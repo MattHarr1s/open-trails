@@ -9,7 +9,7 @@
 <body>
 	<h1>ABQ Open Trails</h1>
 	<h2>Executive Summary</h2>
-	<p>ABQ Open Trails will be an a website for hikers and mountain bikers, used primarily as a way to find trail maps
+	<p>ABQ Open Trails will be a website for hikers and mountain bikers, used primarily as a way to find trail maps
 		and pertinent information, both official and crowd-sourced, to meet the needs of hikers and mountain bikers of
 		all abilities from novice to expert.  Non-registered users will be able to search for specific hikes and/or
 		mountain bike rides by area, level of difficulty, amenities, elevation gain, and length (distance).
