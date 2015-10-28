@@ -27,6 +27,8 @@
 								<li>GSM Radio: 4G LTE</li>
 								<li>Carrier: AT&T</li>
 							</ul>
+						<p>Shawn is rarely found without his trusty iPhone 5s. The 4 inch screen is the perfect balance between
+						viewability and functionality and Shawn f</p>
 						<!-Macbook Air Secondary Device used for web surfing, social media, banking, travel, shopping as well
 						as document creation and book keeping->
 						<li>Macbook Air 13.3"</li>
@@ -38,7 +40,8 @@
 							</ul>
 					</ol>
 
-		<!-Use Case. Might not belong here. I'll find out where it belongs.->
+		<!-Use Case. Might not belong here. I'll find out where it belongs.
+
 		<p>It's 7 o'clock on a crisp May, Friday evening and Shawn is celebrating his best friend Joe's 38th birthday on
 			his patio.			Shawn is in the kitchen getting a beer when he hears a large group applause coming from the
 			back patio. Shawn grabs his Marble Wildflower Wheat and walks onto the patio. On the patio Shawn sees a
@@ -51,7 +54,8 @@
 			his hike. Devin pulls out his trusty Droid turbo and hold it up so the crowd can see photos he took while on
 			his hike.  Devin then turns the phone back toward himself and asks the crowd if they would like to see a map of
 			his hike. Before anyone in the crowd answers, Devin has already started logging in to ABQ Open Trails. In order
-			to access a map of his hike, Devin must first: </p>
+			to access a map of his hike, Devin must first:
+		</p>
 
 
 
@@ -63,7 +67,7 @@
 		love of hiking. The friend mentioned that he both made friends and lost weight simply from hiking. Having never
 		hiked before, but needing to lose a few pounds before summer, Shawn opens a beer and sits down with his trusty
 		Macbook, opens a new chrome browser window and runs a google search for local hiking trails. The search brings
-		Shawn to the ABQ Open Trails Website, were he would like to accomplish the following goals:</p>
+		Shawn to the ABQ Open Trails Website, were he would like to accomplish the following goals:</p> ->
 	</body>
 
 </html>
