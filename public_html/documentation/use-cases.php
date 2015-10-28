@@ -16,7 +16,17 @@
 		<p>Shawn then scrolls back to the top of the page and clicks a “+” which allows him to zoom in on the map. After studying it sufficiently he clicks the drop-down menu in the upper-right hand corner of the screen and selects the “sign out” option.</p>
 		<hr>
 		<h1>Matt's Use Case #1</h1>
-		<p></p>
+		<p>Matt goes to (open trails).com</p>
+		<ul>
+			<li>Matt’s phone loads the mobile version of the site.</li>
+			<li>Matt goes to the interactive map.</li>
+			<li>Matts web browser interacts with (open trails).coms data and loads the needed geojson objects.</li>
+			<li>Matt finds a general area he would be interested in mountain biking and zooms in.</li>
+			<li>The website responds accordingly and adds or removes geojson objects as needed.</li>
+			<li>Matt finds a trail he is interested in and clicks on it.</li>
+			<li>The website loads the trail's advanced information.</li>
+			<li>Matt can then view specific information about the trail like distance, elevation, and other trails that connect to it.</li>
+		</ul>
 		<hr>
 		<h1>Maria's Use Case #1</h1>
 		<p></p>
