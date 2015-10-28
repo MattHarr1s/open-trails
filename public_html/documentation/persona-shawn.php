@@ -5,16 +5,18 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Shawn the Potential Hiker</title>
+		<link rel="stylesheet" type="text/css" href="public_html/css/style-shawn.css">
 	</head>
 	<!-body of persona page for shawn->
 	<body>
 		<!- Heading one "Steady Shawn"->
-		<h1>Shawn Steady Shawn</h1>
+		<h1>Steady Shawn</h1>
 			<!-Paragraph explaining shawn's persona and use case scenarios->
-				<p>Shawn is a 38 year old single male. A financial adviser by day, Shawn never jumps into the deep end, instead
-				preferring to get comfortable in the shallow end before wading deeper into life experiences. When a new novelty grabs the
-				reigns of Shawn's attention it doesn't let go until Shawn has tried the new activity. Whether it's gardening or skiing, not a single shovel
-				or pole is lifted until Shawn completes several hours of internet research from his two primary devices:
+				<p>Shawn is a 38 year old single male. A financial adviser by day, Shawn never jumps into the deep end,
+					instead preferring to get comfortable in the shallow end before wading deeper into life experiences.
+					When a new novelty grabs the reigns of Shawn's attention it doesn't let go until Shawn has tried the
+					new activity. Whether it's gardening or skiing, Shawn won't lift a single shovel or pole until he
+					completes several hours of internet research from his two primary devices:
 				</p>
 					<!-List of Shawn's Devices>
 					<ol>
@@ -27,8 +29,8 @@
 								<li>GSM Radio: 4G LTE</li>
 								<li>Carrier: AT&T</li>
 							</ul>
-						<br>
-												<p>Shawn is rarely found without his trusty iPhone 5s. The 4 inch screen is the perfect balance between
+							<br>
+						<p>Shawn is rarely found without his trusty iPhone 5s. The 4 inch screen is the perfect balance between
 						viewability and functionality and Shawn does everything from it. Siri and Shawn are on a first name
 							basis with Siri often giving Shawn recommendations for restaurants, movies and other activities.
 							When Shawn needs to know something right away his iPhone has the reliability he requires to always
@@ -38,16 +40,16 @@
 						<li>Macbook Air 13.3"</li>
 							<ul>
 								<li>Intel Core i5 1.6GHz</li>
-								<li>13.3" 1440x900 LED Backlit Display</li>
+								<li>13.3" 1440 &times; 900 LED Backlit Display</li>
 								<li>128GB SSD Flash Storage</li>
 								<li>Mac OS X Yosemite</li>
 							</ul>
 						<br>
 						<p>When his iPhone just isn't powerful enough for the task, Shawn opens up his Macbook and performs
-						serious work on the 13'3 inch HD display. The core i5 1.6ghz processor is plenty powerful for the times
-						Shawn needs to edit photos, update his financial spreadsheets, or create a sample portfolio for a
+						serious work on the 13'3 inch HD display. The core i5 1.6ghz processor is plenty powerful for the
+						times Shawn needs to edit photos, update his financial spreadsheets, or create a sample portfolio for a
 						potential client. Shawn also enjoys surfing the web and learning about new hobbies from the beautiful
-						1440 x 900 LED Backlit Display.
+						1440 &times; 900 LED back-lit display.
 						</p>
 					</ol>
 	</body>
