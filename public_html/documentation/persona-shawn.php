@@ -5,7 +5,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Shawn the Potential Hiker</title>
-		<link rel="stylesheet" type="text/css" href="public_html/css/style-shawn.css">
+		<link rel="stylesheet" type="text/css" href="/css/style-shawn.css">
 	</head>
 	<!-body of persona page for shawn->
 	<body>
