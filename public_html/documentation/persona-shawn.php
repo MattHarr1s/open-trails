@@ -51,7 +51,7 @@
 		<!-Use Case. Might not belong here. I'll find out where it belongs.
 
 		<p>It's 7 o'clock on a crisp May, Friday evening and Shawn is celebrating his best friend Joe's 38th birthday on
-			his patio.			Shawn is in the kitchen getting a beer when he hears a large group applause coming from the
+			his patio.Shawn is in the kitchen getting a beer when he hears a large group applause coming from the
 			back patio. Shawn grabs his Marble Wildflower Wheat and walks onto the patio. On the patio Shawn sees a
 			group of about 15 people, including Joe and his wife, gathered around Devin, Joe's abrasive cousin.
 		</p>
