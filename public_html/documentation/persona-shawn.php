@@ -27,7 +27,7 @@
 								<li>GSM Radio: 4G LTE</li>
 								<li>Carrier: AT&T</li>
 							</ul>
-						<!-Macbook Air Secondary Device used for web surfing, social media, banking, travel, shopping as well as
+						<!-Macbook Air Secondary Device used for web surfing, social media, banking, travel, shopping as well
 						as document creation and book keeping->
 						<li>Macbook Air 13.3"</li>
 							<ul>
@@ -39,12 +39,20 @@
 					</ol>
 
 		<!-Use Case. Might not belong here. I'll find out where it belongs.->
-		<p>It's 7 o'clock on a crisp May, Friday evening and Shawn is celebrating his best friend Joe's 38th birthday on his patio.
-			Shawn is in the kitchen getting a beer when he hears a large group applause coming from the back patio. Shawn grabs his Marble Wildflower Wheat
-			and walks onto the patio. On the patio Shawn sees a group of about 15 people, including Joe and his wife, gathered around Devin, Joe's abrasive cousin.
+		<p>It's 7 o'clock on a crisp May, Friday evening and Shawn is celebrating his best friend Joe's 38th birthday on
+			his patio.			Shawn is in the kitchen getting a beer when he hears a large group applause coming from the
+			back patio. Shawn grabs his Marble Wildflower Wheat and walks onto the patio. On the patio Shawn sees a
+			group of about 15 people, including Joe and his wife, gathered around Devin, Joe's abrasive cousin.
 		</p>
 
-		<p>As Shawn walks toward Joe he hears Devin issue a challenge to anyone in the crowd. Devin boasts that he can beat anyone at a beer drinking contest, without using his hands.
+		<p>As Shawn walks toward Joe he hears Devin manically describing the 10 mile hike he completed last weekend. Shawn
+			stops and joins the crowd listening to Devin's outlandish tales of the giant rocks he climbed like it was no
+			big deal. A young woman in the crowd, struck by Devin's charisma, asks Devin if she can see some pictures from
+			his hike. Devin pulls out his trusty Droid turbo and hold it up so the crowd can see photos he took while on
+			his hike.  Devin then turns the phone back toward himself and asks the crowd if they would like to see a map of
+			his hike. Before anyone in the crowd answers, Devin has already started logging in to ABQ Open Trails. In order
+			to access a map of his hike, Devin must first: </p>
+
 
 
 
