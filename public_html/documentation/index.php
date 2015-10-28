@@ -6,13 +6,13 @@
 		<title>ABQ Open Trails</title>
 	</head>
 	<!-Body for ABQ Open Trails landing page->
-<body>
-	<!-Name of Project->
+	<body>
+		<!-Name of Project->
 
-	<h1>ABQ Open Trails</h1>
+		<h1>ABQ Open Trails</h1>
 
-	<h2>Executive Summary</h2>
-	<!-Text of ABQ Open Trails Executive summary->
+		<h2>Executive Summary</h2>
+		<!-Text of ABQ Open Trails Executive summary->
 
 	<p>ABQ Open Trails will be a website for hikers and mountain bikers, used primarily as a way to find trail maps
 		and pertinent information, both official and crowd-sourced, to meet the needs of hikers and mountain bikers of
@@ -25,4 +25,4 @@
 		General Information for users wishing to increase their hiking or mountain biking proficiency.
 	</p>
 
-</body>
+	</body>
