@@ -9,7 +9,7 @@
 	<!-body of persona page for shawn->
 	<body>
 		<!- Heading one "Steady Shawn"->
-		<h1>Shawn the Potential Hiker</h1>
+		<h1>Shawn Steady Shawn</h1>
 			<!-Paragraph explaining shawn's persona and use case scenarios->
 				<p>Shawn is a 38 year old single male. A financial adviser by day, Shawn never jumps into the deep end, instead
 				preferring to get comfortable in the shallow end before wading deeper into life experiences. When a new novelty grabs the
@@ -28,7 +28,10 @@
 								<li>Carrier: AT&T</li>
 							</ul>
 						<p>Shawn is rarely found without his trusty iPhone 5s. The 4 inch screen is the perfect balance between
-						viewability and functionality and Shawn f</p>
+						viewability and functionality and Shawn does everything from it. Siri and Shawn are on a first name
+							basis with Siri often giving Shawn reccomendations for restaurants, movies and other activities.
+							When Shawn needs to know something right away his iPhone has the reliability he requires to always
+						have information at glance, without unexpected hiccups keeping him from the knowledge he craves.</p>
 						<!-Macbook Air Secondary Device used for web surfing, social media, banking, travel, shopping as well
 						as document creation and book keeping->
 						<li>Macbook Air 13.3"</li>
@@ -38,6 +41,11 @@
 								<li>128GB SSD Flash Storage</li>
 								<li>Mac OS X Yosemite</li>
 							</ul>
+						<p>When his iPhone just isn't powerful enough for the task, Shawn opens up his Macbook and performs
+						serious work on the 13'3 inch HD display. The core i5 1.6ghz processor is plenty powerful for the times
+						Shawn needs to edit photos, update his financial spreadsheets, or create a sample portfolio for a
+						potential client. Shawn also enjoys surfing the web and learning about new hobbies from the beautiful
+						1440 x 900 LED Backlit Display.</p>
 					</ol>
 
 		<!-Use Case. Might not belong here. I'll find out where it belongs.
