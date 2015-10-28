@@ -27,9 +27,10 @@
 								<li>GSM Radio: 4G LTE</li>
 								<li>Carrier: AT&T</li>
 							</ul>
-						<p>Shawn is rarely found without his trusty iPhone 5s. The 4 inch screen is the perfect balance between
+						<br>
+												<p>Shawn is rarely found without his trusty iPhone 5s. The 4 inch screen is the perfect balance between
 						viewability and functionality and Shawn does everything from it. Siri and Shawn are on a first name
-							basis with Siri often giving Shawn reccomendations for restaurants, movies and other activities.
+							basis with Siri often giving Shawn recommendations for restaurants, movies and other activities.
 							When Shawn needs to know something right away his iPhone has the reliability he requires to always
 						have information at glance, without unexpected hiccups keeping him from the knowledge he craves.</p>
 						<!-Macbook Air Secondary Device used for web surfing, social media, banking, travel, shopping as well
@@ -41,11 +42,13 @@
 								<li>128GB SSD Flash Storage</li>
 								<li>Mac OS X Yosemite</li>
 							</ul>
+						<br>
 						<p>When his iPhone just isn't powerful enough for the task, Shawn opens up his Macbook and performs
 						serious work on the 13'3 inch HD display. The core i5 1.6ghz processor is plenty powerful for the times
 						Shawn needs to edit photos, update his financial spreadsheets, or create a sample portfolio for a
 						potential client. Shawn also enjoys surfing the web and learning about new hobbies from the beautiful
-						1440 x 900 LED Backlit Display.</p>
+						1440 x 900 LED Backlit Display.
+						</p>
 					</ol>
 	</body>
 	<footer>
