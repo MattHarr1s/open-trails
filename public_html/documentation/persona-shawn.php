@@ -8,10 +8,50 @@
 	</head>
 	<!-body of persona page for shawn->
 	<body>
-		<!- Heading one "Shawn the Potential Hiker"->
+		<!- Heading one "Steady Shawn"->
 		<h1>Shawn the Potential Hiker</h1>
-		<!-Paragraph explaining shawn's persona and use case scenarios->
-		<p>Shawn is a 38 year old male who arrived home from a party in which a friend would not stop talking about their
+			<!-Paragraph explaining shawn's persona and use case scenarios->
+				<p>Shawn is a 38 year old single male. A financial adviser by day, Shawn never jumps into the deep end, instead
+				preferring to get comfortable in the shallow end before wading deeper into life experiences. When a new novelty grabs the
+				reigns of Shawn's attention it doesn't let go until Shawn has tried the new activity. Whether it's gardening or skiing, not a single shovel
+				or pole is lifted until Shawn completes several hours of internet research from his two primary devices:</p>
+
+					<!-List of Shawn's Devices>
+					<ol>
+						<!-iPhone 5s Primary device for researching new interests->
+						<li>iPhone 5s 16 GB</li>
+							<ul>
+								<li>Screen size: 4 inch screen</li>
+								<li>Screen resolution: 1136 x 640</li>
+								<li>Storage capacity: 16 GB</li>
+								<li>GSM Radio: 4G LTE</li>
+								<li>Carrier: AT&T</li>
+							</ul>
+						<!-Macbook Air Secondary Device used for web surfing, social media, banking, travel, shopping as well as
+						as document creation and book keeping->
+						<li>Macbook Air 13.3"</li>
+							<ul>
+								<li>Intel Core i5 1.6GHz</li>
+								<li>13.3" 1440x900 LED Backlit Display</li>
+								<li>128GB SSD Flash Storage</li>
+								<li>Mac OS X Yosemite</li>
+							</ul>
+					</ol>
+
+		<!-Use Case. Might not belong here. I'll find out where it belongs.->
+		<p>It's 7 o'clock on a crisp May, Friday evening and Shawn is celebrating his best friend Joe's 38th birthday on his patio.
+			Shawn is in the kitchen getting a beer when he hears a large group applause coming from the back patio. Shawn grabs his Marble Wildflower Wheat
+			and walks onto the patio. On the patio Shawn sees a group of about 15 people, including Joe and his wife, gathered around Devin, Joe's abrasive cousin.
+		</p>
+
+		<p>As Shawn walks toward Joe he hears Devin issue a challenge to anyone in the crowd. Devin boasts that he can beat anyone at a beer drinking contest, without using his hands.
+
+
+
+		</p>
+
+
+			arrived home from a party in which a friend would not stop talking about their
 		love of hiking. The friend mentioned that he both made friends and lost weight simply from hiking. Having never
 		hiked before, but needing to lose a few pounds before summer, Shawn opens a beer and sits down with his trusty
 		Macbook, opens a new chrome browser window and runs a google search for local hiking trails. The search brings
