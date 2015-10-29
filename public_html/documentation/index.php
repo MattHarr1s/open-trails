@@ -1,18 +1,18 @@
 <!DOCTYPE HTML>
 <HTML lang="eng>"
-	<!-Header for Trail Quail landing page->
+	<!--Header for Trail Quail landing page-->
 	<head>
 		<meta charset="UTF-8">
 		<title>Trail Quail</title>
 	</head>
-	<!-Body for Trail Quail landing page->
+	<!--Body for Trail Quail landing page-->
 	<body>
 		<!--Name of Project-->
 		<h1>Trail Quail</h1>
 		<!--Executive Summary-->
 			<div>
 				<h2>Executive Summary</h2>
-						<!-Text of Trail Quail Executive summary->
+						<!--Text of Trail Quail Executive summary-->
 							<p>Trail Quail will be a website for hikers and mountain bikers, used primarily as a way to find trail maps
 			and pertinent information, both official and crowd-sourced, to meet the needs of hikers and mountain bikers of
 			all abilities from novice to expert.  Non-registered users will be able to search for specific hikes and/or
