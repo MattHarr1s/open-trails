@@ -39,7 +39,7 @@
 			<!-Use cases->
 			<div>
 				<h2>Use Cases</h2>
-					<p> The interactions between the personas and Trail Quail have been mapped as use cases which are found
+					<p> The interactions between the personas and Trail Quail have been mapped as use cases, which are found
 						here:
 					</p>
 					<h3><a href="use-cases.php">Use Cases</a></h3>
