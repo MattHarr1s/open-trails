@@ -24,7 +24,7 @@
 			General Information for users wishing to increase their hiking or mountain biking proficiency.
 							</p>
 			</div>
-			<!-Personas->
+			<!-Personas and the links to them->
 			<div>
 				<h2>Personas</h2>
 					<p>Trail Quail will be accessible by anyone interested in hiking or biking, regardless of experience level.
@@ -33,16 +33,16 @@
 					<ul>
 						<li><a href="persona-maria.php">Maria, 53 F, Parks and Recreation Employee </a></li>
 						<li><a href="persona-matt.php">Matt, 56 M, Engineer</a></li>
-						<li><a href="persona-shawn.php.php">Shawn, 38 M, Financial Adviser</a></li>
+						<li><a href="persona-shawn.php">Shawn, 38 M, Financial Adviser</a></li>
 					</ul>
 			</div>
 	</body>
 	<footer>
 		<!-Follow @Trail_Quail on Twitter->
 		<a href="https://twitter.com/Trail_Quail" class="twitter-follow-button" data-show-count="false" data-size="large">
-			ollow @Trail_Quail</a>
-		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if
+			Follow @Trail_Quail</a>
+		<script>function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if
 			(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
 			fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 		</script>
-	</foot
+	</footer>
