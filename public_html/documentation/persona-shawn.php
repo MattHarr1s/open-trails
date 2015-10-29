@@ -54,6 +54,8 @@
 					</ol>
 	</body>
 	<footer>
-		2015 team open trails
+		<!-Follow @Trail_Quail on Twitter->
+		<a href="https://twitter.com/Trail_Quail" class="twitter-follow-button" data-show-count="false" data-size="large">
+			ollow @Trail_Quail</a>
 	</footer>
 </html>
