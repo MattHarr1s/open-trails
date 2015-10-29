@@ -36,6 +36,14 @@
 						<li><a href="persona-shawn.php">Shawn, 38 M, Financial Adviser</a></li>
 					</ul>
 			</div>
+			<!-Use cases->
+			<div>
+				<h2>Use Cases</h2>
+					<p> The interactions between the personas and Trail Quail have been mapped as use cases which are found
+						here:
+					</p>
+					<h3><a href="use-cases.php">Use Cases</a></h3>
+			</div>
 	</body>
 	<footer>
 		<a href="https://twitter.com/Trail_Quail" class="twitter-follow-button" data-show-count="false" data-size="large">
