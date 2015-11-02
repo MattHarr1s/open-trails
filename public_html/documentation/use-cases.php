@@ -18,7 +18,7 @@
 		<h1>Matt's Use Case #1</h1>
 		<p>Matt goes to (open trails).com</p>
 		<ul>
-			<li>Matt’s phone loads the mobile version of the site.</li>
+			<li>Matt's phone loads the mobile version of the site.</li>
 			<li>Matt goes to the interactive map.</li>
 			<li>Matts web browser interacts with (open trails).coms data and loads the needed geojson objects.</li>
 			<li>Matt finds a general area he would be interested in mountain biking and zooms in.</li>
@@ -32,13 +32,15 @@
 		<p>Most of the time, Maria uses the site like other users. However, as one of the designated site administrators (database babysitter or DBB), she checks the site to see if the trail information is correct for safety purposes.  She goes to the homepage and searches for a specific trail by name or location.  A second page brings up a list of hiking or mountain bike trails that meet the criteria she has entered into the search form on the homepage.  Maria selects the trail she wants to check and looks over the map and other information about the trail (users comments, photos, and GPS tracker maps).  As a DBB, she will have an Check Trail option that will put up two windows.  Window 1 will have the official trail information and window 2 will put up information uploaded by registered users.  She will check to make sure the site route data matches the actual trail.  She will also check to see if other key features such as starting location, distance, elevation, elevation gain, accessibility, amenities, and special conditions are correct.  She will make corrections/updates as needed.  She will field trails comments/concerns flagged for updating the database and decide whether or not to incorporate the changes into the site database. Maria will then discard uploaded information deemed unuseful.  Last, she will close the the Check Trail windows and read over the corrected entry.  If the information is correct, she will exit the site or close the browser window.  If not, she will reopen the Check Trail windows to make further corrections.</p>
 		<hr>
 		<h1>Maria's Use Case #2</h1>
-		<p>Maria gets an alert about a trail closure, or community sponsored event, and goes to (opentrails).com</p>
-		<p>The browser then opens  the site for her.</p>
-		<p>Maria then logs into her account(which gives her DbB (databaseBabysitter) privileges.</p>
-		<p>The website verifies her login information and grants DbB privledges.</p>
-		<p>Maria then goes to the website menu and clicks upload.</p>
-		<p>The website then verifies again that maria is DBB and opens the upload menu.</p>
-		<p>Maria selects upload alert and chooses the file she wants to upload.</p>
-		<p>The website verifies that the file contains no malicious content and uploads the file to the alerts tab.</p>
+		<ul>
+		<li>Maria gets an alert about a trail closure, or community sponsored event, and goes to (opentrails).com</li>
+		<li>The browser then opens  the site for her.</li>
+		<li>Maria then logs into her account(which gives her DbB (databaseBabysitter) privileges.</li>
+		<li>The website verifies her login information and grants DbB privledges.</li>
+		<li>Maria then goes to the website menu and clicks upload.</li>
+		<li>The website then verifies again that maria is DBB and opens the upload menu.</li>
+		<li>Maria selects upload alert and chooses the file she wants to upload.</li>
+		<li>The website verifies that the file contains no malicious content and uploads the file to the alerts tab.</li>
+		</ul>
 	</body>
 </html>
