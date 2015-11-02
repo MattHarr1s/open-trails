@@ -7,9 +7,9 @@
 	</head>
 	<!-Body for Trail Quail landing page->
 	<body>
-		<!-Name of Project->
+		<!--Name of Project-->
 		<h1>Trail Quail</h1>
-		<!-Executive Summary->
+		<!--Executive Summary-->
 			<div>
 				<h2>Executive Summary</h2>
 						<!-Text of Trail Quail Executive summary->
@@ -24,7 +24,7 @@
 			General Information for users wishing to increase their hiking or mountain biking proficiency.
 							</p>
 			</div>
-			<!-Personas and the links to them->
+			<!--Personas and the links to them-->
 			<div>
 				<h2>Personas</h2>
 					<p>Trail Quail will be accessible by anyone interested in hiking or biking, regardless of experience level.
@@ -36,7 +36,7 @@
 						<li><a href="persona-shawn.php">Shawn, 38 M, Financial Adviser</a></li>
 					</ul>
 			</div>
-			<!-Use cases->
+			<!--Use cases-->
 			<div>
 				<h2>Use Cases</h2>
 					<p> The interactions between the personas and Trail Quail have been mapped as use cases, which are found
