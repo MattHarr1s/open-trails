@@ -22,9 +22,8 @@
 		//<p>As a registered user, I want to start a group hike/ride</p>
 		//<p>As a registered user, I want to share my hike/ride information with friends.</p>
 		<hr>
-		<p>As an administrator, I want to deactivate a user's account.</p>
 		<p>As an administrator, I want to approve/deny proposed alterations to trail data.</p>
-		<p>As an administrator, I want to upvote my own comment to the very top of the page.</p>
+		<p>As an administrator, I want to post a notice on a trail.</p>
 		<p>As an administrator, I want to delete a user's comment.</p>
 	</body>
 </html>
