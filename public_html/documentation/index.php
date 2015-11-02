@@ -43,7 +43,79 @@
 						here:
 					</p>
 					<h3><a href="use-cases.php">Use Cases</a></h3>
-			</div>
+			</div> <!--Conceptual Model-->
+		<h2>Conceptual Model</h2>
+		<h3>Entity Name: trailquailUser</h3>
+		<ul>
+			<li>userId</li>
+			<li>userName</li>
+			<li>email</li>
+			<li>password:salt</li>
+			<li>password:hash</li>
+			<li>account type</li>
+		</ul>
+		<br>
+		<h3>Entity:userSubmittedComments</h3>
+		<ul>
+			<li>postingsId</li>
+			<li>userId</li>
+			<li>trailId</li>
+			<li>trailComments</li>
+			<li>trailPhotos</li>
+			<li>userGpsInfo</li>
+			<li>userTrailRating</li>
+		</ul>
+		<br>
+		<h3>Entity:trailRating</h3>
+		<uL>
+			<li>trailRatingId</li>
+			<li>trailId</li>
+			<li>userId</li>
+			<li>rating</li>
+		</uL>
+		<br>
+		<h3>Entity:trailInfo</h3>
+		<ul>
+			<li>trailId</li>
+			<li>trailName</li>
+			<li>trailHead</li>
+			<li>trailSegment</li>
+			<li>distance</li>
+			<li>elevation</li>
+			<li>deltaElevation</li>
+			<li>difficulty</li>
+			<li>amenity's</li>
+			<li>trailUse</Li>
+			<li>trailCondition</li>
+			<li>trailDescription</li>
+			<li>trailTraffic</li>
+		</ul>
+		<br>
+		<h3>Entity:update</h3>
+		<ul>
+			<li>trailUpdateId</li>
+			<li>userId</li>
+			<li>trailName</li>
+			<li>trailHead</li>
+			<li>trailSegments</li>
+			<li>distance</li>
+			<li>elevation</li>
+			<li>deltaElevation</li>
+			<li>difficulty</li>
+			<li>trailCondition</li>
+			<li>amenities</li>
+			<li>accessibility</li>
+			<li>trailUse</li>
+			<li>trailDescription</li>
+			<li>trailTraffic</li>
+			<li>trailConditionComments</li>
+			<li>trailInfoComment</li>
+			<li>trailInfo</li>
+			<li>updateType</li>
+			<li></li>
+
+		</ul>
+
 	</body>
 	<footer>
 		<a href="https://twitter.com/Trail_Quail" class="twitter-follow-button" data-show-count="false" data-size="large">
