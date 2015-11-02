@@ -16,7 +16,7 @@
 			</ul>
 			<hr>
 		<h1>Matt's Use Case #1</h1>
-		<p>Matt goes to (open trails).com</p>
+		<p>Matt goes to quailtrail.com</p>
 		<ul>
 			<li>Matt's phone loads the mobile version of the site.</li>
 			<li>Matt goes to the interactive map.</li>
