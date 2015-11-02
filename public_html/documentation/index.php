@@ -112,8 +112,6 @@
 			<li>trailInfoComment</li>
 			<li>trailInfo</li>
 			<li>updateType</li>
-			<li></li>
-
 		</ul>
 
 	</body>
