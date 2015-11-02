@@ -62,7 +62,8 @@
 			<li>trailId</li>
 			<li>trailComments</li>
 			<li>trailPhotos</li>
-			<li>userGpsInfo</li>
+			<li>userBrowserType</li>
+			<li>userIpAddress</li>
 			<li>userTrailRating</li>
 		</ul>
 		<br>
