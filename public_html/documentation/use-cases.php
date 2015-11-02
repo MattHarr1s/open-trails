@@ -10,9 +10,9 @@
 		<li>When Shawn first uses the website, he is presented with an option to register an account. He may do so by linking a Facebook or Google+ account, or by providing an email address and setting a password.</li>
 		<li>Shawn clicks the "link with Facebook account" button and is immediately brought to the homepage of the site.</li>
 		<li>From here, Shawn clicks on the "Find a trail" button. He uses advanced search options to display only the trails listed as "high difficulty". He then sorts these trails by length by clicking on the head of the "length" column.</li>
-		<li>At this point, the system is displaying a list of "high difficulty" trails, the first of which is the longest. It is named "Dead Man’s Pass".</li>
-		<li>Shawn clicks on "Dead Man’s Pass" and is taken to a page containing a map of the trail and its current weather conditions.</li>
-		<li>Shawn then scrolls back to the top of the page and clicks a “+” which allows him to zoom in on the map. After studying it sufficiently he clicks the drop-down menu in the upper-right hand corner of the screen and selects the “sign out” option.</li>
+		<li>At this point, the system is displaying a list of "high difficulty" trails, the first of which is the longest. It is named "Dead Man's Pass".</li>
+		<li>Shawn clicks on "Dead Man's Pass" and is taken to a page containing a map of the trail and its current weather conditions.</li>
+		<li>Shawn then scrolls back to the top of the page and clicks a "+" which allows him to zoom in on the map. After studying it sufficiently he clicks the drop-down menu in the upper-right hand corner of the screen and selects the “sign out” option.</li>
 			</ul>
 			<hr>
 		<h1>Matt's Use Case #1</h1>
