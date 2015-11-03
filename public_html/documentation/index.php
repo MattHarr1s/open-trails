@@ -59,7 +59,7 @@
 		<br>
 		<h3>Entity:userSubmittedComments</h3>
 		<ul>
-			<li>postingsId</li>
+			<li>commentId</li>
 			<li>userId</li>
 			<li>trailId</li>
 			<li>trailComments</li>
@@ -77,7 +77,7 @@
 			<li>rating</li>
 		</uL>
 		<br>
-		<h3>Entity:trailInfo</h3>
+		<h3>Entity:trail</h3>
 		<ul>
 			<li>trailId</li>
 			<li>amenity's</li>
