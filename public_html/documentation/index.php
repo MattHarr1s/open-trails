@@ -78,18 +78,18 @@
 		<h3>Entity:trailInfo</h3>
 		<ul>
 			<li>trailId</li>
-			<li>trailName</li>
-			<li>trailHead</li>
-			<li>trailSegment</li>
-			<li>distance</li>
-			<li>elevation</li>
+			<li>amenity's</li>
 			<li>deltaElevation</li>
 			<li>difficulty</li>
-			<li>amenity's</li>
-			<li>trailUse</Li>
+			<li>elevation</li>
+			<li>distance</li>
 			<li>trailCondition</li>
 			<li>trailDescription</li>
+			<li>trailHead</li>
+			<li>trailName</li>
+			<li>trailSegment</li>
 			<li>trailTraffic</li>
+			<li>trailUse</Li>
 		</ul>
 		<br>
 		<h3>Entity:update</h3>
