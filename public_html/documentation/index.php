@@ -92,27 +92,28 @@
 			<li>trailUse</Li>
 		</ul>
 		<br>
-		<h3>Entity:update</h3>
+		<h3>Entity:trailInfoSubmission</h3>
 		<ul>
-			<li>trailUpdateId</li>
+			<li>trailSubmissionId</li>
+			<li>trailId</li>
 			<li>userId</li>
-			<li>trailName</li>
-			<li>trailHead</li>
-			<li>trailSegments</li>
+			<li>accessibility</li>
+			<li>amenities</li>
+			<li>difficulty</li>
+			<li>deltaElevation</li>
 			<li>distance</li>
 			<li>elevation</li>
-			<li>deltaElevation</li>
-			<li>difficulty</li>
 			<li>trailCondition</li>
-			<li>amenities</li>
-			<li>accessibility</li>
-			<li>trailUse</li>
 			<li>trailDescription</li>
-			<li>trailTraffic</li>
-			<li>trailConditionComments</li>
-			<li>trailInfoComment</li>
+			<li>trailHead</li>
 			<li>trailInfo</li>
-			<li>updateType</li>
+			<li>submissionBrowserType</li>
+			<li>SubmissionIpAddress</li>
+			<li>submissionType</li>
+			<li>trailName</li>
+			<li>trailSegments</li>
+			<li>trailTraffic</li>
+			<li>trailUse</li>
 		</ul>
 
 	</body>
