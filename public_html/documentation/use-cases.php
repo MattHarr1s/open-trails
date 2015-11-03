@@ -16,11 +16,11 @@
 			</ul>
 			<hr>
 		<h1>Matt's Use Case #1</h1>
-		<p>Matt goes to quailtrail.com</p>
+		<p>Matt goes to quailtrail.net</p>
 		<ul>
 			<li>Matt's phone loads the mobile version of the site.</li>
 			<li>Matt goes to the interactive map.</li>
-			<li>Matts web browser interacts with (open trails).coms data and loads the needed geojson objects.</li>
+			<li>Matts web browser interacts with qualtrail.net's data and loads the needed geojson objects.</li>
 			<li>Matt finds a general area he would be interested in mountain biking and zooms in.</li>
 			<li>The website responds accordingly and adds or removes geojson objects as needed.</li>
 			<li>Matt finds a trail he is interested in and clicks on it.</li>
