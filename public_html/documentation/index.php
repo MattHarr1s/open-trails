@@ -48,11 +48,13 @@
 		<h3>Entity Name: trailquailUser</h3>
 		<ul>
 			<li>userId</li>
-			<li>userName</li>
-			<li>email</li>
-			<li>password:salt</li>
-			<li>password:hash</li>
+
 			<li>account type</li>
+			<li>email</li>
+			<li>password:hash</li>
+			<li>password:salt</li>
+			<li>userName</li>
+
 		</ul>
 		<br>
 		<h3>Entity:userSubmittedComments</h3>
