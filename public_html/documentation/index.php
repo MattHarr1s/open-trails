@@ -64,10 +64,10 @@
 			<li>commentId</li>
 			<li>userId</li>
 			<li>trailId</li>
-			<li>commentText</li>
-			<li>commentPhoto</li>
 			<li>commentBrowser</li>
 			<li>commentIp</li>
+			<li>commentPhoto</li>
+			<li>commentText</li>
 		</ul>
 		<br>
 		<h3>Entity: rating</h3>
@@ -81,6 +81,7 @@
 		<ul>
 			<li>trailId</li>
 			<li>trailUuid</li>
+			<li>userId</li>
 			<li>submitTrailId</li>
 			<li>accessibility</li>
 			<li>amenities</li>
