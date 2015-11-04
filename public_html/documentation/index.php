@@ -84,9 +84,9 @@
 			<li>submitTrailId</li>
 			<li>accessibility</li>
 			<li>amenities</li>
-			<li>submitBrowser</li>
 			<li>difficulty</li>
 			<li>distance</li>
+			<li>submitBrowser</li>
 			<li>submitIp</li>
 			<li>submissionType</li>
 			<li>terrain</li>
