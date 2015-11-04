@@ -48,24 +48,26 @@
 		<h3>Entity Name: trailquailUser</h3>
 		<ul>
 			<li>userId</li>
-
 			<li>account type</li>
 			<li>email</li>
 			<li>password:hash</li>
+			<li>UserBrowser</li>
+			<li>UserIpAddress</li>
 			<li>password:salt</li>
 			<li>userName</li>
 
+
 		</ul>
 		<br>
-		<h3>Entity:userSubmittedComments</h3>
+		<h3>Entity:comments</h3>
 		<ul>
-			<li>commentId</li>
+
 			<li>userId</li>
 			<li>trailId</li>
 			<li>trailComments</li>
 			<li>trailPhotos</li>
-			<li>userBrowserType</li>
-			<li>userIpAddress</li>
+			<li>ComBrowserType</li>
+			<li>ComIpAddress</li>
 			<li>userTrailRating</li>
 		</ul>
 		<br>
@@ -79,44 +81,27 @@
 		<br>
 		<h3>Entity:trail</h3>
 		<ul>
-			<li>trailId</li>
-			<li>amenity's</li>
-			<li>deltaElevation</li>
+			<li>trailInfoId</li>
+			<li>trailUuid</li>
+			<li>accessibility</li>
+			<li>amenities</li>
+			<li>browserType</li>
 			<li>difficulty</li>
-			<li>elevation</li>
 			<li>distance</li>
+			<li>elevation</li>
+			<li>IpAddress</li>
+			<li>submissionType</li>
 			<li>trailCondition</li>
 			<li>trailDescription</li>
-			<li>trailHead</li>
 			<li>trailName</li>
-			<li>trailSegment</li>
 			<li>trailTraffic</li>
 			<li>trailUse</Li>
 		</ul>
 		<br>
-		<h3>Entity:trailInfoSubmission</h3>
-		<ul>
-			<li>trailSubmissionId</li>
-			<li>trailId</li>
-			<li>userId</li>
-			<li>accessibility</li>
-			<li>amenities</li>
-			<li>difficulty</li>
-			<li>deltaElevation</li>
-			<li>distance</li>
-			<li>elevation</li>
-			<li>trailCondition</li>
-			<li>trailDescription</li>
-			<li>trailHead</li>
-			<li>trailInfo</li>
-			<li>submissionBrowserType</li>
-			<li>SubmissionIpAddress</li>
-			<li>submissionType</li>
-			<li>trailName</li>
-			<li>trailSegments</li>
-			<li>trailTraffic</li>
-			<li>trailUse</li>
-		</ul>
+
+
+
+
 
 	</body>
 	<footer>
