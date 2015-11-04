@@ -45,43 +45,43 @@
 					<h3><a href="use-cases.php">Use Cases</a></h3>
 			</div> <!--Conceptual Model-->
 		<h2>Conceptual Model</h2>
-		<h3>Entity Name: trailquailUser</h3>
+		<h3>Entity Name: user</h3>
 		<ul>
 			<li>userId</li>
 			<li>account type</li>
 			<li>email</li>
 			<li>password:hash</li>
-			<li>UserBrowser</li>
-			<li>UserIpAddress</li>
+			<li>userBrowser</li>
+			<li>userIpAddress</li>
 			<li>password:salt</li>
 			<li>userName</li>
 
 
 		</ul>
 		<br>
-		<h3>Entity:comments</h3>
+		<h3>Entity: comment</h3>
 		<ul>
-
+			<li>commentId</li>
 			<li>userId</li>
 			<li>trailId</li>
 			<li>trailComments</li>
 			<li>trailPhotos</li>
-			<li>ComBrowserType</li>
-			<li>ComIpAddress</li>
-			<li>userTrailRating</li>
+			<li>comBrowserType</li>
+			<li>comIpAddress</li>
 		</ul>
 		<br>
-		<h3>Entity:trailRating</h3>
-		<uL>
+		<h3>Entity: rating</h3>
+		<ul>
 			<li>trailRatingId</li>
 			<li>trailId</li>
 			<li>userId</li>
 			<li>rating</li>
-		</uL>
+		</ul>
 		<br>
-		<h3>Entity:trail</h3>
+		<h3>Entity: trail</h3>
 		<ul>
 			<li>trailInfoId</li>
+			<li>trailId</li>
 			<li>trailUuid</li>
 			<li>accessibility</li>
 			<li>amenities</li>
@@ -89,13 +89,28 @@
 			<li>difficulty</li>
 			<li>distance</li>
 			<li>elevation</li>
-			<li>IpAddress</li>
+			<li>ipAddress</li>
 			<li>submissionType</li>
 			<li>trailCondition</li>
 			<li>trailDescription</li>
 			<li>trailName</li>
 			<li>trailTraffic</li>
 			<li>trailUse</Li>
+		</ul>
+		<br>
+		<h3>Entity: segment</h3>
+		<ul>
+			<li>segmentId</li>
+			<li>start</li>
+			<li>stop</li>
+			<li>elevation</li>
+		</ul>
+		<br>
+		<h3>Entity: trail relationship</h3>
+		<ul>
+			<li>trailId</li>
+			<li>segmentId</li>
+			<li>segmentType</li>
 		</ul>
 		<br>
 
