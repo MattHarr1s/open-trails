@@ -49,12 +49,13 @@
 		<ul>
 			<li>userId</li>
 			<li>userAccountType</li>
+			<li>userBrowser</li>
 			<li>userEmail</li>
 			<li>password:userHash</li>
-			<li>userBrowser</li>
 			<li>userIp</li>
-			<li>password:userSalt</li>
 			<li>userName</li>
+			<li>password:userSalt</li>
+
 
 
 		</ul>
@@ -83,16 +84,17 @@
 			<li>trailUuid</li>
 			<li>userId</li>
 			<li>submitTrailId</li>
+			<li>userId</li>
 			<li>accessibility</li>
 			<li>amenities</li>
+			<li>condition</li>
+			<li>description</li>
 			<li>difficulty</li>
 			<li>distance</li>
 			<li>submitBrowser</li>
 			<li>submitIp</li>
 			<li>submissionType</li>
 			<li>terrain</li>
-			<li>condition</li>
-			<li>description</li>
 			<li>trailName</li>
 			<li>traffic</li>
 			<li>use</Li>
@@ -101,9 +103,10 @@
 		<h3>Entity: segment</h3>
 		<ul>
 			<li>segmentId</li>
+			<li>elevation</li>
 			<li>start</li>
 			<li>stop</li>
-			<li>elevation</li>
+
 		</ul>
 		<br>
 		<h3>Entity: trail relationship</h3>
