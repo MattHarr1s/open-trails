@@ -72,7 +72,6 @@
 		<br>
 		<h3>Entity: rating</h3>
 		<ul>
-			<li>trailRatingId</li>
 			<li>trailId</li>
 			<li>userId</li>
 			<li>rating</li>
