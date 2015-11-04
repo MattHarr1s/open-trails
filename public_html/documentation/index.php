@@ -91,6 +91,7 @@
 			<li>elevation</li>
 			<li>ipAddress</li>
 			<li>submissionType</li>
+			<li>terrain</li>
 			<li>trailCondition</li>
 			<li>trailDescription</li>
 			<li>trailName</li>
