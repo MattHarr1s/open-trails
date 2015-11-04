@@ -48,12 +48,12 @@
 		<h3>Entity Name: user</h3>
 		<ul>
 			<li>userId</li>
-			<li>account type</li>
-			<li>email</li>
-			<li>password:hash</li>
+			<li>userAccountType</li>
+			<li>userEmail</li>
+			<li>password:userHash</li>
 			<li>userBrowser</li>
 			<li>userIp</li>
-			<li>password:salt</li>
+			<li>password:userSalt</li>
 			<li>userName</li>
 
 
@@ -64,23 +64,24 @@
 			<li>commentId</li>
 			<li>userId</li>
 			<li>trailId</li>
-			<li>trailComments</li>
-			<li>trailPhotos</li>
-			<li>comBrowser</li>
-			<li>comIp</li>
+			<li>commentText</li>
+			<li>commentPhoto</li>
+			<li>commentBrowser</li>
+			<li>commentIp</li>
 		</ul>
 		<br>
 		<h3>Entity: rating</h3>
 		<ul>
 			<li>trailId</li>
 			<li>userId</li>
-			<li>rating</li>
+			<li>ratingValue</li>
 		</ul>
 		<br>
 		<h3>Entity: trail</h3>
 		<ul>
 			<li>trailId</li>
 			<li>trailUuid</li>
+			<li>submitTrailId</li>
 			<li>accessibility</li>
 			<li>amenities</li>
 			<li>submitBrowser</li>
@@ -89,11 +90,11 @@
 			<li>submitIp</li>
 			<li>submissionType</li>
 			<li>terrain</li>
-			<li>trailCondition</li>
-			<li>trailDescription</li>
+			<li>condition</li>
+			<li>description</li>
 			<li>trailName</li>
-			<li>trailTraffic</li>
-			<li>trailUse</Li>
+			<li>traffic</li>
+			<li>use</Li>
 		</ul>
 		<br>
 		<h3>Entity: segment</h3>
