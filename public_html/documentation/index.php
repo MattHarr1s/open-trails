@@ -82,7 +82,6 @@
 		<ul>
 			<li>trailId</li>
 			<li>trailUuid</li>
-			<li>userId</li>
 			<li>submitTrailId</li>
 			<li>userId</li>
 			<li>accessibility</li>
