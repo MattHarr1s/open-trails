@@ -52,7 +52,7 @@
 			<li>email</li>
 			<li>password:hash</li>
 			<li>userBrowser</li>
-			<li>userIpAddress</li>
+			<li>userIp</li>
 			<li>password:salt</li>
 			<li>userName</li>
 
@@ -66,8 +66,8 @@
 			<li>trailId</li>
 			<li>trailComments</li>
 			<li>trailPhotos</li>
-			<li>comBrowserType</li>
-			<li>comIpAddress</li>
+			<li>comBrowser</li>
+			<li>comIp</li>
 		</ul>
 		<br>
 		<h3>Entity: rating</h3>
@@ -79,15 +79,14 @@
 		<br>
 		<h3>Entity: trail</h3>
 		<ul>
-			<li>trailInfoId</li>
 			<li>trailId</li>
 			<li>trailUuid</li>
 			<li>accessibility</li>
 			<li>amenities</li>
-			<li>browserType</li>
+			<li>submitBrowser</li>
 			<li>difficulty</li>
 			<li>distance</li>
-			<li>ipAddress</li>
+			<li>submitIp</li>
 			<li>submissionType</li>
 			<li>terrain</li>
 			<li>trailCondition</li>
