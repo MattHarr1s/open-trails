@@ -88,7 +88,6 @@
 			<li>browserType</li>
 			<li>difficulty</li>
 			<li>distance</li>
-			<li>elevation</li>
 			<li>ipAddress</li>
 			<li>submissionType</li>
 			<li>terrain</li>
