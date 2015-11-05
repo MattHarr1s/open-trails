@@ -103,9 +103,10 @@ c
 		<h3>Entity: segment</h3>
 		<ul>
 			<li>segmentId</li>
-			<li>segElevation</li>
 			<li>segStart</li>
 			<li>segStop</li>
+			<li>segStartElevation</li>
+			<li>segStopElevation</li>
 
 		</ul>
 		<br>
