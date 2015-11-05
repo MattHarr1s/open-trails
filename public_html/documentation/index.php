@@ -56,7 +56,7 @@
 			<li>userName</li>
 			<li>password:userSalt</li>
 
-
+c
 
 		</ul>
 		<br>
@@ -80,6 +80,7 @@
 		<br>
 		<h3>Entity: trail</h3>
 		<ul>
+			<li>trailInfoId</li>
 			<li>trailId</li>
 			<li>trailUuid</li>
 			<li>submitTrailId</li>
