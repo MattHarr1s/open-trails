@@ -84,27 +84,28 @@ c
 			<li>trailUuid</li>
 			<li>submitTrailId</li>
 			<li>userId</li>
-			<li>accessibility</li>
-			<li>amenities</li>
-			<li>condition</li>
-			<li>description</li>
-			<li>difficulty</li>
-			<li>distance</li>
-			<li>submitBrowser</li>
-			<li>submitIp</li>
-			<li>submissionType</li>
-			<li>terrain</li>
+			<li>trailAccessibility</li>
+			<li>trailAmenities</li>
+			<li>trailCondition</li>
+			<li>trailDescription</li>
+			<li>trailDifficulty</li>
+			<li>trailDistance</li>
+			<li>trailBrowser</li>
+			<li>trailIpAddress</li>
+			<li>createDate</li>
+			<li>trailSubmissionType</li>
+			<li>trailTerrain</li>
 			<li>trailName</li>
-			<li>traffic</li>
-			<li>use</Li>
+			<li>trailTraffic</li>
+			<li>trailUse</Li>
 		</ul>
 		<br>
 		<h3>Entity: segment</h3>
 		<ul>
 			<li>segmentId</li>
-			<li>elevation</li>
-			<li>start</li>
-			<li>stop</li>
+			<li>segElevation</li>
+			<li>segStart</li>
+			<li>segStop</li>
 
 		</ul>
 		<br>
@@ -115,11 +116,6 @@ c
 			<li>segmentType</li>
 		</ul>
 		<br>
-
-
-
-
-
 	</body>
 	<footer>
 		<a href="https://twitter.com/Trail_Quail" class="twitter-follow-button" data-show-count="false" data-size="large">
@@ -129,3 +125,4 @@ c
 				parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 		</script>
 	</footer>
+
