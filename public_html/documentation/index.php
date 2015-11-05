@@ -109,7 +109,7 @@ c
 
 		</ul>
 		<br>
-		<h3>Entity: trail relationship</h3>
+		<h3>Entity: trailRelationship</h3>
 		<ul>
 			<li>trailId</li>
 			<li>segmentId</li>
