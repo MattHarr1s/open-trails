@@ -49,10 +49,10 @@
 		<ul>
 			<li>userId</li>
 			<li>userAccountType</li>
-			<li>userBrowser</li>
+			<li>browser</li>
 			<li>userEmail</li>
 			<li>password:userHash</li>
-			<li>userIp</li>
+			<li>ipAddress</li>
 			<li>userName</li>
 			<li>password:userSalt</li>
 
@@ -65,8 +65,8 @@ c
 			<li>commentId</li>
 			<li>userId</li>
 			<li>trailId</li>
-			<li>commentBrowser</li>
-			<li>commentIp</li>
+			<li>browser</li>
+			<li>ipAddress</li>
 			<li>commentPhoto</li>
 			<li>commentText</li>
 		</ul>
@@ -90,8 +90,8 @@ c
 			<li>trailDescription</li>
 			<li>trailDifficulty</li>
 			<li>trailDistance</li>
-			<li>trailBrowser</li>
-			<li>trailIpAddress</li>
+			<li>browser</li>
+			<li>ipAddress</li>
 			<li>createDate</li>
 			<li>trailSubmissionType</li>
 			<li>trailTerrain</li>
