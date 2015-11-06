@@ -10,12 +10,12 @@
 
 class TrailRelationship {
 	/**
-	 * trailId
+	 * trailId; this is a foreign key
 	 * @var int $trailId
 	 **/
 	private $trailId;
 	/**
-	 * segmentId
+	 * segmentId; this is a foreign key
 	 * @var int $segmentId
 	 **/
 	private $segmentId;
@@ -42,9 +42,17 @@ class TrailRelationship {
 	 * @throws UnexpectedValueException if $newTrailId is not an integer
 	 * @throws RangeException if $newTrailId is not positive
 	 **/
-	public function setTrailId() {
-
+	public function setTrailId($newTrailId) {
+		$newTrailId = filter_var ($newTrailId, FILTER_VALIDATE_INT);
+		if ($newTrailId === false) {
+			throw(new UnexpectedValueException("trailId is not a valid integer"));
+		}
+		if ($newTrailId <= 0) {
+			throw(new RangeException("trailId is not positive"));
+		}
+		$this->trailId = intval($newTrailId);
 	}
+
 	/**
 	 * accessor method for segmentId
 	 *
@@ -54,6 +62,11 @@ class TrailRelationship {
 		return ($this->segmentId);
 	}
 
+	/**
+	 * mutator method for segmentId
+	 *
+	 * @param int $newSegmentId
+	 */
 	/**
 	 * accessor method for segmentType
 	 *
