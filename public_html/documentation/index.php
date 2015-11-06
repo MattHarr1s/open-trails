@@ -50,6 +50,7 @@
 			<li>userId</li>
 			<li>userAccountType</li>
 			<li>browser</li>
+			<li>createDate</li>
 			<li>userEmail</li>
 			<li>password:userHash</li>
 			<li>ipAddress</li>
@@ -66,6 +67,7 @@ c
 			<li>userId</li>
 			<li>trailId</li>
 			<li>browser</li>
+			<li>createDate</li>
 			<li>ipAddress</li>
 			<li>commentPhoto</li>
 			<li>commentText</li>
