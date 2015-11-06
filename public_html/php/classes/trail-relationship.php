@@ -36,6 +36,16 @@ class TrailRelationship {
 	}
 
 	/**
+	 * mutator method for trailId
+	 *
+	 * @param int $newTrailId new value of trailId
+	 * @throws UnexpectedValueException if $newTrailId is not an integer
+	 * @throws RangeException if $newTrailId is not positive
+	 **/
+	public function setTrailId() {
+
+	}
+	/**
 	 * accessor method for segmentId
 	 *
 	 * @return int value for trailId
@@ -52,6 +62,5 @@ class TrailRelationship {
 	public function getSegmentType() {
 		return ($this->segmentType);
 	}
-
 
 }
