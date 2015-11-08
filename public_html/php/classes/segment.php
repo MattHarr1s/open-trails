@@ -23,7 +23,25 @@ class Segment {
 	 * @var int $segmentId
 	 **/
 	private $segmentId;
+
 	/**
 	 * elevation attribute for the trail segment in feet.
+	 * @var int $elevation
 	 **/
+
+	private $elevation;
+
+	/**
+	 * location for start of segment
+	 * @var int $start
+	 **/
+	private $start;
+
+	/**
+	 * location for end of segment
+	 *
+	 **/
+
+	private $stop;
+
 }
