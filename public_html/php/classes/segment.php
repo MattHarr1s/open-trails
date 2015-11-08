@@ -124,4 +124,12 @@ class Segment {
 	public function getElevation() {
 		return ($this->elevation);
 	}
+/**
+ * mutator method for elevation
+ *
+ * modifies values of elevation using access given by the accessor method.
+ *
+ * @param int elevation new value of elevation.
+ */
+
 }
