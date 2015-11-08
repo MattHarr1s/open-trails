@@ -114,4 +114,14 @@ class Segment {
 		// convert and store the segmentId
 		$this->segmentId = intval($newSegmentId);
 	}
+/**
+ * accessor method for elevation
+ *
+ * gains access to elevation for use by mutator method
+ *
+ * @return int value of elevation
+ */
+	public function getElevation() {
+		return ($this->elevation);
+	}
 }
