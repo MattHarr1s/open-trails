@@ -96,7 +96,22 @@ class Segment {
  * @throws InvalidArgumentException if $newSegmentId is not an integer
  * @throws RangeException if $newSegmentId is not positive
  **/
-	public function setSegmentId($segmentId) {
-		$this->segmentId = $segmentId;
+	public function setSegmentId($newSegmentId){
+		//base case: if the segmentId is null, this is a new segment without a mySQL assigned if (yet)
+		if($newSegmentId === false){
+			$this->segmentId = null;
+			return;
+		}
+		// verify the segmentId is valid
+		$newSegmentId = filter_var($newSegmentId, FILTER_VALIDATE_INT);
+		if($newSegmentId === false){
+			throw(new InvalidArgumentException("segment id is not a valid integer"));
+		}
+		// verify the segmentId is positive
+		if($newSegmentId <=0){
+			throw(new RangeException("segment id is not positive"));
+		}
+		// convert and store the segmentId
+		$this->segmentId = intval($newSegmentId);
 	}
 }
