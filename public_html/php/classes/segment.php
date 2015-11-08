@@ -39,9 +39,17 @@ class Segment {
 
 	/**
 	 * location for end of segment
+	 * @var int $stop
 	 *
 	 **/
 
 	private $stop;
+
+	/** Constructor for segment objects
+	 *
+	 creates a new segment object which inherits the traits of the segment class
+	 object contains the 4 attributes listed above in the parent class.
+	 *
+	 */
 
 }
