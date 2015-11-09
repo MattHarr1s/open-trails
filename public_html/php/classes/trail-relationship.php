@@ -60,11 +60,11 @@ class TrailRelationship {
 	 * @throws RangeException if $newTrailId is not positive
 	 **/
 	public function setTrailId($newTrailId) {
-		$newTrailId = filter_var ($newTrailId, FILTER_VALIDATE_INT);
-		if ($newTrailId === false) {
+		$newTrailId = filter_var($newTrailId, FILTER_VALIDATE_INT);
+		if($newTrailId === false) {
 			throw(new UnexpectedValueException("trailId is not a valid integer"));
 		}
-		if ($newTrailId <= 0) {
+		if($newTrailId <= 0) {
 			throw(new RangeException("trailId is not positive"));
 		}
 		$this->trailId = intval($newTrailId);
@@ -87,11 +87,11 @@ class TrailRelationship {
 	 * @throws RangeException if $newSegmentId is not positive
 	 **/
 	public function setNewSegmentId($newSegmentId) {
-		$newSegmentId = filter_var ($newSegmentId, FILTER_VALIDATE_INT);
-		if ($newSegmentId === false) {
+		$newSegmentId = filter_var($newSegmentId, FILTER_VALIDATE_INT);
+		if($newSegmentId === false) {
 			throw(new UnexpectedValueException("segmentId is not a valid integer"));
 		}
-		if ($newSegmentId <= 0) {
+		if($newSegmentId <= 0) {
 			throw(new RangeException("segmentId is not positive"));
 		}
 		$this->segmentId = intval($newSegmentId);
@@ -121,4 +121,19 @@ class TrailRelationship {
 		$this->segmentType = $newSegmentType;
 	}
 
+	/**
+	 * inserts a trail relationship into MySQL
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @throws PDOException when MySQL related errors occur
+	 **/
+	public function insert(PDO $pdo) {
+		if ($this->trailId === null) {
+			throw(new PDOException("not an existing trailId"));
+		}
+		if ($this->segmentId === null) {
+			throw(new PDOException("not an existing segmentId"));
+		}
+		$query = "INSERT INTO trailRelationship(trailId,segmentId,segmentType)"
+	}
 }
