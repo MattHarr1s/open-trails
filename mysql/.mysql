@@ -2,16 +2,16 @@ DROP TABLE IF EXISTS rating;
 DROP TABLE IF EXISTS trailRelationship;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS trail;
-DROP TABLE IF EXISTS segment;
+DROP TABLE IF EXISTS trailSegment;
 DROP TABLE IF EXISTS user;
 
 CREATE TABLE trailSegment(
-segmentId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-segmentStart POINT NOT NULL,
-segmentStop POINT NOT NULL,
-segmentStartElevation MEDIUMINT  NOT NULL,
-SegmentStopElevation MEDIUMINT NOT NULL,
-PRIMARY KEY (segmentId)
+	segmentId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	segmentStart POINT NOT NULL,
+	segmentStop POINT NOT NULL,
+	segmentStartElevation MEDIUMINT  NOT NULL,
+	SegmentStopElevation MEDIUMINT NOT NULL,
+	PRIMARY KEY (segmentId)
 );
 
 CREATE TABLE user (
@@ -23,7 +23,7 @@ CREATE TABLE user (
 	userEmail       VARCHAR(128)                NOT NULL,
 	userHash        CHAR(128)                   NOT NULL,
 	userName        VARCHAR(64)                 NOT NULL,
-	userSalt        CHAR(64),
+	userSalt        CHAR(64) NOT NULL,
 	UNIQUE (userEmail),
 	PRIMARY KEY (userId)
 );
@@ -58,7 +58,7 @@ CREATE TABLE comment (
 	userId INT UNSIGNED NOT NULL,
 	browser VARCHAR (32) NOT NULL,
 	createDate DATETIME NOT NULL,
-	ipAddess VARCHAR (39) NOT NULL,
+	ipAddess VARBINARY (16) NOT NULL,
 	commentPhoto VARCHAR (32) NULL,
 	commentText VARCHAR (256) NOT NULL,
 	INDEX (trailId),
