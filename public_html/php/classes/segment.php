@@ -33,13 +33,13 @@ class Segment {
 
 	/**
 	 * location for start of segment
-	 * @var int $start
+	 * @var float $start
 	 **/
 	private $start;
 
 	/**
 	 * location for end of segment
-	 * @var int $stop
+	 * @var float $stop
 	 *
 	 **/
 
@@ -84,7 +84,7 @@ class Segment {
  *
  *@return mixed value of segmentId
 **/
-	public function getSegmentId() {
+	public function getSegmentId(){
 		return $this->segmentId;
 	}
 /**
@@ -120,8 +120,8 @@ class Segment {
  * gains access to elevation for use by mutator method
  *
  * @return int value of elevation
- */
-	public function getElevation() {
+**/
+	public function getElevation(){
 		return ($this->elevation);
 	}
 /**
@@ -130,6 +130,21 @@ class Segment {
  * modifies values of elevation using access given by the accessor method.
  *
  * @param int elevation new value of elevation.
- */
-
+**/
+/**
+ * accessor method for start
+ *
+ * @return float value of start coordinates
+**/
+	public function getStart(){
+		return ($this->start);
+	}
+/**
+ * accessor method for stop
+ *
+ * @return float value of stop coordinates
+**/
+	public function getStop(){
+		return ($this->stop);
+	}
 }

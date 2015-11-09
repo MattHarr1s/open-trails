@@ -112,7 +112,7 @@ class Trail{
 	 *trail object contains the 16 attributes listed above.
 	 *
 	 * @param mixed $trailId of this trail or null if a new trail
-	 * @param bin $trailUuId id for the submission to the trail object. Exists so primary key doesn't get updated.
+	 * @param int $trailUuId id for the submission to the trail object. Exists so primary key doesn't get updated.
 	 * @param int $submitTrailId identification of info submited to trail entity
 	 * @param mixed $userId id of user that makes submission to trail entity
 	 * @param string $trailAccessibility info on accessibility of trail
@@ -209,6 +209,17 @@ class Trail{
 	public function getTrailUuId(){
 		return ($this->trailUuId);
 }
+/**
+ * mutator method for trailUuId
+ *
+ * @param int trailUuId
+ * @throws InvalidArgumentException if $newTrailUuId is not an integer or not positive
+ * @throws RangeException is $newTrailUuId is not positive
+**/
+	public function setTrailUuId($newTrailUuId){
+		// verify the trailUuId is valid
+
+	}
 /**
  * accessor method for submitTrailId
  *
