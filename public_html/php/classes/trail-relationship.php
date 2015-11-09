@@ -134,6 +134,50 @@ class TrailRelationship {
 		if ($this->segmentId === null) {
 			throw(new PDOException("not an existing segmentId"));
 		}
-		$query = "INSERT INTO trailRelationship(trailId,segmentId,segmentType)"
+		$query = "INSERT INTO trailRelationship(trailId,segmentId,segmentType) VALUES(:trailId,:segmentId,:segmentType)";
+		$statement = $pdo->prepare($query);
+
+		$parameters = array("trailId => $this->trailId, segmentId => $this->segmentId, segmentType => $this->segmentType");
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * deletes a trail relationship from MySQL
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @throws PDOException when MySQL related errors occur
+	 **/
+	public function delete(PDO $pdo) {
+		if ($this->trailId === null) {
+			throw(new PDOException("unable to delete a trail relationship that doesn't exist"));
+		}
+		if ($this->segmentId === null) {
+			throw(new PDOException("unable to delete a trail relationship that doesn't exist"));
+		}
+		$query = "DELETE FROM trailRelationship WHERE trailId = :trailId AND segmentId = :segmentId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = array("trailId => $this->trailId, segmentId => $this->segmentId, segmentType => $this->segmentType");
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates a trail relationship in MySQL
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @throws PDOException when MySQL related errors occur
+	 **/
+	public function update(PDO $pdo) {
+		if($this->trailId === null) {
+			throw(new PDOException("unable to update a trail relationship that doesn't exist"));
+		}
+		if($this->segmentId === null) {
+			throw(new PDOException("unable to update a trail relationship that doesn't exist"));
+		}
+		$query = "UPDATE trailRelationship SET segmentType = :segmentType WHERE trailId = :trailId AND segmentId = :segmentId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = array("segmentType => $this->segmentType");
+		$statement->execute($parameters);
 	}
 }
