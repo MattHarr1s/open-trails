@@ -2,7 +2,7 @@
 require_once(dirname(dirname(__DIR__))."public_html/php/classes/segment.php");
 
 /**
- * Class Segment for the website TrailQuail.com
+ * Class Segment for the website TrailQuail.net
  * This class can be used for any trail mapping application
  * The Segment class contains four attributes as follows:
  *
