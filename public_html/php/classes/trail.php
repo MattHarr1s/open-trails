@@ -124,9 +124,9 @@ class Trail{
 	 * @param string $trailSubmissionType content of the submission made to the trail
 	 * @param string $trailTerrain terrain found on trail
 	 * @param string $trailName common name of the trail
-	 * @param int $trailTraffic rating of average usage of trail
-	 * @param string $trainUse
-	 *
+	 * @param int $trailTraffic rating of average volume of users on trail
+	 * @param string $trailUse
+	 * @throws InvalidArgumentException if data values are out of bounds
 	 *
 	 */
 	public function __construct($newTrailId, $newTrailUuId, $newSubmitTrailId, $newUserId, $newTrailAccessibility,
