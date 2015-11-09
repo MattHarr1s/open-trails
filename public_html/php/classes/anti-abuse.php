@@ -11,7 +11,7 @@
 trait antiAbuse {
 	/**
 	 * ipAddress
-	 * @var binary $ipAddress
+	 * @var string $ipAddress
 	 **/
 	private $ipAddress;
 
@@ -30,7 +30,7 @@ trait antiAbuse {
 	/**
 	 * accessor method for ipAddress
 	 *
-	 * @return binary value of ipAddress
+	 * @return string value of ipAddress
 	 **/
 	public function getIpAddress() {
 		return($this->ipAddress);
@@ -39,10 +39,11 @@ trait antiAbuse {
 	/**
 	 * mutator method for ipAddress
 	 *
-	 * @param binary $newIpAddress new value of ipAddress
+	 * @param string $newIpAddress new value of ipAddress
 	 * @throws UnexpectedValueException if $newIpAddress is not ???
 	 **/
 	public function setIpAddress($newIpAddress) {
+		if
 		$newIpAddress = filter_var($newIpAddress, FILTER_VALIDATE_IP);
 		if(empty($newIpAddress) === true) {
 			throw(new UnexpectedValueException("ipAddress is empty or insecure"));
@@ -89,9 +90,12 @@ trait antiAbuse {
 	 * @param DateTime $newCreateDate new value of createDate
 	 * @throws InvalidArgumentException if $newCreateDate is not a valid object or string
 	 * @throws RangeException if $newCreateDate is a date that does not exist
+	 * @throws Exception if $newCreateDate is
 	 **/
 	public function setCreateDate($newCreateDate) {
-		$this->createDate = new DateTime();
+		if($newCreateDate === null) {
+			$this->createDate = new DateTime();
+		}
 
 		try {
 			$newCreateDate = validateDate($newCreateDate);
@@ -105,7 +109,6 @@ trait antiAbuse {
 		$this->createDate = $newCreateDate;
 	}
 }
-?>
 
 
 //filter sanitize
