@@ -119,6 +119,7 @@ c
 			<li>segmentType</li>
 		</ul>
 		<br>
+		<img src="public_html/documentation/img/TrailQuailErd3v.svg" alt="Trail Quail ERD">
 	</body>
 	<footer>
 		<a href="https://twitter.com/Trail_Quail" class="twitter-follow-button" data-show-count="false" data-size="large">

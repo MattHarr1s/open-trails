@@ -32,3 +32,11 @@ require_once(dirname(dirname(__DIR__))."public_html/php/classes/trail.php");
  *
  * @author Trail Quail <trailquailabq@gmail.com>
  **/
+class Trail{
+	/**
+	 * id for the trail; as stated above, this is the primary key
+	 * @var int trailId
+	 **/
+	private trailId;
+
+}
