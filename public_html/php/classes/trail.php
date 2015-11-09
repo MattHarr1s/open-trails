@@ -127,10 +127,12 @@ class Trail{
 	 * @param int $trailTraffic rating of average volume of users on trail
 	 * @param string $trailUse
 	 * @throws InvalidArgumentException if data values are out of bounds
+	 * @throws RangeException if data values are out of bounds
+	 * @throws  Exception if some other exception is thrown
 	 *
 	 */
 	public function __construct($newTrailId, $newTrailUuId, $newSubmitTrailId, $newUserId, $newTrailAccessibility,
-	$newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance,$newAntiAbuse,
+	$newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance, $newAntiAbuse,
 	$newTrailSubmissionType, $newTrailTerrain, $newTrailName, $newTrailTraffic, $newTrailUse) {
 		try{
 			$this->setTrailId($newTrailId);
@@ -149,6 +151,178 @@ class Trail{
 			$this->setTrailName($newTrailName);
 			$this->setTrailTraffic($newTrailTraffic);
 			$this->setTrailUse($newTrailUse);
+	}catch(invalidArgumentExcepton $invalidArgument){
+			//rethrow the exception to the caller
+			throw(new InvalidArgumentException($invalidArgument->getMessage(),0,$invalidArgument));
+	}catch(rangeException $range){
+			//rethrow the exception to the caller
+			throw(new RangeException($range->getMessage(),0,$range));
+	}catch(exception $exception){
+			//rethrow the exception to the caller
+			throw(new exception($exception->getMessage(),0,$exception));
 		}
 	}
+/**
+ * accessor method for trailId
+ *
+ * gains access to trailId for use by mutator method
+ *
+ * @return mixed value of trailId
+**/
+	public function getTrailId() {
+		return ($this->trailId);
+	}
+/**
+ * mutator method for trailId
+ *
+ * modifies values of trailId using access given by the accessor method.
+ *
+ * @param mixed $newTrailId
+ * @throws InvalidArgumentException if $newTrailId is not an integer
+ * @throws RangeException if $newTrailId is not positive
+ **/
+	public function setTrailId($newTrailId){
+		//base case: if the trailId is null, this is a new trail without a  mySQL assigned (yet)
+		if($newTrailId === false){
+			$this->trailId = null;
+			return;
+		}
+		//verify the trailId is valid
+		$newTrailId = filter_var($newTrailId, FILTER_VALIDATE_INT);
+		if($newTrailId=== false){
+			throw(new InvalidArgumentException("trail id is not a valid integer"));
+		}
+		//verify the trailID is positive
+		if($newTrailId <=0){
+			throw(new RangeException("trail id is not positive"));
+		}
+		// convert and store the trailId
+		$this->trailId = intval($newTrailId);
+	}
+/**
+ * accessor method for trailUuId
+ *
+ * gains access to trailUuId
+ *
+ * @return int value of trailUuId
+ */
+	public function getTrailUuId(){
+		return ($this->trailUuId);
+}
+/**
+ * accessor method for submitTrailId
+ *
+ * gains access to submitTrailId
+ *
+ * @return int value of submitTrailId
+**/
+	public function getSubmitTrailId() {
+		return ($this->submitTrailId);
+	}
+/**
+ * accessor method for userId
+ *
+ * gains access to userId
+ *
+ * @return int value of userId
+**/
+	public function getUserId() {
+		return $this->userId;
+	}
+/**
+ * accessor method for trailAccessibility
+ *
+ * gains access to trailAccessibility
+ *
+ * @return string value of trailAccessibility
+**/
+	public function getTrailAccessibility() {
+		return ($this->trailAccessibility);
+	}
+/**
+ * accessor method for trailAmenities
+ *
+ * @return string value of trailAmenities
+**/
+	public function getTrailAmenities() {
+		return ($this->trailAmenities);
+	}
+/**
+ * accessor method for trailCondition
+ *
+ * @return string value of trailCondition
+**/
+	public function getTrailCondition() {
+		return ($this->trailCondition);
+	}
+/**
+ * accessor method for trailDescription
+ *
+ * @return string value of trailDescription
+**/
+	public function getTrailDescription() {
+		return ($this->trailDescription);
+	}
+/**
+ * accessor method for trailDifficulty
+ *
+ * @return int value of trailDifficulty
+**/
+	public function getTrailDifficulty() {
+		return ($this->trailDifficulty);
+	}
+/**
+ * accessor method for trailDistance
+ *
+ * @return int value of trailDistance
+**/
+	public function getTrailDistance() {
+		return ($this->trailDistance);
+	}
+/**
+ * accessor method for antiAbuse ????????
+**/
+
+/**
+ * accessor method for trailSubmissionType
+ *
+ * @return string value of trailSubmissionType
+ */
+	public function getTrailSubmissionType() {
+		return ($this->trailSubmissionType);
+	}
+/**
+ * accessor method for trailTerrain
+ *
+ *@return string value of trailTerrain
+ */
+	public function getTrailTerrain() {
+		return ($this->trailTerrain);
+	}
+/**
+ * accessor method for trailName
+ *
+ * @return string value of trailName
+**/
+	public function getTrailName(){
+		return($this->trailName);
+	}
+/**
+ * accessor method for trailTraffic
+ *
+ * @return int value of trailTraffic
+**/
+	public function getTrailTraffic(){
+		return($this->trailTraffic);
+	}
+/**
+ * accessor method for trailUse
+ *
+ * @return string value of trailUse
+**/
+	public function getTrailUse(){
+		return($this->trailUse);
+	}
+
+
 }

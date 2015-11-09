@@ -53,7 +53,7 @@ class Segment {
 	 * @param mixed $segmentId id of this  segment or null if new segment
 	 * @param int $elevation elevation of the segment in feet, or null if unavailable.
 	 /matttodo/figure out lat and longitude/
-	 * @param $start lattidue and longitude of start
+	 * @param $start lattitude and longitude of start
 	 * @param $stop  lattitude and longitude of stop
 	 * @throws InvalidArgumentException if datatypes are not valid
 	 * @throws RangeException if data values are out of bounds (e.g. string insted of int, string too long)
@@ -97,7 +97,7 @@ class Segment {
  * @throws RangeException if $newSegmentId is not positive
  **/
 	public function setSegmentId($newSegmentId){
-		//base case: if the segmentId is null, this is a new segment without a mySQL assigned if (yet)
+		//base case: if the segmentId is null, this is a new segment without a mySQL assigned (yet)
 		if($newSegmentId === false){
 			$this->segmentId = null;
 			return;
