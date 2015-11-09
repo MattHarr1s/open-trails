@@ -25,6 +25,23 @@ class TrailRelationship {
 	 **/
 	private $segmentType;
 
+	/**
+	 * constructor for this trail/segment relationship
+	 *
+	 * @param int $newTrailId new value for trailId
+	 * @param int $newSegmentId new value for segmentId
+	 * @param string $newSegmentType new value for segmentType
+	 * @throws UnexpectedValueException if any of the parameters are invalid
+	 **/
+	public function __construct($newTrailId, $newSegmentId, $newSegmentType) {
+		try {
+			$this->setTrailId($newTrailId);
+			$this->setNewSegmentId($newSegmentId);
+			$this->setSegmentType($newSegmentType);
+		} catch(UnexpectedValueException $exception) {
+			throw(new UnexpectedValueException("Unable to construct trail relationship", 0, $exception));
+		}
+	}
 
 	/**
 	 * accessor method for trailId
@@ -65,8 +82,21 @@ class TrailRelationship {
 	/**
 	 * mutator method for segmentId
 	 *
-	 * @param int $newSegmentId
-	 */
+	 * @param int $newSegmentId new value of segmentId
+	 * @throws UnexpectedValueException if $newSegmentId is not an integer
+	 * @throws RangeException if $newSegmentId is not positive
+	 **/
+	public function setNewSegmentId($newSegmentId) {
+		$newSegmentId = filter_var ($newSegmentId, FILTER_VALIDATE_INT);
+		if ($newSegmentId === false) {
+			throw(new UnexpectedValueException("segmentId is not a valid integer"));
+		}
+		if ($newSegmentId <= 0) {
+			throw(new RangeException("segmentId is not positive"));
+		}
+		$this->segmentId = intval($newSegmentId);
+	}
+
 	/**
 	 * accessor method for segmentType
 	 *
@@ -74,6 +104,21 @@ class TrailRelationship {
 	 **/
 	public function getSegmentType() {
 		return ($this->segmentType);
+	}
+
+	/**
+	 * mutator method for segmentType
+	 *
+	 * @param string $newSegmentType new value of segmentType
+	 * @throws UnexpectedValueException if $newSegmentType is not a string or is insecure
+	 **/
+	public function setSegmentType($newSegmentType) {
+		$newSegmentType = trim($newSegmentType);
+		$newSegmentType = filter_var($newSegmentType, FILTER_SANITIZE_STRING);
+		if(empty($newSegmentType) === true) {
+			throw(new UnexpectedValueException("segmentType is empty or insecure"));
+		}
+		$this->segmentType = $newSegmentType;
 	}
 
 }
