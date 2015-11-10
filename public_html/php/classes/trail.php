@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(dirname(__DIR__))."public_html/php/classes/trail.php");
+require_once(dirname(dirname(__DIR__))."");
 
 /**
  * Class trail for the website TrailQuail.com
@@ -108,7 +108,7 @@ class Trail{
 	private $trailUse;
 
 	/**
-	 * constructor for trail object.
+	 *constructor for trail object.
 	 *trail object contains the 16 attributes listed above.
 	 *
 	 * @param mixed $trailId of this trail or null if a new trail
@@ -183,7 +183,7 @@ class Trail{
  **/
 	public function setTrailId($newTrailId){
 		//base case: if the trailId is null, this is a new trail without a  mySQL assigned (yet)
-		if($newTrailId === false){
+		if($newTrailId === null){
 			$this->trailId = null;
 			return;
 		}
@@ -212,7 +212,7 @@ class Trail{
 /**
  * mutator method for trailUuId
  *
- * @param int trailUuId
+ * @param int $newTrailUuId
  * @throws InvalidArgumentException if $newTrailUuId is not an integer or not positive
  * @throws RangeException is $newTrailUuId is not positive
 **/
@@ -230,6 +230,31 @@ class Trail{
 	public function getSubmitTrailId() {
 		return ($this->submitTrailId);
 	}
+	/**
+	 * mutator method for submitTrailId
+	 *
+	 * @param int $newSubmitTrailId
+	 * @throws InvalidArgumentException if $newSubmitTrailId is not an integer or not positive
+	 * @throws RangeException if the $newSubmitTrailId is not positive
+	**/
+	public function setSubmitTrailId($newSubmitTrailId) {
+		// verify the submitTrailId exists
+		if($newSubmitTrailId === null){
+			$this->submitTrailId = null;
+			return;
+		}
+	//verify the submitTrailId is valid
+	$newSubmitTrailId = filter_var($newSubmitTrailId, FILTER_VALIDATE_INT);
+		if($newSubmitTrailId === false){
+			throw(new InvalidArgumentException("submit trail id is not a valid integer"));
+		}
+	//verify the submitTrailId is positive
+		if($newSubmitTrailId <= 0){
+			throw(new RangeException("submit trail id is not positive"));
+		}
+	//convert and store the submitTrailId
+		$this->submitTrailId = intval($newSubmitTrailId);
+	}
 /**
  * accessor method for userId
  *
@@ -239,6 +264,26 @@ class Trail{
 **/
 	public function getUserId() {
 		return $this->userId;
+	}
+/**
+ * mutator method for userId
+ *
+ * @param int $newUserId
+ * @throws InvalidArgumentException if $newUserId is not an integer or not positive
+ * @throws RangeException if the $newUserId is not positive.
+**/
+	public function setUserId($newUserId){
+		//verify the user id is valid
+		$newUserId = filter_var($newUserId, FILTER_VALIDATE_INT);
+		if($newUserId === false){
+			throw(new InvalidArgumentException("user id is not a valid integer"));
+		}
+		//verify the userId is positive
+		if($newUserId<=0){
+			throw(new RangeException("user id is not positive"));
+		}
+		//convert and store the user id
+		$this->userId = intval($newUserId);
 	}
 /**
  * accessor method for trailAccessibility
@@ -251,12 +296,54 @@ class Trail{
 		return ($this->trailAccessibility);
 	}
 /**
+ *mutator method for trailAccessibility
+ *
+ *@param string $newTrailAccessibility new value of trailAccessibility
+ *@throws InvalidArgumentException if $newTrailAccessibility is not a string or insecure
+ *@throws RangeException if $newTrailAccessibility is > 256 characters
+**/
+	public function setTrailAccessibility($newTrailAccessibility){
+		//verify the trail accessibility content is secure
+		$newTrailAccessibility = trim($newTrailAccessibility);
+		$newTrailAccessibility = filter_var($newTrailAccessibility,FILTER_SANITIZE_STRING);
+		if(empty($newTrailAccessibility)=== true){
+			throw(new InvalidArgumentException(" trail accessibility content is empty or insecure "));
+		}
+		// verify the trail accessibility content will fit in the database
+		if(strlen($newTrailAccessibility)>256){
+			throw (new RangeException("trail accessibility content too large"));
+		}
+		//store the trail accessibility content
+		$this->trailAccessibility =$newTrailAccessibility;
+	}
+/**
  * accessor method for trailAmenities
  *
  * @return string value of trailAmenities
 **/
 	public function getTrailAmenities() {
 		return ($this->trailAmenities);
+	}
+/**
+*mutator method for trailAmenities
+ *
+ *@param string $newTrailAmenities information on trail amenities
+ *@throws InvalidArgumentException if $newTrailAmenities is not a string or insecure
+ *@throws RangeException if $newTrailAmenities > 256 characters
+**/
+	public function setTrailAmenities($newTrailAmenities){
+		//verify the trail amenities content is secure
+		$newTrailAmenities = trim($newTrailAmenities);
+		$newTrailAmenities = filter_var($newTrailAmenities, FILTER_SANITIZE_STRING);
+		if(empty($newTrailAmenities)===true){
+			throw(new InvalidArgumentException("trail amenities content is empty or insecure"));
+		}
+		//verify the trail amenities content will fit in the database
+		if(strlen($newTrailAmenities)>256){
+			throw(new RangeException("trail amenities content too large"));
+		}
+		//store the trail amenities content
+		$this->trailAmenities = $newTrailAmenities;
 	}
 /**
  * accessor method for trailCondition
@@ -267,12 +354,48 @@ class Trail{
 		return ($this->trailCondition);
 	}
 /**
+ * mutator method for trailCondition
+ *
+ * @param string $newTrailCondition information on trail condition
+ * @throws InvalidArgumentException if $newTrailCondition content is not a string or insecure
+ * @throws RangeException is $newTrailCondition content is greater than 256 characters
+**/
+	public function setTrailCondition($newTrailCondition){
+		//verify the trail condition content is secure
+		$newTrailCondition = trim($newTrailCondition);
+		$newTrailCondition = filter_var($newTrailCondition, FILTER_SANITIZE_STRING);
+		if(empty($newTrailCondition)=== true) {
+			throw(new InvalidArgumentException("trail condition content is empty or insecure"));
+		}
+		//verify the trail condition will fit in the database
+		if(strlen($newTrailCondition)> 256){
+			throw(new RangeException("trail condition content too large"));
+		}
+		//store the trail condition content
+		$this->trailCondition=$newTrailCondition;
+}
+/**
  * accessor method for trailDescription
  *
  * @return string value of trailDescription
 **/
 	public function getTrailDescription() {
 		return ($this->trailDescription);
+	}
+/**
+ * mutator method for trailDescription
+ *
+ *@param string $newTrailDescription information describing the trail
+ *@throws InvalidArgumentException if $newTrailDescription is not a string or insecure
+ *@throws RangeException if $newTrailDescription is greater than 512 characters
+**/
+	public function setTrailDescription($trailDescription) {
+		//verify the trail content is secure
+		$newTrailDescription = trim($newTrailDescription);
+		$newTrailDescription = filter_var($newTrailDescription, FILTER_SANITIZE_STRING);
+		//verify the trail description will fit in the database
+		if(strlen($newTrailDescription)> 512){}
+		$this->trailDescription = $trailDescription;
 	}
 /**
  * accessor method for trailDifficulty

@@ -56,7 +56,7 @@ class Segment {
 	 * @param $start lattitude and longitude of start
 	 * @param $stop  lattitude and longitude of stop
 	 * @throws InvalidArgumentException if datatypes are not valid
-	 * @throws RangeException if data values are out of bounds (e.g. string insted of int, string too long)
+	 * @throws RangeException if data values are out of bounds (e.g. string instead of int, string too long)
 	 * @throws Exception if some other exception is thrown
 	 *
 	 **/
