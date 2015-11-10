@@ -1,6 +1,6 @@
 <?php
 
-require_once(dirname(dirname(__DIR__)) . "/php/lib/date-utilities.php");
+require_once(dirname(__DIR__) . "/lib/date-utilities.php");
 
 /**
  * Trait anti-abuse
@@ -85,6 +85,7 @@ trait AntiAbuse {
 	 *
 	 * @param string $newBrowser new value of browser
 	 * @throws UnexpectedValueException if $newBrowser is not a string or is insecure
+	 * @throws LengthException if $newBrowser is more than 128 characters long
 	 **/
 	public function setBrowser($newBrowser) {
 		$newBrowser = trim($newBrowser);
