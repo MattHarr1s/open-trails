@@ -119,7 +119,8 @@ c
 			<li>segmentType</li>
 		</ul>
 		<br>
-		<img src="public_html/documentation/trailQuailErd-3b.svg" alt="Trail Quail ER Diagram (ERD)">
+		<h2>Entity Relationship Diagram</h2>
+		<img src="public_html/documentation/trailQuailErd-4a.svg" alt="Trail Quail ER Diagram (ERD)">
 	</body>
 	<footer>
 		<a href="https://twitter.com/Trail_Quail" class="twitter-follow-button" data-show-count="false" data-size="large">
