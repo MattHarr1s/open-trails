@@ -57,7 +57,6 @@
 			<li>userName</li>
 			<li>password:userSalt</li>
 
-c
 
 		</ul>
 		<br>
@@ -120,7 +119,7 @@ c
 		</ul>
 		<br>
 		<h2>Entity Relationship Diagram (ERD)</h2>
-		<img src="trailQuailErd-4a.svg" alt="Trail Quail ER Diagram (ERD)">
+		<img src="trailQuailErd-4b.svg" alt="Trail Quail ER Diagram (ERD)">
 	</body>
 	<footer>
 		<a href="https://twitter.com/Trail_Quail" class="twitter-follow-button" data-show-count="false" data-size="large">
