@@ -119,7 +119,7 @@ c
 			<li>segmentType</li>
 		</ul>
 		<br>
-		<h2>Entity Relationship Diagram</h2>
+		<h2>Entity Relationship Diagram (ERD)</h2>
 		<img src="public_html/documentation/trailQuailErd-4a.svg" alt="Trail Quail ER Diagram (ERD)">
 	</body>
 	<footer>
