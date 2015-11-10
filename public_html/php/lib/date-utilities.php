@@ -1,3 +1,5 @@
+<?php
+
 /**
 * custom filter for mySQL style dates
 *
