@@ -41,12 +41,12 @@ abstract class TrailQuailTest extends PHPUnit_Extensions_Database_TestCase {
 
 		// add all the tables for the project here
 		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
-		$dataset->addTable("user");
 		$dataset->addTable("trailSegment");
+		$dataset->addTable("user");
 		$dataset->addTable("trail");
 		$dataset->addTable("comment");
-		$dataset->addTable("trailRelationship");
 		$dataset->addTable("rating");
+		$dataset->addTable("trailRelationship");
 		return($dataset);
 	}
 
