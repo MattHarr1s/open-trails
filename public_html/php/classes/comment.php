@@ -179,6 +179,7 @@ class comment {
 	 *
 	 * @param string $newCommentPhoto new value of photo file extension
 	 * @throws InvalidArgumentException if $newCommentPhoto is not a string or insecure
+	 * @throws RangeException
 	 */
 
 
