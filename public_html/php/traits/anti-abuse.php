@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(dirname(__DIR__)) . "/php/lib/date-utilities.php");
+
 /**
  * Trait anti-abuse
  *
@@ -8,7 +10,7 @@
  * @author Louis Gill <lgill7@cnm.edu>
  **/
 
-trait antiAbuse {
+trait AntiAbuse {
 	/**
 	 * ipAddress
 	 * @var string $ipAddress
@@ -28,47 +30,21 @@ trait antiAbuse {
 	private $createDate;
 
 	/**
-	 * custom filter for mySQL style dates
+	 * constructor for the anti-abuse trait
 	 *
-	 * Converts a string to a DateTime object or false if invalid. This is designed to be used within a mutator method.
-	 *
-	 * @param mixed $newDate date to validate
-	 * @return mixed DateTime object containing the validated date or false if invalid
-	 * @see http://php.net/manual/en/class.datetime.php PHP's DateTime class
-	 * @throws InvalidArgumentException if the date is in an invalid format
-	 * @throws RangeException if the date is not a Gregorian date
+	 * @param string $newIpAddress new value for ipAddress
+	 * @param string $newBrowser new value for browser
+	 * @param DateTime $newCreateDate new value for createDate
+	 * @throws UnexpectedValueException if any of the parameters are invalid
 	 **/
-	function validateDate($newDate) {
-		// base case: if the date is a DateTime object, there's no work to be done
-		if(is_object($newDate) === true && get_class($newDate) === "DateTime") {
-			return($newDate);
+	public function __construct($newIpAddress, $newBrowser, $newCreateDate) {
+		try {
+			$this->setIpAddress($newIpAddress);
+			$this->setBrowser($newBrowser);
+			$this->setCreateDate($newCreateDate);
+		} catch(UnexpectedValueException $exception) {
+			throw(new UnexpectedValueException("unable to construct an anti-abuse profile", 0, $exception));
 		}
-
-		// treat the date as a mySQL date string: Y-m-d H:i:s
-		$newDate = trim($newDate);
-		if((preg_match("/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/", $newDate, $matches)) !== 1) {
-			throw(new InvalidArgumentException("date is not a valid date"));
-		}
-
-		// verify the date is really a valid calendar date
-		$year   = intval($matches[1]);
-		$month  = intval($matches[2]);
-		$day	= intval($matches[3]);
-		$hour   = intval($matches[4]);
-		$minute = intval($matches[5]);
-		$second = intval($matches[6]);
-		if(checkdate($month, $day, $year) === false) {
-			throw(new RangeException("date $newDate is not a Gregorian date"));
-		}
-
-		// verify the time is really a valid wall clock time
-		if($hour < 0 || $hour >= 24 || $minute < 0 || $minute >= 60 || $second < 0  || $second >= 60) {
-			throw(new RangeException("date $newDate is not a valid time"));
-		}
-
-		// if we got here, the date is clean
-		$newDate = DateTime::createFromFormat("Y-m-d H:i:s", $newDate);
-		return($newDate);
 	}
 
 	/**
@@ -77,9 +53,7 @@ trait antiAbuse {
 	 * @return string value of ipAddress
 	 **/
 	public function getIpAddress() {
-		$this->ipAddress = filter_var($ipAddress, FILTER_VALIDATE_IP); // ????????????????????
-		$this->ipAddress = inet_ntop($ipAddress);
-		return($this->ipAddress);
+		return(inet_ntop($this->ipAddress));
 	}
 
 	/**
@@ -89,11 +63,19 @@ trait antiAbuse {
 	 * @throws UnexpectedValueException if $newIpAddress is not valid
 	 **/
 	public function setIpAddress($newIpAddress) {
-		$newIpAddress = filter_var($newIpAddress, FILTER_VALIDATE_IP);
-		if($newIpAddress === false) {
-			throw(new UnexpectedValueException("IP address is not valid"));
+//		$newIpAddress = filter_var($newIpAddress, FILTER_VALIDATE_IP);
+//		if($newIpAddress === false) {
+//			throw(new UnexpectedValueException("IP address is not valid"));
+//		}
+//		$newIpAddress = inet_pton($newIpAddress);
+
+		if(ip address is "p") {
+			// convert to n
+		} else if(ip address is an *INVALID* "n") {
+			// throw an exception
 		}
-		$newIpAddress = inet_pton($newIpAddress);
+
+		// if we got here, the IP is valid and converted to "n"
 		$this->ipAddress = $newIpAddress;
 	}
 
@@ -118,6 +100,8 @@ trait antiAbuse {
 		if(empty($newBrowser) === true) {
 			throw(new UnexpectedValueException("browser field is empty"));
 		}
+
+
 		$this->browser = $newBrowser;
 	}
 
