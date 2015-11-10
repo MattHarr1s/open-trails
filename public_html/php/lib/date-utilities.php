@@ -9,6 +9,7 @@
 * @throws InvalidArgumentException if the date is in an invalid format
 * @throws RangeException if the date is not a Gregorian date
 **/
+
 function validateDate($newCreateDate) {
 // base case: if the date is a DateTime object, there's no work to be done
 if(is_object($newCreateDate) === true && get_class($newCreateDate) === "DateTime") {

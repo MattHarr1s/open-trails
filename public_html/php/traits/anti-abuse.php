@@ -63,19 +63,11 @@ trait AntiAbuse {
 	 * @throws UnexpectedValueException if $newIpAddress is not valid
 	 **/
 	public function setIpAddress($newIpAddress) {
-//		$newIpAddress = filter_var($newIpAddress, FILTER_VALIDATE_IP);
-//		if($newIpAddress === false) {
-//			throw(new UnexpectedValueException("IP address is not valid"));
-//		}
-//		$newIpAddress = inet_pton($newIpAddress);
-
-		if(ip address is "p") {
-			// convert to n
-		} else if(ip address is an *INVALID* "n") {
-			// throw an exception
+		if (inet_pton($newIpAddress) !== false) {
+			$newIpAddress = inet_pton($newIpAddress);
+		} else if(inet_ntop($newIpAddress) === false) {
+			 throw(new UnexpectedValueException("ipAddress is not valid"));
 		}
-
-		// if we got here, the IP is valid and converted to "n"
 		$this->ipAddress = $newIpAddress;
 	}
 
@@ -99,9 +91,9 @@ trait AntiAbuse {
 		$newBrowser = filter_var($newBrowser, FILTER_SANITIZE_STRING);
 		if(empty($newBrowser) === true) {
 			throw(new UnexpectedValueException("browser field is empty"));
+		} else if(strlen($newBrowser) > 128) {
+			throw(new LengthException("browser string length is too long"));
 		}
-
-
 		$this->browser = $newBrowser;
 	}
 
