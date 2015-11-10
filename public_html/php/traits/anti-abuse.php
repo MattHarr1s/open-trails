@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(dirname(__DIR__)) . "/php/lib/date-utilities.php");
+
 /**
  * Trait anti-abuse
  *
@@ -8,10 +10,10 @@
  * @author Louis Gill <lgill7@cnm.edu>
  **/
 
-trait antiAbuse {
+trait AntiAbuse {
 	/**
 	 * ipAddress
-	 * @var binary $ipAddress
+	 * @var string $ipAddress
 	 **/
 	private $ipAddress;
 
@@ -28,24 +30,43 @@ trait antiAbuse {
 	private $createDate;
 
 	/**
+	 * constructor for the anti-abuse trait
+	 *
+	 * @param string $newIpAddress new value for ipAddress
+	 * @param string $newBrowser new value for browser
+	 * @param DateTime $newCreateDate new value for createDate
+	 * @throws UnexpectedValueException if any of the parameters are invalid
+	 **/
+	public function __construct($newIpAddress, $newBrowser, $newCreateDate) {
+		try {
+			$this->setIpAddress($newIpAddress);
+			$this->setBrowser($newBrowser);
+			$this->setCreateDate($newCreateDate);
+		} catch(UnexpectedValueException $exception) {
+			throw(new UnexpectedValueException("unable to construct an anti-abuse profile", 0, $exception));
+		}
+	}
+
+	/**
 	 * accessor method for ipAddress
 	 *
-	 * @return binary value of ipAddress
+	 * @return string value of ipAddress
 	 **/
 	public function getIpAddress() {
-		return($this->ipAddress);
+		return(inet_ntop($this->ipAddress));
 	}
 
 	/**
 	 * mutator method for ipAddress
 	 *
-	 * @param binary $newIpAddress new value of ipAddress
-	 * @throws UnexpectedValueException if $newIpAddress is not ???
+	 * @param string $newIpAddress new value of ipAddress
+	 * @throws UnexpectedValueException if $newIpAddress is not valid
 	 **/
 	public function setIpAddress($newIpAddress) {
-		$newIpAddress = filter_var($newIpAddress, FILTER_VALIDATE_IP);
-		if(empty($newIpAddress) === true) {
-			throw(new UnexpectedValueException("ipAddress is empty or insecure"));
+		if (inet_pton($newIpAddress) !== false) {
+			$newIpAddress = inet_pton($newIpAddress);
+		} else if(inet_ntop($newIpAddress) === false) {
+			 throw(new UnexpectedValueException("ipAddress is not valid"));
 		}
 		$this->ipAddress = $newIpAddress;
 	}
@@ -70,6 +91,8 @@ trait antiAbuse {
 		$newBrowser = filter_var($newBrowser, FILTER_SANITIZE_STRING);
 		if(empty($newBrowser) === true) {
 			throw(new UnexpectedValueException("browser field is empty"));
+		} else if(strlen($newBrowser) > 128) {
+			throw(new LengthException("browser string length is too long"));
 		}
 		$this->browser = $newBrowser;
 	}
@@ -89,9 +112,12 @@ trait antiAbuse {
 	 * @param DateTime $newCreateDate new value of createDate
 	 * @throws InvalidArgumentException if $newCreateDate is not a valid object or string
 	 * @throws RangeException if $newCreateDate is a date that does not exist
+	 * @throws Exception if $newCreateDate is
 	 **/
 	public function setCreateDate($newCreateDate) {
-		$this->createDate = new DateTime();
+		if($newCreateDate === null) {
+			$this->createDate = new DateTime();
+		}
 
 		try {
 			$newCreateDate = validateDate($newCreateDate);
@@ -105,7 +131,6 @@ trait antiAbuse {
 		$this->createDate = $newCreateDate;
 	}
 }
-?>
 
 
 //filter sanitize
