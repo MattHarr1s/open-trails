@@ -88,7 +88,7 @@ class Trail{
 	private $antiAbuse;
 	/**
 	 * content of submission made to trail
-	 * @var string trailSubmissionType
+	 * @var boolean trailSubmissionType
 	 **/
 	private $trailSubmissionType;
 	/**
@@ -109,26 +109,25 @@ class Trail{
 
 	/**
 	 *constructor for trail object.
-	 *trail object contains the 16 attributes listed above.
 	 *
-	 * @param mixed $trailId of this trail or null if a new trail
-	 * @param int $trailUuId id for the submission to the trail object. Exists so primary key doesn't get updated.
-	 * @param int $submitTrailId identification of info submited to trail entity
-	 * @param mixed $userId id of user that makes submission to trail entity
-	 * @param string $trailAccessibility info on accessibility of trail
-	 * @param string $trailAmenities info on amenities on trail
-	 * @param string $trailCondition info on the condition of the trail
-	 * @param string $trailDescription description of the trail
-	 * @param int $trailDifficulty
-	 * @param trait $antiAbuse
-	 * @param string $trailSubmissionType content of the submission made to the trail
-	 * @param string $trailTerrain terrain found on trail
-	 * @param string $trailName common name of the trail
-	 * @param int $trailTraffic rating of average volume of users on trail
-	 * @param string $trailUse
-	 * @throws InvalidArgumentException if data values are out of bounds
-	 * @throws RangeException if data values are out of bounds
-	 * @throws  Exception if some other exception is thrown
+	 *
+	 * @param $newTrailId
+	 * @param $newTrailUuId
+	 * @param $newSubmitTrailId
+	 * @param $newUserId
+	 * @param $newTrailAccessibility
+	 * @param $newTrailAmenities
+	 * @param $newTrailCondition
+	 * @param $newTrailDescription
+	 * @param $newTrailDifficulty
+	 * @param $newTrailDistance
+	 * @param $newAntiAbuse
+	 * @param $newTrailSubmissionType
+	 * @param $newTrailTerrain
+	 * @param $newTrailName
+	 * @param $newTrailTraffic
+	 * @param $newTrailUse
+	 * @throws exception
 	 *
 	 */
 	public function __construct($newTrailId, $newTrailUuId, $newSubmitTrailId, $newUserId, $newTrailAccessibility,
@@ -145,7 +144,7 @@ class Trail{
 			$this->setTrailDescription($newTrailDescription);
 			$this->setTrailDifficulty($newTrailDifficulty);
 			$this->setTrailDistance($newTrailDistance);
-			/matttodo/figure out $this->antiAbuse
+			$this->setAntiAbuse($newAntiAbuse);
 			$this->setTrailSubmissionType($newTrailSubmissionType);
 			$this->setTrailTerrain($newTrailTerrain);
 			$this->setTrailName($newTrailName);
@@ -175,34 +174,14 @@ class Trail{
 /**
  * mutator method for trailId
  *
- * modifies values of trailId using access given by the accessor method.
- *
  * @param mixed $newTrailId
- * @throws InvalidArgumentException if $newTrailId is not an integer
- * @throws RangeException if $newTrailId is not positive
+ *
  **/
 	public function setTrailId($newTrailId){
-		//base case: if the trailId is null, this is a new trail without a  mySQL assigned (yet)
-		if($newTrailId === null){
-			$this->trailId = null;
-			return;
-		}
-		//verify the trailId is valid
-		$newTrailId = filter_var($newTrailId, FILTER_VALIDATE_INT);
-		if($newTrailId=== false){
-			throw(new InvalidArgumentException("trail id is not a valid integer"));
-		}
-		//verify the trailID is positive
-		if($newTrailId <=0){
-			throw(new RangeException("trail id is not positive"));
-		}
-		// convert and store the trailId
-		$this->trailId = intval($newTrailId);
+		$this->trailId = Filter::filterInt($newTrailId,"Trail Id",true);
 	}
 /**
  * accessor method for trailUuId
- *
- * gains access to trailUuId
  *
  * @return int value of trailUuId
  */
@@ -234,31 +213,12 @@ class Trail{
 	 * mutator method for submitTrailId
 	 *
 	 * @param int $newSubmitTrailId
-	 * @throws InvalidArgumentException if $newSubmitTrailId is not an integer or not positive
-	 * @throws RangeException if the $newSubmitTrailId is not positive
-	**/
+	 **/
 	public function setSubmitTrailId($newSubmitTrailId) {
-		// verify the submitTrailId exists
-		if($newSubmitTrailId === null){
-			$this->submitTrailId = null;
-			return;
-		}
-	//verify the submitTrailId is valid
-	$newSubmitTrailId = filter_var($newSubmitTrailId, FILTER_VALIDATE_INT);
-		if($newSubmitTrailId === false){
-			throw(new InvalidArgumentException("submit trail id is not a valid integer"));
-		}
-	//verify the submitTrailId is positive
-		if($newSubmitTrailId <= 0){
-			throw(new RangeException("submit trail id is not positive"));
-		}
-	//convert and store the submitTrailId
-		$this->submitTrailId = intval($newSubmitTrailId);
+		$this->submitTrailId = Filter::filterInt($newSubmitTrailId, "Submit Trail Id", true);
 	}
 /**
  * accessor method for userId
- *
- * gains access to userId
  *
  * @return int value of userId
 **/
@@ -269,26 +229,13 @@ class Trail{
  * mutator method for userId
  *
  * @param int $newUserId
- * @throws InvalidArgumentException if $newUserId is not an integer or not positive
- * @throws RangeException if the $newUserId is not positive.
-**/
+ **/
 	public function setUserId($newUserId){
-		//verify the user id is valid
-		$newUserId = filter_var($newUserId, FILTER_VALIDATE_INT);
-		if($newUserId === false){
-			throw(new InvalidArgumentException("user id is not a valid integer"));
-		}
-		//verify the userId is positive
-		if($newUserId<=0){
-			throw(new RangeException("user id is not positive"));
-		}
-		//convert and store the user id
-		$this->userId = intval($newUserId);
+		$this->userId = Filter::filterInt($newUserId,"User Id",false);
 	}
 /**
  * accessor method for trailAccessibility
  *
- * gains access to trailAccessibility
  *
  * @return string value of trailAccessibility
 **/
@@ -299,22 +246,9 @@ class Trail{
  *mutator method for trailAccessibility
  *
  *@param string $newTrailAccessibility new value of trailAccessibility
- *@throws InvalidArgumentException if $newTrailAccessibility is not a string or insecure
- *@throws RangeException if $newTrailAccessibility is > 256 characters
-**/
+ **/
 	public function setTrailAccessibility($newTrailAccessibility){
-		//verify the trail accessibility content is secure
-		$newTrailAccessibility = trim($newTrailAccessibility);
-		$newTrailAccessibility = filter_var($newTrailAccessibility,FILTER_SANITIZE_STRING);
-		if(empty($newTrailAccessibility)=== true){
-			throw(new InvalidArgumentException(" trail accessibility content is empty or insecure "));
-		}
-		// verify the trail accessibility content will fit in the database
-		if(strlen($newTrailAccessibility)>256){
-			throw (new RangeException("trail accessibility content too large"));
-		}
-		//store the trail accessibility content
-		$this->trailAccessibility =$newTrailAccessibility;
+		$this->trailAccessibility = Filter::filterString($newTrailAccessibility,"Trail Accessibility", 256);
 	}
 /**
  * accessor method for trailAmenities
@@ -328,22 +262,9 @@ class Trail{
 *mutator method for trailAmenities
  *
  *@param string $newTrailAmenities information on trail amenities
- *@throws InvalidArgumentException if $newTrailAmenities is not a string or insecure
- *@throws RangeException if $newTrailAmenities > 256 characters
 **/
 	public function setTrailAmenities($newTrailAmenities){
-		//verify the trail amenities content is secure
-		$newTrailAmenities = trim($newTrailAmenities);
-		$newTrailAmenities = filter_var($newTrailAmenities, FILTER_SANITIZE_STRING);
-		if(empty($newTrailAmenities)===true){
-			throw(new InvalidArgumentException("trail amenities content is empty or insecure"));
-		}
-		//verify the trail amenities content will fit in the database
-		if(strlen($newTrailAmenities)>256){
-			throw(new RangeException("trail amenities content too large"));
-		}
-		//store the trail amenities content
-		$this->trailAmenities = $newTrailAmenities;
+	$this->trailAmenities = Filter::filterString($newTrailAmenities,"Trail Amenities",256);
 	}
 /**
  * accessor method for trailCondition
@@ -357,22 +278,10 @@ class Trail{
  * mutator method for trailCondition
  *
  * @param string $newTrailCondition information on trail condition
- * @throws InvalidArgumentException if $newTrailCondition content is not a string or insecure
- * @throws RangeException is $newTrailCondition content is greater than 256 characters
+
 **/
 	public function setTrailCondition($newTrailCondition){
-		//verify the trail condition content is secure
-		$newTrailCondition = trim($newTrailCondition);
-		$newTrailCondition = filter_var($newTrailCondition, FILTER_SANITIZE_STRING);
-		if(empty($newTrailCondition)=== true) {
-			throw(new InvalidArgumentException("trail condition content is empty or insecure"));
-		}
-		//verify the trail condition will fit in the database
-		if(strlen($newTrailCondition)> 256){
-			throw(new RangeException("trail condition content too large"));
-		}
-		//store the trail condition content
-		$this->trailCondition=$newTrailCondition;
+		$this->trailCondition = Filter::filterString($newTrailCondition,"Trail Condition",256);
 }
 /**
  * accessor method for trailDescription
@@ -386,16 +295,9 @@ class Trail{
  * mutator method for trailDescription
  *
  *@param string $newTrailDescription information describing the trail
- *@throws InvalidArgumentException if $newTrailDescription is not a string or insecure
- *@throws RangeException if $newTrailDescription is greater than 512 characters
-**/
-	public function setTrailDescription($trailDescription) {
-		//verify the trail content is secure
-		$newTrailDescription = trim($newTrailDescription);
-		$newTrailDescription = filter_var($newTrailDescription, FILTER_SANITIZE_STRING);
-		//verify the trail description will fit in the database
-		if(strlen($newTrailDescription)> 512){}
-		$this->trailDescription = $trailDescription;
+ **/
+	public function setTrailDescription($newTrailDescription) {
+		$this->trailDescription = $newTrailDescription;
 	}
 /**
  * accessor method for trailDifficulty
@@ -406,13 +308,24 @@ class Trail{
 		return ($this->trailDifficulty);
 	}
 /**
+ * mutator method for trailDifficulty
+ *
+ * @param int $newTrailDifficulty
+ */
+	public function setTrailDifficulty($newTrailDifficulty){
+		$this->getTrailDifficulty = Filter::filterInt ($newTrailDifficulty,"Trail Difficulty",false);
+	}
+/**
  * accessor method for trailDistance
  *
- * @return int value of trailDistance
+ * @return float value of trailDistance
 **/
 	public function getTrailDistance() {
 		return ($this->trailDistance);
 	}
+/**
+ *mutator method for trailDistance
+ *
 /**
  * accessor method for antiAbuse ????????
 **/
@@ -420,11 +333,17 @@ class Trail{
 /**
  * accessor method for trailSubmissionType
  *
- * @return string value of trailSubmissionType
+ * @return int value of trailSubmissionType
  */
 	public function getTrailSubmissionType() {
 		return ($this->trailSubmissionType);
 	}
+/**
+ * mutator method for trailSubmissionType
+ *
+ * @param int
+**/
+	public function setTrailSubmissionType
 /**
  * accessor method for trailTerrain
  *
@@ -433,6 +352,13 @@ class Trail{
 	public function getTrailTerrain() {
 		return ($this->trailTerrain);
 	}
+/** mutator method for trailTerrain
+ *
+ * @param string
+**/
+	public function setTrailTerrain($newTrailTerrain){
+	$this->$newTrailTerrain = Filter::filterString($newTrailTerrain,"Trail Terrain",128);
+}
 /**
  * accessor method for trailName
  *
@@ -442,12 +368,28 @@ class Trail{
 		return($this->trailName);
 	}
 /**
+ * mutator method for trailName
+ *
+ * @return string
+**/
+	public function setTrailName($newTrailName){
+		$this->$newTrailName = Filter::filterString($newTrailName, "Trail Name",64);
+	}
+/**
  * accessor method for trailTraffic
  *
- * @return int value of trailTraffic
+ * @return string value of trailTraffic
 **/
 	public function getTrailTraffic(){
 		return($this->trailTraffic);
+	}
+/**
+ * mutator method for trailTraffic
+ *
+ * @param string
+**/
+	public function setTrailTraffic($newTrailTraffic){
+		$this->$newTrailTraffic = Filter::filterString($newTrailTraffic,"Trail Traffic",16);
 	}
 /**
  * accessor method for trailUse
@@ -456,6 +398,12 @@ class Trail{
 **/
 	public function getTrailUse(){
 		return($this->trailUse);
+	}
+/**
+ * mutator method for trailUse
+**/
+	public function setTrailUse($newTrailUse){
+		$this->$newTrailUse = Filter::filterString($newTrailUse,"Trail Use",64);
 	}
 
 

@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(dirname(__DIR__))."public_html/php/classes/segment.php");
+require_once(dirname(dirname(__DIR__))."public_html/php/classes/autoload.php");
 
 /**
  * Class Segment for the website TrailQuail.net
