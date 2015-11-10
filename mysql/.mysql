@@ -6,17 +6,17 @@ DROP TABLE IF EXISTS trailSegment;
 DROP TABLE IF EXISTS user;
 
 CREATE TABLE trailSegment(
-segmentId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-segmentStart POINT NOT NULL,
-segmentStop POINT NOT NULL,
-segmentStartElevation MEDIUMINT  NOT NULL,
-SegmentStopElevation MEDIUMINT NOT NULL,
-PRIMARY KEY (segmentId)
+	segmentId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	segmentStart POINT NOT NULL,
+	segmentStop POINT NOT NULL,
+	segmentStartElevation MEDIUMINT  NOT NULL,
+	SegmentStopElevation MEDIUMINT NOT NULL,
+	PRIMARY KEY (segmentId)
 );
 
 CREATE TABLE user (
 	userId          INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	browser         VARCHAR(32)                 NOT NULL,
+	browser         VARCHAR(128)                NOT NULL,
 	createDate      DATETIME                    NOT NULL,
 	ipAddress       VARBINARY(16)               NOT NULL,
 	userAccountType CHAR(1)                     NOT NULL,
@@ -32,11 +32,11 @@ CREATE TABLE trail (
 	trailId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	userId INT UNSIGNED NOT NULL,
 	submitTrailId INT UNSIGNED NULL,
-	browser VARCHAR (32) NOT NULL,
+	browser VARCHAR (128) NOT NULL,
 	createDate DATETIME NOT NULL,
 	ipAddress VARBINARY (16) NOT NULL,
-	trailAccessibilty VARCHAR (256) NULL,
-	trailAmenties VARCHAR (256) NULL,
+	trailAccessibility VARCHAR (256) NULL,
+	trailAmenities VARCHAR (256) NULL,
 	trailCondition VARCHAR (256) NULL,
 	trailDescription VARCHAR (512)NULL,
 	trailDifficulty TINYINT NULL,
@@ -57,10 +57,10 @@ CREATE TABLE comment (
 	commentId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	trailId INT UNSIGNED NOT NULL,
 	userId INT UNSIGNED NOT NULL,
-	browser VARCHAR (32) NOT NULL,
+	browser VARCHAR (128) NOT NULL,
 	createDate DATETIME NOT NULL,
-	ipAddess VARCHAR (39) NOT NULL,
-	commentPhoto VARCHAR (32) NULL,
+	ipAddress VARBINARY (16) NOT NULL,
+	commentPhoto VARCHAR (255) NULL,
 	commentText VARCHAR (256) NOT NULL,
 	INDEX (trailId),
 	INDEX (userId),
@@ -88,3 +88,4 @@ CREATE TABLE trailRelationship(
 	FOREIGN KEY (trailId) REFERENCES trail (trailId),
 	FOREIGN KEY (segmentId) REFERENCES trailSegment (segmentId)
 );
+
