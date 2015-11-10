@@ -133,11 +133,6 @@ trait AntiAbuse {
 }
 
 
-//filter sanitize
-//accessors & mutators
+// $ipAddress = $_SERVER['REMOTE_ADDR'];
 
-/**
-$ipAddress = $_SERVER['REMOTE_ADDR'];
-
-$browser = $_SERVER['HTTP_USER_AGENT'];
-**/
+// $browser = $_SERVER['HTTP_USER_AGENT'];
