@@ -192,7 +192,21 @@ class comment {
 		// verify if comment photo path is secure
 		$newCommentPhoto = trim($newCommentPhoto);
 		$newCommentPhoto = filter_var($newCommentPhoto, FILTER_SANITIZE_STRING);
+		if (empty($newCommentPhoto) === true ) {
+			throw(new InvalidArgumentException("comment photo path is empty or insecure"));
+
+		}
+
+		//verify the comment photo path is the correct length to fit into the
+		if(strlen($newCommentPhoto) > 256) {
+			throw (new RangeException("comment photo  file path is to long"));
+		}
+
+		// store the file path
+
+
 	}
+
 
 
 
