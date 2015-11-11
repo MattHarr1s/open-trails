@@ -67,12 +67,15 @@ class Segment {
 			$this->setStart($newStart);
 			$this->setStop($newStop);
 	}catch(invalidArgumentException $invalidArgument){
+
 			// rethrow the exception to the caller
 			throw(new InvalidArgumentException($invalidArgument->getMessage(),0,$invalidArgument));
 	}catch(RangeException $range){
+
 			//rethrow the exception to the caller
 			throw(new RangeException($range->getMessage(),0,$range));
 	}catch(Exception $exception){
+
 			//rethrow generic exception
 			throw(new Exception($exception->getMessage(),0,$exception));
 		}
@@ -97,22 +100,7 @@ class Segment {
  * @throws RangeException if $newSegmentId is not positive
  **/
 	public function setSegmentId($newSegmentId){
-		//base case: if the segmentId is null, this is a new segment without a mySQL assigned (yet)
-		if($newSegmentId === false){
-			$this->segmentId = null;
-			return;
-		}
-		// verify the segmentId is valid
-		$newSegmentId = filter_var($newSegmentId, FILTER_VALIDATE_INT);
-		if($newSegmentId === false){
-			throw(new InvalidArgumentException("segment id is not a valid integer"));
-		}
-		// verify the segmentId is positive
-		if($newSegmentId <=0){
-			throw(new RangeException("segment id is not positive"));
-		}
-		// convert and store the segmentId
-		$this->segmentId = intval($newSegmentId);
+		$this->segmentId
 	}
 /**
  * accessor method for elevation

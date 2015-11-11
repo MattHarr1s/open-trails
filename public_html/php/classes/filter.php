@@ -172,9 +172,32 @@ class Filter {
 	 * @param int $trailSubmisionType
 	 * @return string
 	 */
-	public static function createSubmissionType($name,){
-		//verify
+	public static function createSubmissionType($int,){
+		//verify the submissionType is an integer
+		$int = filter_var($int, FILTER_VALIDATE_INT);
+		if($int === false) {
+			throw(new InvalidArgumentException("$int is not a valid integer"));
+		}
 
+		// Make sure the int is not greater than 2
+		if($int > 2) {
+			throw(new InvalidArgumentException("$int cannot be greater than 2"));
+		}
+
+		// Determine the submission type
+		$int = filter_var($int, FILTER_VALIDATE_INT);
+		if($int === false) {
+		throw(new InvalidArgumentException("$name not a valid integer"));
+	}
+
+		// Verify the new int is positive
+		if($int < 0) {
+		throw(new RangeException("$name not positive"));
+	}
+
+		// Convert and return the new int
+		return (intval($int));
+}
 
 	}
 }
