@@ -16,6 +16,7 @@ Class user  {
 
 	/**
 	 * This indicates what type of account and what type of access each user has
+	 * This is a string of length 1
 	 * @var string $userAccountType
 	 */
 	private $userAccountType;
@@ -116,14 +117,18 @@ Class user  {
 		if($newUserId <= 0) {
 			throw(new RangeException("user id is not positive"));
 		}
+
+		// convert and store the user id
+		$this->userId = intval($newUserId);
 	}
+
 	/**
 	 * accessor method for user account type (regular-r, poweruser-p, suspended-x)
 	 *
 	 * @return string $newUserAccountType - 1 byte string value of user account type
 	 */
-	public function getUserAccountType($newUserAccountType) {
-		return ($this->UserAccountType);
+	public function getUserAccountType() {
+		return ($this->userAccountType);
 		}
 
 	/**
@@ -173,9 +178,13 @@ Class user  {
 		if(empty($newUserEmail) === true) {
 			throw new InvalidArgumentException ("user email invalid");
 		}
+
+		// verify that user email address will fit in the database
 		if(strlen($newUserEmail) > 128) {
 			throw (new RangeException ("User email address is too large"));
 		}
+
+		// store the user's email address
 		$this->userEmail = $newUserEmail;
 	}
 
@@ -218,8 +227,37 @@ Class user  {
 	}
 
 	/**
-	 * accessor for userMame
+	 * accessor method for user name - userName
 	 *
 	 * @return string $newUserName - user name
 	 */
+	public function getUserName() {
+		return ($this->userName);
+	}
+
+	/**
+	 * mutator method for user name - $newUserName
+	 *
+	 * @param string $newUserName -- new value of user name
+	 * @throws InvalidArgumentException if $newUserName is not a string or insecure
+	 * @throws RangeException if $newUserName length is > 64 characters
+	 */
+	public function setUserName($newUserName) {
+		// Verify that the user name is secure
+		$newUserName = trim($newUserName);
+		$newUserName = filter_var($newUserName, FILTER_SANITIZE_STRING);
+		if(empty($newUserName) === true) {
+			throw(new InvalidArgumentException("User name is empty or insecure."));
+		}
+
+		// verify that the user name will fit in the database
+		if(strlen($newUserName) > 64) {
+			throw(new RangeException("User name is too long."));
+		}
+
+		// store user name
+		$this->userName = $newUserName;
+	}
+
+
 }
