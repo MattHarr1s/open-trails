@@ -39,7 +39,7 @@ class comment {
 	 *this is the actual comment that is uploaded by a user about a specific trail
 	 * @var string $commentPost
 	 */
-	private $commentPost;
+	private $commentText;
 
 	/**
 	 * constructor for this comment
@@ -51,12 +51,12 @@ class comment {
 	 * @param binary $newIpAddress associated with the user that posted the comment.
 	 * @param string $newCommentPhoto link of the photo, the user posted in the comment thread, about the trail.
 	 * @param string $newCommentPhotoType file type of the photo that was uploaded by the user that posted in the comment thread about the  trail..
-	 * @param string $newCommentPost the actual comment the user posted in the comment forum about a specif trail.
+	 * @param string $newCommentText the actual comment the user posted in the comment forum about a specif trail.
 	 * @throws InvalidArgumentException if data types are not valid
 	 * @throws RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws Exception if some other exception is thrown (foo only needed if more than three exceptions are thrown
 	 */
-	public function __construct($newCommentId, $newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newCommentPhoto, $newCommentPhotoType, $newCommentPost) {
+	public function __construct($newCommentId, $newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newCommentPhoto, $newCommentPhotoType, $newCommentText) {
 		try {
 			$this->setCommentId($newCommentId);
 			$this->setTrailId($newTrailId);
@@ -66,7 +66,7 @@ class comment {
 			$this->setIpaddress($newIpAddress);
 			$this->setCommentPhoto($newCommentPhoto);
 			$this->setCommentPhotoType($newCommentPhotoType);
-			$this->setCommentPost($newCommentPost);
+			$this->setCommentText($newCommentText);
 		} catch(InvalidArgumentException $invalidArgument) {
 			// rethrow the exception to the caller
 			throw(new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
@@ -78,14 +78,16 @@ class comment {
 			throw(new Exception($exception->getMessage(), 0, $exception));
 		}
 	}
+
 	/**
 	 * accessor method for comment id
 	 *
 	 * @return mixed value of comment id
 	 */
 	public function getCommentId() {
-		return($this->commentId);
+		return ($this->commentId);
 	}
+
 	/**
 	 *mutator method for comment id
 	 *
@@ -93,7 +95,7 @@ class comment {
 	 * @throws InvalidArgumentException if $newCommentId is not an integer
 	 * @throws RangeException if $newCommentId is not positive
 	 */
-	public function setCommentId($newCommentId){
+	public function setCommentId($newCommentId) {
 		//base case: if the id is null, this is a new tweet without a mySQl assign id (yet)
 		if($newCommentId === null) {
 			$this->commentId = null;
@@ -106,7 +108,7 @@ class comment {
 			throw(new InvalidArgumentException("comment is not a valid integer"));
 		}
 		// verify the comment id is positive
-		if ($newCommentId <= 0) {
+		if($newCommentId <= 0) {
 			throw(new RangeException("comment id is not positive"));
 		}
 		// convert and store the comment id
@@ -121,6 +123,7 @@ class comment {
 	public function getTrailId() {
 		return $this->trailId;
 	}
+
 	/**
 	 * mutator method for trail id
 	 *
@@ -143,14 +146,16 @@ class comment {
 		//convert and store the trail id
 		$this->trailId = intval($newTrailId);
 	}
-	 /**
-	  * accessor method for user id
-	  *
-	  * @return int value of user id
-	  */
+
+	/**
+	 * accessor method for user id
+	 *
+	 * @return int value of user id
+	 */
 	public function getUserId() {
 		return $this->userId;
 	}
+
 	/**
 	 * mutator method for user id
 	 *
@@ -161,7 +166,7 @@ class comment {
 	public function setUserId($newUserId) {
 		// verify the user id is valid
 		$newUserId = filter_var($newUserId, FILTER_VALIDATE_INT);
-		if($newUserId === false){
+		if($newUserId === false) {
 			throw(new InvalidArgumentException("profile id is not a valid integer"));
 		}
 
@@ -173,6 +178,7 @@ class comment {
 		//convert and store the user id
 		$this->userId = intval($newUserId);
 	}
+
 	/**
 	 *accessor method for comment photo file extension
 	 *
@@ -181,6 +187,7 @@ class comment {
 	public function getCommentPhoto() {
 		return $this->commentPhoto;
 	}
+
 	/**
 	 *mutator method for comment photo file extension
 	 *
@@ -192,7 +199,7 @@ class comment {
 		// verify if comment photo path is secure
 		$newCommentPhoto = trim($newCommentPhoto);
 		$newCommentPhoto = filter_var($newCommentPhoto, FILTER_SANITIZE_STRING);
-		if (empty($newCommentPhoto) === true ) {
+		if(empty($newCommentPhoto) === true) {
 			throw(new InvalidArgumentException("comment photo path is empty or insecure"));
 
 		}
@@ -202,9 +209,134 @@ class comment {
 			throw (new RangeException("comment photo  file path is to long"));
 		}
 
-		// store the file path
+		// store the file path of the comment photo
+		$this->commentPhoto = $newCommentPhoto;
+	}
+
+	/**
+	 * accessor method for comment photo type
+	 *
+	 * @return string value of the comment photo type.
+	 */
+	public function getCommentPhotoType() {
+		return $this->commentPhotoType;
+	}
+
+	/**
+	 * mutator method for comment photo type
+	 *
+	 * @param string $newCommentPhotoType new value of the comment photo type
+	 * @throws InvalidArgumentException if $newCommentPhotoType is not supported file type
+	 */
+	public function setCommentPhotoType($newCommentPhotoType) {
+		//verify the photo file type is supported
+		$goodFileType = ["image/png", "image/jpeg"];
+		if(in_array($goodFileType, $newCommentPhotoType) === false) {
+			throw (new InvalidArgumentException("comment photo file type not supported"));
+		}
+		// store the comment photo type
+		$this->commentPhotoType = $newCommentPhotoType;
+	}
+	//method $foo("cry in a") = $bar("hole till rip"); place holder will come back to change to upload photos method
+	/**
+	 * accessor method for comment text
+	 *
+	 * @return string value of comment text
+	 */
+	public function getCommentText() {
+		return $this->commentText;
+	}
+
+	/**
+	 *mutator method for comment photo file extension
+	 *
+	 * @param string $newCommentText new value of the actual comment text
+	 * @throws InvalidArgumentException if $newCommentText is not a string or insecure
+	 * @throws RangeException if comment text content is larger than > 256
+	 */
+	public function setCommentText($newCommentText) {
+		// verify if comment text is not a string or insecure
+		$newCommentText = trim($newCommentText);
+		$newCommentText = filter_var($newCommentText, FILTER_SANITIZE_STRING);
+		if(empty($newCommentText) === true) {
+			throw(new InvalidArgumentException("comment photo path is empty or insecure"));
+		}
+		//verify the comment text is the correct length to fit into the database
+		if(strlen($newCommentText) > 256) {
+			throw (new RangeException("comment photo  file path is to long"));
+		}
+		// store the content of CommentText
+		$this->commentText = $newCommentText;
+	}
+
+	/** inserts this comment into mySQL
+	 *
+	 * @param PDO $pdo PDo connection object
+	 * @throws PDOException when MySQL related errors happen
+	 */
+	public function insert(PDO $pdo) {
+		// enforce the commentId is null
+		if($this->commentId !== null) {
+			throw(new PDOException("not a new comment"));
+		}
+		// create query template
+		$query = "INSERT INTO comment(trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText ) VALUES (:trailId, :userId, :browser,:createDate, :ipAddress, :CommentPhoto, :commentPhotoType, :commentText)";
+		$statement = $pdo->prepare($query);
 
 
+		//Im going to treat ip address like its formatted i may have to change name
+
+
+		//bind the member variables to the place holders in the template
+		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
+		$formattedIpAddress = $this->ipAddress->format("foo");
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate,["ipAddress"=>$formattedIpAddress], "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this-> commentText];
+		$statement->execute($parameters);
+
+		// update the null tweetId with what mySqL juat gave us
+		$this->commentId = intval($pdo->lastInsertId());
+	}
+
+	/**
+	 *deletes this Tweet from mySql
+	 *
+	 * @param PDO $pdo PDO connect object
+	 * @throws PDOException when mySql related errors occur
+	 */
+	public function delete(PDO $pdo) {
+		// enforce the commentId is not null (i.e., don't delete a tweet that hasn't been inserted)
+		if($this->commentId === null) {
+			throw(new PDOException("unable to delete a comment that does not exist"));
+		}
+
+		//create query template
+		$query = "DELETE FROM comment WHERE commentId = :commentId ";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the placeholder in the template
+		$parameters = ["commentId" => $this->commentId];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates this comment in mySQL
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @throws PDOException when mySQL related errors occur
+	 */
+	public function update(PDO $pdo) {
+		// enforce the comment id is not null
+		if($this->commentId === null) {
+			throw(new PDOException("unable to update a that does not exist"));
+		}
+		$query = "UPDATE comment SET trailId = :trailId, userid = :userId, browser = :browserId, createDate = :createDate, ipAddress = :ipAddress, commentPhoto = :commentPhoto, commentPhotoType = :commentPhotoType, commentText = :commentText ";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
+		$formattedIpAddress = $this->ipAddress->format("foo");
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate,["ipAddress"=>$formattedIpAddress], "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this-> commentText];
+		$statement->execute($parameters);
 	}
 
 
@@ -213,6 +345,7 @@ class comment {
 
 
 }
+
 
 
 

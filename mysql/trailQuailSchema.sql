@@ -61,7 +61,7 @@ CREATE TABLE comment (
 	browser VARCHAR (128) NOT NULL,
 	createDate DATETIME NOT NULL,
 	ipAddress VARBINARY (16) NOT NULL,
-	commentPhoto VARCHAR (255) NULL,
+	commentPhoto VARCHAR (256) NULL,
 	commentPhotoType VARCHAR (12) NULL,
 	commentText VARCHAR (256) NOT NULL,
 	INDEX (trailId),
