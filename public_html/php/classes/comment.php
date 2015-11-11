@@ -39,7 +39,7 @@ class comment {
 	 *this is the actual comment that is uploaded by a user about a specific trail
 	 * @var string $commentPost
 	 */
-	private $commentPost;
+	private $commentText;
 
 	/**
 	 * constructor for this comment
@@ -51,12 +51,12 @@ class comment {
 	 * @param binary $newIpAddress associated with the user that posted the comment.
 	 * @param string $newCommentPhoto link of the photo, the user posted in the comment thread, about the trail.
 	 * @param string $newCommentPhotoType file type of the photo that was uploaded by the user that posted in the comment thread about the  trail..
-	 * @param string $newCommentPost the actual comment the user posted in the comment forum about a specif trail.
+	 * @param string $newCommentText the actual comment the user posted in the comment forum about a specif trail.
 	 * @throws InvalidArgumentException if data types are not valid
 	 * @throws RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws Exception if some other exception is thrown (foo only needed if more than three exceptions are thrown
 	 */
-	public function __construct($newCommentId, $newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newCommentPhoto, $newCommentPhotoType, $newCommentPost) {
+	public function __construct($newCommentId, $newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newCommentPhoto, $newCommentPhotoType, $newCommentText) {
 		try {
 			$this->setCommentId($newCommentId);
 			$this->setTrailId($newTrailId);
@@ -66,7 +66,7 @@ class comment {
 			$this->setIpaddress($newIpAddress);
 			$this->setCommentPhoto($newCommentPhoto);
 			$this->setCommentPhotoType($newCommentPhotoType);
-			$this->setCommentPost($newCommentPost);
+			$this->setCommentText($newCommentText);
 		} catch(InvalidArgumentException $invalidArgument) {
 			// rethrow the exception to the caller
 			throw(new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
@@ -202,10 +202,48 @@ class comment {
 			throw (new RangeException("comment photo  file path is to long"));
 		}
 
-		// store the file path
-
-
+		// store the file path of the comment photo
+		$this->commentPhoto = $newCommentPhoto;
 	}
+	/**
+	 * accessor method for comment photo type
+	 *
+	 * @return string value of the comment photo type.
+	 */
+	public function getCommentPhotoType() {
+		return $this->commentPhotoType;
+	}
+	/**
+	 * mutator method for comment photo type
+	 *
+	 * @param string $newCommentPhotoType new value of the comment photo type
+	 * @throws InvalidArgumentException if $newCommentPhotoType is not supported file type
+	 */
+	public function setCommentPhotoType($newCommentPhotoType) {
+		//verify the photo file type is supported
+		$goodFileType = ["image/png", "image/jpeg"];
+		if(in_array($goodFileType, $newCommentPhotoType) === false) {
+			throw (new InvalidArgumentException("comment photo file type not supported"));
+		}
+		// store the comment photo type
+		$this->commentPhotoType = $newCommentPhotoType;
+	}
+
+	 //method $foo("cry in a") = $bar("hole till rip"); place holder will come back to change to upload photos method
+	/**
+	 * accessor method for comment text
+	 *
+	 * @return string value of comment text
+	 */
+	publ
+
+
+
+
+
+
+
+
 
 
 
