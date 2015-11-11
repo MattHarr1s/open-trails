@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(dirname(__DIR__))."");
+require_once(dirname(dirname(__DIR__))."/autoload.php");
 
 /**
  * Class trail for the website TrailQuail.com
@@ -23,10 +23,6 @@ require_once(dirname(dirname(__DIR__))."");
  * 15.trailTraffic
  * 16.trailUse
  *
- *
- * When a new trail object is created it is automagically given the 16 attributes.
- * The new Segment entry is then created in the mySQL database where it can be accessed, updated, searched for or
- * deleted.
  *
  * @author Trail Quail <trailquailabq@gmail.com>
  **/
@@ -184,36 +180,31 @@ class Trail{
  * accessor method for trailUuId
  *
  * @return int value of trailUuId
- */
+ **/
 	public function getTrailUuId(){
 		return ($this->trailUuId);
 }
 /**
  * mutator method for trailUuId
  *
- * @param int $newTrailUuId
- * @throws InvalidArgumentException if $newTrailUuId is not an integer or not positive
- * @throws RangeException is $newTrailUuId is not positive
-**/
+ * @param string $newTrailUuId
+ **/
 	public function setTrailUuId($newTrailUuId){
-		// verify the trailUuId is valid
-
+		$this->trailUuId = Filter::filterString($newTrailUuId,"Trail UuId",36);
 	}
 /**
  * accessor method for submitTrailId
- *
- * gains access to submitTrailId
  *
  * @return int value of submitTrailId
 **/
 	public function getSubmitTrailId() {
 		return ($this->submitTrailId);
 	}
-	/**
-	 * mutator method for submitTrailId
-	 *
-	 * @param int $newSubmitTrailId
-	 **/
+/**
+ * mutator method for submitTrailId
+ *
+ * @param int $newSubmitTrailId
+ **/
 	public function setSubmitTrailId($newSubmitTrailId) {
 		$this->submitTrailId = Filter::filterInt($newSubmitTrailId, "Submit Trail Id", true);
 	}
@@ -221,7 +212,7 @@ class Trail{
  * accessor method for userId
  *
  * @return int value of userId
-**/
+ **/
 	public function getUserId() {
 		return $this->userId;
 	}
@@ -238,7 +229,7 @@ class Trail{
  *
  *
  * @return string value of trailAccessibility
-**/
+ **/
 	public function getTrailAccessibility() {
 		return ($this->trailAccessibility);
 	}
@@ -254,15 +245,15 @@ class Trail{
  * accessor method for trailAmenities
  *
  * @return string value of trailAmenities
-**/
+ **/
 	public function getTrailAmenities() {
 		return ($this->trailAmenities);
 	}
 /**
-*mutator method for trailAmenities
+ *mutator method for trailAmenities
  *
  *@param string $newTrailAmenities information on trail amenities
-**/
+ **/
 	public function setTrailAmenities($newTrailAmenities){
 	$this->trailAmenities = Filter::filterString($newTrailAmenities,"Trail Amenities",256);
 	}
@@ -270,7 +261,7 @@ class Trail{
  * accessor method for trailCondition
  *
  * @return string value of trailCondition
-**/
+ **/
 	public function getTrailCondition() {
 		return ($this->trailCondition);
 	}
@@ -278,8 +269,7 @@ class Trail{
  * mutator method for trailCondition
  *
  * @param string $newTrailCondition information on trail condition
-
-**/
+ **/
 	public function setTrailCondition($newTrailCondition){
 		$this->trailCondition = Filter::filterString($newTrailCondition,"Trail Condition",256);
 }
@@ -287,7 +277,7 @@ class Trail{
  * accessor method for trailDescription
  *
  * @return string value of trailDescription
-**/
+ **/
 	public function getTrailDescription() {
 		return ($this->trailDescription);
 	}
@@ -303,7 +293,7 @@ class Trail{
  * accessor method for trailDifficulty
  *
  * @return int value of trailDifficulty
-**/
+ **/
 	public function getTrailDifficulty() {
 		return ($this->trailDifficulty);
 	}
@@ -311,7 +301,7 @@ class Trail{
  * mutator method for trailDifficulty
  *
  * @param int $newTrailDifficulty
- */
+ **/
 	public function setTrailDifficulty($newTrailDifficulty){
 		$this->getTrailDifficulty = Filter::filterInt ($newTrailDifficulty,"Trail Difficulty",false);
 	}
@@ -319,13 +309,13 @@ class Trail{
  * accessor method for trailDistance
  *
  * @return float value of trailDistance
-**/
+ **/
 	public function getTrailDistance() {
 		return ($this->trailDistance);
 	}
 /**
  *mutator method for trailDistance
- *
+ */
 /**
  * accessor method for antiAbuse ????????
 **/
@@ -343,7 +333,9 @@ class Trail{
  *
  * @param int
 **/
-	public function setTrailSubmissionType
+	public function setTrailSubmissionType($newTrailSubmissionType){
+
+	}
 /**
  * accessor method for trailTerrain
  *

@@ -50,11 +50,10 @@ class Segment {
 	 creates a new segment object which inherits the traits of the segment class
 	 object contains the 4 attributes listed above in the parent class.
 	 *
-	 * @param mixed $segmentId id of this  segment or null if new segment
+	 * @param mixed $segmentId
 	 * @param int $elevation elevation of the segment in feet, or null if unavailable.
-	 /matttodo/figure out lat and longitude/
-	 * @param $start lattitude and longitude of start
-	 * @param $stop  lattitude and longitude of stop
+	 * @param $start
+	 * @param $stop
 	 * @throws InvalidArgumentException if datatypes are not valid
 	 * @throws RangeException if data values are out of bounds (e.g. string instead of int, string too long)
 	 * @throws Exception if some other exception is thrown
