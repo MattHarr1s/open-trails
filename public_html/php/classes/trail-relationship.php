@@ -180,4 +180,137 @@ class TrailRelationship {
 		$parameters = array("segmentType => $this->segmentType");
 		$statement->execute($parameters);
 	}
+
+	/**
+	 * gets a Trail Relationship by trailId
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @param int $trailId trail id to search for
+	 * @return mixed Trail Relationship found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 **/
+	public static function getTrailRelationshipByTrailId(PDO $pdo, $trailId) {
+		// sanitize the trailId before searching
+		$trailId = filter_var($trailId, FILTER_VALIDATE_INT);
+		if($trailId === false) {
+			throw(new PDOException("trailId is not an integer"));
+		}
+		if($trailId <= 0) {
+			throw(new PDOException("trailId is not positive"));
+		}
+
+		//create query template
+		$query = "SELECT trailId, segmentId, segmentType FROM trailRelationship WHERE trailId = :trailId";
+		$statement = $pdo->prepare($query);
+
+		//bind the trailId to the placeholder in the template
+		$parameters = array("trailId" => $trailId);
+		$statement->execute($parameters);
+
+		// grab the Trail Relationship from mySQL
+		try {
+			$trailRelationship = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$trailRelationship = new TrailRelationship($row["trailId"], $row["segmentId"], $row["segmentType"]);
+			}
+		} catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($trailRelationship);
+	}
+
+	/**
+	 * gets a Trail Relationship by segmentId
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @param int $segmentId segment id to search for
+	 * @return mixed Trail Relationship found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 **/
+	public static function getTrailRelationshipBySegmentId(PDO $pdo, $segmentId) {
+		// sanitize the segmentId before searching
+		$segmentId = filter_var($segmentId, FILTER_VALIDATE_INT);
+		if($segmentId === false) {
+			throw(new PDOException("segmentId is not an integer"));
+		}
+		if($segmentId <= 0) {
+			throw(new PDOException("segmentId is not positive"));
+		}
+
+		//create query template
+		$query = "SELECT trailId, segmentId, segmentType FROM trailRelationship WHERE segmentId = :segmentId";
+		$statement = $pdo->prepare($query);
+
+		//bind the trailId to the placeholder in the template
+		$parameters = array("segmentId" => $segmentId);
+		$statement->execute($parameters);
+
+		// grab the Trail Relationship from mySQL
+		try {
+			$trailRelationship = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$trailRelationship = new TrailRelationship($row["trailId"], $row["segmentId"], $row["segmentType"]);
+			}
+		} catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($trailRelationship);
+	}
+
+	/**
+	 * gets a Trail Relationship by trailId AND segmentId
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @param int $trailId trail id to search for
+	 * @param int $segmentId segment id to search for
+	 * @return mixed Trail Relationship found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 **/
+	public static function getTrailRelationshipByTrailIdAndSegmentId(PDO $pdo, $trailId, $segmentId) {
+		// sanitize the trailId before searching
+		$trailId = filter_var($trailId, FILTER_VALIDATE_INT);
+		if($trailId === false) {
+			throw(new PDOException("trailId is not an integer"));
+		}
+		if($trailId <= 0) {
+			throw(new PDOException("trailId is not positive"));
+		}
+
+		// sanitize the segmentId before searching
+		$segmentId = filter_var($segmentId, FILTER_VALIDATE_INT);
+		if($segmentId === false) {
+			throw(new PDOException("segmentId is not an integer"));
+		}
+		if($segmentId <= 0) {
+			throw(new PDOException("segmentId is not positive"));
+		}
+
+		//create query template
+		$query = "SELECT trailId, segmentId, segmentType FROM trailRelationship WHERE trailId = :trailId AND segmentId = :segmentId";
+		$statement = $pdo->prepare($query);
+
+		//bind the trailId to the placeholder in the template
+		$parameters = array("trailId" => $trailId, "segmentId" => $segmentId);
+		$statement->execute($parameters);
+
+		// grab the Trail Relationship from mySQL
+		try {
+			$trailRelationship = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$trailRelationship = new TrailRelationship($row["trailId"], $row["segmentId"], $row["segmentType"]);
+			}
+		} catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($trailRelationship);
+	}
 }
