@@ -1,24 +1,37 @@
 <?php
-//require_once???????????
+require_once("trail-quail.php");
+require_once(dirname(__DIR__) . "/classes/trail-relationship.php");
 
 /**
+ * Full PHPUnit test for the TrailRelationship class
  *
- */
-
-abstract class TrailRelationshipTest extends PHPUnit_Extensions_Database_TestCase {
-	const INVALID_KEY = 4294967296
-	protected $connection = null;
+ * This is a complete PHPUnit test of the TrailRelationship class. It is complete because *ALL* mySQL/PDO enabled methods are tested for both invalid and valid inputs.
+ *
+ * @see Profile
+ * @author Louis Gill <lgill7@cnm.edu>
+ **/
+class TrailRelationshipTest extends TrailQuailTest {
+	/**
+	 * valid trailId to use
+	 * @var int $VALID_TRAILID
+	 **/
+	protected $VALID_TRAILID = "5";
 
 	/**
-	 * assembles the table from the schema and provides it to PHPUnit
-	 *
-	 * @return PHPUnit_Extensions_Database_DataSet_QueryDataSet assembled schema for PHPUnit
+	 * second valid trailId to use
+	 * @var int $VALID_TRAILID2
 	 **/
-	public final function getDataSet() {
-		$dataset = new PHPUnit_Extensions_Database_DataSet_QueryDataSet($this->getConnection());
+	protected $VALID_TRAILID2 = "31";
 
-		// add all the tables for the project here
-		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
-		$dataset->addTable("trailRel")
-	}
+	/**
+	 * valid segmentId to use
+	 * @var int $VALID_SEGMENTID
+	 **/
+	protected $VALID_SEGMENTID = "1";
+
+	/**
+	 * second valid segmentId to use
+	 * @var int $VALID_SEGMENTID2
+	 **/
+	protected $VALID_SEGMENTID2 = "2";
 }
