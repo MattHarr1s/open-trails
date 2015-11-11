@@ -44,5 +44,86 @@ Class user  {
 	 */
 	private $userSalt;
 
+	/**
+	 * Constructor for user information storage
+	 * This set of methods will check the input data for each user
+	 *
+	 * @param mixed $newUserId -- id of this user is null if they are a new user
+	 * @param string $newUserAccountType -- string containing the type of user account
+	 * @param string $newUserEmail -- string containing the user's email address
+	 * @param string $newUserHash -- string containing hash
+	 * @param string $newUserName -- string containing username
+	 * @param string $newUserSalt -- string containing salt
+	 *
+	 * @throws invalidArgumentException if data types are not valid
+	 * @throws rangeException if data values are out of bounds (e.g. strings too long or too short)
+	 * @throws Exception if some other exception is thrown
+	 */
+	public function _construct($newUserId, $newUserAccountType, $newUserEmail, $newUserHash, $newUserName, $newUserSalt = null) {
+		try {
+			$this->setUserID($newUserId);
+			$this->setUserAccountType($newUserAccountType);
+			$this->setUserEmail($newUserEmail);
+			$this->setUserHash($newUserHash);
+			$this->setUserName($newUserName);
+			$this->setUserSalt($newUserSalt);
+		} catch(InvalidArgumentException $invalidArgument) {
+			// rethrow the exception to the caller
+			throw(new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(RangeException $range) {
+			// rethrow the exception to the caller
+			throw(new RangeException($range->getMessage(), 0,$range));
+		} catch(Exception $exception) {
+			// rethrow generic exception 
+			throw(new Exception($exception->getMessage(), 0, $exception));
+		}
+	}
+
+	/**
+	 * These are the data validation accessors and mutators for user
+	 */
+
+	/**
+	 * accessor method for user id
+	 *
+	 * @return mixed value of user id
+	 */
+	public function getUserId() {
+		return $this->userId;
+	}
+
+	/**
+	 * mutator method for user id
+	 *
+	 * @param mixed $newUserId new value of user id
+	 * @throws InvalidArgumentException if $newUserId is not an integer
+	 * @throws RangeException if $newUserId is not positive
+	 */
+	public function setUserId($newUserId) {
+		//  base case:  if the user id is null, this a new user without a mySQL assigned id at this time
+		if($newUserId=== null) {
+			$this->userId = null;
+			return;
+		}
+
+		// verify that the user id is an integer
+		$newUserId = filter_var($newUserId, FILTER_VALIDATE_INT);
+		if($newUserId === false) {
+			throw(new InvalidArgumentException("user id is not a valid integer"));
+		}
+
+		// verify that the user id is positive
+		if ($newUserId <= 0) {
+			throw(new RangeException("user id is not positive"));
+		}
+	/**
+	 * accessor method for user account type (guest, regular, or steward level)
+	 *
+	 * @return string value of user account type
+	 */
+	public function getUserAccountType($newUserAccountType) {
+		return ($this->UserAccountType);
+		}
+	}
 
 }
