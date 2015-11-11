@@ -296,8 +296,16 @@ class comment {
 		// update the null tweetId with what mySqL juat gave us
 		$this->commentId = intval($pdo->lastInsertId());
 	}
+	public function delete(PDO $pdo) {
+		$query = "DELETE FROM comment WHERE commentId = :commentId ";
+		$statement = $pdo->prepare($query);
 
+		// bind the member variables to the placeholder in the template
+		$parameters = ["commentId" => $this->commentId];
+		$statement->execute($parameters);
+	}
 }
+
 
 
 
