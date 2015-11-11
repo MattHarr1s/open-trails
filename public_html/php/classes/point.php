@@ -29,7 +29,7 @@ class Point {
 		try {
 			$this->setX($newX);
 			$this->setY($newY);
-		} catch(invalidArgumentExcepton $invalidArgument) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			//rethrow the exception to the caller
 			throw(new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(rangeException $range) {
