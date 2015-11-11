@@ -150,4 +150,76 @@ Class user  {
 		$this->userAccountType = $newUserAccountType;
 	}
 
+	/**
+	 * accessor method for user email
+	 *
+	 * @return string $newUserEmail - user email address
+	 */
+	public function getUserEmail() {
+		return ($this->userEmail);
+	}
+
+	/**
+	 * mutator method for user email address
+	 *
+	 * @param string $newUserEmail -- user email address
+	 * @throws InvalidArgumentException if email address does not pass sanitation
+	 * @throws RangeException if email is longer than 128 characters
+	 */
+	public function setUserEmail($newUserEmail) {
+		// verify that email address is valid
+		$newUserEmail = trim($newUserEmail);
+		$newUserEmail = filter_var($newUserEmail, FILTER_SANITIZE_EMAIL);
+		if(empty($newUserEmail) === true) {
+			throw new InvalidArgumentException ("user email invalid");
+		}
+		if(strlen($newUserEmail) > 128) {
+			throw (new RangeException ("User email address is too large"));
+		}
+		$this->userEmail = $newUserEmail;
+	}
+
+	/**
+	 * accessor method for userHash
+	 *
+	 * @return string $newUserHash -- value of user hash
+	 */
+	public function getUserHash() {
+		return ($this->userHash);
+	}
+
+	/**
+	 * mutator method for userHash
+	 *
+	 * @param string $newUserHash -- new value of user hash
+	 * @throws InvalidArgumentException if $newUserHash is empty, not in hexadecimal, or is insecure
+	 * @throws RangeException if $newUserHash is not 128 characters in length
+	 */
+	public function setUserHash($newUserHash) {
+		// Verify that user hash is valid
+		$newUserHash = trim($newUserHash);
+		$newUserHash = filter_var($newUserHash, FILTER_SANITIZE_STRING);
+		if(empty($newUserHash) === true) {
+			throw(new InvalidArgumentException("User hash is empty or insecure."));
+		}
+
+		// Verify that user hash is hexadecimal
+		if((ctype_xdigit($newUserHash))=== false) {
+			throw (new InvalidArgumentException("User hash is not hexadecimal."));
+		}
+
+		// Verify that user hash has correct length = 128
+		if(strlen($newUserHash) !== 128) {
+			throw(new RangeException("User hash is not the right length"));
+		}
+
+		//  store the user hash
+		$this->userHash = $newUserHash;
+	}
+
+	/**
+	 * accessor for userMame
+	 *
+	 * @return string $newUserName - user name
+	 */
 }
