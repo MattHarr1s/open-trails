@@ -4,68 +4,73 @@ require_once(dirname(dirname(__DIR__))."public_html/php/classes/autoload.php");
 /**
  * Class Segment for the website TrailQuail.net
  * This class can be used for any trail mapping application
- * The Segment class contains four attributes as follows:
+ * The Segment class contains the following attributes:
  *
- * 1.segmentId, the primary key
- * 2.elevation
- * 3.start
- * 4.stop
- *
- * When a new Segment object is created it is automagically given the four attributes.
- * The new Segment entry is then created in the mySQL database where it can be accessed, updated, searched for or
- * deleted.
+ * segmentId, the primary key
+ * segmentStart
+ * segmentStop
+ * segmentStartElevation
+ * segmentStopElevation
  *
  * @author Matt Harris <mattharr505@gmail.com>
  **/
 class Segment {
 	/**
 	 * Id for this segment; as stated above, this is the primary key
+	 *
 	 * @var int $segmentId
 	 **/
 	private $segmentId;
 
 	/**
-	 * elevation attribute for the trail segment in feet.
-	 * @var int $elevation
+	 * starting location of trail segment
+	 *
+	 * @var float $segmentStart
 	 **/
-
-	private $elevation;
-
-	/**
-	 * location for start of segment
-	 * @var float $start
-	 **/
-	private $start;
+	private $segmentStart;
 
 	/**
 	 * location for end of segment
-	 * @var float $stop
 	 *
+	 * @var float $segmentStop
 	 **/
+	private $segmentStop;
 
-	private $stop;
+	/**
+	 * elevation at segment start point
+	 *
+	 * @var int $segmentStartElevation
+	 **/
+	private $segmentStartElevation;
+
+	/**
+	 * elevation at segment end point
+	 *
+	 * @var int $segmentStopElevation
+	 **/
+	private $segmentStopElevation;
 
 	/** Constructor for segment objects
 	 *
-	 creates a new segment object which inherits the traits of the segment class
-	 object contains the 4 attributes listed above in the parent class.
 	 *
 	 * @param mixed $segmentId
-	 * @param int $elevation elevation of the segment in feet, or null if unavailable.
-	 * @param $start
-	 * @param $stop
+	 * @param float $segmentStart
+	 * @param float $segmentStop
+	 * @param int $segmentStartElevation
+	 * @param int $segmentStopElevation
 	 * @throws InvalidArgumentException if datatypes are not valid
 	 * @throws RangeException if data values are out of bounds (e.g. string instead of int, string too long)
 	 * @throws Exception if some other exception is thrown
 	 *
 	 **/
-	public function __construct($newSegmentId, $newElevation, $newStart, $newStop) {
+	public function __construct($newSegmentId, $newSegmentStart, $newSegmentStop, $newSegmentStartElevation, $newSegmentStopElevation) {
 		try{
 			$this->setSegmentId($newSegmentId);
-			$this->setElevation($newElevation);
-			$this->setStart($newStart);
-			$this->setStop($newStop);
-	}catch(invalidArgumentException $invalidArgument){
+			$this->setSegmentStart($newSegmentStart);
+			$this->setSegmentStop($newSegmentStop);
+			$this->setSegmentStartElevation($newSegmentStartElevation);
+			$this->setSegmentStopElevation($newSegmentStopElevation);
+	}catch(InvalidArgumentException $invalidArgument){
 
 			// rethrow the exception to the caller
 			throw(new InvalidArgumentException($invalidArgument->getMessage(),0,$invalidArgument));
@@ -84,54 +89,88 @@ class Segment {
  *
  * gains access to segmentId for use by mutator method
  *
- *@return mixed value of segmentId
+ * @return mixed value of segmentId
 **/
 	public function getSegmentId(){
-		return $this->segmentId;
+		return ($this->segmentId);
 	}
 /**
  * mutator method for segmentId
  *
- * modifies values of segmentId using the access given by the accessor method.
  *
  * @param mixed $newSegmentId new value of segmentId
- * @throws InvalidArgumentException if $newSegmentId is not an integer
- * @throws RangeException if $newSegmentId is not positive
  **/
 	public function setSegmentId($newSegmentId){
-		$this->segmentId
+		$this->segmentId = Filter::filterInt($newSegmentId,"Segment Id",true);
 	}
 /**
- * accessor method for elevation
+ * accessor method for segmentStart
  *
- * gains access to elevation for use by mutator method
- *
- * @return int value of elevation
+ * @return float value of segmentStart
 **/
-	public function getElevation(){
-		return ($this->elevation);
+	public function getSegmentStart(){
+		return ($this->segmentStart);
+	}
+
+/**
+ * mutator method for segmentStart
+ *
+ * @param float $newSegmentStart.
+**/
+	public function setSegmentStart($newSegmentStart){
+
+	}
+
+/**
+ * accessor method for segmentStop
+ *
+ * @return float value of segmentStop
+**/
+	public function getSegmentStop(){
+		return ($this->segmentStop);
+	}
+
+/**
+ *mutator method for segmentStop
+ *
+ *@param float $newSegmentStop
+**/
+	public function setSegmentStop($newSegmentStop){
+
 	}
 /**
- * mutator method for elevation
+ * accessor method for segmentStartElevation
  *
- * modifies values of elevation using access given by the accessor method.
- *
- * @param int elevation new value of elevation.
+ * @return int value of startElevation
 **/
-/**
- * accessor method for start
- *
- * @return float value of start coordinates
-**/
-	public function getStart(){
-		return ($this->start);
+	public function getSegmentStartElevation(){
+		return ($this->segmentStartElevation);
 	}
+
 /**
- * accessor method for stop
+ * mutator for segmentStartElevation
  *
- * @return float value of stop coordinates
+ *@param int $newSegmentStartElevation
 **/
-	public function getStop(){
-		return ($this->stop);
+	public function setSegmentStartElevation($newSegmentStartElevation){
+		$this->segmentStartElevation = Filter::filterInt($newSegmentStartElevation,"Segment Start Elevation",false);
+	}
+
+/**
+ * accessor method for segmentStopElevation
+ *
+ * @return int value of segmentStopElevation
+**/
+	public function getSegmentStopElevation(){
+		return ($this->segmentStopElevation);
+	}
+
+/**
+ * mutator for segmentStopElevation
+ *
+ * @param int $newSegmentStopElevation
+**/
+	public function setSegmentStopElevation($newSegmentStopElevation){
+		$this->segmentStopElevation = Filter::filterInt($newSegmentStopElevation,"Segment Stop Elevation",false);
 	}
 }
