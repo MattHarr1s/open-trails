@@ -1,4 +1,8 @@
 <?php
+
+require_once(dirname(__DIR__)  .  "/traits/anti-abuse.php");
+require_once "autoload.php";
+
 /**
  * Trail Quail user class -- this is where user information is stored
  * This is part of the Trail Quail web application.  This feature will determine who the registered users
@@ -46,29 +50,36 @@ Class user  {
 	private $userSalt;
 
 	/**
-	 * Constructor for user information storage
-	 * This set of methods will check the input data for each user
+	 * Constructor for user - store information on each user and superuser
+	 * This set of methods will check the input data for each user/superuser
 	 *
-	 * @param mixed $newUserId -- id of this user is null if they are a new user
-	 * @param string $newUserAccountType -- string containing the type of user account
-	 * @param string $newUserEmail -- string containing the user's email address
-	 * @param string $newUserHash -- string containing hash
-	 * @param string $newUserName -- string containing username
-	 * @param string $newUserSalt -- string containing salt
+	 * @param mixed $newUserId -- user account id, may be null if user is new
+	 * @param string $newBrowser -- information on the user browser
+	 * @param datetime $newCreateDate -- date the user account was set up
+	 * @param binary $newIpAddress -- the user Ip address when account was set up
+	 * @param string $newUserAccountType -- this denotes the type of user account
+	 * @param string $newUserEmail -- the user email address for this account
+	 * @param string $newUserHash -- hash value of user password
+	 * @param string $newUserName -- the user username for this account
+	 * @param string $newUserSalt -- salt value of user password
 	 *
 	 * @throws invalidArgumentException if data types are not valid
 	 * @throws rangeException if data values are out of bounds (e.g. strings too long or too short)
 	 * @throws Exception if some other exception is thrown
 	 */
-	public function _construct($newUserId, $newUserAccountType, $newUserEmail, $newUserHash, $newUserName, $newUserSalt = null) {
+	public function _construct($newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newUserAccountType, $newUserEmail, $newUserHash, $newUserName, $newUserSalt) {
 		try {
 			$this->setUserID($newUserId);
+			$this->setBrowser($newBrowser);
+			$this->setCreateDate($newCreateDate);
+			$this->setIpAddress($newIpAddress)
 			$this->setUserAccountType($newUserAccountType);
 			$this->setUserEmail($newUserEmail);
 			$this->setUserHash($newUserHash);
 			$this->setUserName($newUserName);
 			$this->setUserSalt($newUserSalt);
-		} catch(InvalidArgumentException $invalidArgument) {
+		}
+		catch(InvalidArgumentException $invalidArgument) {
 			// rethrow the exception to the caller
 			throw(new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(RangeException $range) {
