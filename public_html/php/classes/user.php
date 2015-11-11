@@ -259,5 +259,43 @@ Class user  {
 		$this->userName = $newUserName;
 	}
 
+	/**
+	 * accessor method for user salt -- $newUserSalt
+	 *
+	 * @return string value of user salt
+	 */
+	public function getUserSalt() {
+		return $this->userSalt;
+	}
+
+	/**
+	 * mutator method for user salt -- $newUserSalt
+	 *
+	 * @param string $newUserSalt -- new value of user salt
+	 * @throws InvalidArgumentException if $newUserSalt is empty, not in hexadecimal, or is insecure
+	 * @throws RangeException if $newUserSalt is not 64 characters in length
+	 */
+	public function setUserSalt($newUserSalt) {
+		// Verify that user salt is valid
+		$newUserSalt = trim($newUserSalt);
+		$newUserSalt = filter_var($newUserSalt, FILTER_SANITIZE_STRING);
+		if(empty($newUserSalt) === true) {
+			throw(new InvalidArgumentException("User salt is empty or insecure."));
+		}
+
+		// Verify that user salt is hexadecimal
+		if((ctype_xdigit($newUserSalt))=== false) {
+			throw (new InvalidArgumentException("User salt is not hexadecimal."));
+		}
+
+		// Verify that user salt has correct length = 64
+		if(strlen($newUserSalt) !== 64) {
+			throw(new RangeException("User salt is not the right length"));
+		}
+
+		//  store the user salt
+		$this->userSalt = $newUserSalt;
+	}
+
 
 }
