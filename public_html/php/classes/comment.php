@@ -258,6 +258,17 @@ class comment {
 		// store the content of CommentText
 		$this->commentText = $newCommentText;
 	}
+
+	/** inserts this comment into mySQL
+	 *
+	 *@param PDO $pdo PDo connection object
+	 *@throws PDOException when MySQL related errors happen
+	 */
+}public function insert(PDO $pdo) {
+	// enforce the commentId is null
+	if($this->commentId !== null) {
+		throw(new PDOException("not a new comment"));
+	}
 }
 
 
