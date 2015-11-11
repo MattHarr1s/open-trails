@@ -31,10 +31,15 @@ class comment {
 	 */
 	private $commentPhoto;
 	/**
-	 *this is the actual comment that is uploaded by a user about a specific trail
-	 * @var string
+	 * this is the type of photo that was uploaded.
+	 * @var string $commentPhotoType
 	 */
-	protected $commentPost;
+	private $commentPhotoType;
+	/**
+	 *this is the actual comment that is uploaded by a user about a specific trail
+	 * @var string $commentPost
+	 */
+	private $commentPost;
 
 	/**
 	 * constructor for this comment
@@ -45,12 +50,13 @@ class comment {
 	 * @param datetime $newCreateDate the date time the comment was created
 	 * @param binary $newIpAddress associated with the user that posted the comment.
 	 * @param string $newCommentPhoto link of the photo, the user posted in the comment thread, about the trail.
+	 * @param string $newCommentPhotoType file type of the photo that was uploaded by the user that posted in the comment thread about the  trail..
 	 * @param string $newCommentPost the actual comment the user posted in the comment forum about a specif trail.
 	 * @throws InvalidArgumentException if data types are not valid
 	 * @throws RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws Exception if some other exception is thrown (foo only needed if more than three exceptions are thrown
 	 */
-	public function __construct($newCommentId, $newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newCommentPhoto, $newCommentPhoto, $newCommentPost) {
+	public function __construct($newCommentId, $newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newCommentPhoto, $newCommentPhotoType, $newCommentPost) {
 		try {
 			$this->setCommentId($newCommentId);
 			$this->setTrailId($newTrailId);
@@ -59,6 +65,7 @@ class comment {
 			$this->setCreateDate($newCreateDate);
 			$this->setIpaddress($newIpAddress);
 			$this->setCommentPhoto($newCommentPhoto);
+			$this->setCommentPhotoType($newCommentPhotoType);
 			$this->setCommentPost($newCommentPost);
 		} catch(InvalidArgumentException $invalidArgument) {
 			// rethrow the exception to the caller
@@ -179,8 +186,27 @@ class comment {
 	 *
 	 * @param string $newCommentPhoto new value of photo file extension
 	 * @throws InvalidArgumentException if $newCommentPhoto is not a string or insecure
-	 * @throws RangeException if comment photo file link is larger than > 255
+	 * @throws RangeException if comment photo  link is larger than > 256
 	 */
+	public function setCommentPhoto($newCommentPhoto) {
+		// verify if comment photo path is secure
+		$newCommentPhoto = trim($newCommentPhoto);
+		$newCommentPhoto = filter_var($newCommentPhoto, FILTER_SANITIZE_STRING);
+		if (empty($newCommentPhoto) === true ) {
+			throw(new InvalidArgumentException("comment photo path is empty or insecure"));
+
+		}
+
+		//verify the comment photo path is the correct length to fit into the
+		if(strlen($newCommentPhoto) > 256) {
+			throw (new RangeException("comment photo  file path is to long"));
+		}
+
+		// store the file path
+
+
+	}
+
 
 
 
