@@ -296,7 +296,20 @@ class comment {
 		// update the null tweetId with what mySqL juat gave us
 		$this->commentId = intval($pdo->lastInsertId());
 	}
+
+	/**
+	 *deletes this Tweet from mySql
+	 *
+	 * @param PDO $pdo PDO connect object
+	 * @throws PDOException when mySql related errors occur
+	 */
 	public function delete(PDO $pdo) {
+		// enforce the commentId is not null (i.e., don't delete a tweet that hasn't been inserted)
+		if($this->commentId === null) {
+			throw(new PDOException("unable to delete a comment that does not exist"));
+		}
+
+		//create query template
 		$query = "DELETE FROM comment WHERE commentId = :commentId ";
 		$statement = $pdo->prepare($query);
 
@@ -304,6 +317,33 @@ class comment {
 		$parameters = ["commentId" => $this->commentId];
 		$statement->execute($parameters);
 	}
+
+	/**
+	 * updates this comment in mySQL
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @throws PDOException when mySQL related errors occur
+	 */
+	public function update(PDO $pdo) {
+		// enforce the comment id is not null
+		if($this->commentId === null) {
+			throw(new PDOException("unable to update a that does not exist"));
+		}
+		$query = "UPDATE comment SET trailId = :trailId, userid = :userId, browser = :browserId, createDate = :createDate, ipAddress = :ipAddress, commentPhoto = :commentPhoto, commentPhotoType = :commentPhotoType, commentText = :commentText ";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
+		$formattedIpAddress = $this->ipAddress->format("foo");
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate,["ipAddress"=>$formattedIpAddress], "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this-> commentText];
+		$statement->execute($parameters);
+	}
+
+
+
+
+
+
 }
 
 
