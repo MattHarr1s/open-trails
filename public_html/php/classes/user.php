@@ -101,7 +101,7 @@ Class user  {
 	 */
 	public function setUserId($newUserId) {
 		//  base case:  if the user id is null, this a new user without a mySQL assigned id at this time
-		if($newUserId=== null) {
+		if($newUserId === null) {
 			$this->userId = null;
 			return;
 		}
@@ -113,17 +113,41 @@ Class user  {
 		}
 
 		// verify that the user id is positive
-		if ($newUserId <= 0) {
+		if($newUserId <= 0) {
 			throw(new RangeException("user id is not positive"));
 		}
+	}
 	/**
-	 * accessor method for user account type (guest, regular, or steward level)
+	 * accessor method for user account type (regular-r, poweruser-p, suspended-x)
 	 *
-	 * @return string value of user account type
+	 * @return string $newUserAccountType - 1 byte string value of user account type
 	 */
 	public function getUserAccountType($newUserAccountType) {
 		return ($this->UserAccountType);
 		}
+
+	/**
+	 * mutator method for user account type (regular-r, power user-p, suspended-x)
+	 *
+	 * @param string $newUserAccountType - 1 byte string value of user account type
+	 * @throws InvalidArgumentException if $newUserAccountType is not a string or is insecure
+	 * @throws RangeException if $newUserAccountType is > 1 character
+	 */
+	public function setUserAccountType($newUserAccountType) {
+		// verify that the user account type is secure
+		$newUserAccountType = trim($newUserAccountType);
+		$newUserAccountType = filter_var($newUserAccountType, FILTER_SANITIZE_STRING);
+		if(empty($newUserAccountType) === true) {
+			throw(new InvalidArgumentException("User account type is empty or insecure"));
+		}
+
+		// verify the user account type will fit in the database
+		if(strlen($newUserAccountType) > 1) {
+			throw(new RangeException("User account type is too large"));
+		}
+
+		//store user account type
+		$this->userAccountType = $newUserAccountType;
 	}
 
 }
