@@ -28,12 +28,11 @@ class TrailRelationship {
 	/**
 	 * constructor for this trail/segment relationship
 	 *
-	 * @param int $newTrailId new value for trailId
 	 * @param int $newSegmentId new value for segmentId
+	 * @param int $newTrailId new value for trailId
 	 * @param string $newSegmentType new value for segmentType
-	 * @throws UnexpectedValueException if any of the parameters are invalid
-	 **/
-	public function __construct($newTrailId, $newSegmentId, $newSegmentType) {
+	 */
+	public function __construct($newSegmentId, $newTrailId, $newSegmentType) {
 		try {
 			$this->setTrailId($newTrailId);
 			$this->setNewSegmentId($newSegmentId);
@@ -213,7 +212,7 @@ class TrailRelationship {
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$trailRelationship = new TrailRelationship($row["trailId"], $row["segmentId"], $row["segmentType"]);
+				$trailRelationship = new TrailRelationship($row["segmentId"], $row["trailId"], $row["segmentType"]);
 			}
 		} catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -254,7 +253,7 @@ class TrailRelationship {
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$trailRelationship = new TrailRelationship($row["trailId"], $row["segmentId"], $row["segmentType"]);
+				$trailRelationship = new TrailRelationship($row["segmentId"], $row["trailId"], $row["segmentType"]);
 			}
 		} catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -272,16 +271,7 @@ class TrailRelationship {
 	 * @return mixed Trail Relationship found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 **/
-	public static function getTrailRelationshipByTrailIdAndSegmentId(PDO $pdo, $trailId, $segmentId) {
-		// sanitize the trailId before searching
-		$trailId = filter_var($trailId, FILTER_VALIDATE_INT);
-		if($trailId === false) {
-			throw(new PDOException("trailId is not an integer"));
-		}
-		if($trailId <= 0) {
-			throw(new PDOException("trailId is not positive"));
-		}
-
+	public static function getTrailRelationshipBySegmentIdAndTrailId(PDO $pdo, $segmentId, $trailId) {
 		// sanitize the segmentId before searching
 		$segmentId = filter_var($segmentId, FILTER_VALIDATE_INT);
 		if($segmentId === false) {
@@ -291,12 +281,21 @@ class TrailRelationship {
 			throw(new PDOException("segmentId is not positive"));
 		}
 
+		// sanitize the trailId before searching
+		$trailId = filter_var($trailId, FILTER_VALIDATE_INT);
+		if($trailId === false) {
+			throw(new PDOException("trailId is not an integer"));
+		}
+		if($trailId <= 0) {
+			throw(new PDOException("trailId is not positive"));
+		}
+
 		//create query template
-		$query = "SELECT trailId, segmentId, segmentType FROM trailRelationship WHERE trailId = :trailId AND segmentId = :segmentId";
+		$query = "SELECT trailId, segmentId, segmentType FROM trailRelationship WHERE segmentId = :segmentId AND trailId = :trailId";
 		$statement = $pdo->prepare($query);
 
 		//bind the trailId to the placeholder in the template
-		$parameters = array("trailId" => $trailId, "segmentId" => $segmentId);
+		$parameters = array("segmentId" => $segmentId, "trailId" => $trailId);
 		$statement->execute($parameters);
 
 		// grab the Trail Relationship from mySQL
@@ -305,7 +304,7 @@ class TrailRelationship {
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$trailRelationship = new TrailRelationship($row["trailId"], $row["segmentId"], $row["segmentType"]);
+				$trailRelationship = new TrailRelationship($row["segmentId"], $row["trailId"], $row["segmentType"]);
 			}
 		} catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
