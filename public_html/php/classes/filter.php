@@ -164,46 +164,6 @@ class Filter {
 		return ($date);
 	}
 
-	/**
-	 *
-	 * Determines trailSubmissionType
-	 *
-	 * Crappily crafted by Matt Harris
-	 *
-	 * @param int $int
-	 * @param string $name
-	 * @return string of submissionType
-	 * @internal param string $type
-	 */
-		public static function filterSubmissionType($int, $name){
-			//verify the submissionType is an integer
-			$int = filter_var($int, FILTER_VALIDATE_INT);
-			if($int === false) {
-				throw(new InvalidArgumentException("$int is not a valid integer"));
-			}
-			// Verify the new int is positive
-			if($int < 0) {
-				throw(new RangeException("$name not positive"));
-			}
-			// Make sure the int is not greater than 2
-			if($int > 2) {
-				throw(new InvalidArgumentException("$int cannot be greater than 2"));
-			}
 
-			// Determine the submission type
-			if($int == 0) {
-				$type = "Submission";
-			}
-
-			if($int == 1){
-				$type = "Update";
-			}
-
-			if($int == 2){
-				$type = "Alert!");
-			}
-			// Convert and return the new $type
-			return ($type);
-}
 
 }

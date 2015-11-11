@@ -179,6 +179,7 @@ class Trail{
 			throw(new exception($exception->getMessage(),0,$exception));
 		}
 	}
+
 	/**
 	 * accessor method for trailId
 	 *
@@ -187,6 +188,7 @@ class Trail{
 		public function getTrailId() {
 			return ($this->trailId);
 		}
+
 	/**
 	 * mutator method for trailId
 	 *
@@ -195,6 +197,7 @@ class Trail{
 		public function setTrailId($newTrailId){
 			$this->trailId = Filter::filterInt($newTrailId,"Trail Id",true);
 		}
+
 	/**
 	 * accessor method for trailUuId
 	 *
@@ -203,6 +206,7 @@ class Trail{
 		public function getTrailUuId(){
 			return ($this->trailUuId);
 	}
+
 	/**
 	 * mutator method for trailUuId
 	 *
@@ -211,6 +215,7 @@ class Trail{
 		public function setTrailUuId($newTrailUuId){
 			$this->trailUuId = Filter::filterString($newTrailUuId,"Trail UuId",36);
 		}
+
 	/**
 	 * accessor method for submitTrailId
 	 *
@@ -219,6 +224,7 @@ class Trail{
 		public function getSubmitTrailId() {
 			return ($this->submitTrailId);
 		}
+
 	/**
 	 * mutator method for submitTrailId
 	 *
@@ -227,6 +233,7 @@ class Trail{
 		public function setSubmitTrailId($newSubmitTrailId) {
 			$this->submitTrailId = Filter::filterInt($newSubmitTrailId, "Submit Trail Id", true);
 		}
+
 	/**
 	 * accessor method for userId
 	 *
@@ -235,6 +242,7 @@ class Trail{
 		public function getUserId() {
 			return $this->userId;
 		}
+
 	/**
 	 * mutator method for userId
 	 *
@@ -243,6 +251,7 @@ class Trail{
 		public function setUserId($newUserId){
 			$this->userId = Filter::filterInt($newUserId,"User Id",false);
 		}
+
 	/**
 	 * accessor method for browser
 	 *
@@ -251,13 +260,23 @@ class Trail{
 		public function getBrowser(){
 			return $this->browser;
 	}
+
 	/**
 	 * mutator method for browser
 	 *
-	 * @param string $newBrowser
+	 * @param string $newBrowser new value of browser
+	 * @throws UnexpectedValueException if $newBrowser is not a string or is insecure
+	 * @throws LengthException if $newBrowser is more than 128 characters long
 	 **/
-	public function setBrowser($newBrowser) {
-		$this->browser = $browser;
+		public function setBrowser($newBrowser) {
+			$newBrowser = trim($newBrowser);
+			$newBrowser = filter_var($newBrowser, FILTER_SANITIZE_STRING);
+			if(empty($newBrowser) === true) {
+				throw(new UnexpectedValueException("browser field is empty"));
+			} else if(strlen($newBrowser) > 128) {
+				throw(new LengthException("browser string length is too long"));
+			}
+			$this->browser = $newBrowser;
 	}
 
 	/**
@@ -269,12 +288,50 @@ class Trail{
 		return $this->createDate;
 	}
 	/**
+	 * mutator method for createDate
+	 *
+	 * @param DateTime $newCreateDate new value of createDate
+	 * @throws InvalidArgumentException if $newCreateDate is not a valid object or string
+	 * @throws RangeException if $newCreateDate is a date that does not exist
+	 * @throws Exception if $newCreateDate is
+	 **/
+	public function setCreateDate($newCreateDate) {
+		if($newCreateDate === null) {
+			$this->createDate = new DateTime();
+		}
+
+		try {
+			$newCreateDate = validateDate($newCreateDate);
+		} catch(InvalidArgumentException $invalidArgument) {
+			throw(new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(RangeException $range) {
+			throw(new RangeException($range->getMessage(), 0, $range));
+		} catch(Exception $exception) {
+			throw(new Exception($exception->getMessage(), 0, $exception));
+		}
+		$this->createDate = $newCreateDate;
+	}
+	/**
 	 * accessor method for ipAddress
 	 *
 	 * @return int ipAddress
 	 **/
 	public function getIpAddress() {
 		return $this->ipAddress;
+	}
+	/**
+	 * mutator method for ipAddress
+	 *
+	 * @param string $newIpAddress new value of ipAddress
+	 * @throws UnexpectedValueException if $newIpAddress is not valid
+	 **/
+	public function setIpAddress($newIpAddress) {
+		if (inet_pton($newIpAddress) !== false) {
+			$newIpAddress = inet_pton($newIpAddress);
+		} else if(inet_ntop($newIpAddress) === false) {
+			throw(new UnexpectedValueException("ipAddress is not valid"));
+		}
+		$this->ipAddress = $newIpAddress;
 	}
 	/**
 	 * accessor method for trailAccessibility
@@ -368,10 +425,6 @@ class Trail{
 	 *mutator method for trailDistance
 	 */
 	/**
-	 * accessor method for antiAbuse ????????
-	**/
-
-	/**
 	 * accessor method for trailSubmissionType
 	 *
 	 * @return int value of trailSubmissionType
@@ -383,9 +436,26 @@ class Trail{
 	 * mutator method for trailSubmissionType
 	 *
 	 * @param int
+	 * @return int
 	**/
 		public function setTrailSubmissionType($newTrailSubmissionType){
+			$newTrailSubmissionType = filter_var($newTrailSubmissionType, FILTER_VALIDATE_INT);
+			if($newTrailSubmissionType === false) {
+				throw(new InvalidArgumentException("Trail Submission Type is not a valid integer"));
+			}
 
+			// Verify the new int is positive
+			if($newTrailSubmissionType < 0) {
+				throw(new RangeException("Trail Submission Type not positive"));
+			}
+
+			// Make sure the int is not greater than 2
+			if($newTrailSubmissionType > 2) {
+				throw(new InvalidArgumentException("Trail Submission Type cannot be greater than 2"));
+			}
+
+			//convert and store the trail submission type
+			$this->trailSubmissionType=intval($newTrailSubmissionType);
 		}
 	/**
 	 * accessor method for trailTerrain
