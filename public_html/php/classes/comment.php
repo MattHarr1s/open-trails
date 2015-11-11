@@ -228,28 +228,36 @@ class comment {
 		// store the comment photo type
 		$this->commentPhotoType = $newCommentPhotoType;
 	}
-
-	 //method $foo("cry in a") = $bar("hole till rip"); place holder will come back to change to upload photos method
+	//method $foo("cry in a") = $bar("hole till rip"); place holder will come back to change to upload photos method
 	/**
 	 * accessor method for comment text
 	 *
 	 * @return string value of comment text
 	 */
-	publ
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	public function getCommentText() {
+		return $this->commentText;
+	}
+	/**
+	 *mutator method for comment photo file extension
+	 *
+	 * @param string $newCommentText new value of the actual comment text
+	 * @throws InvalidArgumentException if $newCommentText is not a string or insecure
+	 * @throws RangeException if comment text content is larger than > 256
+	 */
+	public function setCommentText($newCommentText) {
+		// verify if comment text is not a string or insecure
+		$newCommentText = trim($newCommentText);
+		$newCommentText = filter_var($newCommentText, FILTER_SANITIZE_STRING);
+		if (empty($newCommentText) === true ) {
+			throw(new InvalidArgumentException("comment photo path is empty or insecure"));
+		}
+		//verify the comment text is the correct length to fit into the database
+		if(strlen($newCommentText) > 256) {
+			throw (new RangeException("comment photo  file path is to long"));
+		}
+		// store the content of CommentText
+		$this->commentText = $newCommentText;
+	}
 }
 
 
