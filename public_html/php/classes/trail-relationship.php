@@ -199,7 +199,7 @@ class TrailRelationship {
 		}
 
 		//create query template
-		$query = "SELECT trailId, segmentId, segmentType FROM trailRelationship WHERE trailId = :trailId";
+		$query = "SELECT segmentId, trailId, segmentType FROM trailRelationship WHERE trailId = :trailId";
 		$statement = $pdo->prepare($query);
 
 		//bind the trailId to the placeholder in the template
@@ -240,7 +240,7 @@ class TrailRelationship {
 		}
 
 		//create query template
-		$query = "SELECT trailId, segmentId, segmentType FROM trailRelationship WHERE segmentId = :segmentId";
+		$query = "SELECT segmentId, trailId, segmentType FROM trailRelationship WHERE segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
 		//bind the trailId to the placeholder in the template
@@ -291,7 +291,7 @@ class TrailRelationship {
 		}
 
 		//create query template
-		$query = "SELECT trailId, segmentId, segmentType FROM trailRelationship WHERE segmentId = :segmentId AND trailId = :trailId";
+		$query = "SELECT segmentId, trailId, segmentType FROM trailRelationship WHERE segmentId = :segmentId AND trailId = :trailId";
 		$statement = $pdo->prepare($query);
 
 		//bind the trailId to the placeholder in the template
@@ -326,6 +326,26 @@ class TrailRelationship {
 		if(empty($segmentType) === true) {
 			throw(new PDOException("segmentType is empty or insecure"));
 		}
+		// create query template
+		$query = "SELECT segmentId, trailId, segmentType FROM trailRelationship WHERE segmentType = :segmentType";
+		$statement = $pdo->prepare($query);
 
+		//bind the segment type to the placeholder in the template
+		$parameters = array("segmentType" => $segmentType);
+		$statement->execute($parameters);
+
+		//grab the Trail Relationship from mySQL
+		try {
+			$trailRelationship = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$trailRelationship = new TrailRelationship($row["segmentId"], $row["trailId"], $row["segmentType"]);
+			} catch(Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($trailRelationship);
 	}
 }
