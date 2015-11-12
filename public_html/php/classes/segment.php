@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(dirname(__DIR__))."public_html/php/classes/autoload.php");
+require_once(dirname(dirname(__DIR__))."/autoload.php");
 
 /**
  * Class Segment for the website TrailQuail.net
@@ -110,7 +110,7 @@ class Segment {
 **/
 	public function getSegmentStart(){
 		return ($this->segmentStart);
-	}
+	}``
 
 /**
  * mutator method for segmentStart
@@ -118,6 +118,8 @@ class Segment {
  * @param float $newSegmentStart.
 **/
 	public function setSegmentStart($newSegmentStart){
+		$this->segmentStart= new Point(newX,newY);
+
 
 	}
 
@@ -136,8 +138,9 @@ class Segment {
  *@param float $newSegmentStop
 **/
 	public function setSegmentStop($newSegmentStop){
-
+		$this->segmentStart = new Point(newX,newY);
 	}
+
 /**
  * accessor method for segmentStartElevation
  *
@@ -153,7 +156,7 @@ class Segment {
  *@param int $newSegmentStartElevation
 **/
 	public function setSegmentStartElevation($newSegmentStartElevation){
-		$this->segmentStartElevation = Filter::filterInt($newSegmentStartElevation,"Segment Start Elevation",false);
+
 	}
 
 /**
