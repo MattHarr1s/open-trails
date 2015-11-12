@@ -110,7 +110,7 @@ class Segment {
 **/
 	public function getSegmentStart(){
 		return ($this->segmentStart);
-	}``
+	}
 
 /**
  * mutator method for segmentStart
@@ -176,4 +176,121 @@ class Segment {
 	public function setSegmentStopElevation($newSegmentStopElevation){
 		$this->segmentStopElevation = Filter::filterInt($newSegmentStopElevation,"Segment Stop Elevation",false);
 	}
+
+	/**
+	 * inserts this segment into mySQL
+	 *
+	 * @param PDO $pdo pointer to PDO connection, by reference
+	 * @throws PDOException when mySQL related errors occur.
+	 */
+	public function insert(PDO &$pdo){
+		//make sure this is a new segment
+		if($this->segmentId !== null){
+			throw(new PDOException("Not a new Segment"));
+		}
+
+		// create query template
+		$query = "INSERT INTO trailSegment(segmentStart, segmentStop, segmentStartElevation, segmentStopElevation)
+		VALUES(:segmentStart, :segmentStop, :segmentStartElevation, :segmentStopElevation)";
+
+		// bind the member variables to the placeholders in the template
+		$parameters = array("segmentStart"=> $this->getSegmentStart(), "segmentStop"=> $this->getSegmentStop(),
+	"segmentStartElevation"=> $this->getSegmentStartElevation(), "segmentStopElevation"=> $this->getSegmentStopElevation());
+		$statement ->execute($parameters);
+
+		//update the null segmentId with what mySQL has generated
+		$this->setSegmentId(intval($pdo-lastInsertId()));
+	}
+	/**
+	 * deletes this segment from mySQL
+	 *
+	 * @param PDO $pdo pointer to PDO connection.
+	 * @throws PDOException when mySQL related errors occur
+	 */
+	public function delete(PDO &$pdo) {
+		//make sure this segment already exists
+		if($this->getSegmentId() === null) {
+			throw(new PDOException("unable to delete a segment that does not exist"));
+		}
+
+		//create query template
+		$query = "DELETE FROM trailSegment WHERE segmentId = :segmentId";
+		$statement = $pdo->prepare($query);
+
+		//Bind the member variables to the placeholders in the templates
+		$parameters = array("segmentId" => $this->getSegmentId());
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates this segment in mySQL
+	 *
+	 *@param PDO $pdo pointer to PDO connection
+	 *@throws PDOException when mySQL related errors occur
+	 */
+	public function update(PDO &$pdo) {
+	//make sure this segment exists
+		if($this->segmentId === null) {
+			throw(new PDOException("unable to update a segment that does not exist"));
+		}
+
+		//create query table
+		$query = "UPDATE trailSegment SET segmentStart = :segmentStart, segmentStop = :segmentStop,
+segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentStopElevation";
+		$statement->prepare($query);
+
+		// bind the member variables to the placeholders in the template
+		$parameters = array("segmentStart"=> $this->getSegmentStart(), "segmentStop"=> $this->getSegmentStop(),
+				"segmentStartElevation"=> $this->getSegmentStartElevation(), "segmentStopElevation"=> $this->getSegmentStopElevation());
+		$statement ->execute($parameters);
+}
+
+	/**
+	 * gets segment by segmentId
+	 *
+	 * @param PDO $pdo pointer to PDO connection
+	 * @param int $segmentId segmentId to search for
+	 * @return mixed Segment found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 */
+	public static function getSegmentById(PDO &$pdo, $segmentId) {
+		//sanitize the ID before searching
+		try {
+			$segmentId = Filter::filterInt($segmentId, "Segment Id");
+		} catch(InvalidArgumentException $invalidArgument) {
+				throw(new PDOException($invalidArgument->getMessage(), 0,$invalidArgument));
+			} catch(RangeException $range) {
+			throw(new PDOException($range->getMessage(), 0, $range));
+		} catch(Exception $exception) {
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		//
+		//create query template
+		$query = "SELECT segmentId, segmentStart, segmentStop, segmentStartElevation, segmentStopElevation FROM trailSegment where segmentId = :segmentId";
+		$statement = $pdo->prepare($query);
+
+		//bind segmentId to placeholder
+		$parameters = array("segmentId" => $segmentId);
+		$statement->execute($parameters);
+
+		//grab the segment from mySQL
+		try {
+			$segmentId = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+
+			if($row !== false) {
+				//new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
+				$segment = new Segment($row["segmentId"], $row[$segmentStart], $row[$segmentStop], $row[$segmentStartElevation], $row[$segmentStopElevation]);
+			}
+		} catch(Exception $e) {
+			//if the row couldn't be converted, rethrow it
+			throw(new PDOException($e->getMessage(), 0, $e));
+		}
+		return($segment);
+	}
+
+
+
 }
