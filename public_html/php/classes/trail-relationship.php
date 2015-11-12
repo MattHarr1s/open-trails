@@ -315,5 +315,17 @@ class TrailRelationship {
 
 	/**
 	 * gets a Trail Relationship by segmentType
-	 */
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @param string $segmentType segment type to search for
+	 * @return mixed Trail Relationship found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 **/
+	public static function getTrailRelationshipBySegmentAndTrailId(PDO $pdo, $segmentType) {
+		$segmentType = filter_var($segmentType, FILTER_SANITIZE_STRING);
+		if(empty($segmentType) === true) {
+			throw(new PDOException("segmentType is empty or insecure"));
+		}
+
+	}
 }

@@ -295,7 +295,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 	public function testGetInvalidTrailRelationshipBySegmentId() {
 		//grab a segmentId that exceeds the maximum allowable segmentId
 		$trailRelationship = TrailRelationship::getTrailRelationshipBySegmentId($this->getPDO(), TrailQuailTest::INVALID_KEY);
-		$this->assertNull($profile);
+		$this->assertNull($trailRelationship);
 	}
 
 	/**
@@ -306,7 +306,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 	public function testGetInvalidTrailRelationshipByTrailId() {
 		//grab a trailId that exceeds the maximum allowable trailId
 		$trailRelationship = TrailRelationship::getTrailRelationshipByTrailId($this->getPDO(), TrailQuailTest::INVALID_KEY);
-		$this->assertNull($profile);
+		$this->assertNull($trailRelationship);
 	}
 
 	/**
@@ -317,7 +317,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 	public function testGetInvalidTrailRelationshipBySegmentIdAndTrailId() {
 		//grab a segmentId that exceeds the maximum allowable segmentId
 		$trailRelationship = TrailRelationship::getTrailRelationshipBySegmentIdAndTrailId($this->getPDO(), TrailQuailTest::INVALID_KEY, TrailQuailTest::INVALID_KEY);
-		$this->assertNull($profile);
+		$this->assertNull($trailRelationship);
 	}
 
 	/**
@@ -328,6 +328,6 @@ class TrailRelationshipTest extends TrailQuailTest {
 	public function testGetInvalidTrailRelationshipBySegmentType() {
 		//grab a segmentType that exceeds the maximum allowable segmentType
 		$trailRelationship = TrailRelationship::getTrailRelationshipBySegmentType($this->getPDO(), "Q");
-		$this->assertNull($profile);
+		$this->assertNull($trailRelationship);
 	}
 }
