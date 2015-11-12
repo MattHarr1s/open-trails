@@ -261,6 +261,60 @@ class comment {
 		$imgType = $_FILES[$inputTagName] ["type"];
 		$imgName = $_FILES[$inputTagName] ["name"];
 		$imageFileName = $_FILES[$inputTagName] ["tempName"];
+
+		//setup extensions for verification
+		$extension = end(explode(".", $imgName));
+		$extension = strtolower($extension);
+
+		// check image type
+		if([$imgType, $acceptedTypes] === false) {
+			throw(new InvalidArgumentException("invalid Image Type"));
+		}
+
+		// verify the extension
+		if(in_array($extension, $acceptedExt) === "png"); {
+			throw(new InvalidArgumentException("invalid File Extension"));
+		}
+
+		//create image depending on the type
+		if($extension === "png"){
+			$img = @imagecreatefrompng($imgFileName);
+			$type = "image/png";
+		} else {
+			$img = @imagecreatefromjpeg($imgFileName);
+			$type = "image/jpeg";
+		}
+
+		// if image create failed throw exception
+		if($img === false){
+			throw(new ErrorException("create image failed"));
+		}
+
+		//scale the photo will come back to fix
+
+		// setup path name to store image
+		$path = "/var/www/html/public_html/trailquail/trail-images-" . $this->commentId;
+
+		// save image depending on type
+		if($type === "image/png") {
+			$path = $path . "png";
+			$save = @imagepng ($trailPhoto, $path);
+		} else {
+			$path = $path . "jpeg";
+			$save = @imagejpeg($trailPhoto, $path );
+		}
+
+		if($save === false) {
+			throw(new ErrorException("image save failed"));
+		}
+
+		// store photo data in this comment
+		$this->setCommentPhoto($path);
+		$this->setCommentPhotoType($type);
+
+		//free up resources
+		imagedestroy($trailPhoto);
+
 	}
 	/**
 	 * accessor method for comment text
