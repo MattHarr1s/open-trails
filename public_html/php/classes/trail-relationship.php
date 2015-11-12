@@ -312,4 +312,8 @@ class TrailRelationship {
 		}
 		return($trailRelationship);
 	}
+
+	/**
+	 * gets a Trail Relationship by segmentType
+	 */
 }
