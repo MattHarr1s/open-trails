@@ -256,6 +256,11 @@ class comment {
 		// setup image type arrays
 		$acceptedTypes = ["image/jpeg", "image/png"];
 		$acceptedExt = ["jpeg", "png"];
+
+		//grab data from $_FILES
+		$imgType = $_FILES[$inputTagName] ["type"];
+		$imgName = $_FILES[$inputTagName] ["name"];
+		$imageFileName = $_FILES[$inputTagName] ["tempName"];
 	}
 	/**
 	 * accessor method for comment text
