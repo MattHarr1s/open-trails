@@ -212,6 +212,7 @@ class comment {
 		// store the file path of the comment photo
 		$this->commentPhoto = $newCommentPhoto;
 	}
+	/**
 
 	/**
 	 * accessor method for comment photo type
@@ -237,7 +238,23 @@ class comment {
 		// store the comment photo type
 		$this->commentPhotoType = $newCommentPhotoType;
 	}
-	//method $foo("cry in a") = $bar("hole till rip"); place holder will come back to change to upload photos method
+/**
+* @param string $inputTagName
+* @throws ErrorException if there was an upload error
+* @throws InvalidArgumentException for invalid image type - must be jpeg or png
+* @throws InvalidArgumentException for invalid file extension
+* @throws error exception if createImage fails
+* @throws error exception if image save fails
+*
+* @authur Derek-Mauldin
+*/
+	public function uploadPhoto($inputTagName) {
+
+		// if upload fails throw an error
+		if($_FILES[$inputTagName] ["error"] !== UPLOAD_ERR_OK) {
+			throw(new ErrorException("image upload error"))star
+		}
+	}
 	/**
 	 * accessor method for comment text
 	 *
@@ -334,14 +351,9 @@ class comment {
 
 		// bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
-		$formattedIpAddress = $this->ipAddress->format("foo");
-		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate,["ipAddress"=>$formattedIpAddress], "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this-> commentText];
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate,"ipAddress"=>$this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this-> commentText];
 		$statement->execute($parameters);
 	}
-
-
-
-
 
 
 }

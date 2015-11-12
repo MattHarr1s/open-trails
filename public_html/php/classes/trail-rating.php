@@ -120,6 +120,100 @@ class trailRating {
 	public function getRatingValue() {
 		return $this->ratingValue;
 	}
+		/**
+		 * mutator method for rating value
+		 *
+		 * @param int $newRatingValue nex value of the user rating
+		 * @throws InvalidArgumentException if $newRatingValue is not an integer or positive
+		 * @throws RangeException if $newRating value is not positive
+		 */
+		public function setRatingValue ($newRatingValue){
+			// verify the rating value is positive
+			$newRatingValue = filter_var($newRatingValue, FILTER_VALIDATE_INT);
+			if ($newRatingValue === false) {
+				throw(new InvalidArgumentException("rating value is not positive"));
+			}
+			// verify the rating value value is positive
+			if($newRatingValue <=0){
+				throw(new RangeException("rating value is not positive"));
+			}
+			// convert and store the rating value
+			$this->ratingValue = intval($newRatingValue);
+		}
+	/**
+	 * inserts this rating into mySQL
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @throws PDOException when mysql errors occur
+	 */
+	public function insert(PDO $pdo){
+		// enforce the trailId and userId is null
+		if($this->trailId !== null) {
+			throw(new PDOException("not a new rating; trail id has been used"));
+		}
+		if($this->userId !== null) {
+			throw(new PDOException("not a new rating; user id has been used"));
+		}
+
+		//create query template
+		$query = "INSERT INTO trailRating(trailId, userId, ratingValue) VALUES(:trailId, :userId, :ratingValue) ";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holder
+		$parameters = ["trailId"=>$this->trailId, "userId"=>$this->userId, $this->ratingValue];
+		$statement->execute($parameters);
+
+
+	}
+	/**
+	 * deletes a user generated  trail rating from  mySQl
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @throws PDOException when a mySQl related error occurs
+	 */
+	public function delete(PDO $pdo) {
+		// enforce that both trailId and userId is not null
+		if ($this->trailId === null) {
+			throw(new PDOException("unable to delete a rating about trail that doesn't exist"));
+		}
+		if ($this->userId === null) {
+			throw (new PDOException("unable to delete to delete a rating that a user didn't post"));
+		}
+		// create query template
+		$query = "DELETE FROM rating  WHERE trailId = :tralId and  userId = :userId";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holder in the template
+		$parameters = ["trailId=>$this->trailId, userId=>$this->userId" ];
+		$statement->execute($parameters);
+	}
+	/**
+	 * updates this rating in mySQL
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @throws PDOException when mySQL related errors occur
+	 */
+	public function update(PDO $pdo) {
+		// enforce the trailId and userId is null
+		if($this->trailId !== null) {
+			throw(new PDOException("not a new rating; trail id has been used"));
+		}
+		if($this->userId !== null) {
+			throw(new PDOException("not a new rating; user id has been used"));
+		}
+		//create query template
+		$query = "UPDATE trailRating SET trailId = :trailId ,userId = :userId, ratingValue = :ratingValue";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holder
+		$parameters = ["trailId"=>$this->trailId, "userId"=>$this->userId, $this->ratingValue];
+		$statement->execute($parameters);
+	}
+
+
+
+
+
 
 
 }
