@@ -249,11 +249,13 @@ class comment {
 * @authur Derek-Mauldin
 */
 	public function uploadPhoto($inputTagName) {
-
 		// if upload fails throw an error
 		if($_FILES[$inputTagName] ["error"] !== UPLOAD_ERR_OK) {
-			throw(new ErrorException("image upload error"))star
+			throw(new ErrorException("image upload error"));
 		}
+		// setup image type arrays
+		$acceptedTypes = ["image/jpeg", "image/png"];
+		$acceptedExt = ["jpeg", "png"];
 	}
 	/**
 	 * accessor method for comment text
