@@ -11,7 +11,9 @@ require_once "autoload.php";
  *
  * author Jeff Saul <scaleup13@gmail.com>
  */
-Class user  {
+class User  {
+	use AntiAbuse;
+
 	/**
 	 * user Id is an unsigned integer; this is the primary key for class user
 	 * @var integer $userId
@@ -308,5 +310,33 @@ Class user  {
 		$this->userSalt = $newUserSalt;
 	}
 
+	/**
+	 * Inserts this user's ID information into mySQL
+	 *
+	 * @param PDO $pdo -- pointer to PDO connection, by reference
+	 * @throws PDOException when mySQL relates errors occur
+	 */
+	public function insert(PDO $pdo) {
+		// check to see if the userId is null
+		If($this->commentId !== null) {
+			throw(new PDOException("not a new user"));
+		}
 
+		// create user template
+		$query = "INSERT INTO user(userId, browswer, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt ) VALUES (:userId, :browser, :createDate, :ipAddress, :userAccountType, :userEmail, :userHash, :userName, :userSalt)";
+		$statement = $pdo->prepare($query);
+
+
+		//bind the member variables to the placeholders in the temlate
+		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
+		$parameters = ["userId" => $this->userId,"browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail,"userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt];
+		$statement->execute($parameters);
+
+		// update the null userId with what mySQL just gave us
+		$this->userId = intval($pdo->lastInsertId());
+	}
+
+	/**
+	 *
+	 */
 }
