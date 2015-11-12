@@ -258,14 +258,13 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		try {
 			$segmentId = Filter::filterInt($segmentId, "Segment Id");
 		} catch(InvalidArgumentException $invalidArgument) {
-				throw(new PDOException($invalidArgument->getMessage(), 0,$invalidArgument));
-			} catch(RangeException $range) {
+			throw(new PDOException($invalidArgument->getMessage(), 0,$invalidArgument));
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
 		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
-		//
 		//create query template
 		$query = "SELECT segmentId, segmentStart, segmentStop, segmentStartElevation, segmentStopElevation FROM trailSegment where segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
@@ -291,6 +290,26 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		return($segment);
 	}
 
+	/**
+	 * gets segment by segmentStart
+	 *
+	 * @param PDO $pdo pointer to PDO connection
+	 * @param float $segmentStart  start point to search for
+	 * @return mixed Segment found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 */
+	public static function getSegmentByStart(PDO &$pdo, $segmentStart){
+		//sanitize the float before searching
+		try {
+			$segmentStart = Filter::filterDouble($segmentStart, "segment start");
+		} catch (InvalidArgumentException $invalidArgument) {
+			throw(new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch (RangeException $range) {
+			throw (new RangeException($range->getMessage(), 0, $range ));
+		} catch  (Exception $exception) {
+			throw (new Exception($exception->getMessage(), 0 ,$exception));
+		}
+	}
 
 
 }
