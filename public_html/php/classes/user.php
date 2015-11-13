@@ -58,7 +58,7 @@ class User  {
 	 * @param mixed $newUserId -- user account id, may be null if user is new
 	 * @param string $newBrowser -- information on the user browser
 	 * @param datetime $newCreateDate -- date the user account was set up
-	 * @param binary $newIpAddress -- the user Ip address when account was set up
+	 * @param string $newIpAddress -- the user Ip address when account was set up
 	 * @param string $newUserAccountType -- this denotes the type of user account
 	 * @param string $newUserEmail -- the user email address for this account
 	 * @param string $newUserHash -- hash value of user password
@@ -74,7 +74,7 @@ class User  {
 			$this->setUserID($newUserId);
 			$this->setBrowser($newBrowser);
 			$this->setCreateDate($newCreateDate);
-			$this->setIpAddress($newIpAddress)
+			$this->setIpAddress($newIpAddress);
 			$this->setUserAccountType($newUserAccountType);
 			$this->setUserEmail($newUserEmail);
 			$this->setUserHash($newUserHash);

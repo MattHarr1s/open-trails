@@ -7,7 +7,7 @@
  * @authur George Kephart <gkephart@gmail.com>
  */
 
-class trailRating {
+class rating {
 	/**
 	 * id for the indivdual trail the rating is based on.
 	 * @var int $trailId
@@ -209,7 +209,70 @@ class trailRating {
 		$parameters = ["trailId"=>$this->trailId, "userId"=>$this->userId, $this->ratingValue];
 		$statement->execute($parameters);
 	}
+	/**
+	 * gets rating from rating value
+	 *
+	 * @param PDO $pdo PDO  connection object
+	 * @param int $ratingValue
+	 * @returns SplFixedArray all ratings for the trail
+	 * @throws PDOException when mySQL error occurs
+	 */
+	public static function geRatingByRatingValue(PDO $pdo, $ratingValue) {
+		$ratingValue = trim($ratingValue);
+		$ratingValue = filter_var($ratingValue, FILTER_VALIDATE_INT);
+		if(empty($ratingValue) === true) {
+			throw(new PDOException("rating value is invalid"));
+		}
 
+		// create query template
+		$query = "select trailId, userId, ratingValue FROM rating WHERE ratingValue Like :RatingValue";
+		$statement = $pdo->prepare($query);
+
+		//bind the rating value to the place holder in the template
+		$ratingValue = "%$ratingValue%";
+		$parameters = ["ratingValue" => $ratingValue];
+		$statement->execute($parameters);
+
+		// build an array of rating values
+		$ratings = new SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$rating = new rating($row["userId"], $row["trailId"], $row["ratingValue"]);
+				$ratings[$ratings->key()] = $rating;
+				$ratings = next();
+			} catch(Exception $exception) {
+				// if the row couldn't be converted rethrow it
+				throw(new PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($ratings);
+	}
+	/**
+	 * gets the trail rating by trailId
+	 *
+	 * @param PDO $pdo PDO Connection object
+	 * @param int $trailId trail id to search for
+	 * @return int found rating value found or null if not found
+	 * @throws PDOException when mySql related error occurs
+	 */
+
+	public static  function getRatingValueByTrailId(PDO $pdo, $trailId){
+		// sanitize the the trailId before searching
+		$trailId = filter_var($trailId, FILTER_VALIDATE_INT);
+		if($trailId === false) {
+			throw(new PDOException("$trailId is not an integer "));
+		}
+		If($trailId <= 0 ){
+			throw(new PDOException("$trailId is not positive"));
+		}
+		// create query template
+		$query = "SELECT uerId,ratingValue FROM rating WHERE trailId = :trailId";
+		$statement = $pdo->prepare($query);
+
+		// bind the tweet id to the place holder
+	$parameters = array("trailId" => $trailId);
+	$statement->execute($parameters);}
 
 
 

@@ -1,5 +1,8 @@
 <?php
 
+require_once(dirname(__DIR__)  .  "/traits/anti-abuse.php");
+require_once "autoload.php";
+
 /**
  cross section of trail quail that is user submitted comments
  *
@@ -9,6 +12,7 @@
  *@author George Kephart <gkephart@cnm.edu>
  */
 class comment {
+	use AntiAbuse;
 	/**
 	 *id for this comment; this is a primary key
 	 * @var int $tweetId
@@ -48,7 +52,7 @@ class comment {
 	 * @param int $newUserId id of the user that sent this comment
 	 * @param string $newBrowser the browser associated with the user who posted the comment
 	 * @param datetime $newCreateDate the date time the comment was created
-	 * @param binary $newIpAddress associated with the user that posted the comment.
+	 * @param string $newIpAddress associated with the user that posted the comment.
 	 * @param string $newCommentPhoto link of the photo, the user posted in the comment thread, about the trail.
 	 * @param string $newCommentPhotoType file type of the photo that was uploaded by the user that posted in the comment thread about the  trail..
 	 * @param string $newCommentText the actual comment the user posted in the comment forum about a specif trail.
@@ -260,7 +264,7 @@ class comment {
 		//grab data from $_FILES
 		$imgType = $_FILES[$inputTagName] ["type"];
 		$imgName = $_FILES[$inputTagName] ["name"];
-		$imageFileName = $_FILES[$inputTagName] ["tempName"];
+		$imageFileName = $_FILES[$inputTagName] ["temp_name"];
 
 		//setup extensions for verification
 		$extension = end(explode(".", $imgName));
@@ -272,16 +276,16 @@ class comment {
 		}
 
 		// verify the extension
-		if(in_array($extension, $acceptedExt) === "png"); {
+		if(in_array($extension, $acceptedExt) === "png") {
 			throw(new InvalidArgumentException("invalid File Extension"));
 		}
 
 		//create image depending on the type
 		if($extension === "png"){
-			$img = @imagecreatefrompng($imgFileName);
+			$img = imagecreatefrompng($imageFileName);
 			$type = "image/png";
 		} else {
-			$img = @imagecreatefromjpeg($imgFileName);
+			$img = imagecreatefromjpeg($imageFileName);
 			$type = "image/jpeg";
 		}
 
@@ -290,7 +294,8 @@ class comment {
 			throw(new ErrorException("create image failed"));
 		}
 
-		//scale the photo will come back to fix
+		//scale the uploaded photo
+		imagescale($imageFileName,$new_width= 1024,[$mode = IMG_BILINEAR_FIXED]);
 
 		// setup path name to store image
 		$path = "/var/www/html/public_html/trailquail/trail-images-" . $this->commentId;
@@ -298,10 +303,10 @@ class comment {
 		// save image depending on type
 		if($type === "image/png") {
 			$path = $path . "png";
-			$save = @imagepng ($trailPhoto, $path);
+			$save = @imagepng ($imageFileName, $path);
 		} else {
 			$path = $path . "jpeg";
-			$save = @imagejpeg($trailPhoto, $path );
+			$save = @imagejpeg($imageFileName, $path );
 		}
 
 		if($save === false) {
@@ -313,7 +318,7 @@ class comment {
 		$this->setCommentPhotoType($type);
 
 		//free up resources
-		imagedestroy($trailPhoto);
+		imagedestroy($imageFileName);
 
 	}
 	/**
