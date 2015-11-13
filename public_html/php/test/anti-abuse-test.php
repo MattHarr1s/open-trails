@@ -49,22 +49,20 @@ class TraitTest extends PHPUnit_Framework_TestCase {
 		$useTheTrait = new UseTheTrait();
 
 		// use the three mutators to make a valid test case
-		setIpAddress(newIpAddress) {
-			$newIpAddress = $VALID_IP;
-		}
-		$newBrowser = setBrowser(VALID_BROWSER);
-		$newCreateDate = setCreateDate(VALID_CREATEDATE);
+		$useTheTrait->setIpAddress($this->VALID_IP);
+		$useTheTrait->setBrowser($this->VALID_BROWSER);
+		$useTheTrait->setCreateDate($this->VALID_CREATEDATE);
 
 		// assertSame() that getFoo() is the same as $VALID_FOO
-		$this->assertSame($this->getIpAddress(), $this->VALID_IP);
-		$this->assertSame($this->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($this->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertSame($useTheTrait->getIpAddress(), $this->VALID_IP);
+		$this->assertSame($useTheTrait->getBrowser(), $this->VALID_BROWSER);
+		$this->assertSame($useTheTrait->getCreateDate(), $this->VALID_CREATEDATE);
 	}
 
 	public function testInvalidAntiAbuse() {
 		$useTheTrait = new UseTheTrait();
 
 		// simply use the $INVALID_IP and an exception will be thrown
-
+		$useTheTrait->setIpAddress($this->INVALID_IP);
 	}
 }
