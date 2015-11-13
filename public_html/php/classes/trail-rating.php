@@ -240,9 +240,9 @@ class rating {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$rating = new rating($row["userId"], $row["trailId"], $row["ratingValue"]);
+				$rating = new Rating($row["userId"], $row["trailId"], $row["ratingValue"]);
 				$ratings[$ratings->key()] = $rating;
-				$ratings = next();
+				$ratings -> next();
 			} catch(Exception $exception) {
 				// if the row couldn't be converted rethrow it
 				throw(new PDOException($exception->getMessage(), 0, $exception));
@@ -299,7 +299,34 @@ class rating {
 
 		// bind the tweet id to the place holder
 		$parameters = array("trailId" => $userId);
-		$statement->execute($parameters);}
+		$statement->execute($parameters);
+	}
+	/** gets all ratings
+	 * @param PDO $pdo PDO connection object
+	 * @return SplFixedArray all ratings found
+	 *	@throws PDOException when mySQL errors occur
+	 */
+	public static  function getAllRatings(PDO $pdo) {
+		//create query template
+		$query = "select trailId, userId, trailRating from rating";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of rating values
+		$ratings = new SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$rating = new Rating($row["userId"], $row["trailId"], $row["ratingValue"]);
+				$ratings[$ratings->key()] = $rating;
+				$ratings->next();
+			} catch(Exception $exception) {
+				// if the row couldn't be converted rethrow it
+				throw(new PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($ratings);
+	}
 
 
 
