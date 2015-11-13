@@ -118,7 +118,7 @@ class Segment {
  * @param float $newSegmentStart.
 **/
 	public function setSegmentStart($newSegmentStart){
-		$this->segmentStart= new Point(newX,newY);
+		$this->segmentStart= Point($newSegmentStart)($newX, $newY);
 
 
 	}
