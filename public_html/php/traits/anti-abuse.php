@@ -30,24 +30,6 @@ trait AntiAbuse {
 	private $createDate;
 
 	/**
-	 * constructor for the anti-abuse trait
-	 *
-	 * @param string $newIpAddress new value for ipAddress
-	 * @param string $newBrowser new value for browser
-	 * @param DateTime $newCreateDate new value for createDate
-	 * @throws UnexpectedValueException if any of the parameters are invalid
-	 **/
-	public function __construct($newIpAddress, $newBrowser, $newCreateDate) {
-		try {
-			$this->setIpAddress($newIpAddress);
-			$this->setBrowser($newBrowser);
-			$this->setCreateDate($newCreateDate);
-		} catch(UnexpectedValueException $exception) {
-			throw(new UnexpectedValueException("unable to construct an anti-abuse profile", 0, $exception));
-		}
-	}
-
-	/**
 	 * accessor method for ipAddress
 	 *
 	 * @return string value of ipAddress
@@ -132,8 +114,3 @@ trait AntiAbuse {
 		$this->createDate = $newCreateDate;
 	}
 }
-
-
-// $ipAddress = $_SERVER['REMOTE_ADDR'];
-
-// $browser = $_SERVER['HTTP_USER_AGENT'];

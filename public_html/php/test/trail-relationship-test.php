@@ -15,25 +15,13 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 * valid trailId to use
 	 * @var int $VALID_TRAILID
 	 **/
-	protected $VALID_TRAILID = "5";
-
-	/**
-	 * second valid trailId to use
-	 * @var int $VALID_TRAILID2
-	 **/
-	protected $VALID_TRAILID2 = "31";
+	protected $VALID_TRAILID = 5;
 
 	/**
 	 * valid segmentId to use
 	 * @var int $VALID_SEGMENTID
 	 **/
 	protected $VALID_SEGMENTID = "1";
-
-	/**
-	 * second valid segmentId to use
-	 * @var int $VALID_SEGMENTID2
-	 **/
-	protected $VALID_SEGMENTID2 = "2";
 
 	/**
 	 * valid segmentType to use
@@ -222,7 +210,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 
 		// delete the Trail Relationship from mySQL
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
-		$profile->delete($this->getPDO());
+		$trailRelationship->delete($this->getPDO());
 
 		//grab the data from my mySQL and enforce the Trail Relationship does not exist
 		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentId($this->getPDO(), $trailRelationship->getSegmentId());
@@ -245,7 +233,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 
 		// delete the Trail Relationship from mySQL
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
-		$profile->delete($this->getPDO());
+		$trailRelationship->delete($this->getPDO());
 
 		//grab the data from my mySQL and enforce the Trail Relationship does not exist
 		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipByTrailId($this->getPDO(), $trailRelationship->getTrailId());
@@ -268,7 +256,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 
 		// delete the Trail Relationship from mySQL
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
-		$profile->delete($this->getPDO());
+		$trailRelationship->delete($this->getPDO());
 
 		//grab the data from my mySQL and enforce the Trail Relationship does not exist
 		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentIdAndTrailId($this->getPDO(), $trailRelationship->getSegmentId(), $trailRelationship->getTrailId());

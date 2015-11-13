@@ -1,5 +1,4 @@
 <?php
-require_once("trail-quail.php");
 require_once(dirname(__DIR__) . "/traits/anti-abuse.php");
 
 /**
@@ -14,7 +13,7 @@ class UseTheTrait {
 	use AntiAbuse;
 }
 
-class TraitTest extends TrailQuailTest{
+class TraitTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * valid ipAddress to use
@@ -23,10 +22,22 @@ class TraitTest extends TrailQuailTest{
 	protected $VALID_IP = "168.176.85.163";
 
 	/**
+	 * invalid ipAddress to use
+	 * @var string $INVALID_IP
+	 **/
+	protected $INVALID_IP = "168.176.85.396";
+
+	/**
 	 * valid browser to use
 	 * @var string $VALID_BROWSER
 	 **/
 	protected $VALID_BROWSER = "Mozilla Firefox";
+
+	/**
+	 * invalid browser to use
+	 * @var string $INVALID_BROWSER
+	 **/
+	protected $INVALID_BROWSER = "Internet Explorer 7";
 
 	/**
 	 * valid createDate to use
@@ -35,16 +46,25 @@ class TraitTest extends TrailQuailTest{
 	protected $VALID_CREATEDATE = "2012-03-24 17:45:12";
 
 	public function testValidAntiAbuse() {
-		$antiAbuse = new AntiAbuse($this->VALID_IP, $this->VALID_BROWSER, $this->VALID_CREATEDATE);
-		$antiAbuse->insert($this->getPDO());
+		$useTheTrait = new UseTheTrait();
 
-		$pdoAntiAbuse = AntiAbuse::getIpAddress($this->getPDO(), $antiAbuse->getIpAddress());
-		$this->assertSame($pdoAntiAbuse->getIpAddress(), $this->VALID_IP);
-		$this->assertSame($pdoAntiAbuse->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($pdoAntiAbuse->getCreateDate(), $this->VALID_CREATEDATE);
+		// use the three mutators to make a valid test case
+		setIpAddress(newIpAddress) {
+			$newIpAddress = $VALID_IP;
+		}
+		$newBrowser = setBrowser(VALID_BROWSER);
+		$newCreateDate = setCreateDate(VALID_CREATEDATE);
+
+		// assertSame() that getFoo() is the same as $VALID_FOO
+		$this->assertSame($this->getIpAddress(), $this->VALID_IP);
+		$this->assertSame($this->getBrowser(), $this->VALID_BROWSER);
+		$this->assertSame($this->getCreateDate(), $this->VALID_CREATEDATE);
 	}
 
 	public function testInvalidAntiAbuse() {
-		$antiAbuse = new AntiAbuse($th
+		$useTheTrait = new UseTheTrait();
+
+		// simply use the $INVALID_IP and an exception will be thrown
+
 	}
 }
