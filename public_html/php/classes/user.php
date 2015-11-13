@@ -136,7 +136,7 @@ class User  {
 	}
 
 	/**
-	 * accessor method for user account type (regular-r, poweruser-p, suspended-x)
+	 * accessor method for user account type (regular-R, super user-R, suspended-X)
 	 *
 	 * @return string $newUserAccountType - 1 byte string value of user account type
 	 */
@@ -145,23 +145,17 @@ class User  {
 		}
 
 	/**
-	 * mutator method for user account type (regular-r, power user-p, suspended-x)
+	 * mutator method for user account type (regular-R, super user-S, suspended-X)
 	 *
 	 * @param string $newUserAccountType - 1 byte string value of user account type
-	 * @throws InvalidArgumentException if $newUserAccountType is not a string or is insecure
+	 * @throws InvalidArgumentException if $newUserAccountType is not "R", "S", or "X"
 	 * @throws RangeException if $newUserAccountType is > 1 character
 	 */
 	public function setUserAccountType($newUserAccountType) {
-		// verify that the user account type is secure
-		$newUserAccountType = trim($newUserAccountType);
-		$newUserAccountType = filter_var($newUserAccountType, FILTER_SANITIZE_STRING);
-		if(empty($newUserAccountType) === true) {
-			throw(new InvalidArgumentException("User account type is empty or insecure"));
-		}
-
-		// verify the user account type will fit in the database
-		if(strlen($newUserAccountType) > 1) {
-			throw(new RangeException("User account type is too large"));
+		//  verify that the user account type is not a recognized account type
+		//  (regular-r, power user-p, suspended-x)
+		if(($newUserAccountType !== "R") || ($newUserAccountType !== "S") || ($newUserAccountType !== "X")) {
+			throw new InvalidArgumentException ("User account type invalid");
 		}
 
 		//store user account type
@@ -376,8 +370,58 @@ class User  {
 
 		//  bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
-		$parameters = ["userId" => $this->userId, "browser" => $this->browser, "createDate" => $this->createDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail, "userHash" => $this->userHash, "userName" => $this->userName, "userSalt" = $this->userSalt];
+		$parameters = ["userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail, "userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt];
 		$statement->execute($parameters);
 	}
+
+	/**
+	 * gets user ID information by userId
+	 *
+	 * @param PDO $pdo pointer to PDO connection, by reference
+	 * @param int $userId userId to search for
+	 * @return user ID information if found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 *
+	 **/
+	public static function getUserByUserId (PDO &$pdo, $userId) {
+		//sanitize the userId before searching
+		try {
+			$userId = Filter::filterInt($userId, "userId");
+		} catch (InvalidArgumentException $invalidArgument ) {
+			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(RangeException $range){
+			throw(new PDOException($range->getMessage(), 0, $range));
+		} catch (Exception $exception){
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		//create query template
+		$query = "SELECT userId, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
+trailTerrain, trailName, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userId";
+		$statement = $pdo->prepare($query);
+
+		//bind userId to placeholder
+		$parameters = array("userId" => $userId);
+		$statement->execute($parameters);
+
+		//build an array of trails
+		$trails = new SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while (($row = $statement->fetch()) !== false) {
+			try {
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
+				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+						$row["trailUse"], $row["trailUuid"]);
+				$trails[$trails->key()] = $trail;
+				$trails->next();
+			} catch (Exception $e) {
+				//if the row couldn't be converted, rethrow it
+				throw(new PDOException($e->getMessage(),0 , $e));
+			}
+		}
+		return($trails);
+	}
+
 
 }
