@@ -463,9 +463,45 @@ class comment {
 	return($comments);
 	}
 	/**
-	 * gets
+	 * gets the comment by comment text
 	 *
+	 * @param PDO $pdo PDO connection object
+	 * @param int $commentId comment id to search for
+	 * @return mixed comment found or null if not found
+	 * @throws PDOException when mySql related errors occur
 	 */
+	public static function getCommentByCommentId( PDO $pdo, $commentId) {
+		// sanitize the tweetId before searching
+		$commentId = filter_var($commentId, FILTER_VALIDATE_INT);
+		if($commentId === false) {
+			throw(new PDOException("comment id is not an integer"));
+		}
+		if($commentId <= 0) {
+			throw(new PDOException("comment id is not positive"));
+		}
+
+		//create query template
+		$query =  "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText WHERE commentId = :commentId";
+		$statement = $pdo->prepare($query);
+
+		// bind the tweet id to the place holder in the template
+		$parameters = array("commentId" => $commentId);
+		$statement->execute($parameters);
+
+		// grab the comment from mySQL
+		try {
+			$comment = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$comment = new Comment($row["commentId"]), ($row["trailId"]), ($row["userId"]), ($row["browser"]), ($row["createDate"]), ($row["IpAddress"]), ($row["commentPhoto"]), ($row["commentPhotoType"]), ($row["commentText"]);
+			}
+			} catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($comment);
+	}
 }
 
 
