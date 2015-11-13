@@ -330,4 +330,80 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$trailRelationship = TrailRelationship::getTrailRelationshipBySegmentType($this->getPDO(), "Q");
 		$this->assertNull($trailRelationship);
 	}
+
+	/**
+ * test grabbing a Trail Relationship by segmentId
+ **/
+	public function testGetValidTrailRelationshipBySegmentId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("trailRelationship");
+
+		//create a new Trail Relationship and insert it into mySQL
+		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentId($this->getPDO(), $this->VALID_SEGMENTID);
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
+		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->VALID_SEGMENTID);
+		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->VALID_TRAILID);
+		$this->assertSame($pdoTrailRelationship->getSegmentType(), $this->VALID_SEGMENTTYPE);
+	}
+
+	/**
+	 * test grabbing a Trail Relationship by trailId
+	 **/
+	public function testGetValidTrailRelationshipByTrailId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("trailRelationship");
+
+		//create a new Trail Relationship and insert it into mySQL
+		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipByTrailId($this->getPDO(), $this->VALID_TRAILID);
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
+		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->VALID_SEGMENTID);
+		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->VALID_TRAILID);
+		$this->assertSame($pdoTrailRelationship->getSegmentType(), $this->VALID_SEGMENTTYPE);
+	}
+
+	/**
+	 * test grabbing a Trail Relationship by segmentIdAndTrailId
+	 **/
+	public function testGetValidTrailRelationshipBySegmentIdAndTrailId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("trailRelationship");
+
+		//create a new Trail Relationship and insert it into mySQL
+		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentIdAndTrailId($this->getPDO(), $this->VALID_SEGMENTID, $this->VALID_TRAILID);
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
+		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->VALID_SEGMENTID);
+		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->VALID_TRAILID);
+		$this->assertSame($pdoTrailRelationship->getSegmentType(), $this->VALID_SEGMENTTYPE);
+	}
+
+	/**
+	 * test grabbing a Trail Relationship by segmentType
+	 **/
+	public function testGetValidTrailRelationshipBySegmentType() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("trailRelationship");
+
+		//create a new Trail Relationship and insert it into mySQL
+		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentId($this->getPDO(), $this->VALID_SEGMENTTYPE);
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
+		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->VALID_SEGMENTID);
+		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->VALID_TRAILID);
+		$this->assertSame($pdoTrailRelationship->getSegmentType(), $this->VALID_SEGMENTTYPE);
+	}
 }

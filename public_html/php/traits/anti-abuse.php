@@ -2,6 +2,8 @@
 
 require_once(dirname(__DIR__) . "/lib/date-utilities.php");
 
+class TestForAntiAbuse
+
 /**
  * Trait anti-abuse
  *
