@@ -296,9 +296,10 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * @param PDO $pdo pointer to PDO connection
 	 * @param float $segmentStart  start point to search for
 	 * @return mixed Segment found or null if not found
-	 * @throws PDOException when mySQL related errors occur
+	 * @throws RangeException when range is invalid
+	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStart(PDO &$pdo, $segmentStart){
+		public static function getSegmentByStart(PDO &$pdo, $segmentStart){
 		//sanitize the float before searching
 		try {
 			$segmentStart = Filter::filterDouble($segmentStart, "segment start");
@@ -383,4 +384,97 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		return($segments);
 	}
 
+	/**
+	 * gets segment by segmentStartElevation
+	 *
+	 * @param PDO $pdo pointer to PDO connection
+	 * @param float $segmentStartElevation  start point to search for
+	 * @return mixed Segment found or null if not found
+	 * @throws RangeException when range is invalid
+	 * @throws Exception for other exception
+	 */
+	public static function getSegmentByStartElevation(PDO &$pdo, $segmentStartElevation){
+		//sanitize the float before searching
+		try {
+			$segmentStartElevation = Filter::filterDouble($segmentStartElevation, "segment start elevation");
+		} catch (InvalidArgumentException $invalidArgument) {
+			throw(new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch (RangeException $range) {
+			throw (new RangeException($range->getMessage(), 0, $range ));
+		} catch  (Exception $exception) {
+			throw (new Exception($exception->getMessage(), 0 ,$exception));
+		}
+
+		//create query template
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM trailSegment WHERE segmentStartElevation LIKE :segmentStartElevation ";
+		$statement = $pdo->prepare($query);
+
+		//binds segmentStartElevation to placeholder
+		$segmentStartElevation = "segmentStartElevation%";
+		$parameters = array("segmentStartElevation" => $segmentStartElevation);
+		$statement->execute($parameters);
+
+		//build an array of segments
+		$segments = new SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch())!== false) {
+			try {
+				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
+				$segments = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+				$segments[$segments->key()] =$segment;
+				$segments->next();
+			} catch(Exception $e) {
+				//if the row couldn't be converter, rethrow it
+				throw (new PDOException($e->getMessage(), 0, $e));
+			}
+		}
+
+		return($segments);
+	}
+	/**
+	 * gets segment by segmentStopElevation
+	 *
+	 * @param PDO $pdo pointer to PDO connection
+	 * @param float $segmentStopElevation stop point to search for
+	 * @return mixed segment found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 * @throws RangeException when range is invalid
+	 * @throws Exception for other exception
+	 */
+	public static function getSegmentByStopElevation( PDO &$pdo, $segmentStopElevation){
+		//santize the float before searching
+		try {
+			$segmentStopElevation = Filter::filterDouble($segmentStopElevation, "segment stop");
+		} catch (InvalidArgumentException $invalidArgument) {
+			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch (RangeException $range){
+			throw (new RangeException ($range->getMessage(), 0, $range));
+		} catch (Exception $exception) {
+			throw (new Exception($exception->getMessage(),0,$exception));
+		}
+		//create query template
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM trailSegment WHERE segmentStopElevation LIKE :segmentStopElevation";
+		$statement = $pdo->prepare($query);
+
+		//binds segmentStopElevation to placeholder
+		$segmentStopElevation = "segmentStopElevation%";
+		$parameters = array("segmentStopElevation" => $segmentStopElevation);
+		$statement->execute($parameters);
+
+		//build an array of segments
+		$segments = new SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch())!== false) {
+			try {
+				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
+				$segments = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+				$segments[$segments->key()] =$segment;
+				$segments->next();
+			} catch(Exception $e) {
+				//if the row couldn't be converter, rethrow it
+				throw (new PDOException($e->getMessage(), 0, $e));
+			}
+		}
+		return($segments);
+	}
 }
