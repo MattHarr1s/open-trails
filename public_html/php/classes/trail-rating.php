@@ -13,6 +13,8 @@ class rating {
 	 * @var int $trailId
 	 */
 	private $trailId;
+
+	//blah
 	/**
 	 * id of the user that has posted a rating about a specific trail
 	 * @var int $userId
