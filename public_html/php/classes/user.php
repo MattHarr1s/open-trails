@@ -311,7 +311,7 @@ class User  {
 	}
 
 	/**
-	 * Inserts this user's ID information into mySQL
+	 * Inserts this user's ID information into mySQL database
 	 *
 	 * @param PDO $pdo -- pointer to PDO connection, by reference
 	 * @throws PDOException when mySQL relates errors occur
@@ -337,6 +337,47 @@ class User  {
 	}
 
 	/**
+	 *  Delete this user's ID information from the mySQL database
 	 *
+	 * @param PDO $pdo PDO connect object
+	 * @throws PDOException when mySQL related errors occur
 	 */
+	public function delete(PDO $pdo) {
+		// Check to see that the user's userId is not null
+		// i.e. check to see that user has user information stored before deletion
+		if($this->userId === null) {
+			throw(new PDOException("unable to delete ID information for a user that does not exist"));
+		}
+
+		// create query template
+		$query = "DELETE FROM user WHERE userId = :userId ";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holder in the template
+		$parameters = array("userId" => $this->userId);
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * Update this user's ID information in the mySQL database
+	 *
+	 * @param PDO $pdo PDO connenction object
+	 * @throws PDOException when mySQL related errors occur
+	 */
+	public function update(PDO $pdo) {
+		// Check to see that the user's userId is not null
+		// i.e. check to see that user has user information stored before updating
+		if($this->userId === null) {
+			throw(new PDOException("unable to update a user's ID information that does not exist"));
+		}
+		// create query template
+		$query = "UPDATE user SET userId = :userId, browser = :browser, createDate = :createDate, ipAddress = :ipAddress, userAccountType = :userAccountType, userEmail = :userEmail, userHash = :userHash, userName = :userName, userSalt = :userSalt";
+		$statement = $pdo->prepare($query);
+
+		//  bind the member variables to the place holders in the template
+		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
+		$parameters = ["userId" => $this->userId, "browser" => $this->browser, "createDate" => $this->createDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail, "userHash" => $this->userHash, "userName" => $this->userName, "userSalt" = $this->userSalt];
+		$statement->execute($parameters);
+	}
+
 }
