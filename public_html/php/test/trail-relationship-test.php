@@ -7,7 +7,7 @@ require_once(dirname(__DIR__) . "/classes/trail-relationship.php");
  *
  * This is a complete PHPUnit test of the TrailRelationship class. It is complete because *ALL* mySQL/PDO enabled methods are tested for both invalid and valid inputs.
  *
- * @see Profile
+ * @see TrailRelationship
  * @author Louis Gill <lgill7@cnm.edu>
  **/
 class TrailRelationshipTest extends TrailQuailTest {

@@ -1,13 +1,12 @@
 <phpunit>
-	<testsuites>
-		<testsuite name="Trail Quail">
-			<file>trail-relationship-test.php</file>
-			<file>comment-test.php</file>
-			<file>segment-test.php</file>
-			<file>trail-test.php</file>
-			<file>rating-test.php</file>
-			<file>user-test.php</file>
-			<file>anti-abuse-test.php</file>
-		</testsuite>
-	</testsuites>
+<testsuites>
+	<testsuite name="Trail Quail">
+		<directory suffix="-test.php">.</directory>
+	</testsuite>
+</testsuites>
+<filter>
+	<whitelist processUncoveredFilesFromWhitelist="true">
+		<directory suffix=".php">../public_html/php/classes</directory>
+	</whitelist>
+</filter>
 </phpunit>
