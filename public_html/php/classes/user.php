@@ -318,7 +318,7 @@ class User  {
 	 */
 	public function insert(PDO $pdo) {
 		// check to see if the userId is null
-		If($this->commentId !== null) {
+		If($this->userId !== null) {
 			throw(new PDOException("not a new user"));
 		}
 

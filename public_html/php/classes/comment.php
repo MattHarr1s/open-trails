@@ -216,9 +216,10 @@ class comment {
 		// store the file path of the comment photo
 		$this->commentPhoto = $newCommentPhoto;
 	}
-	/**
 
 	/**
+	 *
+	 * /**
 	 * accessor method for comment photo type
 	 *
 	 * @return string value of the comment photo type.
@@ -242,16 +243,17 @@ class comment {
 		// store the comment photo type
 		$this->commentPhotoType = $newCommentPhotoType;
 	}
-/**
-* @param string $inputTagName
-* @throws ErrorException if there was an upload error
-* @throws InvalidArgumentException for invalid image type - must be jpeg or png
-* @throws InvalidArgumentException for invalid file extension
-* @throws error exception if createImage fails
-* @throws error exception if image save fails
-*
-* @authur Derek-Mauldin
-*/
+
+	/**
+	 * @param string $inputTagName
+	 * @throws ErrorException if there was an upload error
+	 * @throws InvalidArgumentException for invalid image type - must be jpeg or png
+	 * @throws InvalidArgumentException for invalid file extension
+	 * @throws error exception if createImage fails
+	 * @throws error exception if image save fails
+	 *
+	 * @authur Derek-Mauldin
+	 */
 	public function uploadPhoto($inputTagName) {
 		// if upload fails throw an error
 		if($_FILES[$inputTagName] ["error"] !== UPLOAD_ERR_OK) {
@@ -281,7 +283,7 @@ class comment {
 		}
 
 		//create image depending on the type
-		if($extension === "png"){
+		if($extension === "png") {
 			$img = imagecreatefrompng($imageFileName);
 			$type = "image/png";
 		} else {
@@ -290,12 +292,12 @@ class comment {
 		}
 
 		// if image create failed throw exception
-		if($img === false){
+		if($img === false) {
 			throw(new ErrorException("create image failed"));
 		}
 
 		//scale the uploaded photo
-		imagescale($imageFileName,$new_width= 1024,[$mode = IMG_BILINEAR_FIXED]);
+		imagescale($imageFileName, $new_width = 1024, [$mode = IMG_BILINEAR_FIXED]);
 
 		// setup path name to store image
 		$path = "/var/www/html/public_html/trailquail/trail-images-" . $this->commentId;
@@ -303,10 +305,10 @@ class comment {
 		// save image depending on type
 		if($type === "image/png") {
 			$path = $path . "png";
-			$save = @imagepng ($imageFileName, $path);
+			$save = @imagepng($imageFileName, $path);
 		} else {
 			$path = $path . "jpeg";
-			$save = @imagejpeg($imageFileName, $path );
+			$save = @imagejpeg($imageFileName, $path);
 		}
 
 		if($save === false) {
@@ -321,6 +323,7 @@ class comment {
 		imagedestroy($imageFileName);
 
 	}
+
 	/**
 	 * accessor method for comment text
 	 *
@@ -372,8 +375,7 @@ class comment {
 
 		//bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
-		$formattedIpAddress = $this->ipAddress->format("foo");
-		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate,["ipAddress"=>$formattedIpAddress], "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this-> commentText];
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, ["ipAddress" => $this->ipAddress], "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this->commentText];
 		$statement->execute($parameters);
 
 		// update the null tweetId with what mySqL juat gave us
@@ -417,12 +419,55 @@ class comment {
 
 		// bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
-		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate,"ipAddress"=>$this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this-> commentText];
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this->commentText];
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * gets the comment by content
+	 *
+	 * @param PDO $pdo PDO connection object
+	 * @param string $commentText tweet content to search for
+	 * @return SplFixedArray all tweets found for this search
+	 * @throws PDOException when mySql related errors occur
+	 */
+	public static function getCommentByCommentText(PDO $pdo, $commentText) {
+		// sanitize the description before searching
+		$commentText = trim($commentText);
+		$commentText = filter_var($commentText, FILTER_SANITIZE_STRING);
+		if(empty($commentText) === true) {
+			throw(new PDOException("comment text is invalid"));
+		}
+		//create query template
+		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText WHERE tweetContent LIKE :tweetContent";
+		$statement = $pdo->prepare($query);
 
+		// bind the tweet content to the place holder in the template
+		$commentText = "%$commentText%";
+		$parameters = ["$commentText" => $parameters = ["commentText" => $commentText]];
+		$statement->execute($parameters);
+
+		// build an array of tweets
+		$comments = new SplFixedarray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$comment = new Comment($row["commentId"], $row["trailId"], $row["userId"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentType"], $row["commentText"]);
+				$comments [$comments->key()] = $comment;
+				$comments-> next();
+			} catch(Exception $exception) {
+				// if the couldn't be converted rethrow it
+				throw(new PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+	return($comments);
+	}
+	/**
+	 * gets
+	 *
+	 */
 }
+
 
 
 
