@@ -29,7 +29,8 @@ require_once(dirname(dirname(__DIR__))."/autoload.php");
  *
  * @author Trail Quail <trailquailabq@gmail.com>
  **/
-class Trail{
+class Trail {
+		use AntiAbuse;
 		/**
 		 * id for the trail; as stated above, this is the primary key
 		 * @var int trailId
@@ -350,7 +351,7 @@ class Trail{
 		 *
 		 *@param string $newTrailAccessibility new value of trailAccessibility
 		 **/
-			public function setTrailAccessibility($newTrailAccessibility){
+			public function setTrailAccessibility($newTrailAccessibility) {
 				$this->trailAccessibility = Filter::filterString($newTrailAccessibility,"Trail Accessibility", 256);
 			}
 		/**
@@ -366,8 +367,8 @@ class Trail{
 		 *
 		 *@param string $newTrailAmenities information on trail amenities
 		 **/
-			public function setTrailAmenities($newTrailAmenities){
-			$this->trailAmenities = Filter::filterString($newTrailAmenities,"Trail Amenities",256);
+			public function setTrailAmenities($newTrailAmenities) {
+			$this->trailAmenities = Filter::filterString($newTrailAmenities,"Trail Amenities", 256);
 			}
 		/**
 		 * accessor method for trailCondition
@@ -382,8 +383,8 @@ class Trail{
 		 *
 		 * @param string $newTrailCondition information on trail condition
 		 **/
-			public function setTrailCondition($newTrailCondition){
-				$this->trailCondition = Filter::filterString($newTrailCondition,"Trail Condition",256);
+			public function setTrailCondition($newTrailCondition) {
+				$this->trailCondition = Filter::filterString($newTrailCondition,"Trail Condition", 256);
 			}
 		/**
 		 * accessor method for trailDescription
@@ -399,7 +400,7 @@ class Trail{
 		 *@param string $newTrailDescription information describing the trail
 		 **/
 			public function setTrailDescription($newTrailDescription) {
-				$this->trailDescription = Filter::filterString($newTrailDescription,"Trail Description",512);
+				$this->trailDescription = Filter::filterString($newTrailDescription,"Trail Description", 512);
 			}
 		/**
 		 * accessor method for trailDifficulty
@@ -415,7 +416,7 @@ class Trail{
 		 * @param int $newTrailDifficulty
 		 **/
 			public function setTrailDifficulty($newTrailDifficulty){
-				$this->trailDifficulty = Filter::filterInt ($newTrailDifficulty,"Trail Difficulty",true);
+				$this->trailDifficulty = Filter::filterInt ($newTrailDifficulty,"Trail Difficulty", true);
 			}
 		/**
 		 * accessor method for trailDistance
@@ -431,23 +432,24 @@ class Trail{
 		 * @param int $newTrailDistance
 		 **/
 		public function setTrailDistance($newTrailDistance) {
-			$this->trailDistance = Filter::filterDouble($newTrailDistance,"Trail Distance");
+			$this->trailDistance = Filter::filterDouble($newTrailDistance, "Trail Distance");
 		}
 		/**
 		 * accessor method for trailName
 		 *
 		 * @return string value of trailName
 		 **/
-		public function getTrailName(){
+		public function getTrailName() {
 			return($this->trailName);
 		}
 		/**
 		 * mutator method for trailName
 		 *
+		 * @param $newTrailName
 		 * @return string
 		 **/
-		public function setTrailName($newTrailName){
-			$this->$newTrailName = Filter::filterString($newTrailName, "Trail Name",64);
+		public function setTrailName($newTrailName) {
+			$this->$newTrailName = Filter::filterString($newTrailName, "Trail Name", 64);
 		}
 		/**
 		 * accessor method for trailSubmissionType
@@ -494,8 +496,8 @@ class Trail{
 		 *
 		 * @param string
 		**/
-			public function setTrailTerrain($newTrailTerrain){
-			$this->$newTrailTerrain = Filter::filterString($newTrailTerrain,"Trail Terrain",128);
+			public function setTrailTerrain($newTrailTerrain) {
+			$this->$newTrailTerrain = Filter::filterString($newTrailTerrain,"Trail Terrain", 128);
 			}
 
 		/**
@@ -503,7 +505,7 @@ class Trail{
 		 *
 		 * @return string value of trailTraffic
 		**/
-			public function getTrailTraffic(){
+			public function getTrailTraffic() {
 				return($this->trailTraffic);
 			}
 		/**
@@ -511,8 +513,8 @@ class Trail{
 		 *
 		 * @param string
 		**/
-			public function setTrailTraffic($newTrailTraffic){
-				$this->$newTrailTraffic = Filter::filterString($newTrailTraffic,"Trail Traffic",16);
+			public function setTrailTraffic($newTrailTraffic) {
+				$this->$newTrailTraffic = Filter::filterString($newTrailTraffic,"Trail Traffic", 16);
 			}
 		/**
 		 * accessor method for trailUse
@@ -525,9 +527,95 @@ class Trail{
 		/**
 		 * mutator method for trailUse
 		**/
-			public function setTrailUse($newTrailUse){
+			public function setTrailUse($newTrailUse) {
 				$this->$newTrailUse = Filter::filterString($newTrailUse,"Trail Use",64);
 			}
 
+		/**
+		 * inserts this trail into mySQL
+		 *
+		 * @param PDO $pdo pointer to PDO connection, by reference
+		 * @throws PDOException when mySQL related errors occur
+		**/
+			public function insert(PDO &$pdo) {
+				if($this->trailId !== null) {
+					throw (new PDOException("not a new trail"));
+				}
 
+				//create query template
+				$query = "INSERT INTO trail(userId, submitTrailId, browser, createDate, ipAddress,
+trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
+trailTerrain, trailName, trailTraffic, trailUse, trailUuid) VALUES (:userId, :submitTrailId, :browser, :createDate,
+:ipAddress, :trailAccessibility, :trailAmenities, :trailCondition, :trailDescription, :trailDifficulty, :trailDistance,
+:trailSubmissionType, :trailTerrain, :trailName, :trailTraffic, :trailUse, :trailUuid)";
+				$statement = $pdo->prepare($query);
+
+				//bind the member variables to the placeholders in the template
+				$parameters = array("userid" => $this->getUserId(), "submitTrailId" => $this->getTrailId(), "browser" => $this->getBrowser(),
+"createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
+"trailCondition" => $this->getTrailCondition(), "trailDescription" =>$this->getTrailDescription(), "trailDifficulty" =>$this->getTrailDifficulty(), "trailDistance" =>$this->getTrailDistance(),
+"trailSubmissionType" =>$this->getTrailSubmissionType(), "trailTerrain" =>$this->getTrailTerrain(), "trailName" =>$this->getTrailName(), "trailTraffic" =>$this->getTrailTraffic(),
+"trailUse" =>$this->getTrailUse(), "trailUuid" =>$this->getTrailUuId());
+				$statement = $pdo->prepare($query);
+
+				//update the null trailId with what mySQL has generated
+				$this->setTrailId(intval($pdo->lastInsertId()));
+			}
+
+			/**
+			 * Deletes this trail from mySQL
+			 *
+			 * @param PDO $pdo pointer to PDO connection, by reference
+			 * @throws PDOException when mySQL related errors occur
+			**/
+			public function delete(PDO &$pdo) {
+				//make sure this trail already exists
+				if($this->getTrailId() === null) {
+					throw(new PDOException("Unable to delete a restaurant that does not exist"));
+				}
+
+				//create query template
+				$query = "DELETE FROM trail WHERE trailId = :trailId";
+				$statement = $pdo->prepare($query);
+
+				//bind the member variables to the placeholders in the templates
+				$parameters
+			}
+
+			/**
+			 * updates this trail in mySQL
+			 *
+			 * @param PDO $pdo pointer to PDO connection, by reference
+			 * @throws PDOException when mySQL related errors occur
+			**/
+			public function update(PDO &$pdo) {
+				//make sure this trail exists
+				if($this->getTrailId() === null) {
+					throw(new PDOException ("unable to update a trail that does not exist"));
+				}
+
+				//create a query template
+				$query ="UPDATE trail SET userId =:userId, submitTrailId =:submitTrailId, browser =:browser, createDate =:createDate, ipAddress =:ipAddress,
+trailAccessibility =:trailAccessibility, trailAmenities =:trailAmenities, trailCondition =:trailCondition, trailDescription =:trailDescription, trailDifficulty =:trailDifficulty,
+trailDistance =:trailDistance, trailSubmissionType =:trailSubmissionType,trailTerrain =:trailTerrain, trailName =:trailName, trailTraffic =:trailTraffic, trailUse =:trailUse, trailUuid =:trailUuid";
+				$statement =$pdo->prepare($query);
+
+				//bind the member variables to the placeholders in the templates
+				$parameters = array("userid" => $this->getUserId(), "submitTrailId" => $this->getTrailId(), "browser" => $this->getBrowser(),
+				"createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
+				"trailCondition" => $this->getTrailCondition(), "trailDescription" =>$this->getTrailDescription(), "trailDifficulty" =>$this->getTrailDifficulty(), "trailDistance" =>$this->getTrailDistance(),
+				"trailSubmissionType" =>$this->getTrailSubmissionType(), "trailTerrain" =>$this->getTrailTerrain(), "trailName" =>$this->getTrailName(), "trailTraffic" =>$this->getTrailTraffic(),
+				"trailUse" =>$this->getTrailUse(), "trailUuid" =>$this->getTrailUuId());
+				$statement->execute($parameters);
+			}
+
+			/**
+			 * gets the trail by trailId
+			 *
+			 * @param PDO $pdo pointer to PDO connection, by reference
+			 * @param int $trailId trailID to search for
+			 * @return mixed trail found or null if not found
+			 * @throws PDOException when mySQL related errors occur
+			 *
+			 */
 }
