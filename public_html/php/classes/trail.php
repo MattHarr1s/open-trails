@@ -137,7 +137,7 @@ class Trail {
 		 * @param $newTrailName
 		 * @param $newTrailTraffic
 		 * @param $newTrailUse
-		 * @param$newTrailUuId
+		 * @param $newTrailUuId
 		 * @throws InvalidArgumentException if data types are not valid
 		 * @throws RangeException if values are out of bounds
 		 * @throws Exception if some other exception is thrown

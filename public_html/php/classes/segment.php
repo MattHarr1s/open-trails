@@ -6,11 +6,11 @@ require_once(dirname(dirname(__DIR__))."/autoload.php");
  * This class can be used for any trail mapping application
  * The Segment class contains the following attributes:
  *
- * segmentId, the primary key
- * segmentStart
- * segmentStop
- * segmentStartElevation
- * segmentStopElevation
+ * -segmentId, the primary key
+ * -segmentStart
+ * -segmentStop
+ * -segmentStartElevation
+ * -     segmentStopElevation
  *
  * @author Matt Harris <mattharr505@gmail.com>
  **/
