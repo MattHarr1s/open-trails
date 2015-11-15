@@ -67,7 +67,7 @@ class Comment {
 			$this->setUserId($newUserId);
 			$this->setBrowser($newBrowser);
 			$this->setCreateDate($newCreateDate);
-			$this->setipAddress($newIpAddress);
+			$this->setIpAddress($newIpAddress);
 			$this->setCommentPhoto($newCommentPhoto);
 			$this->setCommentPhotoType($newCommentPhotoType);
 			$this->setCommentText($newCommentText);
@@ -506,10 +506,73 @@ class Comment {
 	/**
 	 * gets the comment by trailId
 	 *
-	 * @ param PDO $pdo PDO Connection object
-	 * @ param PDO $pdo PDO connection object
-	 *
+	 * @param PDO $pdo PDO Connection object
+	 * @param int $trailId trail id to search for
+	 * @return mixed trail relationship found or not null if not found
+	 * @throws PDOException when an mySQL related error occurs
 	 */
+	public static function getCommentByTrailId(PDO $pdo, $trailId) {
+		// sanitize the trailId before search
+		$trailId = filter_var($trailId, FILTER_VALIDATE_INT);
+		if($trailId === false) {
+			throw(new PDOException("trailId is not an integer"));
+		}
+		if($trailId <= 0) {
+			throw(new PDOException("trailId is not positive"));
+		}
+		// create query template
+		$query = "SELECT commentId, userId, browserType, createDate, ipAddress, commentPhoto, commentPhotoType,commentText FROM comment WHERE trailId = :trailId";
+		$statement = $pdo->prepare($query);
+
+		// bind the trailId to the placeholder in the template
+		$parameters =["trailId" => $trailId];
+		$statement->execute($parameters);
+
+		//grab the comment from mySQL
+		try{
+			$comment = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if ($row !== false){
+				$comment = new Comment($row["commentId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"],$row["commentText"]);
+			}
+		} catch(Exception $exception){
+			// if the row couldn't be converted rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+	return($comment);
+	}
+	/**
+	 * gets the comment by userId
+	 *
+	 * @param PDO $pdo PDO Connection object
+	 * @param int $userId user id to search for
+	 * @return mixed trail relationship found or not null if not found
+	 * @throws PDOException when an mySQL related error occurs
+	 */
+	public static function getCommentByUserId(PDO $pdo, $userId) {
+		$userId = filter_var($userId, FILTER_VALIDATE_INT);
+		if($userId === false) {
+			throw(new PDOException("user id  is not an integer"));
+		}
+		if($userId <= 0) {
+			throw(new PDOException("user id  is not positive"));
+		}
+		// create query template
+		$query = "SELECT commentId, trailId, browserType, createDate, ipAddress, commentPhoto, commentPhotoType,commentText FROM comment WHERE userId = :userId ";
+		$statement = $pdo->prepare($query);
+
+		// bind the userId to the placeholder in the template
+		$parameters = ["userId"=> $userId];
+		$statement->execute($parameters);
+
+		// grab the comment from mySQL
+		try{
+
+		}
+
+	}
+
 
 
 	/** gets all comments
