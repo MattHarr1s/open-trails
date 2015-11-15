@@ -11,7 +11,7 @@ require_once "autoload.php";
  *
  *@author George Kephart <gkephart@cnm.edu>
  */
-class comment {
+class Comment {
 	use AntiAbuse;
 	/**
 	 *id for this comment; this is a primary key
@@ -67,7 +67,7 @@ class comment {
 			$this->setUserId($newUserId);
 			$this->setBrowser($newBrowser);
 			$this->setCreateDate($newCreateDate);
-			$this->setIpaddress($newIpAddress);
+			$this->setipAddress($newIpAddress);
 			$this->setCommentPhoto($newCommentPhoto);
 			$this->setCommentPhotoType($newCommentPhotoType);
 			$this->setCommentText($newCommentText);
@@ -454,14 +454,15 @@ class comment {
 			try {
 				$comment = new Comment($row["commentId"], $row["trailId"], $row["userId"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentType"], $row["commentText"]);
 				$comments [$comments->key()] = $comment;
-				$comments-> next();
+				$comments->next();
 			} catch(Exception $exception) {
 				// if the couldn't be converted rethrow it
 				throw(new PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-	return($comments);
+		return ($comments);
 	}
+
 	/**
 	 * gets the comment by comment text
 	 *
@@ -470,7 +471,7 @@ class comment {
 	 * @return mixed comment found or null if not found
 	 * @throws PDOException when mySql related errors occur
 	 */
-	public static function getCommentByCommentId( PDO $pdo, $commentId) {
+	public static function getCommentByCommentId(PDO $pdo, $commentId) {
 		// sanitize the tweetId before searching
 		$commentId = filter_var($commentId, FILTER_VALIDATE_INT);
 		if($commentId === false) {
@@ -481,7 +482,7 @@ class comment {
 		}
 
 		//create query template
-		$query =  "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText WHERE commentId = :commentId";
+		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText WHERE commentId = :commentId";
 		$statement = $pdo->prepare($query);
 
 		// bind the tweet id to the place holder in the template
@@ -494,13 +495,49 @@ class comment {
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$comment = new Comment($row["commentId"]), ($row["trailId"]), ($row["userId"]), ($row["browser"]), ($row["createDate"]), ($row["IpAddress"]), ($row["commentPhoto"]), ($row["commentPhotoType"]), ($row["commentText"]);
+				$comment = new Comment ($row["commentId"], $row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["IpAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"]);
 			}
-			} catch(Exception $exception) {
+		} catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($comment);
+		return ($comment);
+	}
+	/**
+	 * gets the comment by trailId
+	 *
+	 * @ param PDO $pdo PDO Connection object
+	 * @ param PDO $pdo PDO connection object
+	 *
+	 */
+
+
+	/** gets all comments
+	 *
+	 * @param PDO $pdo PDO Connection object
+	 * @return SplFixedArray all comments found
+	 *	@throws PDOException when MySQL errors occur
+	 */
+	public static function getAllComments(PDO $pdo){
+		//create query template
+		$query = "SELECT commentId, trailId, UserId, browserType, createDate, ipAddress, commentPhoto, commentPhotoType,commentText";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		//build an array of comments
+		$comments = new SPLFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$comment = new Comment($row["commentId"], $row["trailId"],$row["userId"], $row["browserType"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"] );
+				$comments[$comments->key()] = $comment;
+				$comments->next();
+			} catch(Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+	return($comments);
 	}
 }
 
