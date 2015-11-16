@@ -693,7 +693,7 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuid FROM trail WHERE user
 	 * gets the trail by browser
 	 *
 	 * @param PDO $pdo pointer to PDO connection, by reference
-	 * @param int $browser browser to search for
+	 * @param string $browser browser to search for
 	 * @return mixed trail found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 *
