@@ -411,7 +411,7 @@ class User  {
 			}
 		}	catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
-			throw(new PDOException($exception-getMessage(), 0, $exception));
+			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 		return($user);
 	}
@@ -456,7 +456,7 @@ class User  {
 			}
 		}	catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
-			throw(new PDOException($exception-getMessage(), 0, $exception));
+			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 		return($user);
 	}
@@ -488,21 +488,69 @@ class User  {
 		$statement = $pdo->prepare($query);
 
 		// bind userId to placeholder
+		$userName = "%$userName%";
 		$parameters = array("userName" => $userName);
 		$statement->execute($parameters);
 
-		// grab the user id information from mySQL
-		try {
-			$userEmail = null;
-			$statement->setFetchMode(PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		// build a user id information array from mySQL
+		$users = new SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
 				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
-			}
+				$users[$users->key()] = $user;
+				$users->next();
 		}	catch(Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw(new PDOException($exception-getMessage(), 0, $exception));
+				// if the row couldn't be converted, rethrow it
+				throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 		return($user);
 	}
+
+		/**
+		 * get all users
+		 *
+		 * @param PDO $pdo -- pointer to PDO connection, by reference
+		 * @param string $userName -- user email address
+		 * @return user ID information if found or null if not found
+		 * @throws PDOException when mySQL related errors occur
+		 *
+		 **/
+		public static function getUserByUserName (PDO $pdo, $userName) {
+			// verify that the userName is secure
+			$userName = trim($userName);
+			$userName = filter_var($userName, FILTER_SANITIZE_STRING);
+			if(EMPTY($userName) === true) {
+				throw(new PDOException("User name is empty on insecure."));
+			}
+
+			// verify that the user name will fit in the database
+			if(strlen($userName) > 64) {
+				throw(new PDOException("User name length is too long.  Must be 64 characters or less."));
+			}
+
+			// create user query template
+			$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user WHERE userName = :userNmae";
+			$statement = $pdo->prepare($query);
+
+			// bind userId to placeholder
+			$userName = "%$userName%";
+			$parameters = array("userName" => $userName);
+			$statement->execute($parameters);
+
+			// build a user id information array from mySQL
+			$users = new SplFixedArray($statement->rowCount());
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			while(($row = $statement->fetch()) !== false) {
+				try {
+					$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
+					$users[$users->key()] = $user;
+					$users->next();
+				}	catch(Exception $exception) {
+					// if the row couldn't be converted, rethrow it
+					throw(new PDOException($exception->getMessage(), 0, $exception));
+				}
+				return($user);
+			}
+		}
 }
