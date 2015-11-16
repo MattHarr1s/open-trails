@@ -1,4 +1,4 @@
-<phpunit>
+<!--<phpunit>
 <testsuites>
 	<testsuite name="Trail Quail">
 		<directory suffix="-test.php">.</directory>
@@ -9,4 +9,12 @@
 		<directory suffix=".php">../public_html/php/classes</directory>
 	</whitelist>
 </filter>
+</phpunit> -->
+
+<phpunit>
+	<testsuites>
+		<testsuite name="Trail Quail">
+			<file>anti-abuse.php</file>
+		</testsuite>
+	</testsuites>
 </phpunit>
