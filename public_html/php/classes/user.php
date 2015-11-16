@@ -394,7 +394,7 @@ class User  {
 		}
 
 		// create user query template
-		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM trail WHERE userId = :userId";
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user WHERE userId = :userId";
 		$statement = $pdo->prepare($query);
 
 		// bind userId to placeholder
@@ -406,7 +406,7 @@ class User  {
 			$user = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
-			while(($row !== false) {
+			if($row !== false) {
 				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
 			}
 		}	catch(Exception $exception) {
@@ -429,7 +429,7 @@ class User  {
 		// sanitize the userId before searching
 		$userEmail = trim($userEmail);
 		$userEmail = filter_var($userEmail, FILTER_SANITIZE_EMAIL);
-		if(EMPTY($userEmail) ==== true) {
+		if(EMPTY($userEmail) === true) {
 			throw(new PDOException("User email address is not valid"));
 		}
 
@@ -439,7 +439,7 @@ class User  {
 		}
 
 		// create user query template
-		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM trail WHERE userId = :userId";
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user WHERE userEmail = :userEmail";
 		$statement = $pdo->prepare($query);
 
 		// bind userId to placeholder
@@ -474,16 +474,21 @@ class User  {
 		// verify that the userName is secure
 		$userName = trim($userName);
 		$userName = filter_var($userName, FILTER_SANITIZE_STRING);
-		if(EMPTY($userName) ==== true) {
-			throw(new PDOException("User email is not valid"));
+		if(EMPTY($userName) === true) {
+			throw(new PDOException("User name is empty on insecure."));
+		}
+
+		// verify that the user name will fit in the database
+		if(strlen($userName) > 64) {
+			throw(new PDOException("User name length is too long.  Must be 64 characters or less."));
 		}
 
 		// create user query template
-		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM trail WHERE userId = :userId";
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user WHERE userName = :userNmae";
 		$statement = $pdo->prepare($query);
 
 		// bind userId to placeholder
-		$parameters = array("userEmail" => $userEmail);
+		$parameters = array("userName" => $userName);
 		$statement->execute($parameters);
 
 		// grab the user id information from mySQL
