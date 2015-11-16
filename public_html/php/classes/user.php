@@ -4,7 +4,7 @@ require_once(dirname(__DIR__)  .  "/traits/anti-abuse.php");
 require_once "autoload.php";
 
 /**
- * Trail Quail user class -- this is where user information is stored
+ * Trail Quail user class -- this is where user id information is stored
  * This is part of the Trail Quail web application.  This feature will determine who the registered users
  * are and what level of access they have.  It will also store the userId, the user's name, their email address,
  * their browsing information, and datetime stamp when their account was set up.
@@ -401,13 +401,13 @@ class User  {
 		$parameters = array("userId" => $userId);
 		$statement->execute($parameters);
 
-		// grab the user id information from mySQL
+		// find user id information using the user's email address from mySQL
 		try {
 			$user = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
-			if($row !== false) {
-				$user = new User($row["userId"], $row[browser], $row[createDate], $row[ipAddress], $row[userAccountType], $row[userEmail], $row[userHash], $row[userName], $row[userSalt]);
+			while(($row !== false) {
+				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
 			}
 		}	catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -416,5 +416,88 @@ class User  {
 		return($user);
 	}
 
+/**
+* gets user ID information by user email address
+*
+* @param PDO $pdo -- pointer to PDO connection, by reference
+* @param string $userEmail -- user email address
+* @return user ID information if found or null if not found
+* @throws PDOException when mySQL related errors occur
+*
+**/
+	public static function getUserByUserEmail (PDO $pdo, $userEmail) {
+		// sanitize the userId before searching
+		$userEmail = trim($userEmail);
+		$userEmail = filter_var($userEmail, FILTER_SANITIZE_EMAIL);
+		if(EMPTY($userEmail) ==== true) {
+			throw(new PDOException("User email address is not valid"));
+		}
 
+		// verify that the user email address is not too large
+		if(strlen($userEmail) > 128) {
+			throw(new PDOException("User email address is too large"));
+		}
+
+		// create user query template
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM trail WHERE userId = :userId";
+		$statement = $pdo->prepare($query);
+
+		// bind userId to placeholder
+		$parameters = array("userEmail" => $userEmail);
+		$statement->execute($parameters);
+
+		// grab the user id information from mySQL
+		try {
+			$userEmail = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
+			}
+		}	catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception-getMessage(), 0, $exception));
+		}
+		return($user);
+	}
+
+	/**
+	 * gets user ID information by userName
+	 *
+	 * @param PDO $pdo -- pointer to PDO connection, by reference
+	 * @param string $userName -- user email address
+	 * @return user ID information if found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 *
+	 **/
+	public static function getUserByUserName (PDO $pdo, $userName) {
+		// verify that the userName is secure
+		$userName = trim($userName);
+		$userName = filter_var($userName, FILTER_SANITIZE_STRING);
+		if(EMPTY($userName) ==== true) {
+			throw(new PDOException("User email is not valid"));
+		}
+
+		// create user query template
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM trail WHERE userId = :userId";
+		$statement = $pdo->prepare($query);
+
+		// bind userId to placeholder
+		$parameters = array("userEmail" => $userEmail);
+		$statement->execute($parameters);
+
+		// grab the user id information from mySQL
+		try {
+			$userEmail = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
+			}
+		}	catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception-getMessage(), 0, $exception));
+		}
+		return($user);
+	}
 }
