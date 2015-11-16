@@ -117,10 +117,8 @@ class Segment implements JsonSerializable {
  *
  * @param float $newSegmentStart.
 **/
-	public function setSegmentStart($newSegmentStart){
-		$this->segmentStart = ($newSegmentStart);
-
-
+	public function setSegmentStart(Point $newSegmentStart){
+		$this->segmentStart = $newSegmentStart;
 	}
 
 /**
@@ -135,10 +133,10 @@ class Segment implements JsonSerializable {
 /**
  *mutator method for segmentStop
  *
- *@param float $newSegmentStop
+ *@param Point $newSegmentStop
 **/
-	public function setSegmentStop($newSegmentStop){
-		$this->$newSegmentStop = Point::jsonSerialize($newSegmentStop);
+	public function setSegmentStop(Point $newSegmentStop){
+		$this->$newSegmentStop = $newSegmentStop;
 	}
 
 /**
