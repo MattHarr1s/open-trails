@@ -1,6 +1,6 @@
 <?php
 require_once("trail-quail.php");
-require_once(dirname(__DIR__) . "/php/classes/trail-relationship.php");
+require_once(dirname(__DIR__). "/php/classes/autoload.php");
 
 /**
  * Full PHPUnit test for the TrailRelationship class

@@ -1,20 +1,15 @@
-<!--<phpunit>
-<testsuites>
-	<testsuite name="Trail Quail">
-		<directory suffix="-test.php">.</directory>
-	</testsuite>
-</testsuites>
-<filter>
-	<whitelist processUncoveredFilesFromWhitelist="true">
-		<directory suffix=".php">../public_html/php/classes</directory>
-	</whitelist>
-</filter>
-</phpunit> -->
-
 <phpunit>
 	<testsuites>
 		<testsuite name="Trail Quail">
+			<file>anti-abuse-test.php</file>
 			<file>trail-test.php</file>
+			<file>trail-relationship-test.php</file>
+			<!--<directory suffix="-test.php">.</directory>-->
 		</testsuite>
 	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">../public_html/php/classes</directory>
+		</whitelist>
+	</filter>
 </phpunit>
