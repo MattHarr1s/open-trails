@@ -90,7 +90,16 @@ class UserTest extends TrailQuailTest {
 		$user->insert($$this->getPDO());
 
 		// grab the data from mySQL and verify the fields match our expectation
-		$pdoUser = User::getUser
+		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("user"));
+		$this->assertSame($pdoUser->$getBrowser(), $this->VALID_BROWSER);
+		$this->assertSame($pdoUser->$getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertSame($pdoUser->$getIpAddress(), $this->VALID_IPADDRESS);
+		$this->assertSame($pdoUser->$getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
+		$this->assertSame($pdoUser->$getUserEmail(), $this->VALID_USEREMAIL);
+		$this->assertSame($pdoUser->$getUserHash(), $this->VALID_USERHASH);
+		$this->assertSame($pdoUser->$getUserName(), $this->VALID_USERNAME);
+		$this->assertSame($pdoUser->$getUserSalt(), $this->VALID_USERSALT);
 	}
 
 }
