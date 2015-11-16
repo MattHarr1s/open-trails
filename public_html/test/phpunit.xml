@@ -14,7 +14,7 @@
 <phpunit>
 	<testsuites>
 		<testsuite name="Trail Quail">
-			<file>anti-abuse.php</file>
+			<file>anti-abuse-test.php</file>
 		</testsuite>
 	</testsuites>
 </phpunit>
