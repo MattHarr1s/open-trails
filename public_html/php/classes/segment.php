@@ -10,11 +10,11 @@ require_once(dirname(dirname(__DIR__))."/php/classes/autoload.php");
  * -segmentStart
  * -segmentStop
  * -segmentStartElevation
- * -     segmentStopElevation
+ * -segmentStopElevation
  *
  * @author Matt Harris <mattharr505@gmail.com>
  **/
-class Segment {
+class Segment implements JsonSerializable {
 	/**
 	 * Id for this segment; as stated above, this is the primary key
 	 *
@@ -101,7 +101,7 @@ class Segment {
  * @param mixed $newSegmentId new value of segmentId
  **/
 	public function setSegmentId($newSegmentId){
-		$this->segmentId = Filter::filterInt($newSegmentId,"Segment Id",true);
+		$this->segmentId = Filter::filterInt($newSegmentId,"Segment Id", true);
 	}
 /**
  * accessor method for segmentStart
@@ -118,7 +118,7 @@ class Segment {
  * @param float $newSegmentStart.
 **/
 	public function setSegmentStart($newSegmentStart){
-		$this->segmentStart = Point::setX($newX), setY ($newY);
+		$this->segmentStart = ($newSegmentStart);
 
 
 	}
@@ -138,7 +138,7 @@ class Segment {
  *@param float $newSegmentStop
 **/
 	public function setSegmentStop($newSegmentStop){
-		$this->$newSegmentStop = new Point($newX,$newY);
+		$this->$newSegmentStop = Point::jsonSerialize($newSegmentStop);
 	}
 
 /**
@@ -281,7 +281,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 
 			if($row !== false) {
 				//new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segment = new Segment($row["segmentId"], $row[$segmentStart], $row[$segmentStop], $row[$segmentStartElevation], $row[$segmentStopElevation]);
+				$segment = new Segment($row["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
 			}
 		} catch(Exception $e) {
 			//if the row couldn't be converted, rethrow it
@@ -348,7 +348,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * @throws Exception for other exception
 	 */
 	public static function getSegmentByStop( PDO &$pdo, $segmentStop){
-		//santize the float before searching
+		//sanitize the float before searching
 		try {
 			$segmentStop = Filter::filterDouble($segmentStop, "segment stop");
 		} catch (InvalidArgumentException $invalidArgument) {
@@ -435,7 +435,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * gets segment by segmentStopElevation
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param float $segmentStopElevation stop point to search for
+	 * @param float $segmentStopElevation stop elevation to search for
 	 * @return mixed segment found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 * @throws RangeException when range is invalid
@@ -476,5 +476,15 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 			}
 		}
 		return($segments);
+	}
+
+	/**
+	 * specifies which fields to include in a JSON serialization
+	 *
+	 * @return array array containing all fields in the Segment
+	 **/
+
+	public function jsonSerialize() {
+		return(get_object_vars($this));
 	}
 }

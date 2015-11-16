@@ -25,7 +25,7 @@ require_once(dirname(dirname(__DIR__))."/autoload.php");
  *
  * @author Matt Harris <mattharr505@gmail.com> and Trail Quail<trailquailabq@gmail.com>
  **/
-class Trail {
+class Trail implements JsonSerializable {
 		use AntiAbuse;
 		/**
 		 * id for the trail; as stated above, this is the primary key
@@ -1346,5 +1346,15 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trai
 			}
 		}
 		return($trails);
+	}
+
+	/**
+	 * specifies which fields to include in a JSON serialization
+	 *
+	 * @return array array containing all fields in the Segment
+	 **/
+
+	public function jsonSerialize() {
+		return(get_object_vars($this));
 	}
 }

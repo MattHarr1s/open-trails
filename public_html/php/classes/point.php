@@ -11,7 +11,7 @@ require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
  * @author Trail Quail
  * @author Matt Harris
  */
-class Point {
+class Point implements JsonSerializable {
 	/**
 	 * @var double $x
 	 */
@@ -111,5 +111,15 @@ class Point {
 
 		// convert and return the new float
 		$this->y = $newY;
+	}
+
+	/**
+	 * specifies which fields to include in a JSON serialization
+	 *
+	 * @return array array containing all fields in the Segment
+	**/
+
+	public function jsonSerialize() {
+		 return(get_object_vars($this));
 	}
 }
