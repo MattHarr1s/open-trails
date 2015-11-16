@@ -76,7 +76,7 @@ class Trail {
 
 		/**
 		 * length of the trail
-		 * @var int trailDistance
+		 * @var float trailDistance
 		 **/
 		private $trailDistance;
 
@@ -246,7 +246,7 @@ class Trail {
 		 *@param string $newTrailAccessibility new value of trailAccessibility
 		 **/
 			public function setTrailAccessibility($newTrailAccessibility) {
-				$this->trailAccessibility = Filter::filterString($newTrailAccessibility,"Trail Accessibility", 256);
+				$this->trailAccessibility = Filter::filterString($newTrailAccessibility,"Trail Accessibility", 32);
 			}
 
 		/**
@@ -300,7 +300,7 @@ class Trail {
 		 *@param string $newTrailDescription information describing the trail
 		 **/
 			public function setTrailDescription($newTrailDescription) {
-				$this->trailDescription = Filter::filterString($newTrailDescription,"Trail Description", 512);
+				$this->trailDescription = Filter::filterString($newTrailDescription, "Trail Description", 512);
 			}
 
 		/**
@@ -324,7 +324,7 @@ class Trail {
 		/**
 		 * accessor method for trailDistance
 		 *
-		 * @return int value of trailDistance
+		 * @return float value of trailDistance
 		 **/
 			public function getTrailDistance() {
 				return ($this->trailDistance);
@@ -333,7 +333,7 @@ class Trail {
 		/**
 		 *mutator method for trailDistance
 		 *
-		 * @param int $newTrailDistance
+		 * @param float $newTrailDistance
 		 **/
 		public function setTrailDistance($newTrailDistance) {
 			$this->trailDistance = Filter::filterDouble($newTrailDistance, "Trail Distance");
@@ -439,6 +439,8 @@ class Trail {
 
 		/**
 		 * mutator method for trailUse
+		 *
+		 * @param string $newTrailUse
 		**/
 			public function setTrailUse($newTrailUse) {
 				$this->$newTrailUse = Filter::filterString($newTrailUse,"Trail Use", 64);
@@ -459,7 +461,7 @@ class Trail {
 	 	 * @param string $newTrailUuId
 	 	**/
 	public function setTrailUuId($newTrailUuId){
-		$this->trailUuId = Filter::filterString($newTrailUuId,"Trail UuId", 36);
+		$this->trailUuId = Filter::filterString($newTrailUuId, "Trail UuId", 36);
 	}
 
 		/**
@@ -689,6 +691,7 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuid FROM trail WHERE user
 		return($trails);
 	}
 
+
 	/**
 	 * gets the trail by browser
 	 *
@@ -697,7 +700,7 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuid FROM trail WHERE user
 	 * @return mixed trail found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 *
-	 **/
+
 	public static function getTrailByBrowser (PDO &$pdo, $browser) {
 		//sanitize the browser before searching
 		try {
@@ -737,7 +740,7 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE brow
 		}
 		return($trails);
 	}
-
+	**/
 	/**
 	 * gets the trail by createDate
 	 *

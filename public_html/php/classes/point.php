@@ -1,10 +1,10 @@
 <?php
-require_once(dirname(dirname(__DIR__)) . "public_html/php/classes/autoload.php");
+require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
 
 /**
  * point class for trail quail trail class
  *
- * point is a container class that two state variables
+ * point is a container class that contains two state variables
  * var $x is the longitude
  * var $y is the latitude
  *
@@ -23,6 +23,7 @@ class Point {
 
 	/**
 	 * constructor for Point object
+	 *
 	 * @param $newX
 	 * @param $newY
 	 * @throws exception
