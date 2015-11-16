@@ -81,9 +81,9 @@ class TrailTest extends TrailQuailTest {
 
 	/**
 	 * length of the trail
-	 * @var int $VALID_TRAILDISTANCE
+	 * @var float $VALID_TRAILDISTANCE
 	 **/
-	protected $VALID_TRAILDISTANCE = "1000";
+	protected $VALID_TRAILDISTANCE = "1054.53";
 
 	/**
 	 * type of submission made to trail
@@ -718,7 +718,7 @@ class TrailTest extends TrailQuailTest {
 			$trail->insert($this->getPDO());
 
 			//grab the data from mySQL and enforce the fields match our expectations
-			$pdoTrail = Trail::getTrailByTrailSubmissionType($this->getPDO(), $trail->getTrailTrailSubmissionType());
+			$pdoTrail = Trail::getTrailByTrailSubmissionType($this->getPDO(), $trail->getTrailSubmissionType());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
 			$this->assertSame($pdoTrail->getSubmitTrailId(), $this->VALID_SUBMITTRAILID);
@@ -1024,7 +1024,7 @@ class TrailTest extends TrailQuailTest {
 
 		/**
 		 * test grabbing a trail by Browser
-		 **/
+
 		public
 		function testGetValidTrailByBrowser() {
 			//count the number of rows and save it for later
@@ -1040,7 +1040,7 @@ class TrailTest extends TrailQuailTest {
 			$trail->insert($this->getPDO());
 
 //grab the data from mySQL and enforce the fields match our expectations
-			$pdoTrail = Trail::getTrailById($this->getPDO(), $trail->getTrailId());
+			$pdoTrail = Trail::getTrailByBrowser($this->getPDO(), $trail->getTrailId());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
 			$this->assertSame($pdoTrail->getSubmitTrailId(), $this->VALID_SUBMITTRAILID);
@@ -1063,11 +1063,11 @@ class TrailTest extends TrailQuailTest {
 			$this->assertSame($pdoTrail->getTrailUuId(), $this->VALID_TRAILUUID);
 		}
 
-		/**
+
 		 * test grabbing a Trail by Browser that does not exist
 		 *
 		 * @expectedException PDOException
-		 **/
+
 
 		public
 		function testGetInvalidTrailByBrowser() {
@@ -1075,6 +1075,7 @@ class TrailTest extends TrailQuailTest {
 			$trail = Trail::getTrailByBrowser($this->getPDO(), "<script></script>");
 			$this->assertNull($trail);
 		}
+		 **/
 
 		/**
 		 * test grabbing a trail by CreateDate
@@ -1094,7 +1095,7 @@ class TrailTest extends TrailQuailTest {
 			$trail->insert($this->getPDO());
 
 //grab the data from mySQL and enforce the fields match our expectations
-			$pdoTrail = Trail::getTrailById($this->getPDO(), $trail->getTrailId());
+			$pdoTrail = Trail::getTrailByCreateDate($this->getPDO(), $trail->getCreateDate());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
 			$this->assertSame($pdoTrail->getSubmitTrailId(), $this->VALID_SUBMITTRAILID);
@@ -1148,7 +1149,7 @@ class TrailTest extends TrailQuailTest {
 			$trail->insert($this->getPDO());
 
 //grab the data from mySQL and enforce the fields match our expectations
-			$pdoTrail = Trail::getTrailById($this->getPDO(), $trail->getTrailId());
+			$pdoTrail = Trail::getTrailByIpAddress($this->getPDO(), $trail->getIpAddress());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
 			$this->assertSame($pdoTrail->getSubmitTrailId(), $this->VALID_SUBMITTRAILID);
