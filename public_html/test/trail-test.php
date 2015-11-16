@@ -1,6 +1,5 @@
 <?php
-require_once("trail.php");
-require_once(dirname(__DIR__). "/classes/trail.php");
+require_once(dirname(__DIR__). "/php/classes/trail.php");
 
 /**
  *
