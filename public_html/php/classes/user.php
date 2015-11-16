@@ -316,7 +316,7 @@ class User  {
 			throw(new PDOException("not a new user"));
 		}
 
-		// create user template
+		// create user query template
 		$query = "INSERT INTO user(userId, browswer, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt ) VALUES (:userId, :browser, :createDate, :ipAddress, :userAccountType, :userEmail, :userHash, :userName, :userSalt)";
 		$statement = $pdo->prepare($query);
 
@@ -362,7 +362,7 @@ class User  {
 		// Check to see that the user's userId is not null
 		// i.e. check to see that user has user information stored before updating
 		if($this->userId === null) {
-			throw(new PDOException("unable to update a user's ID information that does not exist"));
+			throw(new PDOException("unable to update ID information for a user that does not exist"));
 		}
 		// create query template
 		$query = "UPDATE user SET userId = :userId, browser = :browser, createDate = :createDate, ipAddress = :ipAddress, userAccountType = :userAccountType, userEmail = :userEmail, userHash = :userHash, userName = :userName, userSalt = :userSalt";
@@ -377,50 +377,43 @@ class User  {
 	/**
 	 * gets user ID information by userId
 	 *
-	 * @param PDO $pdo pointer to PDO connection, by reference
-	 * @param int $userId userId to search for
+	 * @param PDO $pdo -- pointer to PDO connection, by reference
+	 * @param int $userId -- userId to search for
 	 * @return user ID information if found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getUserByUserId (PDO &$pdo, $userId) {
-		//sanitize the userId before searching
-		try {
-			$userId = Filter::filterInt($userId, "userId");
-		} catch (InvalidArgumentException $invalidArgument ) {
-			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
-			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
-			throw(new PDOException($exception->getMessage(), 0, $exception));
+	public static function getUserByUserId (PDO $pdo, $userId) {
+		// sanitize the userId before searching
+		$userId = filter_var($userId, FILTER_VALIDATE_INT);
+		if($userId === false) {
+			throw(new PDOException("User id is not an integer"));
+		}
+		if($userId <= 0) {
+			throw(new PDOException("User id is not positive"));
 		}
 
-		//create query template
-		$query = "SELECT userId, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userId";
+		// create user query template
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM trail WHERE userId = :userId";
 		$statement = $pdo->prepare($query);
 
-		//bind userId to placeholder
+		// bind userId to placeholder
 		$parameters = array("userId" => $userId);
 		$statement->execute($parameters);
 
-		//build an array of trails
-		$trails = new SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
-			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuid"]);
-				$trails[$trails->key()] = $trail;
-				$trails->next();
-			} catch (Exception $e) {
-				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+		// grab the user id information from mySQL
+		try {
+			$user = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$user = new User($row["userId"], $row[browser], $row[createDate], $row[ipAddress], $row[userAccountType], $row[userEmail], $row[userHash], $row[userName], $row[userSalt]);
 			}
+		}	catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception-getMessage(), 0, $exception));
 		}
-		return($trails);
+		return($user);
 	}
 
 
