@@ -1,5 +1,4 @@
 <?php
-require_once("segment.php");
 require_once(dirname(__DIR__). "/php/classes/segment.php");
 
 /**
