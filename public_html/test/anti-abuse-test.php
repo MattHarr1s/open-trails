@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__DIR__) . "/php/traits/anti-abuse.php");
+require_once(dirname(__DIR__) . "/traits/anti-abuse.php");
 
 /**
  * Full PHPUnit test for the AntiAbuse trait

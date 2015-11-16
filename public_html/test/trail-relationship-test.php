@@ -21,7 +21,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 * valid segmentId to use
 	 * @var int $VALID_SEGMENTID
 	 **/
-	protected $VALID_SEGMENTID = "1";
+	protected $VALID_SEGMENTID = 1;
 
 	/**
 	 * valid segmentType to use
