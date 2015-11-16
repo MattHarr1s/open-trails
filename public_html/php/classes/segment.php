@@ -484,7 +484,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * @return array array containing all fields in the Segment
 	 **/
 
-	public function jsonSerialize() {
+	public function jsonSerializeSegment() {
 		return(get_object_vars($this));
 	}
 }

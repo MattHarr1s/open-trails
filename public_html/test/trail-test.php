@@ -38,7 +38,7 @@ class TrailTest extends TrailQuailTest {
 
 	/**
 	 * createDate of submission to trail
-	 * @var $VALID_CREATEDATE
+	 * @var datetime $VALID_CREATEDATE
 	 **/
 	protected $VALID_CREATEDATE = "2015-11-15 12:15:42";
 

@@ -119,7 +119,7 @@ class Point implements JsonSerializable {
 	 * @return array array containing all fields in the Segment
 	**/
 
-	public function jsonSerialize() {
+	public function jsonSerializeTrail() {
 		 return(get_object_vars($this));
 	}
 }
