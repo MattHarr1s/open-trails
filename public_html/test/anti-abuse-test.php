@@ -66,7 +66,7 @@ class TraitTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * test using an invalid ipAddress
 	 *
-	 * @expectedException PDOException
+	 * @expectedException UnexpectedValueException
 	 **/
 	public function testInvalidAntiAbuse() {
 		$useTheTrait = new UseTheTrait();
