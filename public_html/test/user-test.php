@@ -49,4 +49,14 @@ class UserTest extends TrailQuailTest {
 	/**valid user hash to use
 	 * @var string $VALID_USERHASH
 	 */
-	protected $VALID_USERHASH= "saul.jeff@gmail.com";
+	protected $VALID_USERHASH= null;
+
+	protected $VALID_USERSALT= null;
+
+	public function setUp() {
+		parent::setUp();
+
+		$this->VALID_USERSALT = bin2hex(openssl_random_pseudo_bytes(32));
+		$this->VALID_USERHASH = hash_pbkdf2("sha512", "iLoveIllinois", $this->VALID_USERSALT, 262144, 128);
+	}
+}
