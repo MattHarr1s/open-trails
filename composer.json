@@ -1,0 +1,5 @@
+{
+    "require": {
+        "pascaldevink/shortuuid": "^1.0"
+    }
+}

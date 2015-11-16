@@ -106,7 +106,7 @@ class Comment {
 			return;
 		}
 
-		//verify the tweet id is valid
+		//verify the comment id is valid
 		$newCommentId = filter_var($newCommentId, FILTER_VALIDATE_INT);
 		if($newCommentId === false) {
 			throw(new InvalidArgumentException("comment is not a valid integer"));
@@ -209,7 +209,7 @@ class Comment {
 		}
 
 		//verify the comment photo path is the correct length to fit into the
-		if(strlen($newCommentPhoto) > 256) {
+		if(strlen($newCommentPhoto) > 255) {
 			throw (new RangeException("comment photo  file path is to long"));
 		}
 
@@ -218,9 +218,7 @@ class Comment {
 	}
 
 	/**
-	 *
-	 * /**
-	 * accessor method for comment photo type
+	 *accessor method for comment photo type
 	 *
 	 * @return string value of the comment photo type.
 	 */
@@ -264,8 +262,8 @@ class Comment {
 		$acceptedExt = ["jpeg", "png"];
 
 		//grab data from $_FILES
-		$imgType = $_FILES[$inputTagName] ["type"];
 		$imgName = $_FILES[$inputTagName] ["name"];
+		$imgType = $_FILES[$inputTagName] ["type"];
 		$imageFileName = $_FILES[$inputTagName] ["temp_name"];
 
 		//setup extensions for verification
@@ -278,7 +276,7 @@ class Comment {
 		}
 
 		// verify the extension
-		if(in_array($extension, $acceptedExt) === "png") {
+		if(in_array($extension, $acceptedExt) === false) {
 			throw(new InvalidArgumentException("invalid File Extension"));
 		}
 
@@ -360,7 +358,7 @@ class Comment {
 	 * @param PDO $pdo PDo connection object
 	 * @throws PDOException when MySQL related errors happen
 	 */
-	public function insert(PDO $pdo) {
+	public function insert (PDO $pdo) {
 		// enforce the commentId is null
 		if($this->commentId !== null) {
 			throw(new PDOException("not a new comment"));
@@ -439,20 +437,20 @@ class Comment {
 			throw(new PDOException("comment text is invalid"));
 		}
 		//create query template
-		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText WHERE tweetContent LIKE :tweetContent";
+		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText FROM comment WHERE tweetContent LIKE :tweetContent";
 		$statement = $pdo->prepare($query);
 
 		// bind the tweet content to the place holder in the template
 		$commentText = "%$commentText%";
-		$parameters = ["$commentText" => $parameters = ["commentText" => $commentText]];
+		$parameters = ["commentText"=> $commentText];
 		$statement->execute($parameters);
 
-		// build an array of tweets
+		// build an array of comments
 		$comments = new SplFixedarray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$comment = new Comment($row["commentId"], $row["trailId"], $row["userId"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentType"], $row["commentText"]);
+				$comment = new Comment($row["commentId"], $row["trailId"],$row["userId"], $row["browserType"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"] );
 				$comments [$comments->key()] = $comment;
 				$comments->next();
 			} catch(Exception $exception) {
@@ -466,7 +464,7 @@ class Comment {
 	/**
 	 * gets the comment by comment text
 	 *
-	 * @param PDO $pdo PDO connection object
+	 * @param PDO $pdo connection object
 	 * @param int $commentId comment id to search for
 	 * @return mixed comment found or null if not found
 	 * @throws PDOException when mySql related errors occur
@@ -482,11 +480,11 @@ class Comment {
 		}
 
 		//create query template
-		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText WHERE commentId = :commentId";
+		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText FROM comment WHERE commentId = :commentId";
 		$statement = $pdo->prepare($query);
 
 		// bind the tweet id to the place holder in the template
-		$parameters = array("commentId" => $commentId);
+		$parameters = ["commentId" => $commentId];
 		$statement->execute($parameters);
 
 		// grab the comment from mySQL
@@ -533,8 +531,8 @@ class Comment {
 			$comment = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
-			if ($row !== false){
-				$comment = new Comment($row["commentId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"],$row["commentText"]);
+			if ($row !== false) {
+				$comment = new Comment($row["commentId"], $row["trailId"], $row["userId"], $row["browserType"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"]);
 			}
 		} catch(Exception $exception){
 			// if the row couldn't be converted rethrow it
@@ -572,7 +570,7 @@ class Comment {
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$comment = new Comment($row["commentId"], $row["trailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"]);
+				$comment = new Comment($row["commentId"], $row["trailId"],$row["userId"], $row["browserType"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"] );
 			}
 		} catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -591,7 +589,7 @@ class Comment {
 	 */
 	public static function getAllComments(PDO $pdo){
 		//create query template
-		$query = "SELECT commentId, trailId, UserId, browserType, createDate, ipAddress, commentPhoto, commentPhotoType,commentText";
+		$query = "SELECT commentId, trailId, UserId, browserType, createDate, ipAddress, commentPhoto, commentPhotoType, commentText ";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 

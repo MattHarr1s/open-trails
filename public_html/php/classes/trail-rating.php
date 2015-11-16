@@ -7,7 +7,7 @@
  * @authur George Kephart <gkephart@gmail.com>
  */
 
-class rating {
+class Rating {
 	/**
 	 * id for the indivdual trail the rating is based on.
 	 * @var int $trailId
@@ -276,7 +276,7 @@ class rating {
 	$parameters = array("trailId" => $trailId);
 	$statement->execute($parameters);}
 	/**
-	 * gets the rating by trailId
+	 * gets the rating by userId
 	 *
 	 * @param PDO $pdo PDO Connection object
 	 * @param int $userId user id to search for
@@ -301,14 +301,65 @@ class rating {
 		$parameters = array("trailId" => $userId);
 		$statement->execute($parameters);
 	}
-	/** gets all ratings
+	/**
+	 * gets a trailRating by trail Id and user Id
+	 * @param PDO $pdo PDO connection object
+	 * @param int $trailId trail id to search for
+	 * @param int $userId user id to search for
+	 * @return mixed Trail rating found or null if not found
+	 * @throws PDOException
+	 */
+
+	public static function getTrailRatingByTrailIdAndUserId(PDO $pdo, $trailId, $userId) {
+		// sanitize the trailId before searching
+		$trailId = filter_var($trailId, FILTER_VALIDATE_INT);
+		if($trailId === false) {
+			throw(new PDOException("trailId is not an integer"));
+		}
+		if($trailId <= 0) {
+			throw(new PDOException("trailId is not positive"));
+		}
+		// sanitize the userId before searching
+		$userId = filter_var($userId, FILTER_VALIDATE_INT);
+		if($userId === false) {
+			throw(new PDOException("userId is not an integer"));
+		}
+		if($userId <= 0) {
+			throw(new PDOException("userId is not positive"));
+		}
+
+		//create query template
+		$query = "SELECT trailId, userId, ratingValue FROM Rating WHERE trailId = :trailId AND userId = :userId";
+		$statement = $pdo->prepare($query);
+
+		//bind the trailId and UserId to the placeholder in the template
+		$parameters = ["trailId" => $trailId, "userId" => $userId];
+		$statement->execute($parameters);
+
+		//grab the rating from mySQL
+		try {
+			$rating = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$rating = new rating($row["trailId"], $row["userId"], $row[""]);
+			}
+		} catch (Exception $exception) {
+			// if the row couldn't be converted rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+	return($rating);
+	}
+
+
+		/** gets all ratings
 	 * @param PDO $pdo PDO connection object
 	 * @return SplFixedArray all ratings found
 	 *	@throws PDOException when mySQL errors occur
 	 */
 	public static  function getAllRatings(PDO $pdo) {
 		//create query template
-		$query = "select trailId, userId, trailRating from rating";
+		$query = "select trailId, userId, trailRating FROM rating";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
@@ -327,11 +378,4 @@ class rating {
 		}
 		return($ratings);
 	}
-
-
-
-
-
-
-
 }

@@ -3,10 +3,10 @@ DROP TABLE IF EXISTS rating;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS trail;
 DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS trailSegment;
+DROP TABLE IF EXISTS segment;
 
 
-CREATE TABLE trailSegment(
+CREATE TABLE segment(
 	segmentId INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	segmentStart POINT NOT NULL,
 	segmentStop POINT NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE trail (
 	browser VARCHAR (128) NOT NULL,
 	createDate DATETIME NOT NULL,
 	ipAddress VARBINARY (16) NOT NULL,
-	trailAccessibility VARCHAR (256) NULL,
+	trailAccessibility VARCHAR (32) NULL,
 	trailAmenities VARCHAR (256) NULL,
 	trailCondition VARCHAR (256) NULL,
 	trailDescription VARCHAR (512)NULL,
@@ -61,7 +61,7 @@ CREATE TABLE comment (
 	browser VARCHAR (128) NOT NULL,
 	createDate DATETIME NOT NULL,
 	ipAddress VARBINARY (16) NOT NULL,
-	commentPhoto VARCHAR (256) NULL,
+	commentPhoto VARCHAR (255) NULL,
 	commentPhotoType VARCHAR (12) NULL,
 	commentText VARCHAR (256) NOT NULL,
 	INDEX (trailId),
@@ -81,13 +81,13 @@ CREATE TABLE rating(
 	FOREIGN KEY (userId) REFERENCES user (userId)
 );
 
-CREATE TABLE trailRelationship(
-	trailId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-	segmentId INT UNSIGNED NOT NULL,
-	trSegmentType CHAR (1) NOT NULL,
+CREATE TABLE trailRelationship (
+	trailId       INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	segmentId     INT UNSIGNED                NOT NULL,
+	trSegmentType CHAR(1)                     NOT NULL,
 	INDEX (trailId),
 	INDEX (segmentId),
 	FOREIGN KEY (trailId) REFERENCES trail (trailId),
-	FOREIGN KEY (segmentId) REFERENCES trailSegment (segmentId)
+	FOREIGN KEY (segmentId) REFERENCES segment (segmentId)
 );
 
