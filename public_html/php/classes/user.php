@@ -500,9 +500,10 @@ class User  {
 				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
 				$users[$users->key()] = $user;
 				$users->next();
-		}	catch(Exception $exception) {
+			} catch(Exception $exception) {
 				// if the row couldn't be converted, rethrow it
 				throw(new PDOException($exception->getMessage(), 0, $exception));
+			}
 		}
 		return($users);
 	}
@@ -518,7 +519,7 @@ class User  {
 	**/
 	Public static function getAllUsers(PDO $pdo) {
 		// create user query template
-		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user WHERE userName = :userNmae";
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
