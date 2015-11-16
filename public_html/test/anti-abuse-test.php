@@ -45,8 +45,12 @@ class TraitTest extends PHPUnit_Framework_TestCase {
 	 **/
 	protected $VALID_CREATEDATE = "2012-03-24 17:45:12";
 
+	/**
+	 * test using valid ipAddress, browser, & createDate
+	 */
 	public function testValidAntiAbuse() {
 		$useTheTrait = new UseTheTrait();
+		$this->VALID_CREATEDATE = DateTime::createFromFormat("Y-m-d H:i:s", $this->VALID_CREATEDATE);
 
 		// use the three mutators to make a valid test case
 		$useTheTrait->setIpAddress($this->VALID_IP);
@@ -56,9 +60,14 @@ class TraitTest extends PHPUnit_Framework_TestCase {
 		// assertSame() that getFoo() is the same as $VALID_FOO
 		$this->assertSame($useTheTrait->getIpAddress(), $this->VALID_IP);
 		$this->assertSame($useTheTrait->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($useTheTrait->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertEquals($useTheTrait->getCreateDate(), $this->VALID_CREATEDATE);
 	}
 
+	/**
+	 * test using an invalid ipAddress
+	 *
+	 * @expectedException PDOException
+	 **/
 	public function testInvalidAntiAbuse() {
 		$useTheTrait = new UseTheTrait();
 

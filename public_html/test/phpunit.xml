@@ -2,8 +2,9 @@
 	<testsuites>
 		<testsuite name="Trail Quail">
 			<file>anti-abuse-test.php</file>
-			<!-- <file>trail-test.php</file> -->
+			<file>trail-test.php</file>
 			<file>trail-relationship-test.php</file>
+			<file>trail-quail.php</file>
 			<!--<directory suffix="-test.php">.</directory>-->
 		</testsuite>
 	</testsuites>

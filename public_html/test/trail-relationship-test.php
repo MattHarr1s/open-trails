@@ -1,5 +1,5 @@
 <?php
-require_once("trail-quail.php");
+require_once ("trail-quail.php");
 require_once(dirname(__DIR__). "/php/classes/autoload.php");
 
 /**
@@ -12,16 +12,16 @@ require_once(dirname(__DIR__). "/php/classes/autoload.php");
  **/
 class TrailRelationshipTest extends TrailQuailTest {
 	/**
-	 * valid trailId to use
+	 * trailId referenced in the Trail Relationship; this is for foreign key relations
 	 * @var int $VALID_TRAILID
 	 **/
-	protected $VALID_TRAILID = 5;
+	protected $VALID_TRAILID = null;
 
 	/**
-	 * valid segmentId to use
+	 * segmentId referenced in the Trail Relationship; this is for foreign key relations
 	 * @var int $VALID_SEGMENTID
 	 **/
-	protected $VALID_SEGMENTID = 1;
+	protected $VALID_SEGMENTID = null;
 
 	/**
 	 * valid segmentType to use
@@ -34,6 +34,22 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 * @var string $VALID_SEGMENTTYPE2
 	 **/
 	protected $VALID_SEGMENTTYPE2 = "S";
+
+	/**
+	 * create dependent objects before running each test
+	 **/
+	public final function setUp() {
+		//run the default setUp() method first
+		parent::setUp();
+
+		//create and insert a trailId to own the test Trail Relationship
+		$this->trail = new Trail(null, 7, 5, "Safari", "2015-11-15 12:15:42", "192.168.1.4", "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, "1054.53", 2, "Mostly switchbacks with a few sections of rock fall", "La Luz", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail->insert($this->getPDO());
+
+		//create and insert a segmentId to own the test Trail Relationship
+		$this->segment = new Segment(null, "5,25", "6,36", 1000, 2000);
+		$this->segment->insert($this->getPDO());
+	}
 
 	/**
 	 * test inserting a Trail Relationship that already exists

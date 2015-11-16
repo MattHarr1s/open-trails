@@ -45,9 +45,9 @@ trait AntiAbuse {
 	 * @throws UnexpectedValueException if $newIpAddress is not valid
 	 **/
 	public function setIpAddress($newIpAddress) {
-		if (inet_pton($newIpAddress) !== false) {
+		if (@inet_pton($newIpAddress) !== false) {
 			$newIpAddress = inet_pton($newIpAddress);
-		} else if(inet_ntop($newIpAddress) === false) {
+		} else if(@inet_ntop($newIpAddress) === false) {
 			 throw(new UnexpectedValueException("ipAddress is not valid"));
 		}
 		$this->ipAddress = $newIpAddress;
