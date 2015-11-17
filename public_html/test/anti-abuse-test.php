@@ -43,7 +43,7 @@ class TraitTest extends PHPUnit_Framework_TestCase {
 	 * valid createDate to use
 	 * @var DateTime $VALID_CREATEDATE
 	 **/
-	protected $VALID_CREATEDATE = "2012-03-24 17:45:12";
+	protected $VALID_CREATEDATE;
 
 	/**
 	 * test using valid ipAddress, browser, & createDate
