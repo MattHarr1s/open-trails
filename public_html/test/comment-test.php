@@ -222,6 +222,37 @@ class CommentTest extends TrailQuailTest {
 			$this->assertNull($comment);
 
 		}
+	/**
+	 * test grabbing a comment by its commentText
+	 */
+
+	public function testGetValidCommentByEmail(){
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("comment");
+
+		//create a new comment and insert it into mysql
+		$comment = new Comment(null, $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
+		$comment->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce it meets expectations
+		$pdoComment= Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
+		$this->assertSame($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
+		$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
+		$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
+		$this->assertSame($pdoComment->getCommentText(), $this->VALID_COMMENTTEXT);
+	}
+
+	/**
+	 * test grabbing a  comment by an email that does not exist
+	 *
+	 */
+	public function testGetInvalidCommentByEmail(){
+		$comment = Comment::getCommentByEmail($this->getPDO(),"homer@comcast.net");
+		$this->assertNull($comment);
+	}
 
 
 
