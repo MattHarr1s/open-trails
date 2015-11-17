@@ -1,0 +1,36 @@
+<?php
+require_once(dirname(__DIR__). "/php/classes/point.php.");
+require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
+
+/**
+ *
+ * Full PHPUnit test for the Point container class used by segment
+ *
+ *
+ *
+ * @see Point
+ * @author Matt Harris <mattharr505@gmail.com> and Trail Quail <trailquailabq@gmail.com>
+ **/
+class PointTest extends TrailQuailTest{
+	/**
+	 * valid x value
+	 *
+	 * @var double $x
+	**/
+	protected $VALID_X = 35.6585;
+
+	/**
+	 * valid y value
+	 *
+	 * @var double $y
+	**/
+	protected $VALID_Y = 42.2568;
+
+	/**
+	 * test using valid x, valid y
+	**/
+	public function testValidPoint(){
+		$point = new Point();
+		$this->
+	}
+}
