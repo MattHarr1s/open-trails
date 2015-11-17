@@ -135,7 +135,7 @@ class TrailTest extends TrailQuailTest {
 		parent::setUp();
 
 		//create and insert a userId to own the trail
-		$this->user =new User(null, "Chrome", "2015-11-15 09:45.30", "192.168.1.168", "S",
+		$this->user =new User(null, "Firefox", "2015-11-15 09:45.30", "192.168.1.168", "S",
 				"saul.jeff@gmail.com", null, "Hyourname.tomorrow", null);
 		$this->user->insert($this->getPDO());
 
