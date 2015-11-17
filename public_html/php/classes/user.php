@@ -517,7 +517,7 @@ class User  {
 	* @throws PDOException when mySQL related errors occur
  	*
 	**/
-	Public static function getAllUsers(PDO $pdo) {
+	Public static function getAllUsers(PDO $pdo, ) {
 		// create user query template
 		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user";
 		$statement = $pdo->prepare($query);
