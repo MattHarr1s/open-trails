@@ -49,7 +49,7 @@ CREATE TABLE trail (
 	trailUse VARCHAR (64) NULL,
 	trailUuid VARCHAR (36) UNIQUE NULL,
 	INDEX (submitTrailId),
-	INDEX (UserId),
+	INDEX (userId),
 	FOREIGN KEY (submitTrailId) REFERENCES trail (trailId),
 	FOREIGN KEY (userId) REFERENCES user (userId),
 	PRIMARY KEY (trailId)
