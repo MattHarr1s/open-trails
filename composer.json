@@ -1,5 +1,7 @@
 {
     "require": {
-        "pascaldevink/shortuuid": "^1.0"
+        "pascaldevink/shortuuid": "^1.0",
+        "guzzlehttp/guzzle": "@stable"
     }
+
 }

@@ -83,14 +83,18 @@ class CommentTest extends TrailQuailTest {
 	 */
 	protected $trail = null;
 
-	public function setUp() {
+	public final function setUp() {
 		parent::setUp();
 		//create setup for trail
-		$this->trail = new Trail();
+		$this->trail = new Trail(null, "Safari", DateTime::createFromFormat("Y-m-d H:i:s", "2015-11-15 12:15:42"), "192.168.1.4", 5, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "La Luz", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
 		$this->trail->insert($this->getPDO());
-		//create setup for user
-		$this->trail = new User();
+
+		//create and insert a userId to own the trail
+		$this->user =new User(null, "Chrome", "2015-11-15 09:45.30", "192.168.1.168", "S", "saul.jeff@gmail.com", null, "Hyourname.tomorrow", null);
 		$this->user->insert($this->getPDO());
+
+		//create and insert a datetime object
+		$this->VALID_CREATEDATE = DateTime::createFromFormat("Y-m-d H:i:s", $this->VALID_CREATEDATE);
 	}
 
 	/**
