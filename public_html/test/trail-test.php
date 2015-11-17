@@ -392,7 +392,7 @@ class TrailTest extends TrailQuailTest {
 
 	public function testGetInvalidTrailBySubmitTrailId() {
 		//grab a userId that does not exist
-		$trail = Trail::getTrailBySubmitTrailId($this->getPDO(), "null");
+		$trail = Trail::getTrailBySubmitTrailId($this->getPDO(), null);
 		$this->assertNull($trail);
 	}
 
