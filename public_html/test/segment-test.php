@@ -24,14 +24,14 @@ class SegmentTest extends TrailQuailTest{
 	 *
 	 * @var float $segmentStart
 	 **/
-	protected $VALID_SEGMENTSTART = "35.21966, -106.48073";
+	protected $VALID_SEGMENTSTART ;
 
 	/**
 	 * valid location for end of segment
 	 *
 	 * @var float $segmentStop
 	 **/
-	protected $VALID_SEGMENTSTOP = "34.21966, -107.48073";
+	protected $VALID_SEGMENTSTOP ;
 
 	/**
 	 * valid elevation at segment start point
@@ -53,6 +53,22 @@ class SegmentTest extends TrailQuailTest{
 	 * @var int $segmentStopElevation
 	 **/
 	protected $VALID_SEGMENTSTOPELEVATION = 10253;
+
+	/**
+	 * create dependent objects before running each test
+	 **/
+	public final function setUp() {
+		//run the default setUp() method first
+		parent::setUp();
+
+		//create and insert a point for segmentStart
+		$this->VALID_SEGMENTSTART = new Point(35.55, 44.546);
+		$this->VALID_SEGMENTSTART-> insert($this->getPDO());
+
+		//create and insert a point for segmentStop
+		$this->VALID_SEGMENTSTOP = new Point(34.55, 44.435);
+		$this->VALID_SEGMENTSTOP-> insert($this->getPDO());
+	}
 
 
 

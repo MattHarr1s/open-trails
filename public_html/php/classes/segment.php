@@ -84,13 +84,13 @@ class Segment implements JsonSerializable {
 			throw(new Exception($exception->getMessage(),0,$exception));
 		}
 }
-/**
- * accessor method for segmentId
- *
- * gains access to segmentId for use by mutator method
- *
- * @return mixed value of segmentId
-**/
+	/**
+	 * accessor method for segmentId
+	 *
+	 * gains access to segmentId for use by mutator method
+	 *
+	 * @return mixed value of segmentId
+	**/
 	public function getSegmentId(){
 		return ($this->segmentId);
 	}
