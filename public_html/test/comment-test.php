@@ -181,6 +181,33 @@ class CommentTest extends TrailQuailTest {
 		$this->assertNull($pdoComment);
 		$this->assertSame($numRows, $this->getConnection()->getRowCount("comment"));
 	}
+	/**
+	 * test deleting a profile that doesn't exist
+	 *
+	 * @expectedException PDOException
+	 */
+	public function testDeleteInvalidComment (){
+		// create a comment and than try deleting it without submitting it to mySQL
+		$comment=new Comment(null, $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
+		$comment->delete($this->getPDO());
+	}
+	/**
+	 * test inserting a comment and grabbing it from mySQl
+	 */
+	public function testGetValidCommentByCommentId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("comment");
+
+		// create a new comment and insert to mySQL
+		$comment= new Comment(null, $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
+		$comment->insert($this->getPDO());
+
+		// grab the data from MySQL and enforce the fields match our expectation
+		$pdoComment= Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
+
+
+	}
 
 
 
