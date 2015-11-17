@@ -140,8 +140,48 @@ class CommentTest extends TrailQuailTest {
 		$comment->update($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match expectations
-
+		$pdoComment = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
+		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("comment"));
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
+		$this->assertSame($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
+		$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
+		$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
+		$this->assertSame($pdoComment->getCommentText(), $this->VALID_COMMENTTEXT1);
 	}
+	/**
+	 *test updating a Comment that doesn't exist
+	 *
+	 * @expectedException PDOException
+	 */
+	public function testUpdateInvalidComment() {
+		// create a Comment and try to update without actually inserting it
+		$comment= new Comment(null, $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
+		$comment->insert($this->getPDO());
+	}
+
+	/**
+	 * test creating a comment then delete it
+	 */
+	public function testDeleteValidComment() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("comment");
+
+		// create a new comment and insert it into mySQL
+		$comment = new Comment(null, $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
+		$comment->insert($this->getPDO());
+
+		//delete the Comment from MySQL
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		$comment->delete($this->getPDO());
+
+		// grab the data from mySQL
+		$pdoComment= Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
+		$this->assertNull($pdoComment);
+		$this->assertSame($numRows, $this->getConnection()->getRowCount("comment"));
+	}
+
 
 
 
