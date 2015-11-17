@@ -213,6 +213,7 @@ class UserTest extends TrailQuailTest {
 		//grab a user Id profile that exceeds the maximum allowable user id
 		$user = User::getUserByUserID($this->getPDO(), TrailQuailTest::INVALID_KEY);
 		$this->assertNull($user);
+	}
 
 	/**
 	 * test grabbing a user Id profile by user name
@@ -272,6 +273,13 @@ class UserTest extends TrailQuailTest {
 		$this->assertSame($pdoUser->getUserSalt(), $this->VALID_USERSALT);
 	}
 
-
+	/**
+	 * test grabbing a user Id profile by a user email address that does not exist
+	 */
+	public function testGetInvalid() {
+		// grab a user Id profile using a user email address that does not exist
+		$user = User::getUserByUserEmail($this->getPDO(), "does@not.exist");
+		$this->assertNull($user);
+	}
 
 }
