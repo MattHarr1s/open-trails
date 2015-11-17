@@ -158,7 +158,7 @@ class UserTest extends TrailQuailTest {
 	 */
 	public function testDeleteValidUser() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConenction()->getRowCount("user");
+		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new user Id profile and insert it into MySQL
 		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
