@@ -58,7 +58,7 @@ class UserTest extends TrailQuailTest {
 	 * valid username to use
 	 * @var string $VALID_USERNAME
 	 */
-	protected $VALID_USERNAME = "Hyourname.tomorrow";
+	protected $VALID_USERNAME = "Yourname.tomorrow";
 
 	/**
 	 * valid user salt
@@ -176,7 +176,7 @@ class UserTest extends TrailQuailTest {
 	/**
 	 * test deleting a user Id profile that does not exist
 	 */
-	public function testDeleteInvolidUser() {
+	public function testDeleteInvalidUser() {
 		// create a user Id profile adn try to delete it without actually inserting it
 		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->delete($this->getPDO());
@@ -242,9 +242,9 @@ class UserTest extends TrailQuailTest {
 	/**
 	 * test grabbing a user Id profile by user name that does not exist
 	 */
-	public function testGetIvalidUserBYUserName() {
+	public function testGetInvalidUserBYUserName() {
 		// grab a user Id profile using a user name that does not exist
-		$profile = User::getUserByUserName($this->getPDO(), "does not exist");
+		$user = User::getUserByUserName($this->getPDO(), "does not exist");
 		$this->assertNull($user);
 	}
 
