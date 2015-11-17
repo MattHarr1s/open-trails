@@ -420,7 +420,7 @@ class Trail implements JsonSerializable {
 				return($this->trailTraffic);
 			}
 
-		/**
+	  	/**
 		 * mutator method for trailTraffic
 		 *
 		 * @param string
@@ -813,7 +813,7 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE crea
 		}
 
 		//create query template
-		$query = "SELECT userId, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
+		$query = "SELECT userId, submitTrailId, browser, createDate, ipAddress, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
 trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE IpAddress = :IpAddress";
 		$statement = $pdo->prepare($query);
 
