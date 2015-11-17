@@ -45,8 +45,14 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 **/
 	protected $segment = null;
 
+	/**
+	 * @var mixed $VALID_DATE
+	 */
 	protected $VALID_DATE = null;
 
+	/**
+	 * @var mixed $userId
+	 */
 	protected $userId = null;
 
 	/**

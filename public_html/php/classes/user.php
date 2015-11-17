@@ -320,8 +320,9 @@ class User  {
 		$query = "INSERT INTO user(userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt ) VALUES (:userId, :browser, :createDate, :ipAddress, :userAccountType, :userEmail, :userHash, :userName, :userSalt)";
 		$statement = $pdo->prepare($query);
 
-		//bind the member variables to the placeholders in the template
-		$parameters = ["userId" => $this->userId, "browser" => $this->setBrowser, "createDate" => $this->createDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail,"userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt];
+
+		//bind the member variables to the placeholders in the temlate
+		$parameters = ["userId" => $this->userId, "browser" => $this->browser, "createDate" => $this->createDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail,"userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt];
 		$statement->execute($parameters);
 
 		// update the null userId with what mySQL just gave us
