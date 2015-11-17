@@ -40,7 +40,7 @@ class TrailTest extends TrailQuailTest {
 	 * createDate of submission to trail
 	 * @var datetime $VALID_CREATEDATE
 	 **/
-	protected $VALID_CREATEDATE;
+	protected $VALID_CREATEDATE = "";
 
 	/**
 	 * ipAddress of computer making submission

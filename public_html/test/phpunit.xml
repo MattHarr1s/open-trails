@@ -2,10 +2,10 @@
 	<testsuites>
 		<testsuite name="Trail Quail">
 			<file>anti-abuse-test.php</file>
-			<!--<file>trail-test.php</file>
-			<file>trail-relationship-test.php</file> -->
+			<file>trail-test.php</file>
+			<file>trail-relationship-test.php</file>
 			<file>trail-quail.php</file>
-			<file>user-test.php</file>
+			<file>comment-test.php</file>
 			<!--<directory suffix="-test.php">.</directory>-->
 		</testsuite>
 	</testsuites>

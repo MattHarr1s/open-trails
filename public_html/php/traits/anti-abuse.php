@@ -95,7 +95,7 @@ trait AntiAbuse {
 	 * @param DateTime $newCreateDate new value of createDate
 	 * @throws InvalidArgumentException if $newCreateDate is not a valid object or string
 	 * @throws RangeException if $newCreateDate is a date that does not exist
-	 * @throws Exception if $newCreateDate is
+	 * @throws Exception if $newCreateDate is invalid
 	 **/
 	public function setCreateDate($newCreateDate) {
 		if($newCreateDate === null) {
