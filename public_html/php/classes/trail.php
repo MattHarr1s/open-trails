@@ -26,541 +26,541 @@ require_once("autoload.php");
  * @author Matt Harris <mattharr505@gmail.com> and Trail Quail<trailquailabq@gmail.com>
  **/
 class Trail implements JsonSerializable {
-		use AntiAbuse;
-		/**
-		 * id for the trail; as stated above, this is the primary key
-		 * @var int trailId
-		 **/
-		private $trailId;
+	use AntiAbuse;
+	/**
+	 * id for the trail; as stated above, this is the primary key
+	 * @var int trailId
+	 **/
+	private $trailId;
 
-		/**
-		 * id for the content of the submission of the trail object
-		 * @var int submitTrailID
-		 **/
-		private $submitTrailId;
+	/**
+	 * id for the content of the submission of the trail object
+	 * @var int submitTrailID
+	 **/
+	private $submitTrailId;
 
-		/**
-		 * id of user that submits to the trail
-		 * @var int userId
-		 **/
-		private $userId;
+	/**
+	 * id of user that submits to the trail
+	 * @var int userId
+	 **/
+	private $userId;
 
-		/**
-		 * accessibility info for trail
-		 * @var string trailAccessibility
-		 **/
-		private $trailAccessibility;
+	/**
+	 * accessibility info for trail
+	 * @var string trailAccessibility
+	 **/
+	private $trailAccessibility;
 
-		/**
-		 *information on amenities on trail
-		 * @var string trailAmenities
-		 */
-		private $trailAmenities;
+	/**
+	 *information on amenities on trail
+	 * @var string trailAmenities
+	 */
+	private $trailAmenities;
 
-		/**
-		 * information on the trail condition
-		 * @var string trailConditions
-		 **/
-		private $trailCondition;
+	/**
+	 * information on the trail condition
+	 * @var string trailConditions
+	 **/
+	private $trailCondition;
 
-		/**
-		 * information describing the trail
-		 * @var string trailDescription
-		 **/
-		private $trailDescription;
+	/**
+	 * information describing the trail
+	 * @var string trailDescription
+	 **/
+	private $trailDescription;
 
-		/**
-		 * difficulty rating of trail
-		 * @var int trailDifficulty
-		 **/
-		private $trailDifficulty;
+	/**
+	 * difficulty rating of trail
+	 * @var int trailDifficulty
+	 **/
+	private $trailDifficulty;
 
-		/**
-		 * length of the trail
-		 * @var float trailDistance
-		 **/
-		private $trailDistance;
+	/**
+	 * length of the trail
+	 * @var float trailDistance
+	 **/
+	private $trailDistance;
 
-		/**
-		 * content of submission made to trail
-		 * @var int trailSubmissionType
-		 **/
-		private $trailSubmissionType;
+	/**
+	 * content of submission made to trail
+	 * @var int trailSubmissionType
+	 **/
+	private $trailSubmissionType;
 
-		/**
-		 * type of terrain on the trail
-		 * @var string trailTerrain
-		 **/
-		private $trailTerrain;
+	/**
+	 * type of terrain on the trail
+	 * @var string trailTerrain
+	 **/
+	private $trailTerrain;
 
-		/**
-	 	* name of trail
-	 	* @var string trailName
-	 	**/
-		private $trailName;
+	/**
+	 * name of trail
+	 * @var string trailName
+	 **/
+	private $trailName;
 
-		/**
-		 *amount of traffic on trail
-		 *@var string trailTraffic
-		 **/
-		private $trailTraffic;
+	/**
+	 *amount of traffic on trail
+	 * @var string trailTraffic
+	 **/
+	private $trailTraffic;
 
-		/**
-		 * main use of the trail (hiking, cycling, skiing)
-		 * @var string trailUse
-		 **/
-		private $trailUse;
+	/**
+	 * main use of the trail (hiking, cycling, skiing)
+	 * @var string trailUse
+	 **/
+	private $trailUse;
 
-		/**
-		 * id for the submission on the trail object. Exists so the primary key does not have to get updated.
-		 * @var string trailUuId
-	 	**/
-		private $trailUuid;
+	/**
+	 * id for the submission on the trail object. Exists so the primary key does not have to get updated.
+	 * @var string trailUuId
+	 **/
+	private $trailUuid;
 
-		/**
-		 *constructor for trail object.
-		 *
-		 *
-		 * @param $newTrailId
-		 * @param $newSubmitTrailId
-		 * @param $newUserId
-		 * @param $newBrowser
-		 * @param $newIpAddress
-		 * @param $newCreateDate
-		 * @param $newTrailAccessibility
-		 * @param $newTrailAmenities
-		 * @param $newTrailCondition
-		 * @param $newTrailDescription
-		 * @param $newTrailDifficulty
-		 * @param $newTrailDistance
-		 * @param $newTrailSubmissionType
-		 * @param $newTrailTerrain
-		 * @param $newTrailName
-		 * @param $newTrailTraffic
-		 * @param $newTrailUse
-		 * @param $newTrailUuid
-		 * @throws InvalidArgumentException if data types are not valid
-		 * @throws RangeException if values are out of bounds
-		 * @throws Exception if some other exception is thrown
-		 **/
-		public function __construct($newTrailId, $newUserId,$newBrowser, $newCreateDate,
-		$newIpAddress, $newSubmitTrailId, $newTrailAccessibility,$newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty,
-		$newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid) {
-			try{
-				$this->setTrailId($newTrailId);
-				$this->setUserId($newUserId);
-				$this->setBrowser($newBrowser);
-				$this->setCreateDate($newCreateDate);
-				$this->setIpAddress($newIpAddress);
-				$this->setSubmitTrailId($newSubmitTrailId);
-				$this->setTrailAccessibility($newTrailAccessibility);
-				$this->setTrailAmenities($newTrailAmenities);
-				$this->setTrailCondition($newTrailCondition);
-				$this->setTrailDescription($newTrailDescription);
-				$this->setTrailDifficulty($newTrailDifficulty);
-				$this->setTrailDistance($newTrailDistance);
-				$this->setTrailName($newTrailName);
-				$this->setTrailSubmissionType($newTrailSubmissionType);
-				$this->setTrailTerrain($newTrailTerrain);
-				$this->setTrailTraffic($newTrailTraffic);
-				$this->setTrailUse($newTrailUse);
-				$this->setTrailUuid($newTrailUuid);
-			}catch(InvalidArgumentException $invalidArgument){
-					//rethrow the exception to the caller
-					throw(new InvalidArgumentException($invalidArgument->getMessage(),0, $invalidArgument));
-			}catch(RangeException $range){
-					//rethrow the exception to the caller
-					throw(new RangeException($range->getMessage(),0,$range));
-			}catch(Exception $exception){
-					//rethrow the exception to the caller
-					throw(new exception($exception->getMessage(),0, $exception));
-			}
+	/**
+	 *constructor for trail object.
+	 *
+	 *
+	 * @param $newTrailId
+	 * @param $newSubmitTrailId
+	 * @param $newUserId
+	 * @param $newBrowser
+	 * @param $newIpAddress
+	 * @param $newCreateDate
+	 * @param $newTrailAccessibility
+	 * @param $newTrailAmenities
+	 * @param $newTrailCondition
+	 * @param $newTrailDescription
+	 * @param $newTrailDifficulty
+	 * @param $newTrailDistance
+	 * @param $newTrailSubmissionType
+	 * @param $newTrailTerrain
+	 * @param $newTrailName
+	 * @param $newTrailTraffic
+	 * @param $newTrailUse
+	 * @param $newTrailUuid
+	 * @throws InvalidArgumentException if data types are not valid
+	 * @throws RangeException if values are out of bounds
+	 * @throws Exception if some other exception is thrown
+	 **/
+	public function __construct($newTrailId, $newUserId, $newBrowser, $newCreateDate,
+										 $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty,
+										 $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid) {
+		try {
+			$this->setTrailId($newTrailId);
+			$this->setUserId($newUserId);
+			$this->setBrowser($newBrowser);
+			$this->setCreateDate($newCreateDate);
+			$this->setIpAddress($newIpAddress);
+			$this->setSubmitTrailId($newSubmitTrailId);
+			$this->setTrailAccessibility($newTrailAccessibility);
+			$this->setTrailAmenities($newTrailAmenities);
+			$this->setTrailCondition($newTrailCondition);
+			$this->setTrailDescription($newTrailDescription);
+			$this->setTrailDifficulty($newTrailDifficulty);
+			$this->setTrailDistance($newTrailDistance);
+			$this->setTrailName($newTrailName);
+			$this->setTrailSubmissionType($newTrailSubmissionType);
+			$this->setTrailTerrain($newTrailTerrain);
+			$this->setTrailTraffic($newTrailTraffic);
+			$this->setTrailUse($newTrailUse);
+			$this->setTrailUuid($newTrailUuid);
+		} catch(InvalidArgumentException $invalidArgument) {
+			//rethrow the exception to the caller
+			throw(new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(RangeException $range) {
+			//rethrow the exception to the caller
+			throw(new RangeException($range->getMessage(), 0, $range));
+		} catch(Exception $exception) {
+			//rethrow the exception to the caller
+			throw(new exception($exception->getMessage(), 0, $exception));
+		}
 	}
 
-		/**
-		 * accessor method for trailId
-		 *
-		 * @return mixed value of trailId
-		**/
-			public function getTrailId() {
-				return ($this->trailId);
-			}
+	/**
+	 * accessor method for trailId
+	 *
+	 * @return mixed value of trailId
+	 **/
+	public function getTrailId() {
+		return ($this->trailId);
+	}
 
-		/**
-		 * mutator method for trailId
-		 *
-		 * @param mixed $newTrailId
-		 **/
-			public function setTrailId($newTrailId){
-				$this->trailId = Filter::filterInt($newTrailId, "Trail Id", true);
-			}
+	/**
+	 * mutator method for trailId
+	 *
+	 * @param mixed $newTrailId
+	 **/
+	public function setTrailId($newTrailId) {
+		$this->trailId = Filter::filterInt($newTrailId, "Trail Id", true);
+	}
 
 
-		/**
-		 * accessor method for submitTrailId
-		 *
-		 * @return int value of submitTrailId
-		**/
-			public function getSubmitTrailId() {
-				return ($this->submitTrailId);
-			}
+	/**
+	 * accessor method for submitTrailId
+	 *
+	 * @return int value of submitTrailId
+	 **/
+	public function getSubmitTrailId() {
+		return ($this->submitTrailId);
+	}
 
-		/**
-		 * mutator method for submitTrailId
-		 *
-		 * @param int $newSubmitTrailId
-		 **/
-			public function setSubmitTrailId($newSubmitTrailId) {
-				$this->submitTrailId = Filter::filterInt($newSubmitTrailId, "Submit Trail Id", true);
-			}
+	/**
+	 * mutator method for submitTrailId
+	 *
+	 * @param int $newSubmitTrailId
+	 **/
+	public function setSubmitTrailId($newSubmitTrailId) {
+		$this->submitTrailId = Filter::filterInt($newSubmitTrailId, "Submit Trail Id", true);
+	}
 
-		/**
-		 * accessor method for userId
-		 *
-		 * @return int value of userId
-		 **/
-			public function getUserId() {
-				return $this->userId;
-			}
+	/**
+	 * accessor method for userId
+	 *
+	 * @return int value of userId
+	 **/
+	public function getUserId() {
+		return $this->userId;
+	}
 
-		/**
-		 * mutator method for userId
-		 *
-		 * @param int $newUserId
-		 **/
-			public function setUserId($newUserId){
-				$this->userId = Filter::filterInt($newUserId,"User Id", false);
-			}
+	/**
+	 * mutator method for userId
+	 *
+	 * @param int $newUserId
+	 **/
+	public function setUserId($newUserId) {
+		$this->userId = Filter::filterInt($newUserId, "User Id", false);
+	}
 
-		/**
-		 * accessor method for trailAccessibility
-		 *
-		 * @return string value of trailAccessibility
-		 **/
-			public function getTrailAccessibility() {
-				return ($this->trailAccessibility);
-			}
+	/**
+	 * accessor method for trailAccessibility
+	 *
+	 * @return string value of trailAccessibility
+	 **/
+	public function getTrailAccessibility() {
+		return ($this->trailAccessibility);
+	}
 
-		/**
-		 *mutator method for trailAccessibility
-		 *
-		 *@param string $newTrailAccessibility new value of trailAccessibility
-		 **/
-			public function setTrailAccessibility($newTrailAccessibility) {
-				$this->trailAccessibility = Filter::filterString($newTrailAccessibility,"Trail Accessibility", 32);
-			}
+	/**
+	 *mutator method for trailAccessibility
+	 *
+	 * @param string $newTrailAccessibility new value of trailAccessibility
+	 **/
+	public function setTrailAccessibility($newTrailAccessibility) {
+		$this->trailAccessibility = Filter::filterString($newTrailAccessibility, "Trail Accessibility", 32);
+	}
 
-		/**
-		 * accessor method for trailAmenities
-		 *
-		 * @return string value of trailAmenities
-		 **/
-			public function getTrailAmenities() {
-				return ($this->trailAmenities);
-			}
+	/**
+	 * accessor method for trailAmenities
+	 *
+	 * @return string value of trailAmenities
+	 **/
+	public function getTrailAmenities() {
+		return ($this->trailAmenities);
+	}
 
-		/**
-		 *mutator method for trailAmenities
-		 *
-		 *@param string $newTrailAmenities information on trail amenities
-		 **/
-			public function setTrailAmenities($newTrailAmenities) {
-			$this->trailAmenities = Filter::filterString($newTrailAmenities,"Trail Amenities", 256);
-			}
+	/**
+	 *mutator method for trailAmenities
+	 *
+	 * @param string $newTrailAmenities information on trail amenities
+	 **/
+	public function setTrailAmenities($newTrailAmenities) {
+		$this->trailAmenities = Filter::filterString($newTrailAmenities, "Trail Amenities", 256);
+	}
 
-		/**
-		 * accessor method for trailCondition
-		 *
-		 * @return string value of trailCondition
-		 **/
-			public function getTrailCondition() {
-				return ($this->trailCondition);
-			}
+	/**
+	 * accessor method for trailCondition
+	 *
+	 * @return string value of trailCondition
+	 **/
+	public function getTrailCondition() {
+		return ($this->trailCondition);
+	}
 
-		/**
-		 * mutator method for trailCondition
-		 *
-		 * @param string $newTrailCondition information on trail condition
-		 **/
-			public function setTrailCondition($newTrailCondition) {
-				$this->trailCondition = Filter::filterString($newTrailCondition,"Trail Condition", 256);
-			}
+	/**
+	 * mutator method for trailCondition
+	 *
+	 * @param string $newTrailCondition information on trail condition
+	 **/
+	public function setTrailCondition($newTrailCondition) {
+		$this->trailCondition = Filter::filterString($newTrailCondition, "Trail Condition", 256);
+	}
 
-		/**
-		 * accessor method for trailDescription
-		 *
-		 * @return string value of trailDescription
-		 **/
-			public function getTrailDescription() {
-				return ($this->trailDescription);
-			}
+	/**
+	 * accessor method for trailDescription
+	 *
+	 * @return string value of trailDescription
+	 **/
+	public function getTrailDescription() {
+		return ($this->trailDescription);
+	}
 
-		/**
-		 * mutator method for trailDescription
-		 *
-		 *@param string $newTrailDescription information describing the trail
-		 **/
-			public function setTrailDescription($newTrailDescription) {
-				$this->trailDescription = Filter::filterString($newTrailDescription, "Trail Description", 512);
-			}
+	/**
+	 * mutator method for trailDescription
+	 *
+	 * @param string $newTrailDescription information describing the trail
+	 **/
+	public function setTrailDescription($newTrailDescription) {
+		$this->trailDescription = Filter::filterString($newTrailDescription, "Trail Description", 512);
+	}
 
-		/**
-		 * accessor method for trailDifficulty
-		 *
-		 * @return int value of trailDifficulty
-		 **/
-			public function getTrailDifficulty() {
-				return ($this->trailDifficulty);
-			}
+	/**
+	 * accessor method for trailDifficulty
+	 *
+	 * @return int value of trailDifficulty
+	 **/
+	public function getTrailDifficulty() {
+		return ($this->trailDifficulty);
+	}
 
-		/**
-		 * mutator method for trailDifficulty
-		 *
-		 * @param int $newTrailDifficulty
-		 **/
-			public function setTrailDifficulty($newTrailDifficulty) {
-				$this->trailDifficulty = Filter::filterInt ($newTrailDifficulty,"Trail Difficulty", true);
-			}
+	/**
+	 * mutator method for trailDifficulty
+	 *
+	 * @param int $newTrailDifficulty
+	 **/
+	public function setTrailDifficulty($newTrailDifficulty) {
+		$this->trailDifficulty = Filter::filterInt($newTrailDifficulty, "Trail Difficulty", true);
+	}
 
-		/**
-		 * accessor method for trailDistance
-		 *
-		 * @return float value of trailDistance
-		 **/
-			public function getTrailDistance() {
-				return ($this->trailDistance);
-			}
+	/**
+	 * accessor method for trailDistance
+	 *
+	 * @return float value of trailDistance
+	 **/
+	public function getTrailDistance() {
+		return ($this->trailDistance);
+	}
 
-		/**
-		 *mutator method for trailDistance
-		 *
-		 * @param float $newTrailDistance
-		 **/
-		public function setTrailDistance($newTrailDistance) {
-			$this->trailDistance = Filter::filterDouble($newTrailDistance, "Trail Distance");
+	/**
+	 *mutator method for trailDistance
+	 *
+	 * @param float $newTrailDistance
+	 **/
+	public function setTrailDistance($newTrailDistance) {
+		$this->trailDistance = Filter::filterDouble($newTrailDistance, "Trail Distance");
+	}
+
+	/**
+	 * accessor method for trailName
+	 *
+	 * @return string value of trailName
+	 **/
+	public function getTrailName() {
+		return ($this->trailName);
+	}
+
+	/**
+	 * mutator method for trailName
+	 *
+	 * @param $newTrailName
+	 * @return string
+	 **/
+	public function setTrailName($newTrailName) {
+		$this->$newTrailName = Filter::filterString($newTrailName, "Trail Name", 64);
+	}
+
+	/**
+	 * accessor method for trailSubmissionType
+	 *
+	 * @return int value of trailSubmissionType
+	 */
+	public function getTrailSubmissionType() {
+		return ($this->trailSubmissionType);
+	}
+
+	/**
+	 * mutator method for trailSubmissionType
+	 *
+	 * @param int $newTrailSubmissionType
+	 * @return int value of trailSubmissionType
+	 **/
+	public function setTrailSubmissionType($newTrailSubmissionType) {
+		$newTrailSubmissionType = filter_var($newTrailSubmissionType, FILTER_VALIDATE_INT);
+		if($newTrailSubmissionType === false) {
+			throw(new InvalidArgumentException("Trail Submission Type is not a valid integer"));
 		}
 
-		/**
-		 * accessor method for trailName
-		 *
-		 * @return string value of trailName
-		 **/
-		public function getTrailName() {
-			return($this->trailName);
+		// Verify the new int is positive
+		if($newTrailSubmissionType < 0) {
+			throw(new RangeException("Trail Submission Type not positive"));
 		}
 
-		/**
-		 * mutator method for trailName
-		 *
-		 * @param $newTrailName
-		 * @return string
-		 **/
-		public function setTrailName($newTrailName) {
-			$this->$newTrailName = Filter::filterString($newTrailName, "Trail Name", 64);
+		// Make sure the int is not greater than 2
+		if($newTrailSubmissionType > 2) {
+			throw(new InvalidArgumentException("Trail Submission Type cannot be greater than 2"));
 		}
 
-		/**
-		 * accessor method for trailSubmissionType
-		 *
-		 * @return int value of trailSubmissionType
-		 */
-			public function getTrailSubmissionType() {
-				return ($this->trailSubmissionType);
-			}
+		//convert and store the trail submission type
+		$this->trailSubmissionType = intval($newTrailSubmissionType);
+	}
 
-		/**
-		 * mutator method for trailSubmissionType
-		 *
-		 * @param int $newTrailSubmissionType
-		 * @return int value of trailSubmissionType
-		**/
-			public function setTrailSubmissionType($newTrailSubmissionType){
-				$newTrailSubmissionType = filter_var($newTrailSubmissionType, FILTER_VALIDATE_INT);
-				if($newTrailSubmissionType === false) {
-					throw(new InvalidArgumentException("Trail Submission Type is not a valid integer"));
-				}
+	/**
+	 * accessor method for trailTerrain
+	 *
+	 * @return string value of trailTerrain
+	 */
+	public function getTrailTerrain() {
+		return ($this->trailTerrain);
+	}
 
-				// Verify the new int is positive
-				if($newTrailSubmissionType < 0) {
-					throw(new RangeException("Trail Submission Type not positive"));
-				}
+	/** mutator method for trailTerrain
+	 *
+	 * @param string
+	 **/
+	public function setTrailTerrain($newTrailTerrain) {
+		$this->$newTrailTerrain = Filter::filterString($newTrailTerrain, "Trail Terrain", 128);
+	}
 
-				// Make sure the int is not greater than 2
-				if($newTrailSubmissionType > 2) {
-					throw(new InvalidArgumentException("Trail Submission Type cannot be greater than 2"));
-				}
+	/**
+	 * accessor method for trailTraffic
+	 *
+	 * @return string value of trailTraffic
+	 **/
+	public function getTrailTraffic() {
+		return ($this->trailTraffic);
+	}
 
-				//convert and store the trail submission type
-				$this->trailSubmissionType=intval($newTrailSubmissionType);
-			}
+	/**
+	 * mutator method for trailTraffic
+	 *
+	 * @param string
+	 **/
+	public function setTrailTraffic($newTrailTraffic) {
+		$this->$newTrailTraffic = Filter::filterString($newTrailTraffic, "Trail Traffic", 16);
+	}
 
-		/**
-		 * accessor method for trailTerrain
-		 *
-		 * @return string value of trailTerrain
-		 */
-			public function getTrailTerrain() {
-				return ($this->trailTerrain);
-			}
+	/**
+	 * accessor method for trailUse
+	 *
+	 * @return string value of trailUse
+	 **/
+	public function getTrailUse() {
+		return ($this->trailUse);
+	}
 
-		/** mutator method for trailTerrain
-		 *
-		 * @param string
-		**/
-			public function setTrailTerrain($newTrailTerrain) {
-			$this->$newTrailTerrain = Filter::filterString($newTrailTerrain,"Trail Terrain", 128);
-			}
+	/**
+	 * mutator method for trailUse
+	 *
+	 * @param string $newTrailUse
+	 **/
+	public function setTrailUse($newTrailUse) {
+		$this->$newTrailUse = Filter::filterString($newTrailUse, "Trail Use", 64);
+	}
 
-		/**
-		 * accessor method for trailTraffic
-		 *
-		 * @return string value of trailTraffic
-		**/
-			public function getTrailTraffic() {
-				return($this->trailTraffic);
-			}
+	/**
+	 * accessor method for trailUud
+	 *
+	 * @return int value of trailUuid
+	 **/
+	public function getTrailUuid() {
+		return ($this->trailUuid);
+	}
 
-	  	/**
-		 * mutator method for trailTraffic
-		 *
-		 * @param string
-		**/
-			public function setTrailTraffic($newTrailTraffic) {
-				$this->$newTrailTraffic = Filter::filterString($newTrailTraffic,"Trail Traffic", 16);
-			}
-
-		/**
-		 * accessor method for trailUse
-		 *
-		 * @return string value of trailUse
-		**/
-			public function getTrailUse(){
-				return($this->trailUse);
-			}
-
-		/**
-		 * mutator method for trailUse
-		 *
-		 * @param string $newTrailUse
-		**/
-			public function setTrailUse($newTrailUse) {
-				$this->$newTrailUse = Filter::filterString($newTrailUse,"Trail Use", 64);
-		}
-
-		/**
-		 * accessor method for trailUud
-		 *
-		 * @return int value of trailUuid
-		**/
-		public function getTrailUuid(){
-			return ($this->trailUuid);
-		}
-
-		/**
-		 * mutator method for trailUuid
-		 *
-	 	 * @param string $newTrailUuid
-	 	**/
-	public function setTrailUuid($newTrailUuid){
+	/**
+	 * mutator method for trailUuid
+	 *
+	 * @param string $newTrailUuid
+	 **/
+	public function setTrailUuid($newTrailUuid) {
 		$this->TrailUuid = Filter::filterString($newTrailUuid, "Trail UuId", 36);
 	}
 
-		/**
-		 * inserts this trail into mySQL
-		 *
-		 * @param PDO $pdo pointer to PDO connection, by reference
-		 * @throws PDOException when mySQL related errors occur
-		**/
-		public function insert(PDO &$pdo) {
-			if($this->trailId !== null) {
-				throw (new PDOException("not a new trail"));
-			}
+	/**
+	 * inserts this trail into mySQL
+	 *
+	 * @param PDO $pdo pointer to PDO connection, by reference
+	 * @throws PDOException when mySQL related errors occur
+	 **/
+	public function insert(PDO &$pdo) {
+		if($this->trailId !== null) {
+			throw (new PDOException("not a new trail"));
+		}
 
-			//create query template
-			$query = "INSERT INTO trail(userId, browser, createDate, ipAddress, submitTrailId,
+		//create query template
+		$query = "INSERT INTO trail(userId, browser, createDate, ipAddress, submitTrailId,
 trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
 trailTerrain, trailTraffic, trailUse, trailUuid) VALUES (:userId, :browser, :createDate,
 :ipAddress, :submitTrailId, :trailAccessibility, :trailAmenities, :trailCondition, :trailDescription, :trailDifficulty, :trailDistance, :trailName,
 :trailSubmissionType, :trailTerrain, :trailTraffic, :trailUse, :trailUuid)";
-				$statement = $pdo->prepare($query);
+		$statement = $pdo->prepare($query);
 
-				//bind the member variables to the placeholders in the template
-				$parameters = array("trailId" => $this->getTrailId(),"userId" => $this->getUserId(),  "browser" => $this->getBrowser(),
-"createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId() , "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
-"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" =>$this->getTrailDistance(),
-"trailSubmissionType" =>$this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailName" => $this->getTrailName(), "trailTraffic" => $this->getTrailTraffic(),
-"trailUse" =>$this->getTrailUse(), "trailUuid" =>$this->getTrailUuid());
-				$statement->execute($parameters);
+		//bind the member variables to the placeholders in the template
+		$parameters = array("trailId" => $this->getTrailId(), "userId" => $this->getUserId(), "browser" => $this->getBrowser(),
+				"createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
+				"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" => $this->getTrailDistance(),
+				"trailSubmissionType" => $this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailName" => $this->getTrailName(), "trailTraffic" => $this->getTrailTraffic(),
+				"trailUse" => $this->getTrailUse(), "trailUuid" => $this->getTrailUuid());
+		$statement->execute($parameters);
 
-				//update the null trailId with what mySQL has generated
-				$this->setTrailId(intval($pdo->lastInsertId()));
-			}
+		//update the null trailId with what mySQL has generated
+		$this->setTrailId(intval($pdo->lastInsertId()));
+	}
 
-		/**
-		 * Deletes this trail from mySQL
-		 *
-		 * @param PDO $pdo pointer to PDO connection, by reference
-		 * @throws PDOException when mySQL related errors occur
-		**/
-		public function delete(PDO &$pdo) {
-			//make sure this trail already exists
-			if($this->getTrailId() === null) {
-				throw(new PDOException("Unable to delete a restaurant that does not exist"));
-			}
+	/**
+	 * Deletes this trail from mySQL
+	 *
+	 * @param PDO $pdo pointer to PDO connection, by reference
+	 * @throws PDOException when mySQL related errors occur
+	 **/
+	public function delete(PDO &$pdo) {
+		//make sure this trail already exists
+		if($this->getTrailId() === null) {
+			throw(new PDOException("Unable to delete a restaurant that does not exist"));
+		}
 
-			//create query template
-			$query = "DELETE FROM trail WHERE trailId = :trailId";
-			$statement = $pdo->prepare($query);
+		//create query template
+		$query = "DELETE FROM trail WHERE trailId = :trailId";
+		$statement = $pdo->prepare($query);
 
-			//bind the member variables to the placeholders in the templates
-			$parameters = array("trailId" => $this->getTrailId());
-			$statement->execute($parameters);
-			}
+		//bind the member variables to the placeholders in the templates
+		$parameters = array("trailId" => $this->getTrailId());
+		$statement->execute($parameters);
+	}
 
-			/**
-			 * updates this trail in mySQL
-			 *
-			 * @param PDO $pdo pointer to PDO connection, by reference
-			 * @throws PDOException when mySQL related errors occur
-			**/
-			public function update(PDO &$pdo) {
-				//make sure this trail exists
-				if($this->getTrailId() === null) {
-					throw(new PDOException ("unable to update a trail that does not exist"));
-				}
+	/**
+	 * updates this trail in mySQL
+	 *
+	 * @param PDO $pdo pointer to PDO connection, by reference
+	 * @throws PDOException when mySQL related errors occur
+	 **/
+	public function update(PDO &$pdo) {
+		//make sure this trail exists
+		if($this->getTrailId() === null) {
+			throw(new PDOException ("unable to update a trail that does not exist"));
+		}
 
-				//create a query template
-				$query ="UPDATE trail SET userId =:userId, browser =:browser, createDate =:createDate, ipAddress =:ipAddress, submitTrailId =:submitTrailId,
+		//create a query template
+		$query = "UPDATE trail SET userId =:userId, browser =:browser, createDate =:createDate, ipAddress =:ipAddress, submitTrailId =:submitTrailId,
 trailAccessibility =:trailAccessibility, trailAmenities =:trailAmenities, trailCondition =:trailCondition, trailDescription =:trailDescription, trailDifficulty =:trailDifficulty,
 trailDistance =:trailDistance, trailName =:trailName, trailSubmissionType =:trailSubmissionType,trailTerrain =:trailTerrain, trailTraffic =:trailTraffic, trailUse =:trailUse, trailUuid =:trailUuid";
-				$statement =$pdo->prepare($query);
+		$statement = $pdo->prepare($query);
 
-				//bind the member variables to the placeholders in the template
-				$parameters = array("trailId" => $this->getTrailId(),"userId" => $this->getUserId(),  "browser" => $this->getBrowser(), "createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId() , "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
-"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" =>$this->getTrailDistance(),
-"trailSubmissionType" =>$this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailName" => $this->getTrailName(), "trailTraffic" => $this->getTrailTraffic(),
-"trailUse" =>$this->getTrailUse(), "trailUuid" =>$this->getTrailUuid());
-				$statement->execute($parameters);
-			}
+		//bind the member variables to the placeholders in the template
+		$parameters = array("trailId" => $this->getTrailId(), "userId" => $this->getUserId(), "browser" => $this->getBrowser(), "createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
+				"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" => $this->getTrailDistance(),
+				"trailSubmissionType" => $this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailName" => $this->getTrailName(), "trailTraffic" => $this->getTrailTraffic(),
+				"trailUse" => $this->getTrailUse(), "trailUuid" => $this->getTrailUuid());
+		$statement->execute($parameters);
+	}
 
-		/**
-		 * gets the trail by trailId
-		 *
-		 * @param PDO $pdo pointer to PDO connection, by reference
-		 * @param int $trailId trailID to search for
-		 * @return mixed trail found or null if not found
-		 * @throws PDOException when mySQL related errors occur
-		 *
-		**/
-	public static function getTrailById (PDO &$pdo, $trailId) {
+	/**
+	 * gets the trail by trailId
+	 *
+	 * @param PDO $pdo pointer to PDO connection, by reference
+	 * @param int $trailId trailID to search for
+	 * @return mixed trail found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 *
+	 **/
+	public static function getTrailById(PDO &$pdo, $trailId) {
 		//sanitize the trailId before searching
 		try {
 			$trailId = Filter::filterInt($trailId, "trailId");
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -581,16 +581,16 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailId = :trai
 
 			if($row !== false)
 				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
-				$trail = new Trail ($row["trailId"], $row["userId"],  $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"],  $row["trailTraffic"],
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
-				$trails[$trails->key()] = $trail;
-				$trails->next();
-			} catch (Exception $e) {
-				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
-			}
-		return($trails);
+			$trails[$trails->key()] = $trail;
+			$trails->next();
+		} catch(Exception $e) {
+			//if the row couldn't be converted, rethrow it
+			throw(new PDOException($e->getMessage(), 0, $e));
+		}
+		return ($trails);
 	}
 
 	/**
@@ -602,15 +602,15 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailId = :trai
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getTrailByUserId (PDO &$pdo, $userId) {
+	public static function getTrailByUserId(PDO &$pdo, $userId) {
 		//sanitize the userId before searching
 		try {
 			$userId = Filter::filterInt($userId, "userId");
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -626,20 +626,20 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userI
 		//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
 				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
-				$trail = new Trail ($row["trailId"], $row["userId"],  $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"],  $row["trailTraffic"],
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
 	/**
@@ -651,15 +651,15 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userI
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getTrailBySubmitTrailId (PDO &$pdo, $submitTrailId) {
+	public static function getTrailBySubmitTrailId(PDO &$pdo, $submitTrailId) {
 		//sanitize the trailSubmitId before searching
 		try {
 			$submitTrailId = Filter::filterInt($submitTrailId, "submitTrailId");
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -675,20 +675,20 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userI
 		//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
 				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
-				$trail = new Trail ($row["trailId"], $row["userId"],  $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"],  $row["trailTraffic"],
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
 
@@ -700,47 +700,47 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userI
 	 * @return mixed trail found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 *
-
-	public static function getTrailByBrowser (PDO &$pdo, $browser) {
-		//sanitize the browser before searching
-		try {
-			$browser = Filter::filterString($browser, "browser", 128);
-		} catch (InvalidArgumentException $invalidArgument ) {
-			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
-			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
-			throw(new PDOException($exception->getMessage(), 0, $exception));
-		}
-
-		//create query template
-		$query = "SELECT browser, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuid FROM trail WHERE browser = :browser";
-		$statement = $pdo->prepare($query);
-
-		//bind browser to placeholder
-		$parameters = array("browser" => $browser);
-		$statement->execute($parameters);
-
-		//build an array of trails
-		$trails = new SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
-			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["createDate"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuid"]);
-				$trails[$trails->key()] = $trail;
-				$trails->next();
-			} catch (Exception $e) {
-				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
-			}
-		}
-		return($trails);
-	}
-	**/
+	 *
+	 * public static function getTrailByBrowser (PDO &$pdo, $browser) {
+	 * //sanitize the browser before searching
+	 * try {
+	 * $browser = Filter::filterString($browser, "browser", 128);
+	 * } catch (InvalidArgumentException $invalidArgument ) {
+	 * throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
+	 * } catch(RangeException $range){
+	 * throw(new PDOException($range->getMessage(), 0, $range));
+	 * } catch (Exception $exception){
+	 * throw(new PDOException($exception->getMessage(), 0, $exception));
+	 * }
+	 *
+	 * //create query template
+	 * $query = "SELECT browser, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
+	 * trailTerrain, trailName, trailTraffic, trailUse, trailUuid FROM trail WHERE browser = :browser";
+	 * $statement = $pdo->prepare($query);
+	 *
+	 * //bind browser to placeholder
+	 * $parameters = array("browser" => $browser);
+	 * $statement->execute($parameters);
+	 *
+	 * //build an array of trails
+	 * $trails = new SplFixedArray($statement->rowCount());
+	 * $statement->setFetchMode(PDO::FETCH_ASSOC);
+	 * while (($row = $statement->fetch()) !== false) {
+	 * try {
+	 * //new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
+	 * $trail = new Trail($row["trailId"], $row["createDate"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
+	 * $row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+	 * $row["trailUse"], $row["trailUuid"]);
+	 * $trails[$trails->key()] = $trail;
+	 * $trails->next();
+	 * } catch (Exception $e) {
+	 * //if the row couldn't be converted, rethrow it
+	 * throw(new PDOException($e->getMessage(),0 , $e));
+	 * }
+	 * }
+	 * return($trails);
+	 * }
+	 **/
 	/**
 	 * gets the trail by createDate
 	 *
@@ -750,15 +750,15 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuid FROM trail WHERE brow
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getTrailByCreateDate (PDO &$pdo, $createDate) {
+	public static function getTrailByCreateDate(PDO &$pdo, $createDate) {
 		//sanitize the createDate before searching
 		try {
 			$createDate = Filter::filterDate($createDate, "createDate");
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -774,20 +774,20 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE createDate = :c
 		//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType, $trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["ipAddress"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
 	/**
@@ -799,15 +799,15 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE createDate = :c
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getTrailByIpAddress (PDO &$pdo, $ipAddress) {
+	public static function getTrailByIpAddress(PDO &$pdo, $ipAddress) {
 		//sanitize the ipAddress before searching
 		try {
 			$IpAddress = Filter::filterInt($ipAddress, "ipAddress");
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -820,23 +820,23 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE IpAddress = :Ip
 		$parameters = array("IpAddress" => $IpAddress);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
 				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
-				$trail = new Trail ($row["trailId"], $row["userId"],  $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"],  $row["trailTraffic"],
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
 	/**
@@ -848,15 +848,15 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE IpAddress = :Ip
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getTrailByTrailAccessibility (PDO &$pdo, $trailAccessibility) {
+	public static function getTrailByTrailAccessibility(PDO &$pdo, $trailAccessibility) {
 		//sanitize the trailAccessibility before searching
 		try {
 			$trailAccessibility = Filter::filterString($trailAccessibility, "trailAccessibility", 256);
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -869,23 +869,23 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailAccessibil
 		$parameters = array("trailAccessibility" => $trailAccessibility);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
 				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
-				$trail = new Trail ($row["trailId"], $row["userId"],  $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"],  $row["trailTraffic"],
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
 	/**
@@ -897,15 +897,15 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailAccessibil
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getTrailByTrailAmenities (PDO &$pdo, $trailAmenities) {
+	public static function getTrailByTrailAmenities(PDO &$pdo, $trailAmenities) {
 		//sanitize the trailAmenities before searching
 		try {
 			$trailAmenities = Filter::filterString($trailAmenities, "trailAmenities", 256);
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -918,23 +918,23 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailAmenities 
 		$parameters = array("trailAmenities" => $trailAmenities);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
 	/**
@@ -946,15 +946,15 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailAmenities 
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getTrailByTrailCondition (PDO &$pdo, $trailCondition) {
+	public static function getTrailByTrailCondition(PDO &$pdo, $trailCondition) {
 		//sanitize the trailCondition before searching
 		try {
 			$trailCondition = Filter::filterString($trailCondition, "trailCondition", 256);
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -967,34 +967,34 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailCondition 
 		$parameters = array("trailCondition" => $trailCondition);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
-	public static function getTrailByTrailDescription (PDO &$pdo, $trailDescription) {
+	public static function getTrailByTrailDescription(PDO &$pdo, $trailDescription) {
 		//sanitize the trailDescription before searching
 		try {
 			$trailDescription = Filter::filterString($trailDescription, "trailDescription", 256);
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -1007,34 +1007,34 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailDescriptio
 		$parameters = array("trailDescription" => $trailDescription);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
-	public static function getTrailByTrailDifficulty (PDO &$pdo, $trailDifficulty) {
+	public static function getTrailByTrailDifficulty(PDO &$pdo, $trailDifficulty) {
 		//sanitize the trailDifficulty before searching
 		try {
 			$trailDifficulty = Filter::filterString($trailDifficulty, "trailDifficulty", 256);
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -1047,34 +1047,34 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailDifficulty
 		$parameters = array("trailDifficulty" => $trailDifficulty);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
-	public static function getTrailByTrailDistance (PDO &$pdo, $trailDistance) {
+	public static function getTrailByTrailDistance(PDO &$pdo, $trailDistance) {
 		//sanitize the trailDistance before searching
 		try {
 			$trailDistance = Filter::filterInt($trailDistance, "trailDistance");
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -1087,34 +1087,34 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailDistance =
 		$parameters = array("trailDistance" => $trailDistance);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
-	public static function getTrailByTrailSubmissionType (PDO &$pdo, $trailSubmissionType) {
+	public static function getTrailByTrailSubmissionType(PDO &$pdo, $trailSubmissionType) {
 		//sanitize the trailSubmissionType before searching
 		try {
 			$trailSubmissionType = Filter::filterInt($trailSubmissionType, "trailSubmissionType");
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -1127,34 +1127,34 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailSubmission
 		$parameters = array("trailSubmissionType" => $trailSubmissionType);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType, $trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailTerrain"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
-	public static function getTrailByTrailTerrain (PDO &$pdo, $trailTerrain) {
+	public static function getTrailByTrailTerrain(PDO &$pdo, $trailTerrain) {
 		//sanitize the trailTerrain before searching
 		try {
 			$trailTerrain = Filter::filterString($trailTerrain, "trailTerrain", 256);
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -1167,34 +1167,34 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailTerrain = 
 		$parameters = array("trailTerrain" => $trailTerrain);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
-	public static function getTrailByTrailName (PDO &$pdo, $trailName) {
+	public static function getTrailByTrailName(PDO &$pdo, $trailName) {
 		//sanitize the trailName before searching
 		try {
 			$trailName = Filter::filterString($trailName, "trailName", 256);
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -1208,34 +1208,34 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailName LIKE 
 		$parameters = array("trailName" => $trailName);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
-	public static function getTrailByTrailTraffic (PDO &$pdo, $trailTraffic) {
+	public static function getTrailByTrailTraffic(PDO &$pdo, $trailTraffic) {
 		//sanitize the trailTraffic before searching
 		try {
 			$trailTraffic = Filter::filterString($trailTraffic, "trailTraffic", 16);
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -1251,31 +1251,31 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailTraffic = 
 		//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
-	public static function getTrailByTrailUse (PDO &$pdo, $trailUse) {
+	public static function getTrailByTrailUse(PDO &$pdo, $trailUse) {
 		//sanitize the trailUse before searching
 		try {
 			$trailUse = Filter::filterString($trailUse, "trailUse", 16);
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -1288,34 +1288,34 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailUse = :tra
 		$parameters = array("trailUse" => $trailUse);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
-	public static function getTrailByTrailUuid (PDO &$pdo, $trailUuid) {
+	public static function getTrailByTrailUuid(PDO &$pdo, $trailUuid) {
 		//sanitize the trailUuid before searching
 		try {
 			$trailUuId = Filter::filterString($trailUuid, "trailUuid");
-		} catch (InvalidArgumentException $invalidArgument ) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range){
+		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch (Exception $exception){
+		} catch(Exception $exception) {
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
 
@@ -1328,23 +1328,23 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailUuid = :tr
 		$parameters = array("trailUuid" => $trailUuid);
 		$statement->execute($parameters);
 
-		//build an array of trails
+//build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while (($row = $statement->fetch()) !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
-			} catch (Exception $e) {
+			} catch(Exception $e) {
 				//if the row couldn't be converted, rethrow it
-				throw(new PDOException($e->getMessage(),0 , $e));
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($trails);
+		return ($trails);
 	}
 
 	/**
@@ -1354,6 +1354,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailUuid = :tr
 	 **/
 
 	public function jsonSerialize() {
-		return(get_object_vars($this));
+		return (get_object_vars($this));
 	}
+}
 
