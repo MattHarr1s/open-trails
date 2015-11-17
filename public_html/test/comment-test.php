@@ -142,7 +142,6 @@ class CommentTest extends TrailQuailTest {
 		// grab the data from mySQL and enforce the fields match expectations
 		$pdoComment = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
 		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("comment"));
-		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
 		$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
@@ -205,9 +204,29 @@ class CommentTest extends TrailQuailTest {
 		// grab the data from MySQL and enforce the fields match our expectation
 		$pdoComment= Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
-
-hu
+		$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
+		$this->assertSame($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
+		$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
+		$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
+		$this->assertSame($pdoComment->getCommentText(), $this->VALID_COMMENTTEXT);
 	}
+
+
+		/**
+		 *test grabbing a comment that doesn't exist
+		 */
+		public function testGetInvalidCommentByCommentId(){
+			// grab a comment id that exceeds the maximum allowable comment id
+			$comment = Comment::getCommentByCommentId($this->getPDO(), DataDesignTest::INVALID_KEY);
+			$this->assertNull($comment);
+
+		}
+
+
+
+
+
 
 
 
