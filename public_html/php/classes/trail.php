@@ -911,7 +911,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailAccessibil
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
 trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailAmenities = :trailAmenities";
 		$statement = $pdo->prepare($query);
 
@@ -960,7 +960,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailAmenities 
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
 trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailCondition = :trailCondition";
 		$statement = $pdo->prepare($query);
 
@@ -1000,7 +1000,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailCondition 
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
 trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDescription = :trailDescription";
 		$statement = $pdo->prepare($query);
 
@@ -1040,8 +1040,8 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDescriptio
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDifficulty = :trailDifficulty";
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDifficulty = :trailDifficulty";
 		$statement = $pdo->prepare($query);
 
 		//bind trailDifficulty to placeholder
@@ -1080,8 +1080,8 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trai
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDistance = :trailDistance";
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDistance = :trailDistance";
 		$statement = $pdo->prepare($query);
 
 		//bind trailDistance to placeholder
@@ -1120,8 +1120,8 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trai
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trailSubmissionType = :trailSubmissionType";
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailSubmissionType = :trailSubmissionType";
 		$statement = $pdo->prepare($query);
 
 		//bind trailSubmissionType to placeholder
@@ -1160,8 +1160,8 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trai
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trailTerrain = :trailTerrain";
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailTerrain = :trailTerrain";
 		$statement = $pdo->prepare($query);
 
 		//bind trailTerrain to placeholder
@@ -1200,8 +1200,8 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trai
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trailName LIKE :trailName";
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailName LIKE :trailName";
 		$statement = $pdo->prepare($query);
 
 		//bind trailName to placeholder
@@ -1241,8 +1241,8 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trai
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, submitTrailId, browser, createDate, ipAddress, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trailTraffic = :trailTraffic";
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailTraffic = :trailTraffic";
 		$statement = $pdo->prepare($query);
 
 		//bind trailTraffic to placeholder
@@ -1281,8 +1281,8 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trai
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trailUse = :trailUse";
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailUse = :trailUse";
 		$statement = $pdo->prepare($query);
 
 		//bind trailUse to placeholder
@@ -1321,8 +1321,8 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trai
 		}
 
 		//create query template
-		$query = "SELECT trailAmenities, submitTrailId, browser, createDate, ipAddress, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE trailUuId = :trailUuId";
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailUuId = :trailUuId";
 		$statement = $pdo->prepare($query);
 
 		//bind trailUuId to placeholder
