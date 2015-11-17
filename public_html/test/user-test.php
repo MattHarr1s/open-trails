@@ -1,6 +1,7 @@
 <?php
 require_once("trail-quail.php");
-require_once(dirname(__DIR__). "/php/classes/autoload.php");
+require_once(dirname(__DIR__) . "/php/classes/autoload.php");
+
 
 /**
  *
