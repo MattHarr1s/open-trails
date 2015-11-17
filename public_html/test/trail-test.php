@@ -17,7 +17,7 @@ class TrailTest extends TrailQuailTest {
 	 * @var int $VALID_TRAILID
 	 */
 
-	protected $VALID_TRAILID = "5";
+	protected $VALID_TRAILID = "null";
 	/**
 	 * id for the content of the submission of the trail object
 	 * @var int $VALID_SUBMITTRAILID
@@ -126,6 +126,19 @@ class TrailTest extends TrailQuailTest {
 	 * @var string $VALID_TRAILUUID
 	 **/
 	protected $VALID_TRAILUUID = "SSEERFFV4444554";
+
+	/**
+	* create dependent objects before running each test
+	**/
+	public final function setUp(){
+		//run the default setUp() method first
+		parent::setUp();
+
+		//create and insert a userId to own the trail
+		$this->user =new User(null, "Chrome", "2015-11-15 09:45.30", "192.168.1.168", "S",
+				"saul.jeff@gmail.com", null, "Hyourname.tomorrow", null);
+		$this->user->insert($this->getPDO());
+	}
 
 	/**
 	 * test inserting a valid Trail and verify that the actual mySQL data matches
