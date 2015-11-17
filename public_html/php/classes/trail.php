@@ -550,8 +550,7 @@ trailDistance =:trailDistance, trailName =:trailName, trailSubmissionType =:trai
 	 * @param int $trailId trailID to search for
 	 * @return mixed trail found or null if not found
 	 * @throws PDOException when mySQL related errors occur
-	 *
-	 **/
+	**/
 	public static function getTrailById(PDO &$pdo, $trailId) {
 		//sanitize the trailId before searching
 		try {
@@ -579,17 +578,18 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailId = :trai
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 
-			if($row !== false)
+			if($row !== false) {
 				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
 				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
-			$trails[$trails->key()] = $trail;
-			$trails->next();
-		} catch(Exception $e) {
-			//if the row couldn't be converted, rethrow it
-			throw(new PDOException($e->getMessage(), 0, $e));
-		}
+				$trails[$trails->key()] = $trail;
+				$trails->next();
+				}
+			} catch(Exception $e) {
+				//if the row couldn't be converted, rethrow it
+				throw(new PDOException($e->getMessage(), 0, $e));
+			}
 		return ($trails);
 	}
 
