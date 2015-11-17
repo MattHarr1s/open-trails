@@ -115,7 +115,7 @@ class Trail implements JsonSerializable {
 		 * id for the submission on the trail object. Exists so the primary key does not have to get updated.
 		 * @var string trailUuId
 	 	**/
-		private $trailUuId;
+		private $trailUuid;
 
 		/**
 		 *constructor for trail object.
@@ -138,14 +138,14 @@ class Trail implements JsonSerializable {
 		 * @param $newTrailName
 		 * @param $newTrailTraffic
 		 * @param $newTrailUse
-		 * @param $newTrailUuId
+		 * @param $newTrailUuid
 		 * @throws InvalidArgumentException if data types are not valid
 		 * @throws RangeException if values are out of bounds
 		 * @throws Exception if some other exception is thrown
 		 **/
 		public function __construct($newTrailId, $newSubmitTrailId, $newUserId,$newBrowser, $newCreateDate,
 		$newIpAddress, $newTrailAccessibility,$newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty,
-		$newTrailDistance, $newTrailSubmissionType, $newTrailTerrain, $newTrailName, $newTrailTraffic, $newTrailUse, $newTrailUuId) {
+		$newTrailDistance, $newTrailSubmissionType, $newTrailTerrain, $newTrailName, $newTrailTraffic, $newTrailUse, $newTrailUuid) {
 			try{
 				$this->setTrailId($newTrailId);
 				$this->setSubmitTrailId($newSubmitTrailId);
@@ -164,7 +164,7 @@ class Trail implements JsonSerializable {
 				$this->setTrailName($newTrailName);
 				$this->setTrailTraffic($newTrailTraffic);
 				$this->setTrailUse($newTrailUse);
-				$this->setTrailUuId($newTrailUuId);
+				$this->setTrailUuid($newTrailUuid);
 			}catch(InvalidArgumentException $invalidArgument){
 					//rethrow the exception to the caller
 					throw(new InvalidArgumentException($invalidArgument->getMessage(),0, $invalidArgument));
@@ -192,7 +192,7 @@ class Trail implements JsonSerializable {
 		 * @param mixed $newTrailId
 		 **/
 			public function setTrailId($newTrailId){
-				$this->trailId = Filter::filterInt($newTrailId,"Trail Id", true);
+				$this->trailId = Filter::filterInt($newTrailId, "Trail Id", true);
 			}
 
 
@@ -448,21 +448,21 @@ class Trail implements JsonSerializable {
 		}
 
 		/**
-		 * accessor method for trailUuId
+		 * accessor method for trailUud
 		 *
-		 * @return int value of trailUuId
+		 * @return int value of trailUuid
 		**/
-		public function getTrailUuId(){
-			return ($this->trailUuId);
+		public function getTrailUuid(){
+			return ($this->trailUuid);
 		}
 
 		/**
-		 * mutator method for trailUuId
+		 * mutator method for trailUuid
 		 *
-	 	 * @param string $newTrailUuId
+	 	 * @param string $newTrailUuid
 	 	**/
-	public function setTrailUuId($newTrailUuId){
-		$this->trailUuId = Filter::filterString($newTrailUuId, "Trail UuId", 36);
+	public function setTrailUuid($newTrailUuid){
+		$this->TrailUuid = Filter::filterString($newTrailUuid, "Trail UuId", 36);
 	}
 
 		/**
@@ -485,11 +485,11 @@ trailTerrain, trailTraffic, trailUse, trailUuid) VALUES (:userId, :browser, :cre
 				$statement = $pdo->prepare($query);
 
 				//bind the member variables to the placeholders in the template
-				$parameters = array("userId" => $this->getUserId(), "submitTrailId" => $this->getTrailId(), "browser" => $this->getBrowser(),
-"createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
-"trailCondition" => $this->getTrailCondition(), "trailDescription" =>$this->getTrailDescription(), "trailDifficulty" =>$this->getTrailDifficulty(), "trailDistance" =>$this->getTrailDistance(),
-"trailSubmissionType" =>$this->getTrailSubmissionType(), "trailTerrain" =>$this->getTrailTerrain(), "trailName" =>$this->getTrailName(), "trailTraffic" =>$this->getTrailTraffic(),
-"trailUse" =>$this->getTrailUse(), "trailUuid" =>$this->getTrailUuId());
+				$parameters = array("trailId" => $this->getTrailId(),"userId" => $this->getUserId(),  "browser" => $this->getBrowser(),
+"createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId() , "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
+"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" =>$this->getTrailDistance(),
+"trailSubmissionType" =>$this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailName" => $this->getTrailName(), "trailTraffic" => $this->getTrailTraffic(),
+"trailUse" =>$this->getTrailUse(), "trailUuid" =>$this->getTrailUuid());
 				$statement->execute($parameters);
 
 				//update the null trailId with what mySQL has generated
@@ -535,12 +535,11 @@ trailAccessibility =:trailAccessibility, trailAmenities =:trailAmenities, trailC
 trailDistance =:trailDistance, trailName =:trailName, trailSubmissionType =:trailSubmissionType,trailTerrain =:trailTerrain, trailTraffic =:trailTraffic, trailUse =:trailUse, trailUuid =:trailUuid";
 				$statement =$pdo->prepare($query);
 
-				//bind the member variables to the placeholders in the templates
-				$parameters = array("userId" => $this->getUserId(), "submitTrailId" => $this->getTrailId(), "browser" => $this->getBrowser(),
-				"createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
-				"trailCondition" => $this->getTrailCondition(), "trailDescription" =>$this->getTrailDescription(), "trailDifficulty" =>$this->getTrailDifficulty(), "trailDistance" =>$this->getTrailDistance(),
-				"trailSubmissionType" =>$this->getTrailSubmissionType(), "trailTerrain" =>$this->getTrailTerrain(), "trailName" =>$this->getTrailName(), "trailTraffic" =>$this->getTrailTraffic(),
-				"trailUse" =>$this->getTrailUse(), "trailUuid" =>$this->getTrailUuId());
+				//bind the member variables to the placeholders in the template
+				$parameters = array("trailId" => $this->getTrailId(),"userId" => $this->getUserId(),  "browser" => $this->getBrowser(), "createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId() , "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
+"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" =>$this->getTrailDistance(),
+"trailSubmissionType" =>$this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailName" => $this->getTrailName(), "trailTraffic" => $this->getTrailTraffic(),
+"trailUse" =>$this->getTrailUse(), "trailUuid" =>$this->getTrailUuid());
 				$statement->execute($parameters);
 			}
 
@@ -581,16 +580,17 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailId = :trai
 			$row = $statement->fetch();
 
 			if($row !== false) {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail ($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-			$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-			$row["trailUse"], $row["trailUuid"]);
+				//new trail ($trailId, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailTraffic, $trailUse, $trailUuid)
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
+						$row["trailUse"], $row["trailUuid"]);
+				$trails[$trails->key()] = $trail;
+				$trails->next();
+			 }catch(Exception $e) {
+				//if the row could not be converted, rethrow it
+				throw (new PDOException($e->getMessage(), 0, $e));
 			}
-			}catch (Exception $e) {
-			//if the row could not be converted, rethrow it
-			throw (new PDOException($e->getMessage(), 0, $e));
 		}
-
 		return($trail);
 	}
 
@@ -629,9 +629,9 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userI
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				$trail = new Trail ($row["trailId"], $row["userId"],  $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"],  $row["trailTraffic"],
 						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
@@ -679,9 +679,9 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userI
 		while (($row = $statement->fetch()) !== false) {
 			try {
 				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
-				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+				$trail = new Trail ($row["trailId"], $row["userId"],  $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
+						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"],  $row["trailTraffic"],
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -716,7 +716,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userI
 
 		//create query template
 		$query = "SELECT browser, submitTrailId, browser, createDate, ipAddress,trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailSubmissionType,
-trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE browser = :browser";
+trailTerrain, trailName, trailTraffic, trailUse, trailUuid FROM trail WHERE browser = :browser";
 		$statement = $pdo->prepare($query);
 
 		//bind browser to placeholder
@@ -728,10 +728,10 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE brow
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["createDate"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -765,7 +765,7 @@ trailTerrain, trailName, trailTraffic, trailUse, trailUuId FROM trail WHERE brow
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE createDate = :createDate";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE createDate = :createDate";
 		$statement = $pdo->prepare($query);
 
 		//bind createDate to placeholder
@@ -777,10 +777,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE createDate = :c
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["ipAddress"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -814,7 +814,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE createDate = :c
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE IpAddress = :IpAddress";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE IpAddress = :IpAddress";
 		$statement = $pdo->prepare($query);
 
 		//bind IpAddress to placeholder
@@ -826,10 +826,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE IpAddress = :Ip
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["trailAccessibility"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -863,7 +863,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE IpAddress = :Ip
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailAccessibility = :trailAccessibility";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailAccessibility = :trailAccessibility";
 		$statement = $pdo->prepare($query);
 
 		//bind trailAccessibility to placeholder
@@ -875,10 +875,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailAccessibil
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $trailAmenities, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $trailAmenities, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -912,7 +912,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailAccessibil
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailAmenities = :trailAmenities";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailAmenities = :trailAmenities";
 		$statement = $pdo->prepare($query);
 
 		//bind trailAmenities to placeholder
@@ -924,10 +924,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailAmenities 
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -961,7 +961,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailAmenities 
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailCondition = :trailCondition";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailCondition = :trailCondition";
 		$statement = $pdo->prepare($query);
 
 		//bind trailCondition to placeholder
@@ -973,10 +973,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailCondition 
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -1001,7 +1001,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailCondition 
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDescription = :trailDescription";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailDescription = :trailDescription";
 		$statement = $pdo->prepare($query);
 
 		//bind trailDescription to placeholder
@@ -1013,10 +1013,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDescriptio
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -1041,7 +1041,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDescriptio
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDifficulty = :trailDifficulty";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailDifficulty = :trailDifficulty";
 		$statement = $pdo->prepare($query);
 
 		//bind trailDifficulty to placeholder
@@ -1053,10 +1053,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDifficulty
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -1081,7 +1081,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDifficulty
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDistance = :trailDistance";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailDistance = :trailDistance";
 		$statement = $pdo->prepare($query);
 
 		//bind trailDistance to placeholder
@@ -1093,10 +1093,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDistance =
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -1121,7 +1121,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailDistance =
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailSubmissionType = :trailSubmissionType";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailSubmissionType = :trailSubmissionType";
 		$statement = $pdo->prepare($query);
 
 		//bind trailSubmissionType to placeholder
@@ -1133,10 +1133,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailSubmission
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType, $trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType, $trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailTerrain"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -1161,7 +1161,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailSubmission
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailTerrain = :trailTerrain";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailTerrain = :trailTerrain";
 		$statement = $pdo->prepare($query);
 
 		//bind trailTerrain to placeholder
@@ -1173,10 +1173,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailTerrain = 
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -1201,7 +1201,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailTerrain = 
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailName LIKE :trailName";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailName LIKE :trailName";
 		$statement = $pdo->prepare($query);
 
 		//bind trailName to placeholder
@@ -1214,10 +1214,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailName LIKE 
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -1242,7 +1242,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailName LIKE 
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailTraffic = :trailTraffic";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailTraffic = :trailTraffic";
 		$statement = $pdo->prepare($query);
 
 		//bind trailTraffic to placeholder
@@ -1254,10 +1254,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailTraffic = 
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -1282,7 +1282,7 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailTraffic = 
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailUse = :trailUse";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailUse = :trailUse";
 		$statement = $pdo->prepare($query);
 
 		//bind trailUse to placeholder
@@ -1294,10 +1294,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailUse = :tra
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {
@@ -1308,10 +1308,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailUse = :tra
 		return($trails);
 	}
 
-	public static function getTrailByTrailUuId (PDO &$pdo, $trailUuId) {
-		//sanitize the trailUuId before searching
+	public static function getTrailByTrailUuid (PDO &$pdo, $trailUuid) {
+		//sanitize the trailUuid before searching
 		try {
-			$trailUuId = Filter::filterString($trailUuId, "trailUuId");
+			$trailUuId = Filter::filterString($trailUuid, "trailUuid");
 		} catch (InvalidArgumentException $invalidArgument ) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(RangeException $range){
@@ -1322,11 +1322,11 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailUse = :tra
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailUuId = :trailUuId";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailUuid = :trailUuid";
 		$statement = $pdo->prepare($query);
 
-		//bind trailUuId to placeholder
-		$parameters = array("trailUuId" => $trailUuId);
+		//bind trailUuid to placeholder
+		$parameters = array("trailUuid" => $trailUuid);
 		$statement->execute($parameters);
 
 		//build an array of trails
@@ -1334,10 +1334,10 @@ trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE trailUuId = :tr
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
+				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuid)
 				$trail = new Trail($row["trailId"], $row["userId"], $row["submitTrailId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["trailAccessibility"], $row["trailAmenities"],
 						$row["trailDifficulty"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailName"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuId"]);
+						$row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch (Exception $e) {

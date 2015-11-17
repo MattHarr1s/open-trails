@@ -1,6 +1,6 @@
 <?php
-require_once(dirname(__DIR__). "/php/classes/point.php.");
-require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
+require_once(dirname(__DIR__). "/public_html/php/classes/point.php.");
+require_once(dirname(dirname(__DIR__)) . "/public_html/php/classes/autoload.php");
 
 /**
  *
@@ -30,9 +30,11 @@ class PointTest extends TrailQuailTest{
 	 * test using valid x, valid y
 	**/
 	public function testValidPoint(){
-		$point = new Point();
-		$this->
+		$point = new Point($this->VALID_X, $this->VALID_Y);
 
+		//use the mutators to make a valid test case
+		$point->setX($this->VALID_X);
+		$point->setY($this->VALID_Y);
 
 	}
 }

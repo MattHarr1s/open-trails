@@ -299,7 +299,7 @@ class TrailTest extends TrailQuailTest {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trail");
 
-		//create a new trail and insert it into mySQL
+
 		//create a new trail and insert it into mySQL
 		$trail = new Trail($this->VALID_TRAILID, $this->VALID_SUBMITTRAILID, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
@@ -403,7 +403,6 @@ class TrailTest extends TrailQuailTest {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trail");
 
-		//create a new trail and insert it into mySQL
 		//create a new trail and insert it into mySQL
 		$trail = new Trail($this->VALID_TRAILID, $this->VALID_SUBMITTRAILID, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
