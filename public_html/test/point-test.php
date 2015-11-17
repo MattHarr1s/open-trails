@@ -1,6 +1,6 @@
 <?php
-require_once(dirname(__DIR__). "/public_html/php/classes/point.php.");
-require_once(dirname(dirname(__DIR__)) . "/public_html/php/classes/autoload.php");
+require_once("trail-quail.php");
+require_once(dirname(__DIR__). "/php/classes/autoload.php");
 
 /**
  *
@@ -18,7 +18,6 @@ class PointTest extends TrailQuailTest{
 	 * @var double $VALID_X
 	**/
 	protected $VALID_X = 35.6585;
-
 	/**
 	 * valid y value
 	 *
@@ -61,23 +60,24 @@ class PointTest extends TrailQuailTest{
 	 * test using invalid x
 	 **/
 	public function testInvalidPoint(){
-		$point = new Point();
+		$point = new Point($this->INVALID_X,$this->VALID_Y);
 
 		//use the mutators to make a valid test case
 		$point->setX($this->INVALID_X);
-		$point->setY($this->INVALID_Y);
+		$point->setY($this->VALID_Y);
 
 	}
 
 	/**
-	 * test using an invalid X
-	 *
-	 * @expectedException UnexpectedValueException
-	 **/
-	public function testInvalidAntiAbuse() {
-		$point = new Point();
+	 * test using an invalid y
+	**/
+
+   public function testInvalidPointY() {
+		$point = new Point($this->VALID_X, $this->INVALID_Y);
 
 		// simply use the $INVALID_IP and an exception will be thrown
-		$point->setX($this->INVALID_X);
+		$point->setX($this->VALID_X);
+		$point->setY($this->INVALID_Y);
 	}
+
 }
