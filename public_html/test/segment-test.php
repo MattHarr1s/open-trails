@@ -24,14 +24,14 @@ class SegmentTest extends TrailQuailTest{
 	 *
 	 * @var float $segmentStart
 	 **/
-	protected $VALID_SEGMENTSTART = 35.21966, -106.48073;
+	protected $VALID_SEGMENTSTART = "35.21966, -106.48073";
 
 	/**
 	 * valid location for end of segment
 	 *
 	 * @var float $segmentStop
 	 **/
-	protected $VALID_SEGMENTSTOP = 34.21966, -107.48073;
+	protected $VALID_SEGMENTSTOP = "34.21966, -107.48073";
 
 	/**
 	 * valid elevation at segment start point
