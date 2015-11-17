@@ -322,7 +322,7 @@ class User  {
 
 
 		//bind the member variables to the placeholders in the temlate
-		$formattedDate = $this->getCreateDate()->format("Y-m-d H:i:s");
+		$formattedDate = $this->setCreateDate()->format("Y-m-d H:i:s");
 		$parameters = ["userId" => $this->userId,"browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail,"userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt];
 		$statement->execute($parameters);
 
