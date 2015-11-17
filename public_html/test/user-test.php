@@ -58,7 +58,7 @@ class UserTest extends TrailQuailTest {
 	 * valid username to use
 	 * @var string $VALID_USERNAME
 	 */
-	protected $VALID_USERNAME = Hyourname.tomorrow;
+	protected $VALID_USERNAME = "Hyourname.tomorrow";
 
 	/**
 	 * valid user salt
@@ -83,7 +83,7 @@ class UserTest extends TrailQuailTest {
 	 */
 	public function testInsertValidUser() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("profile");
+		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new user information profile and insert it in the database
 		$user = new user(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE,$this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
@@ -107,7 +107,7 @@ class UserTest extends TrailQuailTest {
 	 *
 	 * @expectedException PDOException
 	 */
-	public function testInsertValidUser() {
+	public function testInsertInValidUser() {
 		// create a user Id profile with a non null userId adn watch it fail
 		$user = new User(UserTest::INVALID_KEY, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE,$this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->insert($this->getPDO());
@@ -118,7 +118,7 @@ class UserTest extends TrailQuailTest {
 	 */
 	public function testUpdateValidProfile() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()-getRowCount("user");
+		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new user Id profile and insert it into mySQL
 		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE,$this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
@@ -149,7 +149,7 @@ class UserTest extends TrailQuailTest {
 	public function testUpdateInvalidUser() {
 		// create a user Id profile  and try to update it without actually inserting it
 		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
-		$user->update(this->getPDO());
+		$user->update($this->getPDO());
 		}
 
 	/**

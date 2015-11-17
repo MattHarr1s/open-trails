@@ -53,7 +53,7 @@ class Segment implements JsonSerializable {
 	/** Constructor for segment objects
 	 *
 	 *
-	 * @param mixed $segmentId
+	 * @param int $segmentId
 	 * @param float $segmentStart
 	 * @param float $segmentStop
 	 * @param int $segmentStartElevation
