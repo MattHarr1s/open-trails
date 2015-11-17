@@ -116,7 +116,7 @@ class UserTest extends TrailQuailTest {
 	/**
 	 * test inserting a user Id profile, editing it, and then updating it
 	 */
-	public function testUpdateValidProfile() {
+	public function testUpdateValidUser() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("user");
 
@@ -173,5 +173,71 @@ class UserTest extends TrailQuailTest {
 		$this->assertSame($numRows, $this->getConnection()->getRowCount("user"));
 	}
 
+	/**
+	 * test deleting a user Id profile that does not exist
+	 */
+	public function testDeleteInvolidUser() {
+		// create a user Id profile adn try to delete it without actually inserting it
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user->delete($this->getPDO());
+	}
+
+	/**
+	 * test inserting a user Id profile and then grabbing it from mySQL
+	 */
+	public function testGetValidUserByUserId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("user");
+
+		// create a new user Id profile and insert it into mySQL
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user->insert($this->getPDO());
+
+		// grab the data from mySQL and see if the fields match our expected values
+		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("user"));
+		$this->assertSame($pdoUser->getBrowser(), $this->VALID_BROWSER);
+		$this->assertSame($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
+		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
+		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
+		$this->assertSame($pdoUser->getUserHash(), $this->VALID_USERHASH);
+		$this->assertSame($pdoUser->getUserName(), $this->VALID_USERNAME);
+		$this->assertSame($pdoUser->getUserSalt(), $this->VALID_USERSALT);
+	}
+
+	/**
+	 * test grabbing a user Id profile that does not exist
+	 */
+	public function testGetInvalidUserByUserId() {
+		//grab a user Id profile that exceeds the maximum allowable user id
+		$user = User::getUserByUserID($this->getPDO(), TrailQuailTest::INVALID_KEY);
+		$this->assertNull($user);
+
+		public function testGetValidUserbyUserName() {
+			// count the number of rows and save it for later
+			$numRows = $this->getConnection()->getRowCount("user");
+
+			// create a new user Id profile and insert it into mySQL
+			$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+			$user->insert($this->getPDO());
+
+			// grab the data from mySQL and see if the fields match our expected values
+			$pdoUser = User::getUserByUserName($this->getPDO(), $user->getUserName());
+			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("user"));
+			$this->assertSame($pdoUser->getBrowser(), $this->VALID_BROWSER);
+			$this->assertSame($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
+			$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
+			$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
+			$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
+			$this->assertSame($pdoUser->getUserHash(), $this->VALID_USERHASH);
+			$this->assertSame($pdoUser->getUserName(), $this->VALID_USERNAME);
+			$this->assertSame($pdoUser->getUserSalt(), $this->VALID_USERSALT);
+		}
+
+		/**
+		 * test grabbing a user Id profile by email
+		 */
+	}
 
 }
