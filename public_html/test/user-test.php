@@ -88,7 +88,7 @@ class UserTest extends TrailQuailTest {
 
 		// create a new user information profile and insert it in the database
 		$user = new user(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE,$this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
-		$user->insert($$this->getPDO());
+		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and verify the fields match our expectation
 		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
