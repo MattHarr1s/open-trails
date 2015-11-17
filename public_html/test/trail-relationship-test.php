@@ -1,6 +1,6 @@
 <?php
-require_once ("trail-quail.php");
-require_once(dirname(__DIR__). "/php/classes/autoload.php");
+require_once("trail-quail.php");
+require_once(dirname(__DIR__) . "/php/classes/autoload.php");
 
 /**
  * Full PHPUnit test for the TrailRelationship class
@@ -36,6 +36,16 @@ class TrailRelationshipTest extends TrailQuailTest {
 	protected $VALID_SEGMENTTYPE2 = "S";
 
 	/**
+	 * @var Trail $trail
+	 **/
+	protected $trail = null;
+
+	/**
+	 * @var Segment $segment
+	 **/
+	protected $segment = null;
+
+	/**
 	 * create dependent objects before running each test
 	 **/
 	public final function setUp() {
@@ -43,7 +53,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		parent::setUp();
 
 		//create and insert a trailId to own the test Trail Relationship
-		$this->trail = new Trail(null, 7, 5, "Safari", "2015-11-15 12:15:42", "192.168.1.4", "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, "1054.53", 2, "Mostly switchbacks with a few sections of rock fall", "La Luz", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail = new Trail(null, 7, 5, "Safari", DateTime::createFromFormat("Y-m-d H:i:s", "2015-11-15 12:15:42"), "192.168.1.4", "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, "1054.53", 2, "Mostly switchbacks with a few sections of rock fall", "La Luz", "Heavy", "Hiking", "SSEERFFV4444554");
 		$this->trail->insert($this->getPDO());
 
 		//create and insert a segmentId to own the test Trail Relationship
@@ -273,8 +283,8 @@ class TrailRelationshipTest extends TrailQuailTest {
 	}
 
 	/**
- * test grabbing a Trail Relationship by segmentId
- **/
+	 * test grabbing a Trail Relationship by segmentId
+	 **/
 	public function testGetValidTrailRelationshipBySegmentId() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
@@ -347,4 +357,5 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->VALID_TRAILID);
 		$this->assertSame($pdoTrailRelationship->getSegmentType(), $this->VALID_SEGMENTTYPE);
 	}
+
 }
