@@ -146,5 +146,32 @@ class UserTest extends TrailQuailTest {
 	 *
 	 * @expectedException PDOException
 	 */
-	public function
+	public function testUpdateInvalidUser() {
+		// create a user Id profile  and try to update it without actually inserting it
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user->update(this->getPDO());
+		}
+
+	/**
+	 * test creating a user Id profile and then deleting it
+	 */
+	public function testDeleteValidUser() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConenction()->getRowCount("user");
+
+		// create a new user Id profile and insert it into MySQL
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user->insert($this->getPDO());
+
+		// delete this user Id profile from mySQL
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("user"));
+		$user->delete($this->getPDO());
+
+		// grab the data from mySQL and make the user Id profile does not exist
+		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
+		$this->assertNull($pdoUser);
+		$this->assertSame($numRows, $this->getConnection()->getRowCount("user"));
+	}
+
+
 }
