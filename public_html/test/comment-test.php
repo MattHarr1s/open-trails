@@ -206,7 +206,7 @@ class CommentTest extends TrailQuailTest {
 		$pdoComment= Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
 
-
+hu
 	}
 
 
