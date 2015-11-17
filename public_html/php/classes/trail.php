@@ -143,25 +143,25 @@ class Trail implements JsonSerializable {
 		 * @throws RangeException if values are out of bounds
 		 * @throws Exception if some other exception is thrown
 		 **/
-		public function __construct($newTrailId, $newSubmitTrailId, $newUserId,$newBrowser, $newCreateDate,
-		$newIpAddress, $newTrailAccessibility,$newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty,
-		$newTrailDistance, $newTrailSubmissionType, $newTrailTerrain, $newTrailName, $newTrailTraffic, $newTrailUse, $newTrailUuid) {
+		public function __construct($newTrailId, $newUserId,$newBrowser, $newCreateDate,
+		$newIpAddress, $newSubmitTrailId, $newTrailAccessibility,$newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty,
+		$newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid) {
 			try{
 				$this->setTrailId($newTrailId);
-				$this->setSubmitTrailId($newSubmitTrailId);
 				$this->setUserId($newUserId);
 				$this->setBrowser($newBrowser);
 				$this->setCreateDate($newCreateDate);
 				$this->setIpAddress($newIpAddress);
+				$this->setSubmitTrailId($newSubmitTrailId);
 				$this->setTrailAccessibility($newTrailAccessibility);
 				$this->setTrailAmenities($newTrailAmenities);
 				$this->setTrailCondition($newTrailCondition);
 				$this->setTrailDescription($newTrailDescription);
 				$this->setTrailDifficulty($newTrailDifficulty);
 				$this->setTrailDistance($newTrailDistance);
+				$this->setTrailName($newTrailName);
 				$this->setTrailSubmissionType($newTrailSubmissionType);
 				$this->setTrailTerrain($newTrailTerrain);
-				$this->setTrailName($newTrailName);
 				$this->setTrailTraffic($newTrailTraffic);
 				$this->setTrailUse($newTrailUse);
 				$this->setTrailUuid($newTrailUuid);
