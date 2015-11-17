@@ -54,6 +54,8 @@ class SegmentTest extends TrailQuailTest{
 	 **/
 	protected $VALID_SEGMENTSTOPELEVATION = 10253;
 
+
+
 	/**
 	 *test inserting a valid segmentId entry and confirm the data matches mySQL
 	**/
