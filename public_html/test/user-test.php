@@ -146,5 +146,5 @@ class UserTest extends TrailQuailTest {
 	 *
 	 * @expectedException PDOException
 	 */
-
+	public function
 }
