@@ -242,15 +242,36 @@ class UserTest extends TrailQuailTest {
 	 * test grabbing a user Id profile by user name that does not exist
 	 */
 	public function testGetIvalidUserBYUserName() {
-			// grab a user Id profile using a user name that does not exist
-			$profile = User::getUserByUserName($this->getPDO(), "does not exist");
-			$this->assertNull($user);
-		}
+		// grab a user Id profile using a user name that does not exist
+		$profile = User::getUserByUserName($this->getPDO(), "does not exist");
+		$this->assertNull($user);
+	}
 
 
 	/**
 	 * test grabbing a user Id profile by email
 	 */
+	public function testGetValidUserByEmail() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("profile");
+
+		// create a new user Id profile and insert it into mySQL
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user->insert($this->getPDO);
+
+		// grab the data from mySQL and see if the fields match our expected values
+		$pdoUser = User::getUserByEmail($this->getPDO(), $this->VALID_EMAIL);
+		$this->assertSame($numRows + 1), $this->getConnection()->getRowCount("user");
+		$this->assertSame($pdoUser->getBrowser(), $this->VALID_BROWSER);
+		$this->assertSame($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
+		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
+		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
+		$this->assertSame($pdoUser->getUserHash(), $this->VALID_USERHASH);
+		$this->assertSame($pdoUser->getUserName(), $this->VALID_USERNAME);
+		$this->assertSame($pdoUser->getUserSalt(), $this->VALID_USERSALT);
 	}
+
+
 
 }
