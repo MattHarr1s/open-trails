@@ -250,7 +250,7 @@ class UserTest extends TrailQuailTest {
 
 
 	/**
-	 * test grabbing a user Id profile by email
+	 * test grabbing a user Id profile by user email
 	 */
 	public function testGetValidUserByEmail() {
 		// count the number of rows and save it for later
@@ -261,8 +261,8 @@ class UserTest extends TrailQuailTest {
 		$user->insert($this->getPDO);
 
 		// grab the data from mySQL and see if the fields match our expected values
-		$pdoUser = User::getUserByEmail($this->getPDO(), $this->VALID_EMAIL);
-		$this->assertSame($numRows + 1), $this->getConnection()->getRowCount("user");
+		$pdoUser = User::getUserByUserEmail($this->getPDO(), $this->VALID_USEREMAIL);
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertSame($pdoUser->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
