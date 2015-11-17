@@ -239,8 +239,14 @@ class UserTest extends TrailQuailTest {
 	}
 
 	/**
-	 *
+	 * test grabbing a user Id profile by user name that does not exist
 	 */
+	public function testGetIvalidUserBYUserName() {
+			// grab a user Id profile using a user name that does not exist
+			$profile = User::getUserByUserName($this->getPDO(), "does not exist");
+			$this->assertNull($user);
+		}
+
 
 	/**
 	 * test grabbing a user Id profile by email
