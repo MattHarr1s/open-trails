@@ -126,6 +126,7 @@ class TrailTest extends TrailQuailTest {
 	 * @var string $VALID_TRAILUUID
 	 **/
 	protected $VALID_TRAILUUID = "SSEERFFV4444554";
+
 	/**
 	 * id for the user
 	 * @var mixed $userId
@@ -134,7 +135,6 @@ class TrailTest extends TrailQuailTest {
 
 	/**
 	* create dependent objects before running each test
-	 * @var mixed $userId
 	**/
 	public final function setUp(){
 		//run the default setUp() method first

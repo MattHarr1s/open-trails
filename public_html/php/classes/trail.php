@@ -485,8 +485,8 @@ trailTerrain, trailTraffic, trailUse, trailUuid) VALUES (:userId, :browser, :cre
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the placeholders in the template
-		$parameters = array("trailId" => $this->getTrailId(), "userId" => $this->getUserId(), "browser" => $this->getBrowser(),
-				"createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
+		$parameters = array("userId" => $this->getUserId(), "browser" => $this->getBrowser(),
+				"createDate" => $this->getCreateDate()->format("Y-m-d H:i:s"), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
 				"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" => $this->getTrailDistance(),
 				"trailSubmissionType" => $this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailName" => $this->getTrailName(), "trailTraffic" => $this->getTrailTraffic(),
 				"trailUse" => $this->getTrailUse(), "trailUuid" => $this->getTrailUuid());

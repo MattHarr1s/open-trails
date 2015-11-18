@@ -46,7 +46,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 	protected $segment = null;
 
 	/**
-	 * @var mixed $VALID_DATE
+	 * @var string $VALID_DATE
 	 */
 	protected $VALID_DATE = null;
 
@@ -62,12 +62,13 @@ class TrailRelationshipTest extends TrailQuailTest {
 		//run the default setUp() method first
 		parent::setUp();
 
-		$this->VALID_DATE = new DateTime();//DateTime::createFromFormat("Y-m-d H:i:s", "2015-11-15 12:15:42");
+		$this->VALID_DATE = DateTime::createFromFormat("Y-m-d H:i:s", "2015-10-24 10:24:42");
 
 		// create user
 		$this->userId = 83;
 
 		//create and insert a trailId to own the test Trail Relationship
+		// $newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid
 		$this->trail = new Trail(null, $this->userId, "Safari", $this->VALID_DATE, "192.168.1.4", 5, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "La Luz", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
 		$this->trail->insert($this->getPDO());
 
