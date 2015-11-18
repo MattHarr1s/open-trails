@@ -65,11 +65,11 @@ class SegmentTest extends TrailQuailTest{
 
 		//create and insert a point for segmentStart
 		$this->VALID_SEGMENTSTART = new Point(35.55, 44.546);
-		$this->VALID_SEGMENTSTART-> insert($this->getPDO());
+
 
 		//create and insert a point for segmentStop
 		$this->VALID_SEGMENTSTOP = new Point(34.55, 44.435);
-		$this->VALID_SEGMENTSTOP -> insert($this->getPDO());
+
 	}
 
 
@@ -83,7 +83,7 @@ class SegmentTest extends TrailQuailTest{
 	$numRows = $this ->getConnection()->getRowCount("segment");
 
 	//create a new segment and insert it into the database
-	$segment = new segment (null, "{$this->VALID_SEGMENTSTART}", "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+	$segment = new segment (null, "{$thisthis->VALID_SEGMENTSTART}", "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 	$segment->insert ($this->getPDO());
 
 	//grab the data from mySQL and verify the fields
