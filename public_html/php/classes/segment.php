@@ -118,7 +118,7 @@ class Segment implements JsonSerializable {
  * @param float $newSegmentStart.
 **/
 	public function setSegmentStart(Point $newSegmentStart){
-		$this->segmentStart = $newSegmentStart;
+		$this->segmentStart = Filter::filterDouble($newSegmentStart, "segment start", false);
 	}
 
 /**
@@ -133,7 +133,7 @@ class Segment implements JsonSerializable {
 /**
  *mutator method for segmentStop
  *
- *@param Point $newSegmentStop
+ *@param float $newSegmentStop
 **/
 	public function setSegmentStop(Point $newSegmentStop){
 		$this->$newSegmentStop = $newSegmentStop;
@@ -482,7 +482,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * @return array array containing all fields in the Segment
 	 **/
 
-	public function jsonSerializeSegment() {
+	public function jsonSerialize() {
 		return(get_object_vars($this));
 	}
 }
