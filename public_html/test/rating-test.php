@@ -130,7 +130,7 @@ class RatingTest extends TrailQuailTest {
 	/**
 	 * test grabbing a rating by rating value
 	 */
-	public function testGetValidRatingBy() { 5
+	public function testGetValidRatingBy() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
 
