@@ -352,8 +352,8 @@ class Trail implements JsonSerializable {
 	/**
 	 * mutator method for trailName
 	 *
-	 * @param $newTrailName
-	 * @return string
+	 * @param string $newTrailName
+	 * @return string value of trailName
 	 **/
 	public function setTrailName($newTrailName) {
 		$this->$newTrailName = Filter::filterString($newTrailName, "Trail Name", 64);
@@ -487,8 +487,8 @@ trailTerrain, trailTraffic, trailUse, trailUuid) VALUES (:userId, :browser, :cre
 		//bind the member variables to the placeholders in the template
 		$parameters = array("userId" => $this->getUserId(), "browser" => $this->getBrowser(),
 				"createDate" => $this->getCreateDate()->format("Y-m-d H:i:s"), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
-				"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" => $this->getTrailDistance(),
-				"trailSubmissionType" => $this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailName" => $this->getTrailName(), "trailTraffic" => $this->getTrailTraffic(),
+				"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" => $this->getTrailDistance(), "trailName" => $this->getTrailName(),
+				"trailSubmissionType" => $this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailTraffic" => $this->getTrailTraffic(),
 				"trailUse" => $this->getTrailUse(), "trailUuid" => $this->getTrailUuid());
 		$statement->execute($parameters);
 
