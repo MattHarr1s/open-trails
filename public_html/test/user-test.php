@@ -249,7 +249,6 @@ class UserTest extends TrailQuailTest {
 		$this->assertNull($user);
 	}
 
-
 	/**
 	 * test grabbing a user Id profile by user email
 	 */
