@@ -23,7 +23,7 @@ class UserTest extends TrailQuailTest {
 		 * valid user Browser type to use
 		 * @var string $VALID_BROWSER
 		 */
-	protected $VALID_BROWSER = "Chrome";
+	protected $VALID_BROWSER = "Firefox";
 
 	/**
 	 * valid user account creation date to use
@@ -87,7 +87,7 @@ class UserTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new user information profile and insert it in the database
-		$user = new user(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE,$this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE,$this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and verify the fields match our expectation

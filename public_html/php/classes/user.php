@@ -57,7 +57,7 @@ class User {
 	 *
 	 * @param mixed $newUserId -- user account id, may be null if user is new
 	 * @param string $newBrowser -- information on the user browser
-	 * @param datetime $newCreateDate -- date the user account was set up
+	 * @param DateTime $newCreateDate -- date the user account was set up
 	 * @param string $newIpAddress -- the user Ip address when account was set up
 	 * @param string $newUserAccountType -- this denotes the type of user account
 	 * @param string $newUserEmail -- the user email address for this account
@@ -65,11 +65,11 @@ class User {
 	 * @param string $newUserName -- the user username for this account
 	 * @param string $newUserSalt -- salt value of user password
 	 *
-	 * @throws invalidArgumentException if data types are not valid
-	 * @throws rangeException if data values are out of bounds (e.g. strings too long or too short)
+	 * @throws InvalidArgumentException if data types are not valid
+	 * @throws RangeException if data values are out of bounds (e.g. strings too long or too short)
 	 * @throws Exception if some other exception is thrown
 	 */
-	public function _construct($newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newUserAccountType, $newUserEmail, $newUserHash, $newUserName, $newUserSalt) {
+	public function __construct($newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newUserAccountType, $newUserEmail, $newUserHash, $newUserName, $newUserSalt) {
 		try {
 			$this->setUserID($newUserId);
 			$this->setBrowser($newBrowser);
@@ -321,7 +321,7 @@ class User {
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the placeholders in the template
-		$parameters = ["userId" => $this->userId, "browser" => $this->browser, "createDate" => $this->createDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail,"userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt];
+		$parameters = array("userId" => $this->userId, "browser" => $this->browser, "createDate" => $this->createDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail,"userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt);
 		$statement->execute($parameters);
 
 		// update the null userId with what mySQL just gave us
