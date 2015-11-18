@@ -7,7 +7,7 @@ require_once "autoload.php";
  * Trail Quail user class -- this is where user id information is stored
  * This is part of the Trail Quail web application.  This feature will determine who the registered users
  * are and what level of access they have.  It will also store the userId, the user's name, their email address,
- * their browsing information, and datetime stamp when their account was set up.
+ * their browsing information, their IP address, and datetime stamp when their account was set up.
  *
  * author Jeff Saul <scaleup13@gmail.com>
  */
@@ -152,10 +152,14 @@ class User {
 	 * @throws RangeException if $newUserAccountType is > 1 character
 	 */
 	public function setUserAccountType($newUserAccountType) {
-		//  verify that the user account type is not a recognized account type
-		//  (regular-r, power user-p, suspended-x)
-		if(($newUserAccountType !== "R") || ($newUserAccountType !== "S") || ($newUserAccountType !== "X")) {
-			throw new InvalidArgumentException ("User account type invalid");
+		//verify that user account type is not null
+		if($newUserAccountType === null) {
+			throw(new InvalidArgumentException("UserAccountType is null"));
+		}
+
+		//verify that the user account type is a recognized account type (regular-r, power user-p, suspended-x)
+		if(($newUserAccountType !== "R") && ($newUserAccountType !== "S") && ($newUserAccountType !== "X")) {
+			throw(new InvalidArgumentException("User account type invalid"));
 		}
 
 		//store user account type
@@ -312,7 +316,7 @@ class User {
 	 */
 	public function insert(PDO $pdo) {
 		// check to see if the userId is null
-		If($this->userId !== null) {
+		if($this->userId !== null) {
 			throw(new PDOException("not a new user"));
 		}
 
