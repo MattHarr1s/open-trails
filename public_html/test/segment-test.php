@@ -13,7 +13,6 @@ require_once(dirname(__DIR__). "/php/classes/autoload.php");
  * @author Matt Harris <mattharr505@gmail.com> and Trail Quail <trailquailabq@gmail.com>
  **/
 class SegmentTest extends TrailQuailTest{
-
 	/**
 	 *  valid id for this segment; as stated above, this is the primary key
 	 *
