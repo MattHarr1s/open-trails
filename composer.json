@@ -1,7 +1,7 @@
 {
     "require": {
+        "guzzlehttp/guzzle": "@stable",
         "pascaldevink/shortuuid": "^1.0",
-        "guzzlehttp/guzzle": "@stable"
+        "symm/gisconverter": "@stable"
     }
-
 }
