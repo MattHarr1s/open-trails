@@ -115,7 +115,7 @@ class RatingTest extends TrailQuailTest {
 		$rating->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match expectations
-		$pdoRating = Rating::getTrailRatingByTrailIdAndUserId($this->getPDO(),$this->trail->getTrailId(), $this->user->getUserId());
+		$pdoRating = Rating::getRatingByTrailIdAndUserId($this->getPDO(),$this->trail->getTrailId(), $this->user->getUserId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$this->assertSame($pdoRating->getAtHandle(), $this->VALID_RATINGVALUE);
 	}
@@ -124,32 +124,31 @@ class RatingTest extends TrailQuailTest {
 	 */
 	public function testGetInvalidRatingByIds() {
 		//grab a rating value that exceeds the maximum allowable id's
-		$rating = Rating::getTrailRatingByTrailIdAndUserId($this->getPDO(), TrailQuailTest::INVALID_KEY);
+		$rating = Rating::getRatingByTrailIdAndUserId($this->getPDO(), TrailQuailTest::INVALID_KEY);
 		$this->assertNull($rating);
 	}
 	/**
-	 * test grabbing a rating by rating value
+	 * test inserting a Rating and grabbing it from my sql
 	 */
-	public function testGetValidRatingBy() {
+	public function testGetValidRatingByTrail() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("rating");
+		$numRows = $this->getConnection()->getRowCount("profile");
 
 		// create a new rating and insert it into my sql
 		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALIDRATINGVALUE);
 		$rating->insert($this->getPDO());
 
-		// grab the data from mySQL and enforce it meets expectation
-		$pdoRating = Rating::getRatingByRatingValue($this->getPDO(), $this->VALID_RATINGVALUE);
+		//grab the data from mySQL and enforce the fields match expectations
+		$pdoRating = Rating::getTrailRatingByTrailId($this->getPDO(), $this->trail->getTrailId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("rating"));
-		$this->assertSame($pdoRating->getAtHandle(), $this->VALID_RATINGVALUE);
+		$this->assertSame($pdoRating->getRating(), $this->VALID_RATINGVALUE);
 	}
+
 	/**
 	 * test grabbing a rating by ata handle that doesn't exist
 	 */
-	public function testGetInvalidRatingByRating(){
+	public function testGetInvalidRatingByValue(){
 		$rating = Rating::geRatingByRatingValue($this->getPDO(), "@doesnotexist");
 		$this->assertNull($rating);
-
 	}
-
 }
