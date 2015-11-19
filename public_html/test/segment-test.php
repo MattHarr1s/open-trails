@@ -23,16 +23,16 @@ class SegmentTest extends TrailQuailTest{
 	/**
 	 * valid starting location of trail segment
 	 *
-	 * @var float $segmentStart
+	 * @var Point $segmentStart
 	 **/
-	protected $VALID_SEGMENTSTART ;
+	protected $VALID_SEGMENTSTART = null;
 
 	/**
 	 * valid location for end of segment
 	 *
-	 * @var float $segmentStop
+	 * @var Point $segmentStop
 	 **/
-	protected $VALID_SEGMENTSTOP ;
+	protected $VALID_SEGMENTSTOP = null;
 
 	/**
 	 * valid elevation at segment start point
@@ -63,11 +63,11 @@ class SegmentTest extends TrailQuailTest{
 		parent::setUp();
 
 		//create and insert a point for segmentStart
-		$this->VALID_SEGMENTSTART = new Point(35.55, 44.546);
+		$this->VALID_SEGMENTSTART = new Point(35.554, 44.546);
 
 
 		//create and insert a point for segmentStop
-		$this->VALID_SEGMENTSTOP = new Point(34.55, 44.435);
+		$this->VALID_SEGMENTSTOP = new Point(34.556, 44.435);
 
 	}
 
@@ -82,14 +82,16 @@ class SegmentTest extends TrailQuailTest{
 	$numRows = $this ->getConnection()->getRowCount("segment");
 
 	//create a new segment and insert it into the database
-	$segment = new segment (null, "{$this->VALID_SEGMENTSTART}", "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+	$segment = new Segment (null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 	$segment->insert ($this->getPDO());
 
 	//grab the data from mySQL and verify the fields
 	$pdoSegment = Segment::getSegmentById($this->getPDO(),$segment->getSegmentId());
 	$this->assertSame($numRows +1, $this->getConnection()->getRowCount("segment"));
-	$this->assertSame($pdoSegment->getSegmentStart()->getX->getY,"{$this->VALID_SEGMENTSTART}");
-	$this->assertSame($pdoSegment->getSegmentStop()->getX->getY,"{$this->VALID_SEGMENTSTOP}");
+	$this->assertSame($pdoSegment->getSegmentStart()->getX(),$this->VALID_SEGMENTSTART->getX());
+	$this->assertSame($pdoSegment->getSegmentStart()->getY(), $this->VALID_SEGMENTSTART->getY());
+	$this->assertSame($pdoSegment->getSegmentStop()->getX(), $this->VALID_SEGMENTSTOP->getX());
+	$this->assertSame($pdoSegment->getSegmentStop()->getY(), $this->VALID_SEGMENTSTOP->getY());
 	$this->assertSame($pdoSegment->getSegmentStartElevation(), $this->VALID_SEGMENTSTARTELEVATION);
 	$this->assertSame($pdoSegment->getSegmentStopElevation(), $this->VALID_SEGMENTSTOPELEVATION);
 	}
@@ -101,7 +103,7 @@ class SegmentTest extends TrailQuailTest{
 
 	public function testInsertInValidSegmentId() {
 		//create segmentId with non null value and watch it fail
-		$segment = new Segment(SegmentTest::INVALID_KEY, "{$this->VALID_SEGMENTSTART}", "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+		$segment = new Segment(SegmentTest::INVALID_KEY, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 		$segment-> insert($this->getPDO());
 	}
 
@@ -113,7 +115,7 @@ class SegmentTest extends TrailQuailTest{
 	$numRows = $this ->getConnection()->getRowCount("segment");
 
 	//create a new segment and insert it into the database
-	$segment = new segment (null, "{$this->VALID_SEGMENTSTART}", "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+	$segment = new Segment(null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 	$segment-> insert ($this->getPDO());
 
 	//edit the stopElevation in segment and update it in mySQL
@@ -123,8 +125,10 @@ class SegmentTest extends TrailQuailTest{
 	//grab the data from mySQL and verify the fields
 	$pdoSegment = Segment::getSegmentById($this->getPDO(),$segment->getSegmentId());
 	$this->assertSame($numRows +1, $this->getConnection()->getRowCount("segment"));
-	$this->assertSame($pdoSegment->getSegmentStart(), "{$this->VALID_SEGMENTSTART}");
-	$this->assertSame($pdoSegment->getSegmentStop(), "{$this->VALID_SEGMENTSTOP}");
+	$this->assertSame($pdoSegment->getSegmentStart()->getX(),$this->VALID_SEGMENTSTART->getX());
+	$this->assertSame($pdoSegment->getSegmentStart()->getY(), $this->VALID_SEGMENTSTART->getY());
+	$this->assertSame($pdoSegment->getSegmentStop()->getX(), $this->VALID_SEGMENTSTOP->getX());
+	$this->assertSame($pdoSegment->getSegmentStop()->getY(), $this->VALID_SEGMENTSTOP->getY());
 	$this->assertSame($pdoSegment->getSegmentStartElevation(), $this->VALID_SEGMENTSTARTELEVATION);
 	$this->assertSame($pdoSegment->getSegmentStopElevation(), $this->VALID_SEGMENTSTOPELEVATION);
 	}
@@ -136,7 +140,7 @@ class SegmentTest extends TrailQuailTest{
 
 	public function testUpdateInvalidSegmentId() {
 		//create segmentId with non null value and watch it fail
-		$segment = new Segment(SegmentTest::INVALID_KEY, '{$this->VALID_SEGMENTSTART}', "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+		$segment = new Segment(SegmentTest::INVALID_KEY, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 		$segment-> update($this->getPDO());
 	}
 
@@ -148,7 +152,7 @@ class SegmentTest extends TrailQuailTest{
 		$numRows = $this->getConnection()->getRowCount("segment");
 
 		//create a new segment and insert it into the database
-		$segment = new segment (null, "{$this->VALID_SEGMENTSTART}", "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+		$segment = new Segment (null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 		$segment->insert($this->getPDO());
 
 		//delete this segment from mySQL
@@ -169,14 +173,16 @@ class SegmentTest extends TrailQuailTest{
 		$numRows = $this->getConnection()->getRowCount("segment");
 
 		//create a new segment and insert it into the database
-		$segment = new segment (null, "{$this->VALID_SEGMENTSTART}", "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+		$segment = new Segment (null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 		$segment->insert($this->getPDO());
 
 		//grab the data from mySQL and verify the fields
 		$pdoSegment = Segment::getSegmentByStart($this->getPDO(),$segment->getSegmentStart());
 		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("segment"));
-		$this->assertSame($pdoSegment->getSegmentStart(), "{$this->VALID_SEGMENTSTART}");
-		$this->assertSame($pdoSegment->getSegmentStop(), "{$this->VALID_SEGMENTSTOP}");
+		$this->assertSame($pdoSegment->getSegmentStart()->getX(),$this->VALID_SEGMENTSTART->getX());
+		$this->assertSame($pdoSegment->getSegmentStart()->getY(), $this->VALID_SEGMENTSTART->getY());
+		$this->assertSame($pdoSegment->getSegmentStop()->getX(), $this->VALID_SEGMENTSTOP->getX());
+		$this->assertSame($pdoSegment->getSegmentStop()->getY(), $this->VALID_SEGMENTSTOP->getY());
 		$this->assertSame($pdoSegment->getSegmentStartElevation(), $this->VALID_SEGMENTSTARTELEVATION);
 		$this->assertSame($pdoSegment->getSegmentStopElevation(), $this->VALID_SEGMENTSTOPELEVATION);
 	}
@@ -201,14 +207,16 @@ class SegmentTest extends TrailQuailTest{
 		$numRows = $this->getConnection()->getRowCount("segment");
 
 		//create a new segment and insert it into the database
-		$segment = new segment (null, "{$this->VALID_SEGMENTSTART}", "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+		$segment = new segment (null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 		$segment->insert($this->getPDO());
 
 		//grab the data from mySQL and verify the fields
 		$pdoSegment = Segment::getSegmentByStop($this->getPDO(),$segment->getsegmentStop());
 		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("segment"));
-		$this->assertSame($pdoSegment->getSegmentStart(), "{$this->VALID_SEGMENTSTART}");
-		$this->assertSame($pdoSegment->getSegmentStop(), "{$this->VALID_SEGMENTSTOP}");
+		$this->assertSame($pdoSegment->getSegmentStart()->getX(),$this->VALID_SEGMENTSTART->getX());
+		$this->assertSame($pdoSegment->getSegmentStart()->getY(), $this->VALID_SEGMENTSTART->getY());
+		$this->assertSame($pdoSegment->getSegmentStop()->getX(), $this->VALID_SEGMENTSTOP->getX());
+		$this->assertSame($pdoSegment->getSegmentStop()->getY(), $this->VALID_SEGMENTSTOP->getY());
 		$this->assertSame($pdoSegment->getSegmentStartElevation(), $this->VALID_SEGMENTSTARTELEVATION);
 		$this->assertSame($pdoSegment->getSegmentStopElevation(), $this->VALID_SEGMENTSTOPELEVATION);
 	}
@@ -233,14 +241,16 @@ class SegmentTest extends TrailQuailTest{
 		$numRows = $this->getConnection()->getRowCount("segment");
 
 		//create a new segment and insert it into the database
-		$segment = new segment (null, "{$this->VALID_SEGMENTSTART}", "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+		$segment = new segment (null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 		$segment->insert($this->getPDO());
 
 		//grab the data from mySQL and verify the fields
 		$pdoSegment = Segment::getSegmentByStartElevation($this->getPDO(),$segment->getSegmentStartElevation());
 		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("segment"));
-		$this->assertSame($pdoSegment->getSegmentStart(), "{$this->VALID_SEGMENTSTART}");
-		$this->assertSame($pdoSegment->getSegmentStop(), "{$this->VALID_SEGMENTSTOP}");
+		$this->assertSame($pdoSegment->getSegmentStart()->getX(),$this->VALID_SEGMENTSTART->getX());
+		$this->assertSame($pdoSegment->getSegmentStart()->getY(), $this->VALID_SEGMENTSTART->getY());
+		$this->assertSame($pdoSegment->getSegmentStop()->getX(), $this->VALID_SEGMENTSTOP->getX());
+		$this->assertSame($pdoSegment->getSegmentStop()->getY(), $this->VALID_SEGMENTSTOP->getY());
 		$this->assertSame($pdoSegment->getSegmentStartElevation(), $this->VALID_SEGMENTSTARTELEVATION);
 		$this->assertSame($pdoSegment->getSegmentStopElevation(), $this->VALID_SEGMENTSTOPELEVATION);
 	}
@@ -265,14 +275,14 @@ class SegmentTest extends TrailQuailTest{
 		$numRows = $this->getConnection()->getRowCount("segment");
 
 		//create a new segment and insert it into the database
-		$segment = new segment (null, "{$this->VALID_SEGMENTSTART}", "{$this->VALID_SEGMENTSTOP}", $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+		$segment = new segment (null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 		$segment->insert($this->getPDO());
 
-		//grab the data from mySQL and verify the fields
-		$pdoSegment = Segment::getSegmentByStopElevation($this->getPDO(),$segment->getSegmentStopElevation());
 		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("segment"));
-		$this->assertSame($pdoSegment->getSegmentStart(), "{$this->VALID_SEGMENTSTART}");
-		$this->assertSame($pdoSegment->getSegmentStop(), "{$this->VALID_SEGMENTSTOP}");
+		$this->assertSame($pdoSegment->getSegmentStart()->getX(),$this->VALID_SEGMENTSTART->getX());
+		$this->assertSame($pdoSegment->getSegmentStart()->getY(), $this->VALID_SEGMENTSTART->getY());
+		$this->assertSame($pdoSegment->getSegmentStop()->getX(), $this->VALID_SEGMENTSTOP->getX());
+		$this->assertSame($pdoSegment->getSegmentStop()->getY(), $this->VALID_SEGMENTSTOP->getY());
 		$this->assertSame($pdoSegment->getSegmentStartElevation(), $this->VALID_SEGMENTSTARTELEVATION);
 		$this->assertSame($pdoSegment->getSegmentStopElevation(), $this->VALID_SEGMENTSTOPELEVATION);
 	}

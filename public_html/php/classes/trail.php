@@ -143,8 +143,8 @@ class Trail implements JsonSerializable {
 	 * @throws RangeException if values are out of bounds
 	 * @throws Exception if some other exception is thrown
 	 **/
-	public function __construct($newTrailId, $newUserId, $newBrowser, $newCreateDate,
-										 $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty,
+	public function __construct($newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId,
+										 $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty,
 										 $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid) {
 		try {
 			$this->setTrailId($newTrailId);
@@ -535,7 +535,8 @@ trailDistance =:trailDistance, trailName =:trailName, trailSubmissionType =:trai
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the placeholders in the template
-		$parameters = array("trailId" => $this->getTrailId(), "userId" => $this->getUserId(), "browser" => $this->getBrowser(), "createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
+		$parameters = array("userId" => $this->getUserId(), "browser" => $this->getBrowser(),
+				"createDate" => $this->getCreateDate()->format("Y-m-d H:i:s"), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
 				"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" => $this->getTrailDistance(),
 				"trailSubmissionType" => $this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(),  "trailTraffic" => $this->getTrailTraffic(),
 				"trailName" => $this->getTrailName(), "trailUse" => $this->getTrailUse(), "trailUuid" => $this->getTrailUuid());
@@ -1309,7 +1310,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailUse = :tra
 	public static function getTrailByTrailUuid(PDO &$pdo, $trailUuid) {
 		//sanitize the trailUuid before searching
 		try {
-			$trailUuId = Filter::filterString($trailUuid, "trailUuid");
+			$trailUuid = Filter::filterString($trailUuid, "trailUuid");
 		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(RangeException $range) {

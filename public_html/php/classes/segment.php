@@ -25,14 +25,14 @@ class Segment implements JsonSerializable {
 	/**
 	 * starting location of trail segment
 	 *
-	 * @var float $segmentStart
+	 * @var Point $segmentStart
 	 **/
 	private $segmentStart;
 
 	/**
 	 * location for end of segment
 	 *
-	 * @var float $segmentStop
+	 * @var Point $segmentStop
 	 **/
 	private $segmentStop;
 
@@ -53,11 +53,11 @@ class Segment implements JsonSerializable {
 	/** Constructor for segment objects
 	 *
 	 *
-	 * @param int $segmentId
-	 * @param float $segmentStart
-	 * @param float $segmentStop
-	 * @param int $segmentStartElevation
-	 * @param int $segmentStopElevation
+	 * @param int $newSegmentId
+	 * @param Point $newSegmentStart
+	 * @param Point $newSegmentStop
+	 * @param int $newSegmentStartElevation
+	 * @param int $newSegmentStopElevation
 	 * @throws InvalidArgumentException if datatypes are not valid
 	 * @throws RangeException if data values are out of bounds (e.g. string instead of int, string too long)
 	 * @throws Exception if some other exception is thrown
@@ -106,7 +106,7 @@ class Segment implements JsonSerializable {
 /**
  * accessor method for segmentStart
  *
- * @return float value of segmentStart
+ * @return Point value of segmentStart
 **/
 	public function getSegmentStart(){
 		return ($this->segmentStart);
@@ -115,16 +115,16 @@ class Segment implements JsonSerializable {
 /**
  * mutator method for segmentStart
  *
- * @param float $newSegmentStart.
+ * @param Point $newSegmentStart.
 **/
 	public function setSegmentStart(Point $newSegmentStart){
-		$this->segmentStart = Filter::filterDouble($newSegmentStart, "segment start", false);
+		$this->segmentStart = $newSegmentStart;
 	}
 
 /**
  * accessor method for segmentStop
  *
- * @return float value of segmentStop
+ * @return Point value of segmentStop
 **/
 	public function getSegmentStop(){
 		return ($this->segmentStop);
@@ -133,10 +133,10 @@ class Segment implements JsonSerializable {
 /**
  *mutator method for segmentStop
  *
- *@param float $newSegmentStop
+ *@param Point $newSegmentStop
 **/
 	public function setSegmentStop(Point $newSegmentStop){
-		$this->$newSegmentStop = $newSegmentStop;
+		$this->segmentStop = $newSegmentStop;
 	}
 
 /**
@@ -154,7 +154,7 @@ class Segment implements JsonSerializable {
  *@param int $newSegmentStartElevation
 **/
 	public function setSegmentStartElevation($newSegmentStartElevation){
-
+		$this->segmentStartElevation = $newSegmentStartElevation;
 	}
 
 /**
@@ -188,16 +188,21 @@ class Segment implements JsonSerializable {
 		}
 
 		// create query template
-		$query = "INSERT INTO trailSegment(segmentStart, segmentStop, segmentStartElevation, segmentStopElevation)
+		$query = "INSERT INTO segment(segmentStart, segmentStop, segmentStartElevation, segmentStopElevation)
 		VALUES(:segmentStart, :segmentStop, :segmentStartElevation, :segmentStopElevation)";
+		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
-		$parameters = array("segmentStart"=> $this->getSegmentStart(), "segmentStop"=> $this->getSegmentStop(),
+		$startX = $this->getSegmentStart()->getX();
+		$startY = $this->getSegmentStart()->getY();
+		$stopX = $this->getSegmentStop()->getX();
+		$stopY = $this->getSegmentStop()->getY();
+		$parameters = array("segmentStart"=> "POINT($startX $startY)", "segmentStop"=> "POINT($stopX $stopY)",
 	"segmentStartElevation"=> $this->getSegmentStartElevation(), "segmentStopElevation"=> $this->getSegmentStopElevation());
-		$statement ->execute($parameters);
+		$statement->execute($parameters);
 
 		//update the null segmentId with what mySQL has generated
-		$this->setSegmentId(intval($pdo-lastInsertId()));
+		$this->setSegmentId(intval($pdo->lastInsertId()));
 	}
 	/**
 	 * deletes this segment from mySQL
@@ -212,7 +217,7 @@ class Segment implements JsonSerializable {
 		}
 
 		//create query template
-		$query = "DELETE FROM trailSegment WHERE segmentId = :segmentId";
+		$query = "DELETE FROM segment WHERE segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
 		//Bind the member variables to the placeholders in the templates
@@ -233,14 +238,18 @@ class Segment implements JsonSerializable {
 		}
 
 		//create query table
-		$query = "UPDATE trailSegment SET segmentStart = :segmentStart, segmentStop = :segmentStop,
+		$query = "UPDATE segment SET segmentStart = :segmentStart, segmentStop = :segmentStop,
 segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentStopElevation";
-		$statement->prepare($query);
+		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
-		$parameters = array("segmentStart"=> $this->getSegmentStart(), "segmentStop"=> $this->getSegmentStop(),
+		$startX = $this->getSegmentStart()->getX();
+		$startY = $this->getSegmentStart()->getY();
+		$stopX = $this->getSegmentStop()->getX();
+		$stopY = $this->getSegmentStop()->getY();
+		$parameters = array("segmentStart"=> "POINT($startX $startY)", "segmentStop"=> "POINT($stopX $stopY)",
 				"segmentStartElevation"=> $this->getSegmentStartElevation(), "segmentStopElevation"=> $this->getSegmentStopElevation());
-		$statement ->execute($parameters);
+		$statement->execute($parameters);
 }
 
 	/**
@@ -264,7 +273,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		}
 
 		//create query template
-		$query = "SELECT segmentId, segmentStart, segmentStop, segmentStartElevation, segmentStopElevation FROM trailSegment where segmentId = :segmentId";
+		$query = "SELECT segmentId, segmentStart, segmentStop, segmentStartElevation, segmentStopElevation FROM segment where segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
 		//bind segmentId to placeholder
@@ -273,7 +282,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 
 		//grab the segment from mySQL
 		try {
-			$segmentId = null;
+			$segment = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 
@@ -298,19 +307,19 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * @throws Exception for other exception
 	 */
 		public static function getSegmentByStart(PDO &$pdo, $segmentStart){
-		//sanitize the float before searching
-		try {
-			$segmentStart = Filter::filterDouble($segmentStart, "segment start");
-		} catch (InvalidArgumentException $invalidArgument) {
-			throw(new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch (RangeException $range) {
-			throw (new RangeException($range->getMessage(), 0, $range ));
-		} catch  (Exception $exception) {
-			throw (new Exception($exception->getMessage(), 0 ,$exception));
-		}
+//		//sanitize the float before searching
+//		try {
+//			$segmentStart = $segmentStart; //
+//		} catch (InvalidArgumentException $invalidArgument) {
+//			throw(new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
+//		} catch (RangeException $range) {
+//			throw (new RangeException($range->getMessage(), 0, $range ));
+//		} catch  (Exception $exception) {
+//			throw (new Exception($exception->getMessage(), 0 ,$exception));
+//		}
 
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM trailSegment WHERE segmentStart LIKE :segmentStart ";
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStart LIKE :segmentStart ";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStart to placeholder
@@ -324,8 +333,8 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		while(($row = $statement->fetch())!== false) {
 			try {
 				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segments = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
-				$segments[$segments->key()] =$segment;
+				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
 				//if the row couldn't be converter, rethrow it
@@ -347,17 +356,17 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 */
 	public static function getSegmentByStop( PDO &$pdo, $segmentStop){
 		//sanitize the float before searching
-		try {
-			$segmentStop = Filter::filterDouble($segmentStop, "segment stop");
-		} catch (InvalidArgumentException $invalidArgument) {
-			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch (RangeException $range){
-			throw (new RangeException ($range->getMessage(), 0, $range));
-		} catch (Exception $exception) {
-			throw (new Exception($exception->getMessage(),0,$exception));
-		}
+//		try {
+//			$segmentStop =  $segmentStop;
+//		} catch (InvalidArgumentException $invalidArgument) {
+//			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
+//		} catch (RangeException $range){
+//			throw (new RangeException ($range->getMessage(), 0, $range));
+//		} catch (Exception $exception) {
+//			throw (new Exception($exception->getMessage(),0,$exception));
+//		}
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM trailSegment WHERE segmentStop LIKE :segmentStop";
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStop LIKE :segmentStop";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStop to placeholder
@@ -371,7 +380,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		while(($row = $statement->fetch())!== false) {
 			try {
 				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segments = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
 				$segments[$segments->key()] =$segment;
 				$segments->next();
 			} catch(Exception $e) {
@@ -394,7 +403,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	public static function getSegmentByStartElevation(PDO &$pdo, $segmentStartElevation){
 		//sanitize the float before searching
 		try {
-			$segmentStartElevation = Filter::filterDouble($segmentStartElevation, "segment start elevation");
+			$segmentStartElevation = Filter::filterInt($segmentStartElevation, "segment start elevation");
 		} catch (InvalidArgumentException $invalidArgument) {
 			throw(new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch (RangeException $range) {
@@ -404,11 +413,10 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		}
 
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM trailSegment WHERE segmentStartElevation LIKE :segmentStartElevation ";
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStartElevation LIKE :segmentStartElevation ";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStartElevation to placeholder
-		$segmentStartElevation = "segmentStartElevation%";
 		$parameters = array("segmentStartElevation" => $segmentStartElevation);
 		$statement->execute($parameters);
 
@@ -418,7 +426,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		while(($row = $statement->fetch())!== false) {
 			try {
 				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segments = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
 				$segments[$segments->key()] =$segment;
 				$segments->next();
 			} catch(Exception $e) {
@@ -433,7 +441,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * gets segment by segmentStopElevation
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param float $segmentStopElevation stop elevation to search for
+	 * @param int $segmentStopElevation stop elevation to search for
 	 * @return mixed segment found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 * @throws RangeException when range is invalid
@@ -442,7 +450,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	public static function getSegmentByStopElevation( PDO &$pdo, $segmentStopElevation){
 		//santize the float before searching
 		try {
-			$segmentStopElevation = Filter::filterDouble($segmentStopElevation, "segment stop");
+			$segmentStopElevation = Filter::filterInt($segmentStopElevation, "segment stop", false);
 		} catch (InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch (RangeException $range){
@@ -451,11 +459,10 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 			throw (new Exception($exception->getMessage(),0,$exception));
 		}
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM trailSegment WHERE segmentStopElevation LIKE :segmentStopElevation";
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStopElevation LIKE :segmentStopElevation";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStopElevation to placeholder
-		$segmentStopElevation = "segmentStopElevation%";
 		$parameters = array("segmentStopElevation" => $segmentStopElevation);
 		$statement->execute($parameters);
 
@@ -465,7 +472,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		while(($row = $statement->fetch())!== false) {
 			try {
 				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segments = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
 				$segments[$segments->key()] =$segment;
 				$segments->next();
 			} catch(Exception $e) {
@@ -484,5 +491,6 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 
 	public function jsonSerialize() {
 		return(get_object_vars($this));
+
 	}
 }

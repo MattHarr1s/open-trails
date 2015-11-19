@@ -13,11 +13,11 @@ require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
  */
 class Point implements JsonSerializable {
 	/**
-	 * @var double $x
+	 * @var float $x
 	 */
 	private $x;
 	/**
-	 * @var double $y
+	 * @var float $y
 	 */
 	private $y;
 
@@ -28,6 +28,7 @@ class Point implements JsonSerializable {
 	 * @param $newY
 	 * @throws exception
 	 **/
+
 	public function __construct($newX, $newY) {
 		try {
 			$this->setX($newX);
@@ -44,6 +45,7 @@ class Point implements JsonSerializable {
 		}
 	}
 
+
 	/**
 	 * accessor method for x
 	 **/
@@ -55,7 +57,7 @@ class Point implements JsonSerializable {
 	 * mutator method for x
 	 * -180 to 180 is the valid input range
 	 *
-	 * @param double $newX
+	 * @param float $newX
 	 * @throws RangeException
 	 * @throws InvalidArgumentException
 	 **/
@@ -88,7 +90,7 @@ class Point implements JsonSerializable {
 	/**
 	 * mutator method for y
 	 *
-	 * @param double $newY
+	 * @param float $newY
 	 * @throws InvalidArgumentException
 	 * @throws RangeException
 
