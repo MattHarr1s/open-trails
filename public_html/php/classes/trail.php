@@ -244,7 +244,7 @@ class Trail implements JsonSerializable {
 	/**
 	 *mutator method for trailAccessibility
 	 *
-	 * @param string $newTrailAccessibility new value of trailAccessibility
+	 * @param string $newTrailAccessibility
 	 **/
 	public function setTrailAccessibility($newTrailAccessibility) {
 		$this->trailAccessibility = Filter::filterString($newTrailAccessibility, "Trail Accessibility", 32);
@@ -332,7 +332,7 @@ class Trail implements JsonSerializable {
 	}
 
 	/**
-	 *mutator method for trailDistance
+	 * mutator method for trailDistance
 	 *
 	 * @param float $newTrailDistance
 	 **/
@@ -372,7 +372,6 @@ class Trail implements JsonSerializable {
 	 * mutator method for trailSubmissionType
 	 *
 	 * @param int $newTrailSubmissionType
-	 * @return int value of trailSubmissionType
 	 **/
 	public function setTrailSubmissionType($newTrailSubmissionType) {
 		$newTrailSubmissionType = filter_var($newTrailSubmissionType, FILTER_VALIDATE_INT);
@@ -405,7 +404,7 @@ class Trail implements JsonSerializable {
 
 	/** mutator method for trailTerrain
 	 *
-	 * @param string
+	 * @param string $newTrailTerrain
 	 **/
 	public function setTrailTerrain($newTrailTerrain) {
 		$this->$newTrailTerrain = Filter::filterString($newTrailTerrain, "Trail Terrain", 128);
@@ -423,7 +422,7 @@ class Trail implements JsonSerializable {
 	/**
 	 * mutator method for trailTraffic
 	 *
-	 * @param string
+	 * @param string $newTrailTraffic
 	 **/
 	public function setTrailTraffic($newTrailTraffic) {
 		$this->$newTrailTraffic = Filter::filterString($newTrailTraffic, "Trail Traffic", 16);
@@ -538,8 +537,8 @@ trailDistance =:trailDistance, trailName =:trailName, trailSubmissionType =:trai
 		//bind the member variables to the placeholders in the template
 		$parameters = array("trailId" => $this->getTrailId(), "userId" => $this->getUserId(), "browser" => $this->getBrowser(), "createDate" => $this->getCreateDate(), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
 				"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" => $this->getTrailDistance(),
-				"trailSubmissionType" => $this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailName" => $this->getTrailName(), "trailTraffic" => $this->getTrailTraffic(),
-				"trailUse" => $this->getTrailUse(), "trailUuid" => $this->getTrailUuid());
+				"trailSubmissionType" => $this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(),  "trailTraffic" => $this->getTrailTraffic(),
+				"trailName" => $this->getTrailName(), "trailUse" => $this->getTrailUse(), "trailUuid" => $this->getTrailUuid());
 		$statement->execute($parameters);
 	}
 
@@ -665,7 +664,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userI
 
 		//create query template
 		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-			trailTerrain, trailTraffic, trailUse, trailUuId FROM trail WHERE submitTrailId = :submitTrailId";
+			trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE submitTrailId = :submitTrailId";
 		$statement = $pdo->prepare($query);
 
 		//bind submitTrailId to placeholder
@@ -1159,7 +1158,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailSubmission
 		}
 
 		//create query template
-		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition,trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
+		$query = "SELECT userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
 trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailTerrain = :trailTerrain";
 		$statement = $pdo->prepare($query);
 
