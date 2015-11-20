@@ -426,7 +426,7 @@ class Trail implements JsonSerializable {
 	 * @param string $newTrailTraffic
 	 **/
 	public function setTrailTraffic($newTrailTraffic) {
-		$this->$newTrailTraffic = Filter::filterString($newTrailTraffic, "Trail Traffic", 16);
+		$this->trailTraffic = Filter::filterString($newTrailTraffic, "Trail Traffic", 16);
 	}
 
 	/**
