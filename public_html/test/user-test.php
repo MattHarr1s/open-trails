@@ -27,9 +27,9 @@ class UserTest extends TrailQuailTest {
 
 	/**
 	 * valid user account creation date to use
-	 * @var datetime $VALID_CREATEDATE
+	 * @var string $VALID_CREATEDATE
 	 */
-	protected $VALID_CREATEDATE = "2015-11-15 09:45:30";
+	protected $VALID_CREATEDATE = "2015-11-20 09:28:05";
 
 	/**
 	 * valid user IP address to use
@@ -77,6 +77,7 @@ class UserTest extends TrailQuailTest {
 
 		$this->VALID_USERSALT = bin2hex(openssl_random_pseudo_bytes(32));
 		$this->VALID_USERHASH = hash_pbkdf2("sha512", "iLoveIllinois", $this->VALID_USERSALT, 262144, 128);
+		$this->VALID_CREATEDATE = DateTime::createFromFormat("Y-m-d H:i:s", $this->VALID_CREATEDATE);
 	}
 
 	/**
@@ -85,7 +86,6 @@ class UserTest extends TrailQuailTest {
 	public function testInsertValidUser() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("user");
-
 		// create a new user information profile and insert it in the database
 		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->insert($this->getPDO());
