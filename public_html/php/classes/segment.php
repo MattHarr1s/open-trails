@@ -274,7 +274,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		}
 
 		//create query template
-		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentId = :segmentId";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStart) AS segmentStart, ST_AsWKT(segmentStop) AS segmentStop, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
 		//bind segmentId to placeholder
@@ -380,7 +380,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 //			throw (new Exception($exception->getMessage(),0,$exception));
 //		}
 		//create query template
-		$query = "SELECT SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStop = :segmentStop";
+		$query = "SELECT SELECT segmentId, ST_AsWKT(segmentStart) AS segmentStart, ST_AsWKT(segmentStop) AS segmentStop, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStop = :segmentStop";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStop to placeholder
@@ -394,7 +394,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+				$segment = new Segment($row ["segmentId"], $segmentStart, $segmentStop, $row["segmentStartElevation"], $row["segmentStopElevation"]);
 				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
