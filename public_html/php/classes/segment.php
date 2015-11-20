@@ -383,7 +383,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 //			throw (new Exception($exception->getMessage(),0,$exception));
 //		}
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStop = :segmentStop";
+		$query = "SELECT SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStop = :segmentStop";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStop to placeholder
