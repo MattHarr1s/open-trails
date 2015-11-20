@@ -176,7 +176,7 @@ class TrailRelationship {
 		$query = "UPDATE trailRelationship SET segmentType = :segmentType WHERE trailId = :trailId AND segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
-		$parameters = array("segmentType" => $this->segmentType);
+		$parameters = array("segmentId" => $this->getSegmentId(), "trailId" => $this->getTrailId(), "segmentType" => $this->segmentType);
 		$statement->execute($parameters);
 	}
 
