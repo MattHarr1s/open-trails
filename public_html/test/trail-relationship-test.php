@@ -81,6 +81,16 @@ class TrailRelationshipTest extends TrailQuailTest {
 	protected $point = null;
 
 	/**
+	 * @var SegmentStart $segmentStart
+	 */
+	protected $segmentStart = null;
+
+	/**
+	 * @var SegmentStop $segmentStop
+	 */
+	protected $segmentStop = null;
+
+	/**
 	 * create dependent objects before running each test
 	 **/
 	public final function setUp() {
@@ -96,7 +106,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$this->VALID_USERHASH = $this->VALID_USERHASH = hash_pbkdf2("sha512", "password4321", $this->VALID_USERSALT, 262144, 128);
 
 		//create and insert a userId to own the trail
-		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_DATE, "192.168.1.168", "S", "saul.jeff@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
+		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_DATE, "192.168.1.168", "S", "louisgill5@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
 		$this->user->insert($this->getPDO());
 
 		$this->VALID_TRAILNAME = "La Luz";
@@ -106,11 +116,11 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_DATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
 		$this->trail->insert($this->getPDO());
 
-		$this->point = new Point()
-		$this->point->insert($this->getPDO());
+		$this->segmentStart = new Point(35.554, 44.546);
+		$this->segmentStop = new Point (6, 36);
 
 		//create and insert a segmentId to own the test Trail Relationship
-		$this->segment = new Segment(null, 5,25, 6,36, 1000, 2000);
+		$this->segment = new Segment(null, $this->segmentStart, $this->segmentStop, 1000, 2000);
 		$this->segment->insert($this->getPDO());
 	}
 

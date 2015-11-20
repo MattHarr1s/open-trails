@@ -16,9 +16,13 @@ class Autoloader {
 	 * @return bool false if classes can not be loaded
 	 **/
 	public static function classLoader($className) {
-		$className = strtolower($className);
-		if(is_readable(__DIR__ . "/$className.php")) {
-			require_once(__DIR__ . "/$className.php");
+		$className[0] = strtolower($className[0]);
+		$className = preg_replace_callback("/([A-Z])/", function($matches) {
+			return("-" . strtolower($matches[0]));
+		}, $className);
+		$classFile = __DIR__ . "/" . $className . ".php";
+		if(is_readable($classFile) === true && require_once($classFile)) {
+			return(true);
 		} else {
 			return(false);
 		}

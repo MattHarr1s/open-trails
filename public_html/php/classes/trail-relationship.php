@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * The relationship between trails and their segments
@@ -133,10 +133,10 @@ class TrailRelationship {
 		if ($this->segmentId === null) {
 			throw(new PDOException("not an existing segmentId"));
 		}
-		$query = "INSERT INTO trailRelationship(trailId,segmentId,segmentType) VALUES(:trailId,:segmentId,:segmentType)";
+		$query = "INSERT INTO trailRelationship(segmentId, trailId, segmentType) VALUES(:segmentId, :trailId, :segmentType)";
 		$statement = $pdo->prepare($query);
 
-		$parameters = array("trailId => $this->trailId, segmentId => $this->segmentId, segmentType => $this->segmentType");
+		$parameters = array("segmentId => $this->segmentId, trailId => $this->trailId, segmentType => $this->segmentType");
 		$statement->execute($parameters);
 	}
 
@@ -156,7 +156,7 @@ class TrailRelationship {
 		$query = "DELETE FROM trailRelationship WHERE trailId = :trailId AND segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
-		$parameters = array("trailId => $this->trailId, segmentId => $this->segmentId, segmentType => $this->segmentType");
+		$parameters = array("segmentId => $this->segmentId, trailId => $this->trailId, segmentType => $this->segmentType");
 		$statement->execute($parameters);
 	}
 
@@ -321,7 +321,7 @@ class TrailRelationship {
 	 * @return mixed Trail Relationship found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 **/
-	public static function getTrailRelationshipBySegmentAndTrailId(PDO $pdo, $segmentType) {
+	public static function getTrailRelationshipBySegmentType(PDO $pdo, $segmentType) {
 		$segmentType = filter_var($segmentType, FILTER_SANITIZE_STRING);
 		if(empty($segmentType) === true) {
 			throw(new PDOException("segmentType is empty or insecure"));
