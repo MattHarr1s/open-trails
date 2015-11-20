@@ -193,11 +193,11 @@ class SegmentTest extends TrailQuailTest{
 	 * @expectedException PDOException
 	**/
 
-	public function testGetInvalidSegmentByStart(){
+//	public function testGetInvalidSegmentByStart(){
 		//grab a segmentStart that does not exist
-		$segment = Segment::getSegmentByStart($this->getPDO(), null);
-		$this->assertNull($segment);
-	}
+//		$segment = Segment::getSegmentByStart($this->getPDO(), null);
+//		$this->assertNull($segment);
+//	}
 
 /**
  * test grabbing a segment by segmentStop
