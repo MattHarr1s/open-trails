@@ -1,5 +1,8 @@
 <?php
+require_once(dirname(dirname(dirname(__DIR__))) . "/vendor/autoload.php");
 require_once(dirname(dirname(__DIR__))."/php/classes/autoload.php");
+
+use Symm\Gisconverter\Gisconverter;
 
 /**
  * Class Segment for the website TrailQuail.net
@@ -189,16 +192,13 @@ class Segment implements JsonSerializable {
 
 		// create query template
 		$query = "INSERT INTO segment(segmentStart, segmentStop, segmentStartElevation, segmentStopElevation)
-		VALUES(:segmentStart, :segmentStop, :segmentStartElevation, :segmentStopElevation)";
+		VALUES(POINT(:segmentStartX, :segmentStartY), POINT(:segmentStopX, :segmentStopY), :segmentStartElevation, :segmentStopElevation)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
-		$startX = $this->getSegmentStart()->getX();
-		$startY = $this->getSegmentStart()->getY();
-		$stopX = $this->getSegmentStop()->getX();
-		$stopY = $this->getSegmentStop()->getY();
-		$parameters = array("segmentStart"=> "POINT($startX $startY)", "segmentStop"=> "POINT($stopX $stopY)",
-	"segmentStartElevation"=> $this->getSegmentStartElevation(), "segmentStopElevation"=> $this->getSegmentStopElevation());
+		$parameters = array("segmentStartX"=> $this->getSegmentStart()->getX(), "segmentStartY"=> $this->getSegmentStart()->getY(),
+				"segmentStopX"=> $this->getSegmentStop()->getX(), "segmentStopY"=> $this->getSegmentStop()->getY(),
+				"segmentStartElevation"=> $this->getSegmentStartElevation(), "segmentStopElevation"=> $this->getSegmentStopElevation());
 		$statement->execute($parameters);
 
 		//update the null segmentId with what mySQL has generated
@@ -238,16 +238,17 @@ class Segment implements JsonSerializable {
 		}
 
 		//create query table
-		$query = "UPDATE segment SET segmentStart = :segmentStart, segmentStop = :segmentStop,
-segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentStopElevation";
+		$query = "UPDATE segment SET (ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation)
+					VALUES(POINT(:segmentStartX, :segmentStartY), POINT(:segmentStopX, :segmentStopY), :segmentStartElevation, :segmentStopElevation)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
-		$startX = $this->getSegmentStart()->getX();
-		$startY = $this->getSegmentStart()->getY();
-		$stopX = $this->getSegmentStop()->getX();
-		$stopY = $this->getSegmentStop()->getY();
-		$parameters = array("segmentStart"=> "POINT($startX $startY)", "segmentStop"=> "POINT($stopX $stopY)",
+		// $startX = $this->getSegmentStart()->getX();
+		// $startY = $this->getSegmentStart()->getY();
+		// $stopX = $this->getSegmentStop()->getX();
+		// $stopY = $this->getSegmentStop()->getY();
+		$parameters = array("segmentStartX"=> $this->getSegmentStart()->getX(), "segmentStartY"=> $this->getSegmentStart()->getY(),
+				"segmentStopX"=> $this->getSegmentStop()->getX(), "segmentStopY"=> $this->getSegmentStop()->getY(),
 				"segmentStartElevation"=> $this->getSegmentStartElevation(), "segmentStopElevation"=> $this->getSegmentStopElevation());
 		$statement->execute($parameters);
 }
@@ -273,7 +274,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		}
 
 		//create query template
-		$query = "SELECT segmentId, segmentStart, segmentStop, segmentStartElevation, segmentStopElevation FROM segment where segmentId = :segmentId";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
 		//bind segmentId to placeholder
@@ -287,8 +288,13 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 			$row = $statement->fetch();
 
 			if($row !== false) {
-				//new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segment = new Segment($row["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
+				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
+				$segmentStartGenericObject = json_decode($segmentStartJSON);
+				$segmentStopGenericObject = json_decode($segmentStopJSON);
+				$segmentStart = new Point($segmentStartGenericObject->coordinates[0], $segmentStartGenericObject->coordinates[1]);
+				$segmentStop = new Point($segmentStopGenericObject->coordinates[0], $segmentStopGenericObject->coordinates[1]);
+				$segment = new Segment($row["segmentId"], $segmentStart, $segmentStop, $row["segmentStartElevation"], $row["segmentStopElevation"]);
 			}
 		} catch(Exception $e) {
 			//if the row couldn't be converted, rethrow it
@@ -319,11 +325,11 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 //		}
 
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStart LIKE :segmentStart ";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = segmentStart ";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStart to placeholder
-		$segmentStart = "segmentStart%";
+		$segmentStart = "segmentStart";
 		$parameters = array("segmentStart" => $segmentStart);
 		$statement->execute($parameters);
 
@@ -332,7 +338,13 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch())!== false) {
 			try {
-				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
+
+				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
+				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
+				$segmentStartGenericObject = json_decode($segmentStartJSON);
+				$segmentStopGenericObject = json_decode($segmentStopJSON);
+				$segmentStart = new Point($segmentStartGenericObject->coordinates[0], $segmentStartGenericObject->coordinates[1]);
+				$segmentStop = new Point($segmentStopGenericObject->coordinates[0], $segmentStopGenericObject->coordinates[1]);
 				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
 				$segments[$segments->key()] = $segment;
 				$segments->next();
@@ -366,11 +378,11 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 //			throw (new Exception($exception->getMessage(),0,$exception));
 //		}
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStop LIKE :segmentStop";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment where segmentStop = segmentStop";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStop to placeholder
-		$segmentStop = "segmentStop%";
+		$segmentStop = "segmentStop";
 		$parameters = array("segmentStop" => $segmentStop);
 		$statement->execute($parameters);
 
@@ -413,7 +425,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		}
 
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStartElevation LIKE :segmentStartElevation ";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment where segmentStartElevation = segmentStartElevation ";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStartElevation to placeholder
@@ -459,7 +471,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 			throw (new Exception($exception->getMessage(),0,$exception));
 		}
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStopElevation LIKE :segmentStopElevation";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStopElevation LIKE :segmentStopElevation";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStopElevation to placeholder
