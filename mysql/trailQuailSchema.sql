@@ -85,7 +85,7 @@ CREATE TABLE rating(
 CREATE TABLE trailRelationship (
 	trailId       INT UNSIGNED AUTO_INCREMENT NOT NULL,
 	segmentId     INT UNSIGNED                NOT NULL,
-	trSegmentType CHAR(1)                     NOT NULL,
+	segmentType CHAR(1)                     NOT NULL,
 	INDEX (trailId),
 	INDEX (segmentId),
 	FOREIGN KEY (trailId) REFERENCES trail (trailId),

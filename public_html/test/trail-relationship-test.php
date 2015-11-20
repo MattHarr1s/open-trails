@@ -213,11 +213,11 @@ class TrailRelationshipTest extends TrailQuailTest {
 	/**
 	 *test updating a Trail Relationship that does not exist
 	 *
-	 * @expectedException PDOException
+	 * @expectedException UnexpectedValueException
 	 **/
 	public function testUpdateInvalidTrailRelationship() {
 		// create a Trail Relationship and try to update it without actually inserting it
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
 		$trailRelationship->update($this->getPDO());
 	}
 

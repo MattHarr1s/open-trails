@@ -34,8 +34,8 @@ class TrailRelationship {
 	 */
 	public function __construct($newSegmentId, $newTrailId, $newSegmentType) {
 		try {
+			$this->setSegmentId($newSegmentId);
 			$this->setTrailId($newTrailId);
-			$this->setNewSegmentId($newSegmentId);
 			$this->setSegmentType($newSegmentType);
 		} catch(UnexpectedValueException $exception) {
 			throw(new UnexpectedValueException("Unable to construct trail relationship", 0, $exception));
@@ -85,7 +85,7 @@ class TrailRelationship {
 	 * @throws UnexpectedValueException if $newSegmentId is not an integer
 	 * @throws RangeException if $newSegmentId is not positive
 	 **/
-	public function setNewSegmentId($newSegmentId) {
+	public function setSegmentId($newSegmentId) {
 		$newSegmentId = filter_var($newSegmentId, FILTER_VALIDATE_INT);
 		if($newSegmentId === false) {
 			throw(new UnexpectedValueException("segmentId is not a valid integer"));
@@ -136,7 +136,7 @@ class TrailRelationship {
 		$query = "INSERT INTO trailRelationship(segmentId, trailId, segmentType) VALUES(:segmentId, :trailId, :segmentType)";
 		$statement = $pdo->prepare($query);
 
-		$parameters = array("segmentId => $this->segmentId, trailId => $this->trailId, segmentType => $this->segmentType");
+		$parameters = array("segmentId" => $this->segmentId, "trailId" => $this->trailId, "segmentType" => $this->segmentType);
 		$statement->execute($parameters);
 	}
 
@@ -156,7 +156,7 @@ class TrailRelationship {
 		$query = "DELETE FROM trailRelationship WHERE trailId = :trailId AND segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
-		$parameters = array("segmentId => $this->segmentId, trailId => $this->trailId, segmentType => $this->segmentType");
+		$parameters = array("segmentId" => $this->segmentId, "trailId" => $this->trailId, "segmentType" => $this->segmentType);
 		$statement->execute($parameters);
 	}
 
@@ -176,7 +176,7 @@ class TrailRelationship {
 		$query = "UPDATE trailRelationship SET segmentType = :segmentType WHERE trailId = :trailId AND segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
-		$parameters = array("segmentType => $this->segmentType");
+		$parameters = array("segmentType" => $this->segmentType);
 		$statement->execute($parameters);
 	}
 
