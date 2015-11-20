@@ -310,12 +310,12 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * gets segment by segmentStart
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param float $segmentStart start point to search for
+	 * @param Point $segmentStart start point to search for
 	 * @return mixed Segment found or null if not found
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStart(PDO &$pdo, $segmentStart) {
+	public static function getSegmentByStart(PDO &$pdo, Point $segmentStart) {
 //		//sanitize the float before searching
 //		try {
 //			$segmentStart = $segmentStart; //
@@ -328,7 +328,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 //		}
 
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStart = :segmentStart";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = :segmentStart";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStart to placeholder
@@ -383,7 +383,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 //			throw (new Exception($exception->getMessage(),0,$exception));
 //		}
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStop LIKE :segmentStop";
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStop = :segmentStop";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStop to placeholder
@@ -430,7 +430,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		}
 
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStartElevation LIKE :segmentStartElevation ";
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStartElevation = :segmentStartElevation ";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStartElevation to placeholder

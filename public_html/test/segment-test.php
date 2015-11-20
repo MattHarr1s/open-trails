@@ -16,7 +16,7 @@ class SegmentTest extends TrailQuailTest{
 	/**
 	 *  valid id for this segment; as stated above, this is the primary key
 	 *
-	 * @var int $segmentId
+	 * @var mixed $segmentId
 	 **/
 	protected $VALID_SEGMENTID = null;
 
@@ -152,7 +152,7 @@ class SegmentTest extends TrailQuailTest{
 		$numRows = $this->getConnection()->getRowCount("segment");
 
 		//create a new segment and insert it into the database
-		$segment = new Segment (null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+		$segment = new Segment (null , $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 		$segment->insert($this->getPDO());
 
 		//delete this segment from mySQL
