@@ -61,6 +61,11 @@ class TrailRelationshipTest extends TrailQuailTest {
 	protected $VALID_TRAILNAME = "La Luz";
 
 	/**
+	 * @var string $VALID_BROWSER
+	 */
+	protected $VALID_BROWSER = "";
+
+	/**
 	 * create dependent objects before running each test
 	 **/
 	public final function setUp() {
@@ -70,13 +75,22 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$this->VALID_DATE = DateTime::createFromFormat("Y-m-d H:i:s", "2015-10-24 10:24:42");
 
 		// create user
-		$this->userId = 83;
+		//$this->userId = 83;
+		//$this->userId->insert($this->getPDO());
+
+		//create browser
+		$this->VALID_BROWSER = "Chrome";
+		$this->VALID_BROWSER->insert($this->getPDO());
+
+		//create and insert a userId to own the trail
+		$this->user = new User(null, $this->VALID_BROWSER, "2015-11-15 09:45.30", "192.168.1.168", "S", "saul.jeff@gmail.com", null, "Hyourname.tomorrow", null);
+		$this->user->insert($this->getPDO());
 
 		$this->VALID_TRAILNAME = "La Luz";
 
 		//create and insert a trailId to own the test Trail Relationship
 		//$newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid
-		$this->trail = new Trail(null, $this->userId, "Safari", $this->VALID_DATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail = new Trail(null, $this->userId, "Safari", $this->VALID_DATE, "192.168.1.4", 5, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
 		$this->trail->insert($this->getPDO());
 
 		//create and insert a segmentId to own the test Trail Relationship

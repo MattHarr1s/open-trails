@@ -176,6 +176,8 @@ class UserTest extends TrailQuailTest {
 
 	/**
 	 * test deleting a user Id profile that does not exist
+	 *
+	 * @expectedException PDOException
 	 */
 	public function testDeleteInvalidUser() {
 		// create a user Id profile adn try to delete it without actually inserting it
@@ -243,7 +245,7 @@ class UserTest extends TrailQuailTest {
 	/**
 	 * test grabbing a user Id profile by user name that does not exist
 	 */
-	public function testGetInvalidUserBYUserName() {
+	public function testGetInvalidUserByUserName() {
 		// grab a user Id profile using a user name that does not exist
 		$user = User::getUserByUserName($this->getPDO(), "does not exist");
 		$this->assertNull($user);
