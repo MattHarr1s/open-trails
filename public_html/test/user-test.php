@@ -94,7 +94,7 @@ class UserTest extends TrailQuailTest {
 		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertSame($pdoUser->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertEquals($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
@@ -133,7 +133,7 @@ class UserTest extends TrailQuailTest {
 		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertSame($pdoUser->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertEquals($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
@@ -200,7 +200,7 @@ class UserTest extends TrailQuailTest {
 		$pdoUser = User::getUserByUserId($this->getPDO(), $user->getUserId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertSame($pdoUser->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertEquals($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
@@ -233,7 +233,7 @@ class UserTest extends TrailQuailTest {
 		$pdoUser = User::getUserByUserName($this->getPDO(), $user->getUserName());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertSame($pdoUser->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertEquals($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
@@ -266,7 +266,7 @@ class UserTest extends TrailQuailTest {
 		$pdoUser = User::getUserByUserEmail($this->getPDO(), $this->VALID_USEREMAIL);
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("user"));
 		$this->assertSame($pdoUser->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertEquals($pdoUser->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
