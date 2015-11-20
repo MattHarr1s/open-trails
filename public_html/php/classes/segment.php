@@ -242,17 +242,14 @@ class Segment implements JsonSerializable {
 		}
 
 		//create query table
-		$query = "UPDATE segment SET segmentStart = :segmentStart, segmentStop = :segmentStop,
+		$query = "UPDATE segment SET segmentStart = :(POINT(:segmentStartX, :segmentStartY), segmentStop = :POINT(:segmentStopX, :segmentStopY),
 segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentStopElevation";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
-		$startX = $this->getSegmentStart()->getX();
-		$startY = $this->getSegmentStart()->getY();
-		$stopX = $this->getSegmentStop()->getX();
-		$stopY = $this->getSegmentStop()->getY();
-		$parameters = array("segmentStart" => "POINT($startX $startY)", "segmentStop" => "POINT($stopX $stopY)",
-			"segmentStartElevation" => $this->getSegmentStartElevation(), "segmentStopElevation" => $this->getSegmentStopElevation());
+		$parameters = array("segmentStartX" => $this->getSegmentStart()->getX(), "segmentStartY" => $this->getSegmentStart()->getY(),
+				"segmentStopX" => $this->getSegmentStop()->getX(), "segmentStopY" => $this->getSegmentStop()->getY(),
+				"segmentStartElevation" => $this->getSegmentStartElevation(), "segmentStopElevation" => $this->getSegmentStopElevation());
 		$statement->execute($parameters);
 	}
 
