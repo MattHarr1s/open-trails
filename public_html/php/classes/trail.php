@@ -356,7 +356,7 @@ class Trail implements JsonSerializable {
 	 * @return string value of trailName
 	 **/
 	public function setTrailName($newTrailName) {
-		$this->$newTrailName = Filter::filterString($newTrailName, "Trail Name", 64);
+		$this->trailName = Filter::filterString($newTrailName, "Trail Name", 64);
 	}
 
 	/**
@@ -405,9 +405,10 @@ class Trail implements JsonSerializable {
 	/** mutator method for trailTerrain
 	 *
 	 * @param string $newTrailTerrain
+	 * @return string value of trailTerrain
 	 **/
 	public function setTrailTerrain($newTrailTerrain) {
-		$this->$newTrailTerrain = Filter::filterString($newTrailTerrain, "Trail Terrain", 128);
+		$this->$trailTerrain = Filter::filterString($newTrailTerrain, "Trail Terrain", 128);
 	}
 
 	/**
