@@ -1,6 +1,6 @@
 <?php
 require_once(dirname(dirname(dirname(__DIR__))) . "/vendor/autoload.php");
-require_once(dirname(dirname(__DIR__))."/php/classes/autoload.php");
+require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
 
 use Symm\Gisconverter\Gisconverter;
 
@@ -67,115 +67,118 @@ class Segment implements JsonSerializable {
 	 *
 	 **/
 	public function __construct($newSegmentId, $newSegmentStart, $newSegmentStop, $newSegmentStartElevation, $newSegmentStopElevation) {
-		try{
+		try {
 			$this->setSegmentId($newSegmentId);
 			$this->setSegmentStart($newSegmentStart);
 			$this->setSegmentStop($newSegmentStop);
 			$this->setSegmentStartElevation($newSegmentStartElevation);
 			$this->setSegmentStopElevation($newSegmentStopElevation);
-	}catch(InvalidArgumentException $invalidArgument){
+		} catch(InvalidArgumentException $invalidArgument) {
 
 			// rethrow the exception to the caller
-			throw(new InvalidArgumentException($invalidArgument->getMessage(),0,$invalidArgument));
-	}catch(RangeException $range){
+			throw(new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		} catch(RangeException $range) {
 
 			//rethrow the exception to the caller
-			throw(new RangeException($range->getMessage(),0,$range));
-	}catch(Exception $exception){
+			throw(new RangeException($range->getMessage(), 0, $range));
+		} catch(Exception $exception) {
 
 			//rethrow generic exception
-			throw(new Exception($exception->getMessage(),0,$exception));
+			throw(new Exception($exception->getMessage(), 0, $exception));
 		}
-}
+	}
+
 	/**
 	 * accessor method for segmentId
 	 *
 	 * gains access to segmentId for use by mutator method
 	 *
 	 * @return mixed value of segmentId
-	**/
-	public function getSegmentId(){
+	 **/
+	public function getSegmentId() {
 		return ($this->segmentId);
 	}
-/**
- * mutator method for segmentId
- *
- *
- * @param mixed $newSegmentId new value of segmentId
- **/
-	public function setSegmentId($newSegmentId){
-		$this->segmentId = Filter::filterInt($newSegmentId,"Segment Id", true);
+
+	/**
+	 * mutator method for segmentId
+	 *
+	 *
+	 * @param mixed $newSegmentId new value of segmentId
+	 **/
+	public function setSegmentId($newSegmentId) {
+		$this->segmentId = Filter::filterInt($newSegmentId, "Segment Id", true);
 	}
-/**
- * accessor method for segmentStart
- *
- * @return Point value of segmentStart
-**/
-	public function getSegmentStart(){
+
+	/**
+	 * accessor method for segmentStart
+	 *
+	 * @return Point value of segmentStart
+	 **/
+	public function getSegmentStart() {
 		return ($this->segmentStart);
 	}
 
-/**
- * mutator method for segmentStart
- *
- * @param Point $newSegmentStart.
-**/
-	public function setSegmentStart(Point $newSegmentStart){
+	/**
+	 * mutator method for segmentStart
+	 *
+	 * @param Point $newSegmentStart .
+	 **/
+	public function setSegmentStart(Point $newSegmentStart) {
 		$this->segmentStart = $newSegmentStart;
 	}
 
-/**
- * accessor method for segmentStop
- *
- * @return Point value of segmentStop
-**/
-	public function getSegmentStop(){
+	/**
+	 * accessor method for segmentStop
+	 *
+	 * @return Point value of segmentStop
+	 **/
+	public function getSegmentStop() {
 		return ($this->segmentStop);
 	}
 
-/**
- *mutator method for segmentStop
- *
- *@param Point $newSegmentStop
-**/
-	public function setSegmentStop(Point $newSegmentStop){
+	/**
+	 *mutator method for segmentStop
+	 *
+	 * @param Point $newSegmentStop
+	 **/
+	public function setSegmentStop(Point $newSegmentStop) {
 		$this->segmentStop = $newSegmentStop;
 	}
 
-/**
- * accessor method for segmentStartElevation
- *
- * @return int value of startElevation
-**/
-	public function getSegmentStartElevation(){
+	/**
+	 * accessor method for segmentStartElevation
+	 *
+	 * @return int value of startElevation
+	 **/
+	public function getSegmentStartElevation() {
 		return ($this->segmentStartElevation);
 	}
 
-/**
- * mutator for segmentStartElevation
- *
- *@param int $newSegmentStartElevation
-**/
-	public function setSegmentStartElevation($newSegmentStartElevation){
+	/**
+	 * mutator for segmentStartElevation
+	 *
+	 * @param int $newSegmentStartElevation
+	 **/
+	public function setSegmentStartElevation($newSegmentStartElevation) {
 		$this->segmentStartElevation = Filter::filterInt($newSegmentStartElevation, "Segment Start Elevation", false);
 	}
 
-/**
- * accessor method for segmentStopElevation
- *
- * @return int value of segmentStopElevation
-**/
-	public function getSegmentStopElevation(){
+	/**
+	 * accessor method for segmentStopElevation
+	 *
+	 * @return int value of segmentStopElevation
+	 **/
+	public function getSegmentStopElevation() {
 		return ($this->segmentStopElevation);
 	}
 
-/**
- * mutator for segmentStopElevation
- *
- * @param int $newSegmentStopElevation
-**/
-	public function setSegmentStopElevation($newSegmentStopElevation){
-		$this->segmentStopElevation = Filter::filterInt($newSegmentStopElevation,"Segment Stop Elevation", false);
+	/**
+	 * mutator for segmentStopElevation
+	 *
+	 * @param int $newSegmentStopElevation
+	 **/
+	public function setSegmentStopElevation($newSegmentStopElevation) {
+		$this->segmentStopElevation = Filter::filterInt($newSegmentStopElevation, "Segment Stop Elevation", false);
 	}
 
 	/**
@@ -184,9 +187,9 @@ class Segment implements JsonSerializable {
 	 * @param PDO $pdo pointer to PDO connection, by reference
 	 * @throws PDOException when mySQL related errors occur.
 	 */
-	public function insert(PDO &$pdo){
+	public function insert(PDO &$pdo) {
 		//make sure this is a new segment
-		if($this->segmentId !== null){
+		if($this->segmentId !== null) {
 			throw(new PDOException("Not a new Segment"));
 		}
 
@@ -196,14 +199,15 @@ class Segment implements JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
-		$parameters = array("segmentStartX"=> $this->getSegmentStart()->getX(), "segmentStartY"=> $this->getSegmentStart()->getY(),
-				"segmentStopX"=> $this->getSegmentStop()->getX(), "segmentStopY"=> $this->getSegmentStop()->getY(),
-				"segmentStartElevation"=> $this->getSegmentStartElevation(), "segmentStopElevation"=> $this->getSegmentStopElevation());
+		$parameters = array("segmentStartX" => $this->getSegmentStart()->getX(), "segmentStartY" => $this->getSegmentStart()->getY(),
+			"segmentStopX" => $this->getSegmentStop()->getX(), "segmentStopY" => $this->getSegmentStop()->getY(),
+			"segmentStartElevation" => $this->getSegmentStartElevation(), "segmentStopElevation" => $this->getSegmentStopElevation());
 		$statement->execute($parameters);
 
 		//update the null segmentId with what mySQL has generated
 		$this->setSegmentId(intval($pdo->lastInsertId()));
 	}
+
 	/**
 	 * deletes this segment from mySQL
 	 *
@@ -228,11 +232,11 @@ class Segment implements JsonSerializable {
 	/**
 	 * updates this segment in mySQL
 	 *
-	 *@param PDO $pdo pointer to PDO connection
-	 *@throws PDOException when mySQL related errors occur
+	 * @param PDO $pdo pointer to PDO connection
+	 * @throws PDOException when mySQL related errors occur
 	 */
 	public function update(PDO &$pdo) {
-	//make sure this segment exists
+		//make sure this segment exists
 		if($this->segmentId === null) {
 			throw(new PDOException("unable to update a segment that does not exist"));
 		}
@@ -247,10 +251,10 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		$startY = $this->getSegmentStart()->getY();
 		$stopX = $this->getSegmentStop()->getX();
 		$stopY = $this->getSegmentStop()->getY();
-		$parameters = array("segmentStart"=> "POINT($startX $startY)", "segmentStop"=> "POINT($stopX $stopY)",
-				"segmentStartElevation"=> $this->getSegmentStartElevation(), "segmentStopElevation"=> $this->getSegmentStopElevation());
+		$parameters = array("segmentStart" => "POINT($startX $startY)", "segmentStop" => "POINT($stopX $stopY)",
+			"segmentStartElevation" => $this->getSegmentStartElevation(), "segmentStopElevation" => $this->getSegmentStopElevation());
 		$statement->execute($parameters);
-}
+	}
 
 	/**
 	 * gets segment by segmentId
@@ -265,7 +269,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		try {
 			$segmentId = Filter::filterInt($segmentId, "Segment Id");
 		} catch(InvalidArgumentException $invalidArgument) {
-			throw(new PDOException($invalidArgument->getMessage(), 0,$invalidArgument));
+			throw(new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(RangeException $range) {
 			throw(new PDOException($range->getMessage(), 0, $range));
 		} catch(Exception $exception) {
@@ -273,7 +277,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		}
 
 		//create query template
-		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment where segmentId = :segmentId";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
 		//bind segmentId to placeholder
@@ -299,19 +303,19 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 			//if the row couldn't be converted, rethrow it
 			throw(new PDOException($e->getMessage(), 0, $e));
 		}
-		return($segment);
+		return ($segment);
 	}
 
 	/**
 	 * gets segment by segmentStart
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param float $segmentStart  start point to search for
+	 * @param float $segmentStart start point to search for
 	 * @return mixed Segment found or null if not found
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-		public static function getSegmentByStart(PDO &$pdo, $segmentStart){
+	public static function getSegmentByStart(PDO &$pdo, $segmentStart) {
 //		//sanitize the float before searching
 //		try {
 //			$segmentStart = $segmentStart; //
@@ -324,7 +328,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 //		}
 
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStart = :segmentStart ";
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStart = :segmentStart";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStart to placeholder
@@ -335,10 +339,17 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		//build an array of segments
 		$segments = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch())!== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
 				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
+				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
+				$segmentStartGenericObject = json_decode($segmentStartJSON);
+				$segmentStopGenericObject = json_decode($segmentStopJSON);
+				$segmentStart = new Point($segmentStartGenericObject->coordinates[0], $segmentStartGenericObject->coordinates[1]);
+				$segmentStop = new Point($segmentStopGenericObject->coordinates[0], $segmentStopGenericObject->coordinates[1]);
+				$segment = new Segment($row["segmentId"], $segmentStart, $segmentStop, $row["segmentStartElevation"], $row["segmentStopElevation"]);
+
 				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
@@ -347,8 +358,9 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 			}
 		}
 
-		return($segments);
+		return ($segments);
 	}
+
 	/**
 	 * gets segment by segmentStop
 	 *
@@ -359,7 +371,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStop( PDO &$pdo, $segmentStop){
+	public static function getSegmentByStop(PDO &$pdo, $segmentStop) {
 		//sanitize the float before searching
 //		try {
 //			$segmentStop =  $segmentStop;
@@ -382,39 +394,39 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		//build an array of segments
 		$segments = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch())!== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
 				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
 				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
-				$segments[$segments->key()] =$segment;
+				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
 				//if the row couldn't be converter, rethrow it
 				throw (new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($segments);
+		return ($segments);
 	}
 
 	/**
 	 * gets segment by segmentStartElevation
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param float $segmentStartElevation  start point to search for
+	 * @param float $segmentStartElevation start point to search for
 	 * @return mixed Segment found or null if not found
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStartElevation(PDO &$pdo, $segmentStartElevation){
+	public static function getSegmentByStartElevation(PDO &$pdo, $segmentStartElevation) {
 		//sanitize the float before searching
 		try {
 			$segmentStartElevation = Filter::filterInt($segmentStartElevation, "segment start elevation");
-		} catch (InvalidArgumentException $invalidArgument) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw(new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch (RangeException $range) {
-			throw (new RangeException($range->getMessage(), 0, $range ));
-		} catch  (Exception $exception) {
-			throw (new Exception($exception->getMessage(), 0 ,$exception));
+		} catch(RangeException $range) {
+			throw (new RangeException($range->getMessage(), 0, $range));
+		} catch(Exception $exception) {
+			throw (new Exception($exception->getMessage(), 0, $exception));
 		}
 
 		//create query template
@@ -428,11 +440,11 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		//build an array of segments
 		$segments = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch())!== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
 				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
 				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
-				$segments[$segments->key()] =$segment;
+				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
 				//if the row couldn't be converter, rethrow it
@@ -440,8 +452,9 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 			}
 		}
 
-		return($segments);
+		return ($segments);
 	}
+
 	/**
 	 * gets segment by segmentStopElevation
 	 *
@@ -452,16 +465,16 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStopElevation( PDO &$pdo, $segmentStopElevation){
+	public static function getSegmentByStopElevation(PDO &$pdo, $segmentStopElevation) {
 		//santize the float before searching
 		try {
 			$segmentStopElevation = Filter::filterInt($segmentStopElevation, "segment stop", false);
-		} catch (InvalidArgumentException $invalidArgument) {
+		} catch(InvalidArgumentException $invalidArgument) {
 			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch (RangeException $range){
+		} catch(RangeException $range) {
 			throw (new RangeException ($range->getMessage(), 0, $range));
-		} catch (Exception $exception) {
-			throw (new Exception($exception->getMessage(),0,$exception));
+		} catch(Exception $exception) {
+			throw (new Exception($exception->getMessage(), 0, $exception));
 		}
 		//create query template
 		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStopElevation LIKE :segmentStopElevation";
@@ -474,18 +487,18 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		//build an array of segments
 		$segments = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch())!== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
 				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
 				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
-				$segments[$segments->key()] =$segment;
+				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
 				//if the row couldn't be converter, rethrow it
 				throw (new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-		return($segments);
+		return ($segments);
 	}
 
 	/**
@@ -495,7 +508,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 **/
 
 	public function jsonSerialize() {
-		return(get_object_vars($this));
+		return (get_object_vars($this));
 
 	}
 }
