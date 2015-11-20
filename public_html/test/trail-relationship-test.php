@@ -66,6 +66,16 @@ class TrailRelationshipTest extends TrailQuailTest {
 	protected $VALID_BROWSER = "";
 
 	/**
+	 * @var string $VALID_USERHASH
+	 */
+	protected $VALID_USERHASH = "";
+
+	/**
+	 * @var string $VALID_USERSALT
+	 */
+	protected $VALID_USERSALT = "";
+
+	/**
 	 * create dependent objects before running each test
 	 **/
 	public final function setUp() {
@@ -80,10 +90,12 @@ class TrailRelationshipTest extends TrailQuailTest {
 
 		//create browser
 		$this->VALID_BROWSER = "Chrome";
-		$this->VALID_BROWSER->insert($this->getPDO());
+
+		$this->VALID_USERSALT = bin2hex(openssl_random_pseudo_bytes(32));
+		$this->VALID_USERHASH = $this->VALID_USERHASH = hash_pbkdf2("sha512", "password4321", $this->VALID_USERSALT, 262144, 128);
 
 		//create and insert a userId to own the trail
-		$this->user = new User(null, $this->VALID_BROWSER, "2015-11-15 09:45.30", "192.168.1.168", "S", "saul.jeff@gmail.com", null, "Hyourname.tomorrow", null);
+		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_DATE, "192.168.1.168", "S", "saul.jeff@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
 		$this->user->insert($this->getPDO());
 
 		$this->VALID_TRAILNAME = "La Luz";
