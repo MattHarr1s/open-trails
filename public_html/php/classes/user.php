@@ -450,7 +450,7 @@ class User {
 
 		// grab the user id information from mySQL
 		try {
-			$userEmail = null;
+			$user = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
@@ -486,7 +486,7 @@ class User {
 		}
 
 		// create user query template
-		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user WHERE userName = :userNmae";
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user WHERE userName = :userName";
 		$statement = $pdo->prepare($query);
 
 		// bind userId to placeholder
