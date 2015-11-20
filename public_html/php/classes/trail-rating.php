@@ -274,33 +274,9 @@ class Rating {
 
 		// bind the tweet id to the place holder
 	$parameters = array("trailId" => $trailId);
-	$statement->execute($parameters);}
-	/**
-	 * gets the rating by userId
-	 *
-	 * @param PDO $pdo PDO Connection object
-	 * @param int $userId user id to search for
-	 * @return int found rating value found or null if not found
-	 * @throws PDOException when mySql related error occurs
-	 */
-
-	public static  function getRatingValueByUserId(PDO $pdo, $userId){
-		// sanitize the the trailId before searching
-		$userId = filter_var($userId, FILTER_VALIDATE_INT);
-		if($userId === false) {
-			throw(new PDOException("$userId is not an integer "));
-		}
-		If($userId <= 0 ){
-			throw(new PDOException("$userId is not positive"));
-		}
-		// create query template
-		$query = "SELECT trailId,ratingValue FROM rating WHERE userId = :userId";
-		$statement = $pdo->prepare($query);
-
-		// bind the tweet id to the place holder
-		$parameters = array("trailId" => $userId);
-		$statement->execute($parameters);
+	$statement->execute($parameters);
 	}
+
 	/**
 	 * gets a trailRating by trail Id and user Id
 	 * @param PDO $pdo PDO connection object

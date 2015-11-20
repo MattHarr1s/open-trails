@@ -947,7 +947,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailAmenities 
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getTrailByTrailCondition(PDO &$pdo, $trailCondition) {
+	public static function getTrailByTrailCondition(PDO $pdo, $trailCondition) {
 		//sanitize the trailCondition before searching
 		try {
 			$trailCondition = Filter::filterString($trailCondition, "trailCondition", 256);
