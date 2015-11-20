@@ -48,12 +48,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 	/**
 	 * @var string $VALID_DATE
 	 */
-	protected $VALID_DATE = null;
-
-	/**
-	 * @var mixed $userId
-	 */
-	protected $userId = null;
+	protected $VALID_DATE = "2015-10-24 10:24:42";
 
 	/**
 	 * @var string $VALID_TRAILNAME
@@ -76,17 +71,18 @@ class TrailRelationshipTest extends TrailQuailTest {
 	protected $VALID_USERSALT = "";
 
 	/**
+	 * @var User $user
+	 */
+	protected $user = null;
+
+	/**
 	 * create dependent objects before running each test
 	 **/
 	public final function setUp() {
 		//run the default setUp() method first
 		parent::setUp();
 
-		$this->VALID_DATE = DateTime::createFromFormat("Y-m-d H:i:s", "2015-10-24 10:24:42");
-
-		// create user
-		//$this->userId = 83;
-		//$this->userId->insert($this->getPDO());
+		$this->VALID_DATE = DateTime::createFromFormat("Y-m-d H:i:s", $this->VALID_DATE);
 
 		//create browser
 		$this->VALID_BROWSER = "Chrome";
@@ -102,7 +98,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 
 		//create and insert a trailId to own the test Trail Relationship
 		//$newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid
-		$this->trail = new Trail(null, $this->userId, "Safari", $this->VALID_DATE, "192.168.1.4", 5, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_DATE, "192.168.1.4", 5, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
 		$this->trail->insert($this->getPDO());
 
 		//create and insert a segmentId to own the test Trail Relationship
@@ -117,7 +113,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 **/
 	public function testInsertInvalidTrailRelationship() {
 		// create a Trail Relationship with a non-null trailId and watch it fail
-		$trailRelationship = new TrailRelationship($this->VALID_TRAILID, TrailQuailTest::INVALID_KEY, $this->VALID_SEGMENTID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->trail->getTrailId(), TrailQuailTest::INVALID_KEY, $this->segment->getSegmentId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 	}
 
@@ -131,7 +127,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
 		//create a new Trail Relationship and insert it into mySQL
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 
 		// edit the Trail Relationship and update it in mySQL
@@ -156,7 +152,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
 		//create a new Trail Relationship and insert it into mySQL
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 
 		// edit the Trail Relationship and update it in mySQL
@@ -181,7 +177,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
 		//create a new Trail Relationship and insert it into mySQL
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 
 		// edit the Trail Relationship and update it in mySQL
@@ -217,7 +213,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
 		// create a new Trail Relationship and insert it into mySQL
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 
 		// delete the Trail Relationship from mySQL
@@ -240,7 +236,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
 		// create a new Trail Relationship and insert it into mySQL
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 
 		// delete the Trail Relationship from mySQL
@@ -263,7 +259,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
 		// create a new Trail Relationship and insert it into mySQL
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 
 		// delete the Trail Relationship from mySQL
@@ -283,7 +279,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 **/
 	public function testDeleteInvalidTrailRelationship() {
 		// create a Trail Relationship and try to delete it without actually inserting it
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->delete($this->getPDO());
 	}
 
@@ -339,7 +335,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
 		//create a new Trail Relationship and insert it into mySQL
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -358,7 +354,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
 		//create a new Trail Relationship and insert it into mySQL
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -377,7 +373,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
 		//create a new Trail Relationship and insert it into mySQL
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -396,7 +392,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
 		//create a new Trail Relationship and insert it into mySQL
-		$trailRelationship = new TrailRelationship($this->VALID_SEGMENTID, $this->VALID_TRAILID, $this->VALID_SEGMENTTYPE);
+		$trailRelationship = new TrailRelationship($this->segment->getSegmentId(), $this->trail->getTrailId(), $this->VALID_SEGMENTTYPE);
 		$trailRelationship->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
