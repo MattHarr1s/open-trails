@@ -157,7 +157,7 @@ class Segment implements JsonSerializable {
  *@param int $newSegmentStartElevation
 **/
 	public function setSegmentStartElevation($newSegmentStartElevation){
-		$this->segmentStartElevation = $newSegmentStartElevation;
+		$this->segmentStartElevation = Filter::filterInt($newSegmentStartElevation, "Segment Start Elevation", false);
 	}
 
 /**
@@ -175,7 +175,7 @@ class Segment implements JsonSerializable {
  * @param int $newSegmentStopElevation
 **/
 	public function setSegmentStopElevation($newSegmentStopElevation){
-		$this->segmentStopElevation = Filter::filterInt($newSegmentStopElevation,"Segment Stop Elevation",false);
+		$this->segmentStopElevation = Filter::filterInt($newSegmentStopElevation,"Segment Stop Elevation", false);
 	}
 
 	/**
@@ -238,17 +238,16 @@ class Segment implements JsonSerializable {
 		}
 
 		//create query table
-		$query = "UPDATE segment SET (ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation)
-					VALUES(POINT(:segmentStartX, :segmentStartY), POINT(:segmentStopX, :segmentStopY), :segmentStartElevation, :segmentStopElevation)";
+		$query = "UPDATE segment SET segmentStart = :segmentStart, segmentStop = :segmentStop,
+segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentStopElevation";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
-		// $startX = $this->getSegmentStart()->getX();
-		// $startY = $this->getSegmentStart()->getY();
-		// $stopX = $this->getSegmentStop()->getX();
-		// $stopY = $this->getSegmentStop()->getY();
-		$parameters = array("segmentStartX"=> $this->getSegmentStart()->getX(), "segmentStartY"=> $this->getSegmentStart()->getY(),
-				"segmentStopX"=> $this->getSegmentStop()->getX(), "segmentStopY"=> $this->getSegmentStop()->getY(),
+		$startX = $this->getSegmentStart()->getX();
+		$startY = $this->getSegmentStart()->getY();
+		$stopX = $this->getSegmentStop()->getX();
+		$stopY = $this->getSegmentStop()->getY();
+		$parameters = array("segmentStart"=> "POINT($startX $startY)", "segmentStop"=> "POINT($stopX $stopY)",
 				"segmentStartElevation"=> $this->getSegmentStartElevation(), "segmentStopElevation"=> $this->getSegmentStopElevation());
 		$statement->execute($parameters);
 }
@@ -274,7 +273,7 @@ class Segment implements JsonSerializable {
 		}
 
 		//create query template
-		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentId = :segmentId";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment where segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
 		//bind segmentId to placeholder
@@ -325,7 +324,7 @@ class Segment implements JsonSerializable {
 //		}
 
 		//create query template
-		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = segmentStart ";
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStart = :segmentStart ";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStart to placeholder
@@ -338,13 +337,7 @@ class Segment implements JsonSerializable {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch())!== false) {
 			try {
-
-				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
-				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
-				$segmentStartGenericObject = json_decode($segmentStartJSON);
-				$segmentStopGenericObject = json_decode($segmentStopJSON);
-				$segmentStart = new Point($segmentStartGenericObject->coordinates[0], $segmentStartGenericObject->coordinates[1]);
-				$segmentStop = new Point($segmentStopGenericObject->coordinates[0], $segmentStopGenericObject->coordinates[1]);
+				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
 				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
 				$segments[$segments->key()] = $segment;
 				$segments->next();
@@ -378,11 +371,11 @@ class Segment implements JsonSerializable {
 //			throw (new Exception($exception->getMessage(),0,$exception));
 //		}
 		//create query template
-		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment where segmentStop = segmentStop";
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStop LIKE :segmentStop";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStop to placeholder
-		$segmentStop = "segmentStop";
+		$segmentStop = "segmentStop%";
 		$parameters = array("segmentStop" => $segmentStop);
 		$statement->execute($parameters);
 
@@ -425,7 +418,7 @@ class Segment implements JsonSerializable {
 		}
 
 		//create query template
-		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment where segmentStartElevation = segmentStartElevation ";
+		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStartElevation LIKE :segmentStartElevation ";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStartElevation to placeholder
