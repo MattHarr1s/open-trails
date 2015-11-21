@@ -3,8 +3,8 @@
 		<testsuite name="Trail Quail">
 			<file>anti-abuse-test.php</file>
 			 <!-- <file>segment-test.php</file> -->
-			<!-- <file>point-test.php</file>
-			 <file>trail-test.php</file> -->
+			<!-- <file>point-test.php</file> -->
+			 <!-- <file>trail-test.php</file> -->
 			 <file>trail-relationship-test.php</file>
 			<file>trail-quail.php</file>
 			<!-- <file>comment-test.php</file>-->
