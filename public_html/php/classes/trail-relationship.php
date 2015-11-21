@@ -156,7 +156,7 @@ class TrailRelationship {
 		$query = "DELETE FROM trailRelationship WHERE trailId = :trailId AND segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
-		$parameters = array("segmentId" => $this->segmentId, "trailId" => $this->trailId, "segmentType" => $this->segmentType);
+		$parameters = array("segmentId" => $this->segmentId, "trailId" => $this->trailId,);
 		$statement->execute($parameters);
 	}
 
