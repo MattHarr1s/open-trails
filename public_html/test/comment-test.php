@@ -76,36 +76,41 @@ class CommentTest extends TrailQuailTest {
 	 * @var string $VALID_COMMENTTEXT1
 	 */
 	protected $VALID_COMMENTTEXT1 = " Books are useless! I only ever read one book, \"To Kill A Mockingbird,\" and it gave me absolutely no insight on how to kill mockingbirds! ";
-
 	/**
 	 * @var Trail $trail
 	 * @var User $user
+	 * @var segment $segment
 	 */
 	protected $trail = null;
+	protected $user = null;
+	protected $segment = null;
 
+	/**
+	 * create various functions to run unit test
+	 */
 	public final function setUp() {
 		parent::setUp();
+		// necessary DateTime format to run the test
+		$this->VALID_CREATEDATE= DateTime::createFromFormat("2015-12-19 12:30:45", $this->VALID_CREATEDATE);
 
-		$this->VALID_DATE = DateTime::createFromFormat("Y-m-d H:i:s", $this->VALID_CREATEDATEDATE);
-		//create browser
-		$this->VALID_BROWSER = "Chrome";
-		$this->VALID_USERSALT = bin2hex(openssl_random_pseudo_bytes(32));
-		$this->VALID_USERHASH = $this->VALID_USERHASH = hash_pbkdf2("sha512", "password4321", $this->VALID_USERSALT, 262144, 128);
-		//create and insert a userId to own the trail
-		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATEDATE, "192.168.1.168", "S", "louisgill5@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
-		$this->user->insert($this->getPDO());
-		$this->VALID_TRAILNAME = "La Luz";
-		//create and insert a trailId to own the test Trail Relationship
-		//$newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid
-		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATEDATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		//create points needed for segment
+		$segmentStart = new Point(35.554, 44.546);
+		$segmentStop = new Point(35.554, 48.445);
+
+		//create new segment to use for testing
+		$this->Segment(null, $segmentStart, $segmentStop, 7565, 9800);
+
+		//create needed dependencies to ensure user can be created to run unit testing
+		$salt = bin2hex(openssl_random_pseudo_bytes(32));
+		$hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->VALID_USERSALT, 262144, 128);
+
+		//create a new user to use for testing
+		$this->user = new User(null,"chrome",$this->VALID_CREATEDATE, "192.168.1.4,", "S", "bootbob@trex.com", $hash, "george kephart", $salt);
+
+		// create a trail to own test
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail ", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking",null);
 		$this->trail->insert($this->getPDO());
-		$this->segmentStart = new Point(35.554, 44.546);
-		$this->segmentStop = new Point (6, 36);
-		//create and insert a segmentId to own the test Trail Relationship
-		$this->segment = new Segment(null, $this->segmentStart, $this->segmentStop, 1000, 2000);
-		$this->segment->insert($this->getPDO());
 	}
-
 	/**
 	 * test inserting a valid Comment and verify that the actual mySQL data matches
 	 */
