@@ -141,6 +141,33 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 * grabs the data from mySQL via getTrailRelationshipByTrailId
 	 **/
 	public function testUpdateValidTrailRelationshipByTrailId() {
+
+		$this->VALID_DATE = DateTime::createFromFormat("Y-m-d H:i:s", "2015-10-24 10:24:42");
+
+		//create browser
+		$this->VALID_BROWSER = "Chrome";
+
+		$this->VALID_USERSALT = bin2hex(openssl_random_pseudo_bytes(32));
+		$this->VALID_USERHASH = $this->VALID_USERHASH = hash_pbkdf2("sha512", "password4321", $this->VALID_USERSALT, 262144, 128);
+
+		//create and insert a userId to own the trail
+		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_DATE, "192.168.1.168", "S", "louisgill@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
+		$this->user->insert($this->getPDO());
+
+		$this->VALID_TRAILNAME = "La Luz";
+
+		//create and insert a trailId to own the test Trail Relationship
+		//$newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_DATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail->insert($this->getPDO());
+
+		$this->segmentStart = new Point(35.554, 44.546);
+		$this->segmentStop = new Point (6, 36);
+
+		//create and insert a segmentId to own the test Trail Relationship
+		$this->segment = new Segment(null, $this->segmentStart, $this->segmentStop, 1000, 2000);
+		$this->segment->insert($this->getPDO());
+
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
@@ -155,8 +182,8 @@ class TrailRelationshipTest extends TrailQuailTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipByTrailId($this->getPDO(), $trailRelationship->getTrailId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
-		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->VALID_TRAILID);
-		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->VALID_SEGMENTID);
+		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->trail->getTrailId());
+		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->segment->getSegmentId());
 		$this->assertSame($pdoTrailRelationship->getSegmentType(), $this->VALID_SEGMENTTYPE2);
 	}
 
@@ -349,6 +376,33 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 * test grabbing a Trail Relationship by segmentId
 	 **/
 	public function testGetValidTrailRelationshipBySegmentId() {
+
+		$this->VALID_DATE = DateTime::createFromFormat("Y-m-d H:i:s", "2015-10-24 10:24:42");
+
+		//create browser
+		$this->VALID_BROWSER = "Chrome";
+
+		$this->VALID_USERSALT = bin2hex(openssl_random_pseudo_bytes(32));
+		$this->VALID_USERHASH = $this->VALID_USERHASH = hash_pbkdf2("sha512", "password4321", $this->VALID_USERSALT, 262144, 128);
+
+		//create and insert a userId to own the trail
+		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_DATE, "192.168.1.168", "S", "louisgill@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
+		$this->user->insert($this->getPDO());
+
+		$this->VALID_TRAILNAME = "La Luz";
+
+		//create and insert a trailId to own the test Trail Relationship
+		//$newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_DATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail->insert($this->getPDO());
+
+		$this->segmentStart = new Point(35.554, 44.546);
+		$this->segmentStop = new Point (6, 36);
+
+		//create and insert a segmentId to own the test Trail Relationship
+		$this->segment = new Segment(null, $this->segmentStart, $this->segmentStop, 1000, 2000);
+		$this->segment->insert($this->getPDO());
+
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
@@ -357,10 +411,10 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$trailRelationship->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentId($this->getPDO(), $this->VALID_SEGMENTID);
+		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentId($this->getPDO(), $this->segment->getSegmentId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
-		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->VALID_SEGMENTID);
-		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->VALID_TRAILID);
+		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->segment->getSegmentId());
+		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->trail->getTrailId());
 		$this->assertSame($pdoTrailRelationship->getSegmentType(), $this->VALID_SEGMENTTYPE);
 	}
 
@@ -368,6 +422,33 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 * test grabbing a Trail Relationship by trailId
 	 **/
 	public function testGetValidTrailRelationshipByTrailId() {
+
+		$this->VALID_DATE = DateTime::createFromFormat("Y-m-d H:i:s", "2015-10-24 10:24:42");
+
+		//create browser
+		$this->VALID_BROWSER = "Chrome";
+
+		$this->VALID_USERSALT = bin2hex(openssl_random_pseudo_bytes(32));
+		$this->VALID_USERHASH = $this->VALID_USERHASH = hash_pbkdf2("sha512", "password4321", $this->VALID_USERSALT, 262144, 128);
+
+		//create and insert a userId to own the trail
+		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_DATE, "192.168.1.168", "S", "louisgill@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
+		$this->user->insert($this->getPDO());
+
+		$this->VALID_TRAILNAME = "La Luz";
+
+		//create and insert a trailId to own the test Trail Relationship
+		//$newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_DATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail->insert($this->getPDO());
+
+		$this->segmentStart = new Point(35.554, 44.546);
+		$this->segmentStop = new Point (6, 36);
+
+		//create and insert a segmentId to own the test Trail Relationship
+		$this->segment = new Segment(null, $this->segmentStart, $this->segmentStop, 1000, 2000);
+		$this->segment->insert($this->getPDO());
+
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
@@ -376,10 +457,10 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$trailRelationship->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipByTrailId($this->getPDO(), $this->VALID_TRAILID);
+		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipByTrailId($this->getPDO(), $this->trail->getTrailId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
-		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->VALID_SEGMENTID);
-		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->VALID_TRAILID);
+		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->segment->getSegmentId());
+		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->trail->getTrailId());
 		$this->assertSame($pdoTrailRelationship->getSegmentType(), $this->VALID_SEGMENTTYPE);
 	}
 
@@ -387,6 +468,33 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 * test grabbing a Trail Relationship by segmentIdAndTrailId
 	 **/
 	public function testGetValidTrailRelationshipBySegmentIdAndTrailId() {
+
+		$this->VALID_DATE = DateTime::createFromFormat("Y-m-d H:i:s", "2015-10-24 10:24:42");
+
+		//create browser
+		$this->VALID_BROWSER = "Chrome";
+
+		$this->VALID_USERSALT = bin2hex(openssl_random_pseudo_bytes(32));
+		$this->VALID_USERHASH = $this->VALID_USERHASH = hash_pbkdf2("sha512", "password4321", $this->VALID_USERSALT, 262144, 128);
+
+		//create and insert a userId to own the trail
+		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_DATE, "192.168.1.168", "S", "louisgill@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
+		$this->user->insert($this->getPDO());
+
+		$this->VALID_TRAILNAME = "La Luz";
+
+		//create and insert a trailId to own the test Trail Relationship
+		//$newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_DATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail->insert($this->getPDO());
+
+		$this->segmentStart = new Point(35.554, 44.546);
+		$this->segmentStop = new Point (6, 36);
+
+		//create and insert a segmentId to own the test Trail Relationship
+		$this->segment = new Segment(null, $this->segmentStart, $this->segmentStop, 1000, 2000);
+		$this->segment->insert($this->getPDO());
+
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
@@ -395,10 +503,10 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$trailRelationship->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentIdAndTrailId($this->getPDO(), $this->VALID_SEGMENTID, $this->VALID_TRAILID);
+		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentIdAndTrailId($this->getPDO(), $this->segment->getSegmentId(), $this->trail->getTrailId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
-		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->VALID_SEGMENTID);
-		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->VALID_TRAILID);
+		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->segment->getSegmentId());
+		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->trail->getTrailId());
 		$this->assertSame($pdoTrailRelationship->getSegmentType(), $this->VALID_SEGMENTTYPE);
 	}
 
@@ -406,6 +514,33 @@ class TrailRelationshipTest extends TrailQuailTest {
 	 * test grabbing a Trail Relationship by segmentType
 	 **/
 	public function testGetValidTrailRelationshipBySegmentType() {
+
+		$this->VALID_DATE = DateTime::createFromFormat("Y-m-d H:i:s", "2015-10-24 10:24:42");
+
+		//create browser
+		$this->VALID_BROWSER = "Chrome";
+
+		$this->VALID_USERSALT = bin2hex(openssl_random_pseudo_bytes(32));
+		$this->VALID_USERHASH = $this->VALID_USERHASH = hash_pbkdf2("sha512", "password4321", $this->VALID_USERSALT, 262144, 128);
+
+		//create and insert a userId to own the trail
+		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_DATE, "192.168.1.168", "S", "louisgill@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
+		$this->user->insert($this->getPDO());
+
+		$this->VALID_TRAILNAME = "La Luz";
+
+		//create and insert a trailId to own the test Trail Relationship
+		//$newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId, $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty, $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_DATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail->insert($this->getPDO());
+
+		$this->segmentStart = new Point(35.554, 44.546);
+		$this->segmentStop = new Point (6, 36);
+
+		//create and insert a segmentId to own the test Trail Relationship
+		$this->segment = new Segment(null, $this->segmentStart, $this->segmentStop, 1000, 2000);
+		$this->segment->insert($this->getPDO());
+
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trailRelationship");
 
@@ -416,8 +551,8 @@ class TrailRelationshipTest extends TrailQuailTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentId($this->getPDO(), $this->VALID_SEGMENTTYPE);
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
-		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->VALID_SEGMENTID);
-		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->VALID_TRAILID);
+		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->segment->getSegmentId());
+		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->trail->getTrailId());
 		$this->assertSame($pdoTrailRelationship->getSegmentType(), $this->VALID_SEGMENTTYPE);
 	}
 

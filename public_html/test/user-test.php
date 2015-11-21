@@ -62,6 +62,12 @@ class UserTest extends TrailQuailTest {
 	protected $VALID_USERNAME = "Yourname.tomorrow";
 
 	/**
+	 * valid username to update to
+	 * @var string $VALID_USERNAME2
+	 */
+	protected $VALID_USERNAME2 = "Louis";
+
+	/**
 	 * valid user salt
 	 * @var string $VALID_USERSALT
 	 */
@@ -126,7 +132,7 @@ class UserTest extends TrailQuailTest {
 		$user->insert($this->getPDO());
 
 		// edit the user Id profile and update it in mySQL
-		$user->setUserName($this->VALID_USERNAME);
+		$user->setUserName($this->VALID_USERNAME2);
 		$user->update($this->getPDO());
 
 		// grab the user data from mySQL and see if the fields match our expected values
@@ -138,7 +144,7 @@ class UserTest extends TrailQuailTest {
 		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
 		$this->assertSame($pdoUser->getUserHash(), $this->VALID_USERHASH);
-		$this->assertSame($pdoUser->getUserName(), $this->VALID_USERNAME);
+		$this->assertSame($pdoUser->getUserName(), $this->VALID_USERNAME2);
 		$this->assertSame($pdoUser->getUserSalt(), $this->VALID_USERSALT);
 	}
 
