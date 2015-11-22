@@ -110,11 +110,12 @@ class CommentTest extends TrailQuailTest {
 		$this->VALID_CREATEDATE= DateTime::createFromFormat("2015-12-19 12:30:45", $this->VALID_CREATEDATE);
 
 		//create points needed for segment
-		$this->segmentStart = new Point(35.554, 44.546);
-		$this->segmentStop = new Point(35.554, 48.445);
+		$segmentStart = new Point(35.554, 44.546);
+		$segmentStop = new Point(35.554, 48.445);
 
 		//create new segment to use for testing
-		$this->Segment(null, $this->segmentStart, $this->segmentStop, 7565, 9800);
+		$this->segment = new Segment(null, $segmentStart, $segmentStop, 7565, 9800);
+
 		$this->segment->insert($this->getPDO());
 
 		//create needed dependencies to ensure user can be created to run unit testing
@@ -122,7 +123,7 @@ class CommentTest extends TrailQuailTest {
 		$this->hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->salt, 262144, 128);
 
 		//create a new user to use for testing
-		$this->user = new User(null,$this->VALID_BROWSER ,$this->VALID_CREATEDATE, "192.168.1.4,", "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
+		$this->user = new User(null, $this->VALID_BROWSER ,$this->VALID_CREATEDATE, "192.168.1.4,", "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
 		$this->user->insert($this->getPDO());
 
 
