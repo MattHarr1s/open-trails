@@ -3,6 +3,8 @@ require_once "trail-quail.php";
 require_once(dirname(__DIR__). "/php/classes/segment.php");
 require_once(dirname(__DIR__). "/php/classes/autoload.php");
 
+use Symm\Gisconverter\Gisconverter;
+
 /**
  *
  * Full PHPUnit test for the Segment class

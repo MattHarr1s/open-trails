@@ -85,6 +85,22 @@ class CommentTest extends TrailQuailTest {
 	protected $user = null;
 	protected $segment = null;
 
+
+	/**
+	 * valid segment start and stop
+	 * @var point $segmentStart
+	 */
+	protected $segmentStop = null;
+	protected $segmentStart = null;
+	/**
+	 *valid user salt and hash to create a user to own the test
+	 * @var string user $hash
+	 * @var string user $salt
+	 */
+	protected $hash = null;
+	protected $salt = null;
+
+
 	/**
 	 * create various functions to run unit test
 	 */
@@ -94,18 +110,22 @@ class CommentTest extends TrailQuailTest {
 		$this->VALID_CREATEDATE= DateTime::createFromFormat("2015-12-19 12:30:45", $this->VALID_CREATEDATE);
 
 		//create points needed for segment
-		$segmentStart = new Point(35.554, 44.546);
-		$segmentStop = new Point(35.554, 48.445);
+		$this->segmentStart = new Point(35.554, 44.546);
+		$this->segmentStop = new Point(35.554, 48.445);
 
 		//create new segment to use for testing
-		$this->Segment(null, $segmentStart, $segmentStop, 7565, 9800);
+		$this->Segment(null, $this->segmentStart, $this->segmentStop, 7565, 9800);
+		$this->segment->insert($this->getPDO());
 
 		//create needed dependencies to ensure user can be created to run unit testing
-		$salt = bin2hex(openssl_random_pseudo_bytes(32));
-		$hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->VALID_USERSALT, 262144, 128);
+		$this->salt = bin2hex(openssl_random_pseudo_bytes(32));
+		$this->hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->salt, 262144, 128);
 
 		//create a new user to use for testing
-		$this->user = new User(null,"chrome",$this->VALID_CREATEDATE, "192.168.1.4,", "S", "bootbob@trex.com", $hash, "george kephart", $salt);
+		$this->user = new User(null,$this->VALID_BROWSER ,$this->VALID_CREATEDATE, "192.168.1.4,", "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
+		$this->user->insert($this->getPDO());
+
+
 
 		// create a trail to own test
 		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail ", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking",null);
@@ -244,7 +264,7 @@ class CommentTest extends TrailQuailTest {
 	 * test grabbing a comment by its commentText
 	 */
 
-	public function testGetValidCommentByEmail(){
+	public function testGetValidCommentByCommentText(){
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("comment");
 
