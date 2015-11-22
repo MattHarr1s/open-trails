@@ -195,7 +195,7 @@ class Segment implements JsonSerializable {
 
 		// create query template
 		$query = "INSERT INTO segment(segmentStart, segmentStop, segmentStartElevation, segmentStopElevation)
-		VALUES(POINT(:segmentStartX, :segmentStartY), POINT(:segmentStopX, :segmentStopY), :segmentStartElevation, :segmentStopElevation)";
+		VALUES(:POINT(segmentStartX, segmentStartY), :POINT(segmentStopX, segmentStopY), :segmentStartElevation, :segmentStopElevation)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
