@@ -477,15 +477,15 @@ class Trail implements JsonSerializable {
 		}
 
 		//create query template
-		$query = "INSERT INTO trail(userId, browser, createDate, ipAddress, submitTrailId,
+		$query = "INSERT INTO trail(trailId, userId, browser, createDate, ipAddress, submitTrailId,
 trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuid) VALUES (:userId, :browser, :createDate,
+trailTerrain, trailTraffic, trailUse, trailUuid) VALUES (:trailId, :userId, :browser, :createDate,
 :ipAddress, :submitTrailId, :trailAccessibility, :trailAmenities, :trailCondition, :trailDescription, :trailDifficulty, :trailDistance, :trailName,
 :trailSubmissionType, :trailTerrain, :trailTraffic, :trailUse, :trailUuid)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the placeholders in the template
-		$parameters = array("userId" => $this->getUserId(), "browser" => $this->getBrowser(),
+		$parameters = array( "trailId" => $this->getTrailId(), "userId" => $this->getUserId(), "browser" => $this->getBrowser(),
 				"createDate" => $this->getCreateDate()->format("Y-m-d H:i:s"), "ipAddress" => $this->getIpAddress(), "submitTrailId" => $this->getSubmitTrailId(), "trailAccessibility" => $this->getTrailAccessibility(), "trailAmenities" => $this->getTrailAmenities(),
 				"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" => $this->getTrailDistance(), "trailName" => $this->getTrailName(),
 				"trailSubmissionType" => $this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailTraffic" => $this->getTrailTraffic(),
