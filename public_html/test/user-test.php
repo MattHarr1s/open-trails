@@ -9,7 +9,7 @@ require_once(dirname(__DIR__) . "/php/classes/autoload.php");
  *
  * This is a complete PHPUnit test of the User class. It is complete because *ALL* mySQL/PDO enabled methods are tested for both invalid and valid inputs.
  *
- * @see user.php in the classes directory
+ * @see user.php in the php/classes directory
  * @author Jeff Saul <scaleup13@gmail.com> and Trail Quail <trailquailabq@gmail.com>
  **/
 class UserTest extends TrailQuailTest {

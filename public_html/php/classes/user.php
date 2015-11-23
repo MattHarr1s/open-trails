@@ -15,7 +15,7 @@ class User {
 	use AntiAbuse;
 
 	/**
-	 * user Id is an unsigned integer; this is the primary key for class user
+	 * user Id is an unsigned integer; user Id is the primary key for class user
 	 * @var integer $userId
 	 */
 	private $userId;
