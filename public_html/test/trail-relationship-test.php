@@ -419,7 +419,7 @@ class TrailRelationshipTest extends TrailQuailTest {
 		$trailRelationship->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentId($this->getPDO(), $this->VALID_SEGMENTTYPE);
+		$pdoTrailRelationship = TrailRelationship::getTrailRelationshipBySegmentType($this->getPDO(), $this->VALID_SEGMENTTYPE);
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trailRelationship"));
 		$this->assertSame($pdoTrailRelationship->getSegmentId(), $this->segment->getSegmentId());
 		$this->assertSame($pdoTrailRelationship->getTrailId(), $this->trail->getTrailId());
