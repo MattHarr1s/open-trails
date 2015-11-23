@@ -22,7 +22,7 @@ class TrailTest extends TrailQuailTest {
 	 * id for the content of the submission of the trail object
 	 * @var int $VALID_SUBMITTRAILID
 	 **/
-	protected $VALID_SUBMITTRAILID = 7;
+	protected $VALID_SUBMITTRAILID = null;
 
 	/**
 	 * id of user that submits to the trail
@@ -137,7 +137,7 @@ class TrailTest extends TrailQuailTest {
 	 * create dependent objects before running each test
 	 *
 	 */
-	public final function setUp(){
+	public function setUp(){
 		//run the default setUp() method first
 		parent::setUp();
 

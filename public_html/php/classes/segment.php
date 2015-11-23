@@ -195,7 +195,7 @@ class Segment implements JsonSerializable {
 
 		// create query template
 		$query = "INSERT INTO segment(segmentStart, segmentStop, segmentStartElevation, segmentStopElevation)
-		VALUES(:POINT(segmentStartX, segmentStartY), :POINT(segmentStopX, segmentStopY), :segmentStartElevation, :segmentStopElevation)";
+		VALUES(POINT(:segmentStartX, :segmentStartY), POINT(:segmentStopX, :segmentStopY), :segmentStartElevation, :segmentStopElevation)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
@@ -242,7 +242,7 @@ class Segment implements JsonSerializable {
 		}
 
 		//create query table
-		$query = "UPDATE segment SET segmentStart = :(POINT(:segmentStartX, :segmentStartY), segmentStop = :POINT(:segmentStopX, :segmentStopY),
+		$query = "UPDATE segment SET segmentStart = (POINT(:segmentStartX, :segmentStartY), segmentStop = POINT(:segmentStopX, :segmentStopY),
 segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentStopElevation";
 		$statement = $pdo->prepare($query);
 
@@ -380,7 +380,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 //			throw (new Exception($exception->getMessage(),0,$exception));
 //		}
 		//create query template
-		$query = "SELECT SELECT segmentId, ST_AsWKT(segmentStart) AS segmentStart, ST_AsWKT(segmentStop) AS segmentStop, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStop = :segmentStop";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStart) AS segmentStart, ST_AsWKT(segmentStop) AS segmentStop, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStop = :segmentStop";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStop to placeholder
