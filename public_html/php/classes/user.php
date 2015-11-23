@@ -21,7 +21,7 @@ class User {
 	private $userId;
 
 	/**
-	 * This indicates what type of account and what type of access each user has
+	 * This indicates what type of account and access each user has
 	 * This is a string of length 1
 	 * @var string $userAccountType
 	 */
