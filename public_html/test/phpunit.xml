@@ -1,22 +1,20 @@
 <phpunit>
 	<testsuites>
 		<testsuite name="Trail Quail">
-			<file>anti-abuse-test.php</file>
-			  <!--<file>segment-test.php</file>-->
+			<!--<file>anti-abuse-test.php</file>-->
+			  <file>segment-test.php</file>
 			<!-- <file>point-test.php</file> -->
-			 <!-- <file>trail-test.php</file> -->
+			<!--<file>trail-test.php</file> -->
 			 <!--<file>trail-relationship-test.php</file>-->
-			<!--<file>trail-quail.php</file>-->
-			<!-- <file>comment-test.php</file>-->
+			 <!--<file>comment-test.php</file>-->
 			<!--<file>user-test.php</file>-->
-			<file>rating-test.php</file>-->
-			<directory suffix="-test.php">.</directory>
+			<!--<directory suffix="-test.php">.</directory>-->
 		</testsuite>
 	</testsuites>
 	<filter>
 		<whitelist processUncoveredFilesFromWhitelist="false">
-			<directory suffix=".php">../php/classes</directory>
-			<directory suffix=".php">../php/traits</directory>
+			<directory suffix =".php">../php/classes</directory>
+			<directory suffix =".php">../php/traits</directory>
 		</whitelist>
 	</filter>
 </phpunit>

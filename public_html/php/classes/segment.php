@@ -312,7 +312,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-//	public static function getSegmentByStart(PDO &$pdo, $segmentStart) {
+	public static function getSegmentByStart(PDO &$pdo, $segmentStart) {
 //		sanitize the float before searching
 //		try {
 //			$segmentStart = $segmentStart; //
@@ -322,42 +322,41 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 //			throw (new RangeException($range->getMessage(), 0, $range ));
 //		} catch  (Exception $exception) {
 //			throw (new Exception($exception->getMessage(), 0 ,$exception));
-//		}
-//
-//		create query template
-//		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = :segmentStart";
-//		$statement = $pdo->prepare($query);
-//
-//		binds segmentStart to placeholder
-//		$segmentStart = "segmentStart";
-//		$parameters = array("segmentStart" => $segmentStart);
-//		$statement->execute($parameters);
-//
-//		build an array of segments
-//		$segments = new SplFixedArray($statement->rowCount());
-//		$statement->setFetchMode(PDO::FETCH_ASSOC);
-//		while(($row = $statement->fetch()) !== false) {
-//			try {
-//				 new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-//				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
-//				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
-//				$segmentStartGenericObject = json_decode($segmentStartJSON);
-//				$segmentStopGenericObject = json_decode($segmentStopJSON);
-//				$segmentStart = new Point($segmentStartGenericObject->coordinates[0], $segmentStartGenericObject->coordinates[1]);
-//				$segmentStop = new Point($segmentStopGenericObject->coordinates[0], $segmentStopGenericObject->coordinates[1]);
-//				$segment = new Segment($row["segmentId"], $segmentStart, $segmentStop, $row["segmentStartElevation"], $row["segmentStopElevation"]);
-//
-//				$segments[$segments->key()] = $segment;
-//				$segments->next();
-//			} catch(Exception $e) {
-//				if the row couldn't be converter, rethrow it
-//				throw (new PDOException($e->getMessage(), 0, $e));
-//			}
-//		}
 
-//		return ($segments);
-//	}
-//
+//		create query template
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = :segmentStart";
+		$statement = $pdo->prepare($query);
+
+		binds segmentStart to placeholder
+		$segmentStart = "segmentStart";
+		$parameters = array("segmentStart" => $segmentStart);
+		$statement->execute($parameters);
+
+//		build an array of segments
+		$segments = new SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				 new Segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
+				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
+				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
+				$segmentStartGenericObject = json_decode($segmentStartJSON);
+				$segmentStopGenericObject = json_decode($segmentStopJSON);
+				$segmentStart = new Point($segmentStartGenericObject->coordinates[0], $segmentStartGenericObject->coordinates[1]);
+				$segmentStop = new Point($segmentStopGenericObject->coordinates[0], $segmentStopGenericObject->coordinates[1]);
+				$segment = new Segment($row["segmentId"], $segmentStart, $segmentStop, $row["segmentStartElevation"], $row["segmentStopElevation"]);
+
+				$segments[$segments->key()] = $segment;
+				$segments->next();
+			} catch(Exception $e) {
+//				if the row couldn't be converter, rethrow it
+				throw (new PDOException($e->getMessage(), 0, $e));
+			}
+		}
+
+		return ($segments);
+	}
+
 	/**
 	 * gets segment by segmentStop
 	 *
