@@ -260,7 +260,7 @@ class Segment implements JsonSerializable {
 	 * @return mixed Segment found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 */
-	public static function getSegmentById(PDO &$pdo, $segmentId) {
+	public static function getSegmentBySegmentId(PDO &$pdo, $segmentId) {
 		//sanitize the ID before searching
 		try {
 			$segmentId = Filter::filterInt($segmentId, "Segment Id");
@@ -310,7 +310,7 @@ class Segment implements JsonSerializable {
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStart(PDO &$pdo, Point $segmentStart) {
+	public static function getSegmentBySegmentStart(PDO &$pdo, Point $segmentStart) {
 
 		//create query template
 		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = POINT(:segmentStartX, :segmentStartY)";
@@ -353,7 +353,7 @@ class Segment implements JsonSerializable {
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStop(PDO &$pdo, Point $segmentStop) {
+	public static function getSegmentBySegmentStop(PDO &$pdo, Point $segmentStop) {
 
 		//create query template
 		$query = "SELECT segmentId, ST_AsWKT(segmentStart) AS segmentStart, ST_AsWKT(segmentStop) AS segmentStop, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStop = POINT(:segmentStopX, :segmentStopY)";
@@ -394,7 +394,7 @@ class Segment implements JsonSerializable {
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStartElevation(PDO &$pdo, $segmentStartElevation) {
+	public static function getSegmentBySegmentStartElevation(PDO &$pdo, $segmentStartElevation) {
 		//sanitize the float before searching
 		try {
 			$segmentStartElevation = Filter::filterInt($segmentStartElevation, "segment start elevation");
@@ -446,7 +446,7 @@ class Segment implements JsonSerializable {
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStopElevation(PDO &$pdo, $segmentStopElevation) {
+	public static function getSegmentBySegmentStopElevation(PDO &$pdo, $segmentStopElevation) {
 		//sanitize the int before searching
 		try {
 			$segmentStopElevation = Filter::filterInt($segmentStopElevation, "segment stop", false);
