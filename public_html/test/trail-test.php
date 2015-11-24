@@ -171,7 +171,7 @@ class TrailTest extends TrailQuailTest {
 		$this->VALID_TRAILNAME = "La Luz";
 
 		//create and insert a userId to own the trail
-		$this->trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, DateTime::createFromFormat("Y-m-d H:i:s", "2015-11-15 12:15:42"), "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
 		$this->trail->insert($this->getPDO());
 
 
