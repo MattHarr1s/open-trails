@@ -260,7 +260,7 @@ class SegmentTest extends TrailQuailTest{
 		$segment->insert($this->getPDO());
 
 		//grab the data from mySQL and verify the fields
-		$pdoSegments = Segment::getSegmentByStartElevation($this->getPDO(),$segment->getSegmentStartElevation());
+		$pdoSegments = Segment::getSegmentBySegmentStartElevation($this->getPDO(),$segment->getSegmentStartElevation());
 		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("segment"));
 		foreach($pdoSegments as $pdoSegment) {
 			$this->assertSame($pdoSegment->getSegmentStart()->getX(), $this->VALID_SEGMENTSTART->getX());
@@ -297,7 +297,7 @@ class SegmentTest extends TrailQuailTest{
 		$segment->insert($this->getPDO());
 
 		//grab the data from mySQL and verify the fields
-		$pdoSegments = Segment::getSegmentByStopElevation($this->getPDO(),$segment->getSegmentStopElevation());
+		$pdoSegments = Segment::getSegmentBySegmentStopElevation($this->getPDO(),$segment->getSegmentStopElevation());
 		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("segment"));
 		foreach($pdoSegments as $pdoSegment) {
 			$this->assertSame($pdoSegment->getSegmentStart()->getX(), $this->VALID_SEGMENTSTART->getX());
@@ -317,7 +317,7 @@ class SegmentTest extends TrailQuailTest{
 
 	public function testGetInvalidSegmentByStopElevation(){
 		//grab a SegmentStopElevation that does not exist
-		$segment = Segment::getSegmentByStopElevation($this->getPDO(), null);
+		$segment = Segment::getSegmentBySegmentStopElevation($this->getPDO(), null);
 		$this->assertNull($segment);
 	}
 }
