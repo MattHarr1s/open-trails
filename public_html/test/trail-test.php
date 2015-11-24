@@ -39,10 +39,14 @@ class TrailTest extends TrailQuailTest {
 	protected $VALID_BROWSER = "";
 
 	/**
-	 * createDate of submission to trail
-	 * @var datetime $VALID_CREATEDATE
-	 **/
-	protected $VALID_CREATEDATE = "";
+	 * valid create dates to use for unit testing
+	 * @var DATETIME $VALID_CREATEDATE
+	 * @var DATETIME $VALID_CREATEDATE1
+	 * @var DATETIME $VALID_CREATEDATE2
+	 */
+	protected $VALID_CREATEDATE = "2015-12-19 12:15:18";
+	protected $VALID_CREATEDATE1 = "2015-12-19 12:16:20";
+	protected $VALID_CREATEDATE2 = "2015-12-19 12:19:20";
 
 	/**
 	 * ipAddress of computer making submission
@@ -163,7 +167,7 @@ class TrailTest extends TrailQuailTest {
 		$this->VALID_USERHASH = $this->VALID_USERHASH = hash_pbkdf2("sha512", "password4321", $this->VALID_USERSALT, 262144, 128);
 
 		//create and insert a userId to own the trail
-		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, "192.168.1.168", "S", "louisgill5@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
+		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE1, "192.168.1.168", "S", "louisgill5@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
 		$this->user->insert($this->getPDO());
 
 
@@ -171,7 +175,7 @@ class TrailTest extends TrailQuailTest {
 		$this->VALID_TRAILNAME = "La Luz";
 
 		//create and insert a userId to own the trail
-		$this->trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE2, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
 		$this->trail->insert($this->getPDO());
 
 
@@ -187,7 +191,7 @@ class TrailTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trail");
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -198,7 +202,7 @@ class TrailTest extends TrailQuailTest {
 		$pdoTrail = Trail::getTrailById($this->getPDO(), $trail->getTrailId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-		$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+		$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -221,12 +225,12 @@ class TrailTest extends TrailQuailTest {
 	/**
 	 * test inserting a Trail that already exists
 	 *
-	 * @expectedException PDOException
+	 * @expectedException InvalidArgumentException
 	 **/
 
 	public function testInsertInvalidTrail() {
 		//create a profile with a non null trailId and break the system
-		$trail = new Trail(TrailQuailTest::INVALID_KEY, $this->VALID_SUBMITTRAILID, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(TrailQuailTest::INVALID_KEY, $this->VALID_SUBMITTRAILID, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILNAME,
 				$this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC, $this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -241,7 +245,7 @@ class TrailTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trail");
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -254,7 +258,7 @@ class TrailTest extends TrailQuailTest {
 		$pdoTrail = Trail::getTrailById($this->getPDO(), $trail->getTrailId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-		$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+		$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -282,7 +286,7 @@ class TrailTest extends TrailQuailTest {
 
 	public function testUpdateInvalidTrail() {
 		//create a profile with a non null trailId and break the system
-		$trail = new Trail(TrailQuailTest::INVALID_KEY, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(TrailQuailTest::INVALID_KEY, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILNAME,
 				$this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC, $this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -298,7 +302,7 @@ class TrailTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trail");
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -322,7 +326,7 @@ class TrailTest extends TrailQuailTest {
 
 	public function testDeleteInvalidTrail() {
 		//create a profile with a non null trailId and break the system
-		$trail = new Trail(TrailQuailTest::INVALID_KEY, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(TrailQuailTest::INVALID_KEY, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILNAME,
 				$this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC, $this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -338,7 +342,7 @@ class TrailTest extends TrailQuailTest {
 
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -349,7 +353,7 @@ class TrailTest extends TrailQuailTest {
 		$pdoTrail = Trail::getTrailByUserId($this->getPDO(), $trail->getUserId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-		$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+		$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -389,7 +393,7 @@ class TrailTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trail");
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -400,7 +404,7 @@ class TrailTest extends TrailQuailTest {
 		$pdoTrail = Trail::getTrailBySubmitTrailId($this->getPDO(), $trail->getSubmitTrailId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-		$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+		$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -440,7 +444,7 @@ class TrailTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trail");
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -451,7 +455,7 @@ class TrailTest extends TrailQuailTest {
 		$pdoTrail = Trail::getTrailByTrailAccessibility($this->getPDO(), $trail->getTrailAccessibility());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-		$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+		$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -491,7 +495,7 @@ class TrailTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trail");
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -502,7 +506,7 @@ class TrailTest extends TrailQuailTest {
 		$pdoTrail = Trail::getTrailByTrailAmenities($this->getPDO(), $trail->getTrailAmenities());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-		$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+		$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -542,7 +546,7 @@ class TrailTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trail");
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -553,7 +557,7 @@ class TrailTest extends TrailQuailTest {
 		$pdoTrail = Trail::getTrailByTrailCondition($this->getPDO(), $trail->getTrailCondition());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-		$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+		$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -593,7 +597,7 @@ class TrailTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trail");
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -604,7 +608,7 @@ class TrailTest extends TrailQuailTest {
 		$pdoTrail = Trail::getTrailByTrailDescription($this->getPDO(), $trail->getTrailDescription());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 		$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-		$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+		$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -646,7 +650,7 @@ class TrailTest extends TrailQuailTest {
 			$numRows = $this->getConnection()->getRowCount("trail");
 
 			//create a new trail and insert it into mySQL
-			$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 					$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -657,7 +661,7 @@ class TrailTest extends TrailQuailTest {
 			$pdoTrail = Trail::getTrailByTrailDifficulty($this->getPDO(), $trail->getTrailDifficulty());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -699,7 +703,7 @@ class TrailTest extends TrailQuailTest {
 			$numRows = $this->getConnection()->getRowCount("trail");
 
 			//create a new trail and insert it into mySQL
-			$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 					$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -710,7 +714,7 @@ class TrailTest extends TrailQuailTest {
 			$pdoTrail = Trail::getTrailByTrailDistance($this->getPDO(), $trail->getTrailTrailDistance());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -752,7 +756,7 @@ class TrailTest extends TrailQuailTest {
 			$numRows = $this->getConnection()->getRowCount("trail");
 
 			//create a new trail and insert it into mySQL
-			$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 					$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -763,7 +767,7 @@ class TrailTest extends TrailQuailTest {
 			$pdoTrail = Trail::getTrailByTrailSubmissionType($this->getPDO(), $trail->getTrailSubmissionType());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -805,7 +809,7 @@ class TrailTest extends TrailQuailTest {
 			$numRows = $this->getConnection()->getRowCount("trail");
 
 			//create a new trail and insert it into mySQL
-			$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 					$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -816,7 +820,7 @@ class TrailTest extends TrailQuailTest {
 			$pdoTrail = Trail::getTrailByTrailTerrain($this->getPDO(), $trail->getTrailTerrain());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -858,7 +862,7 @@ class TrailTest extends TrailQuailTest {
 			$numRows = $this->getConnection()->getRowCount("trail");
 
 			//create a new trail and insert it into mySQL
-			$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 					$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -868,7 +872,7 @@ class TrailTest extends TrailQuailTest {
 //grab the data from mySQL and enforce the fields match our expectations
 			$pdoTrail = Trail::getTrailByName($this->getPDO(), $trail->getTrailName());
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -910,7 +914,7 @@ class TrailTest extends TrailQuailTest {
 			$numRows = $this->getConnection()->getRowCount("trail");
 
 			//create a new trail and insert it into mySQL
-			$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 					$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -921,7 +925,7 @@ class TrailTest extends TrailQuailTest {
 			$pdoTrail = Trail::getTrailByTrailTraffic($this->getPDO(), $trail->getTrailTraffic());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -963,7 +967,7 @@ class TrailTest extends TrailQuailTest {
 			$numRows = $this->getConnection()->getRowCount("trail");
 
 			//create a new trail and insert it into mySQL
-			$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 					$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -973,7 +977,7 @@ class TrailTest extends TrailQuailTest {
 			$pdoTrail = Trail::getTrailByTrailUse($this->getPDO(), $trail->getTrailUse());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -1015,7 +1019,7 @@ class TrailTest extends TrailQuailTest {
 			$numRows = $this->getConnection()->getRowCount("trail");
 
 			//create a new trail and insert it into mySQL
-			$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 					$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -1025,7 +1029,7 @@ class TrailTest extends TrailQuailTest {
 			$pdoTrail = Trail::getTrailByTrailUuId($this->getPDO(), $trail->getTrailUuId());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -1068,7 +1072,7 @@ class TrailTest extends TrailQuailTest {
 
 			//create a new trail and insert it into mySQL
 			//create a new trail and insert it into mySQL
-			$trail = new Trail($this->VALID_TRAILID, $this->VALID_SUBMITTRAILID, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail($this->VALID_TRAILID, $this->VALID_SUBMITTRAILID, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILNAME,
 					$this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC, $this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -1080,7 +1084,7 @@ class TrailTest extends TrailQuailTest {
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
 			$this->assertSame($pdoTrail->getSubmitTrailId(), $this->VALID_SUBMITTRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -1122,7 +1126,7 @@ class TrailTest extends TrailQuailTest {
 			$numRows = $this->getConnection()->getRowCount("trail");
 
 			//create a new trail and insert it into mySQL
-			$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 					$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -1132,7 +1136,7 @@ class TrailTest extends TrailQuailTest {
 			$pdoTrail = Trail::getTrailByCreateDate($this->getPDO(), $trail->getCreateDate());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
@@ -1174,7 +1178,7 @@ class TrailTest extends TrailQuailTest {
 			$numRows = $this->getConnection()->getRowCount("trail");
 
 			//create a new trail and insert it into mySQL
-			$trail = new Trail(null, $this->VALID_USERID, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+			$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
 					$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 					$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 					$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -1185,7 +1189,7 @@ class TrailTest extends TrailQuailTest {
 			$pdoTrail = Trail::getTrailByIpAddress($this->getPDO(), $trail->getIpAddress());
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertSame($pdoTrail->getTrailId(), $this->VALID_TRAILID);
-			$this->assertSame($pdoTrail->getUserId(), $this->VALID_USERID);
+			$this->assertSame($pdoTrail->getUserId(), $this->user->getUserId());
 			$this->assertSame($pdoTrail->getBrowser(), $this->VALID_BROWSER);
 			$this->assertSame($pdoTrail->getCreateDate(), $this->VALID_CREATEDATE);
 			$this->assertSame($pdoTrail->getIpAddress(), $this->VALID_IPADDRESS);
