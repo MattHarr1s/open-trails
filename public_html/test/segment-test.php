@@ -291,7 +291,7 @@ class SegmentTest extends TrailQuailTest{
 		$numRows = $this->getConnection()->getRowCount("segment");
 
 		//create a new segment and insert it into the database
-		$segment = new segment (null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
+		$segment = new Segment (null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 		$segment->insert($this->getPDO());
 
 		//grab the data from mySQL and verify the fields
