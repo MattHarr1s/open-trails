@@ -163,7 +163,7 @@ class CommentTest extends TrailQuailTest {
 	 */
 	public function testInsertInvalidComment() {
 		// create a comment with a non null commentId for the fail!!
-		$comment = new Comment(DataDesignTest::INVALID_KEY, $this-> VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
+		$comment = new Comment(TrailQuailTest::INVALID_KEY, $this-> VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
 		$comment->insert($this->getPDO());
 	}
 	/**
@@ -260,7 +260,7 @@ class CommentTest extends TrailQuailTest {
 		 */
 		public function testGetInvalidCommentByCommentId(){
 			// grab a comment id that exceeds the maximum allowable comment id
-			$comment = Comment::getCommentByCommentId($this->getPDO(), DataDesignTest::INVALID_KEY);
+			$comment = Comment::getCommentByCommentId($this->getPDO(), TrailQuailTest::INVALID_KEY);
 			$this->assertNull($comment);
 
 		}
@@ -277,7 +277,7 @@ class CommentTest extends TrailQuailTest {
 		$comment->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce it meets expectations
-		$pdoComment= Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
+		$pdoComment= Comment::getCommentByCommmentText($this->getPDO(), $comment->getCommentId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
 		$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
 		$this->assertSame($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
@@ -291,8 +291,8 @@ class CommentTest extends TrailQuailTest {
 	 * test grabbing a  comment by an email that does not exist
 	 *
 	 */
-	public function testGetInvalidCommentByEmail(){
-		$comment = Comment::getCommentByEmail($this->getPDO(),"homer@comcast.net");
+	public function testGetInvalidCommentByText(){
+		$comment = Comment::getCommentByCommentText($this->getPDO(),"homer@comcast.net");
 		$this->assertNull($comment);
 	}
 

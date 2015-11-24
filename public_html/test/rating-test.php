@@ -24,16 +24,94 @@ class RatingTest extends TrailQuailTest {
 	 *
 	 */
 	protected $VALID_RATINGVALUE1= "4";
-	public final function setUp() {
-		//create setup for trail
-		$this->trail = new Trail(null, "Safari", DateTime::createFromFormat("Y-m-d H:i:s", "2015-11-15 12:15:42"), "192.168.1.4", 5, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "La Luz", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
-		$this->trail->insert($this->getPDO());
 
-		//create and insert a userId to own the trail
-		$this->user =new User(null, "Chrome", "2015-11-15 09:45.30", "192.168.1.168", "S", "saul.jeff@gmail.com", null, "Hyourname.tomorrow", null);
+	/**
+	 *valid browser to use
+	 * @var string $VALID_BROWSER
+	 * @var string $VALID_BROWSER1
+	 * @var string $VALID_BROWSER2
+	 */
+	protected $VALID_BROWSER = "chrome 46.0.2490.";
+	protected $VALID_BROWSER1="firefox 41.0.2";
+	protected $VALID_BROWSER2="IE 7 shit ";
+
+
+	/**
+	 * valid create dates to use for unit testing
+	 * @var DATETIME $VALID_CREATEDATE
+	 * @var DATETIME $VALID_CREATEDATE1
+	 * @var DATETIME $VALID_CREATEDATE2
+	 */
+	protected $VALID_CREATEDATE = "2015-12-19 12:15:18";
+	protected $VALID_CREATEDATE1 = "2015-12-19 12:16:20";
+	protected $VALID_CREATEDATE2 = "2015-12-19 11:16:20";
+
+
+	/**
+	 * valid Ip Address to use for unit testing
+	 * @var string $VALID_IPADDRESS
+	 * @var string $VALID_IPADDRESS1
+	 * @var string $VALID_IPADDRESS2
+	 *
+	 */
+	protected $VALID_IPADDRESS = "2600::dead:beef:cafe";
+	protected $VALID_IPADDRESS1= "2400::dead:beef:cafe";
+	protected $VALID_IPADDRESS2 = "2700::dead:beef:cafe";
+
+	/**
+	 * @var Trail $trail
+	 * @var User $user
+	 * @var segment $segment
+	 */
+	protected $trail = null;
+	protected $user = null;
+	protected $segment = null;
+
+
+	/**
+	 * valid segment start and stop
+	 * @var point $segmentStart
+	 */
+	protected $segmentStop = null;
+	protected $segmentStart = null;
+	/**
+	 *valid user salt and hash to create a user to own the test
+	 * @var string user $hash
+	 * @var string user $salt
+	 */
+	protected $hash = null;
+	protected $salt = null;
+
+	public final function setUp() {
+		parent::setUp();
+		// necessary DateTime format to run the test
+		$this->VALID_CREATEDATE= DateTime::createFromFormat("2015-12-19 12:30:45", $this->VALID_CREATEDATE);
+
+		//create points needed for segment
+		$segmentStart = new Point(35.554, 44.546);
+		$segmentStop = new Point(35.554, 48.445);
+
+		//create new segment to use for testing
+		$this->segment = new Segment(null, $segmentStart, $segmentStop, 7565, 9800);
+
+		$this->segment->insert($this->getPDO());
+
+		//create needed dependencies to ensure user can be created to run unit testing
+		$this->salt = bin2hex(openssl_random_pseudo_bytes(32));
+		$this->hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->salt, 262144, 128);
+
+		//create a new user to use for testing
+		$this->user = new User(null, $this->VALID_BROWSER ,$this->VALID_CREATEDATE1, $this->VALID_IPADDRESS2, "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
 		$this->user->insert($this->getPDO());
 
+		// create a trail to own test
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE2, $this->VALID_IPADDRESS2, null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail ", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking","fpfyRTmt6XeE9ehEKZ5LwF");
+		$this->trail->insert($this->getPDO());
 	}
+
+
+
+
 	public function testInsertInvalidRating() {
 		//create a rating with a non null ratingId for the fail!!
 		$rating= new Rating($this->VALID_TRAILID, TrailQuailTest::INVALID_KEY, $this->VALID_RATINGVALUE);
@@ -145,10 +223,10 @@ class RatingTest extends TrailQuailTest {
 	}
 
 	/**
-	 * test grabbing a rating by ata handle that doesn't exist
+	 * test grabbing a rating by rating value
 	 */
-	public function testGetInvalidRatingByValue(){
-		$rating = Rating::geRatingByRatingValue($this->getPDO(), "@doesnotexist");
+	public function testGetInvalidRatingByTrail(){
+		$rating = Rating::getRatingValueByTrailId($this->getPDO(), "@doesnotexist");
 		$this->assertNull($rating);
 	}
 }
