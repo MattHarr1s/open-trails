@@ -319,6 +319,7 @@ class Segment implements JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 //		binds segmentStart to placeholder
+		$segmentStart = "segmentStart";
 		$parameters = array("segmentStart" => $segmentStart);
 		$statement->execute($parameters);
 
@@ -362,6 +363,7 @@ class Segment implements JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStop to placeholder
+		$segmentStop = "segmentStop";
 		$parameters = array("segmentStop" => $segmentStop);
 		$statement->execute($parameters);
 
