@@ -199,11 +199,12 @@ class SegmentTest extends TrailQuailTest{
 	/**
 	 * test grabbing a segment by segmentStart that does not exist
 	 *
+	 * @expectedException RangeException
 	 **/
 
 	public function testGetInvalidSegmentByStart(){
 		//grab a segmentStart that does not exist
-		$pdoSegments = Segment::getSegmentByStart($this->getPDO(), null);
+		$pdoSegments = Segment::getSegmentByStart($this->getPDO(), new Point(190.222, -190.222));
 		foreach($pdoSegments as $pdoSegment){
 			$this->assertNull($pdoSegment);
 		}
@@ -236,11 +237,12 @@ class SegmentTest extends TrailQuailTest{
 	/**
 	 * test grabbing a segment by segmentStop that does not exist
 	 *
+	 * @expectedException RangeException
 	 **/
 
 	public function testGetInvalidSegmentByStop(){
 		//grab a segmentStop that does not exist
-		$pdoSegments = Segment::getSegmentByStop($this->getPDO(), null);
+		$pdoSegments = Segment::getSegmentByStop($this->getPDO(), new Point(190.222, -190.222));
 		foreach($pdoSegments as $pdoSegment) {
 			$this->assertNull($pdoSegment);
 		}

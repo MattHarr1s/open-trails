@@ -312,15 +312,14 @@ class Segment implements JsonSerializable {
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStart(PDO &$pdo, $segmentStart) {
+	public static function getSegmentByStart(PDO &$pdo, Point $segmentStart) {
 
 //		create query template
-		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = :segmentStart";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = POINT(:segmentStartX, :segmentStartY)";
 		$statement = $pdo->prepare($query);
 
 //		binds segmentStart to placeholder
-		$segmentStart = "segmentStart";
-		$parameters = array("segmentStart" => $segmentStart);
+		$parameters = array("segmentStartX" => $segmentStart->getX(), "segmentStartY" => $segmentStart->getY());
 		$statement->execute($parameters);
 
 //		build an array of segments
@@ -350,21 +349,20 @@ class Segment implements JsonSerializable {
 	 * gets segment by segmentStop
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param float $segmentStop stop point to search for
+	 * @param Point $segmentStop stop point to search for
 	 * @return mixed segment found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
 	 */
-	public static function getSegmentByStop(PDO &$pdo, $segmentStop) {
+	public static function getSegmentByStop(PDO &$pdo, Point $segmentStop) {
 
 		//create query template
-		$query = "SELECT segmentId, ST_AsWKT(segmentStart) AS segmentStart, ST_AsWKT(segmentStop) AS segmentStop, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStop = :segmentStop";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStart) AS segmentStart, ST_AsWKT(segmentStop) AS segmentStop, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStop = POINT(:segmentStopX, :segmentStopY)";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStop to placeholder
-		$segmentStop = "segmentStop";
-		$parameters = array("segmentStop" => $segmentStop);
+		$parameters = array("segmentStopX" => $segmentStop->getX(), "segmentStopY" => $segmentStop->getY());
 		$statement->execute($parameters);
 
 		//build an array of segments
@@ -423,7 +421,6 @@ class Segment implements JsonSerializable {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				//new Segment ($row["segmentId"], $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
 				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
 				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
 				$segmentStartGenericObject = json_decode($segmentStartJSON);
@@ -438,7 +435,6 @@ class Segment implements JsonSerializable {
 				throw (new PDOException($e->getMessage(), 0, $e));
 			}
 		}
-
 		return ($segments);
 	}
 
@@ -453,7 +449,7 @@ class Segment implements JsonSerializable {
 	 * @throws Exception for other exception
 	 */
 	public static function getSegmentByStopElevation(PDO &$pdo, $segmentStopElevation) {
-		//santize the float before searching
+		//sanitize the int before searching
 		try {
 			$segmentStopElevation = Filter::filterInt($segmentStopElevation, "segment stop", false);
 		} catch(InvalidArgumentException $invalidArgument) {
@@ -476,7 +472,6 @@ class Segment implements JsonSerializable {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-//				new Segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
 				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
 				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
 				$segmentStartGenericObject = json_decode($segmentStartJSON);
