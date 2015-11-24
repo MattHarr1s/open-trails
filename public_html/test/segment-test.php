@@ -176,14 +176,14 @@ class SegmentTest extends TrailQuailTest{
 	 * test grabbing a segment by segmentStart
 	**/
 	public function testGetValidSegmentByStart() {
-//		count the number of rows and save it for later
+		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("segment");
 
-//		create a new segment and insert it into the database
+		//create a new segment and insert it into the database
 		$segment = new Segment (null, $this->VALID_SEGMENTSTART, $this->VALID_SEGMENTSTOP, $this->VALID_SEGMENTSTARTELEVATION, $this->VALID_SEGMENTSTOPELEVATION);
 		$segment->insert($this->getPDO());
 
-//		grab the data from mySQL and verify the fields
+		//grab the data from mySQL and verify the fields
 		$pdoSegments = Segment::getSegmentByStart($this->getPDO(), $segment->getSegmentStart());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("segment"));
 		foreach($pdoSegments as $pdoSegment) {
