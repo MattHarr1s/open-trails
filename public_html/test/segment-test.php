@@ -281,7 +281,7 @@ class SegmentTest extends TrailQuailTest{
 
 	public function testGetInvalidSegmentByStartElevation(){
 		//grab a SegmentStartElevation that does not exist
-		$segment = Segment::getSegmentByStartElevation($this->getPDO(), null);
+		$segment = Segment::getSegmentBySegmentStartElevation($this->getPDO(), null);
 		$this->assertNull($segment);
 	}
 
