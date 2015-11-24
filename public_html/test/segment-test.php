@@ -221,7 +221,7 @@ class SegmentTest extends TrailQuailTest{
 		$segment->insert($this->getPDO());
 
 		//grab the data from mySQL and verify the fields
-		$pdoSegments = Segment::getSegmentByStop($this->getPDO(), $segment->getsegmentStop());
+		$pdoSegments = Segment::getSegmentByStop($this->getPDO(), $segment->getSegmentStop());
 		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("segment"));
 		foreach($pdoSegments as $pdoSegment) {
 			$this->assertSame($pdoSegment->getSegmentStart()->getX(), $this->VALID_SEGMENTSTART->getX());
