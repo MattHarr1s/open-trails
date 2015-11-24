@@ -7,9 +7,10 @@
 			 <!-- <file>trail-test.php</file> -->
 			 <!--<file>trail-relationship-test.php</file>-->
 			<!--<file>trail-quail.php</file>-->
-			 <file>comment-test.php</file> 
+			<!-- <file>comment-test.php</file>-->
 			<!--<file>user-test.php</file>-->
-			<!--<directory suffix="-test.php">.</directory>-->
+			<file>rating-test.php</file>-->
+			<directory suffix="-test.php">.</directory>
 		</testsuite>
 	</testsuites>
 	<filter>

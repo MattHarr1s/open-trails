@@ -184,6 +184,7 @@ class RatingTest extends TrailQuailTest {
 	/**
 	 * test inserting a Rating and grabbing it from my sql
 	 */
+
 	public function testGetValidRatingByIds(){
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");

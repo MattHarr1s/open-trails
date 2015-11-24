@@ -286,7 +286,7 @@ class Rating {
 	 * @throws PDOException
 	 */
 
-	public static function getTrailRatingByTrailIdAndUserId(PDO $pdo, $trailId, $userId) {
+	public static function getRatingByTrailIdAndUserId(PDO $pdo, $trailId, $userId) {
 		// sanitize the trailId before searching
 		$trailId = filter_var($trailId, FILTER_VALIDATE_INT);
 		if($trailId === false) {
