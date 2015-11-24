@@ -403,7 +403,8 @@ class User {
 		$parameters = array("userId" => $userId);
 		$statement->execute($parameters);
 
-		// find user id information using the user's email address from mySQL
+		// find user id information using the user's user id
+		// from mySQL
 		try {
 			$user = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
@@ -514,7 +515,6 @@ class User {
 	 * get all user ID information
 	 *
 	 * @param PDO $pdo -- pointer to PDO connection, by reference
-	 * @param string $userName -- user email address
 	 * @return SplFixedArray users -- return array of user ID information if found or null if not found
 	* @throws PDOException when mySQL related errors occur
  	*

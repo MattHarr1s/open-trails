@@ -8,8 +8,8 @@ require_once(dirname(__DIR__). "/php/classes/trail-rating.php");
 /**
  * Full PHPUnit test for the trail rating class
  *
- * This is a comlete PHPUnit test of the trail rating class. it will test *all* mySQL/PDo enabled methods
- * are tested for both valid and invalid inputs
+ * This is a complete PHPUnit test of the trail rating class.
+ * *All* mySQL/PDo enabled methods are tested for both valid and invalid inputs
  */
 class RatingTest extends TrailQuailTest {
 	/**
@@ -24,6 +24,12 @@ class RatingTest extends TrailQuailTest {
 	 *
 	 */
 	protected $VALID_RATINGVALUE1= "4";
+
+	/**
+	 * invalid rating value
+	 * @var int $INVALID_RATINGVALUE= "1500000"
+	 *
+	*/
 
 	/**
 	 *valid browser to use
