@@ -285,7 +285,6 @@ class Segment implements JsonSerializable {
 			$segment = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
-
 			if($row !== false) {
 				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
 				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
@@ -313,15 +312,15 @@ class Segment implements JsonSerializable {
 	 */
 	public static function getSegmentByStart(PDO &$pdo, Point $segmentStart) {
 
-//		create query template
+		//create query template
 		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = POINT(:segmentStartX, :segmentStartY)";
 		$statement = $pdo->prepare($query);
 
-//		binds segmentStart to placeholder
+		//binds segmentStart to placeholder
 		$parameters = array("segmentStartX" => $segmentStart->getX(), "segmentStartY" => $segmentStart->getY());
 		$statement->execute($parameters);
 
-//		build an array of segments
+		//build an array of segments
 		$segments = new SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
@@ -336,7 +335,7 @@ class Segment implements JsonSerializable {
 				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
-//				if the row couldn't be converter, rethrow it
+				//if the row couldn't be converter, rethrow it
 				throw (new PDOException($e->getMessage(), 0, $e));
 			}
 		}
