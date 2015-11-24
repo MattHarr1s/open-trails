@@ -76,7 +76,7 @@ class Segment implements JsonSerializable {
 			$this->setSegmentStopElevation($newSegmentStopElevation);
 		} catch(InvalidArgumentException $invalidArgument) {
 
-			// rethrow the exception to the caller
+			//rethrow the exception to the caller
 			throw(new InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(RangeException $range) {
 
@@ -194,11 +194,11 @@ class Segment implements JsonSerializable {
 			throw(new PDOException("Not a new Segment"));
 		}
 
-		// create query template
+		//create query template
 		$query = "INSERT INTO segment(segmentStart, segmentStop, segmentStartElevation, segmentStopElevation)	VALUES (POINT(:segmentStartX, :segmentStartY), POINT(:segmentStopX, :segmentStopY), :segmentStartElevation, :segmentStopElevation)";
 		$statement = $pdo->prepare($query);
 
-		// bind the member variables to the placeholders in the template
+		//bind the member variables to the placeholders in the template
 		$parameters = array("segmentStartX" => $this->getSegmentStart()->getX(), "segmentStartY" => $this->getSegmentStart()->getY(),
 			"segmentStopX" => $this->getSegmentStop()->getX(), "segmentStopY" => $this->getSegmentStop()->getY(),
 			"segmentStartElevation" => $this->getSegmentStartElevation(), "segmentStopElevation" => $this->getSegmentStopElevation());
@@ -224,7 +224,7 @@ class Segment implements JsonSerializable {
 		$query = "DELETE FROM segment WHERE segmentId = :segmentId";
 		$statement = $pdo->prepare($query);
 
-		//Bind the member variables to the placeholders in the templates
+		//bind the member variables to the placeholders in the templates
 		$parameters = array("segmentId" => $this->getSegmentId());
 		$statement->execute($parameters);
 	}
@@ -245,7 +245,7 @@ class Segment implements JsonSerializable {
 		$query = "UPDATE segment SET segmentStart = POINT(:segmentStartX, :segmentStartY), segmentStop = POINT(:segmentStopX, :segmentStopY), segmentStartElevation = :segmentStartElevation, segmentStopElevation = :segmentStopElevation";
 		$statement = $pdo->prepare($query);
 
-		// bind the member variables to the placeholders in the template
+		//bind the member variables to the placeholders in the template
 		$parameters = array("segmentStartX" => $this->getSegmentStart()->getX(), "segmentStartY" => $this->getSegmentStart()->getY(),
 				"segmentStopX" => $this->getSegmentStop()->getX(), "segmentStopY" => $this->getSegmentStop()->getY(),
 				"segmentStartElevation" => $this->getSegmentStartElevation(), "segmentStopElevation" => $this->getSegmentStopElevation());
