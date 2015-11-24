@@ -100,8 +100,10 @@ class SegmentTest extends TrailQuailTest{
 		}
 	}
 
-	/**test inserting a segmentId that already exists
+	/**
+	 * test inserting a segmentId that already exists
 	 *
+	 * @expectedException PDOException
 	**/
 
 	public function testInsertInValidSegmentId() {
@@ -197,8 +199,7 @@ class SegmentTest extends TrailQuailTest{
 	/**
 	 * test grabbing a segment by segmentStart that does not exist
 	 *
-	 * @expectedException PDOException
-	**/
+	 **/
 
 	public function testGetInvalidSegmentByStart(){
 		//grab a segmentStart that does not exist
@@ -235,7 +236,6 @@ class SegmentTest extends TrailQuailTest{
 	/**
 	 * test grabbing a segment by segmentStop that does not exist
 	 *
-	 * @expectedException PDOException
 	 **/
 
 	public function testGetInvalidSegmentByStop(){
