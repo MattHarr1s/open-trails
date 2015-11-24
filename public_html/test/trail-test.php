@@ -130,6 +130,16 @@ class TrailTest extends TrailQuailTest {
 	protected $VALID_TRAILUUID = "SSEERFFV4444554";
 
 	/**
+	 * @var string $VALID_USERHASH
+	 */
+	protected $VALID_USERHASH = "";
+
+	/**
+	 * @var string $VALID_USERSALT
+	 */
+	protected $VALID_USERSALT = "";
+
+	/**
 	 * id for the user
 	 * @var mixed $userId
 	**/
@@ -143,21 +153,28 @@ class TrailTest extends TrailQuailTest {
 		//run the default setUp() method first
 		parent::setUp();
 
-		//create userId
-		$this->userId = 83;
+		//create and insert a datetime object
+		$this->VALID_CREATEDATE = DateTime::createFromFormat("Y-m-d H:i:s", $this->VALID_CREATEDATE);
 
 		//create browser
 		$this->VALID_BROWSER ="Safari";
+
+		$this->VALID_USERSALT = bin2hex(openssl_random_pseudo_bytes(32));
+		$this->VALID_USERHASH = $this->VALID_USERHASH = hash_pbkdf2("sha512", "password4321", $this->VALID_USERSALT, 262144, 128);
+
+		//create and insert a userId to own the trail
+		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, "192.168.1.168", "S", "louisgill5@gmail.com", $this->VALID_USERHASH, "Hyourname.tomorrow", $this->VALID_USERSALT);
+		$this->user->insert($this->getPDO());
+
 
 		//create trailName
 		$this->VALID_TRAILNAME = "La Luz";
 
 		//create and insert a userId to own the trail
-		$this->trail = new Trail(null, $this->userId, $this->VALID_BROWSER, DateTime::createFromFormat("Y-m-d H:i:s", "2015-11-15 12:15:42"), "192.168.1.4", 5, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
+		$this->trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, DateTime::createFromFormat("Y-m-d H:i:s", "2015-11-15 12:15:42"), "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, $this->VALID_TRAILNAME, 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "SSEERFFV4444554");
 		$this->trail->insert($this->getPDO());
 
-		//create and insert a datetime object
-		$this->VALID_CREATEDATE = DateTime::createFromFormat("Y-m-d H:i:s", $this->VALID_CREATEDATE);
+
 	}
 
 	/**
