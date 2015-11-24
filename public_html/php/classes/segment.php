@@ -10,6 +10,7 @@ use Symm\Gisconverter\Gisconverter;
  * The Segment class contains the following attributes:
  *
  * -segmentId, the primary key
+ *
  * -segmentStart
  * -segmentStop
  * -segmentStartElevation
@@ -195,7 +196,7 @@ class Segment implements JsonSerializable {
 
 		// create query template
 		$query = "INSERT INTO segment(segmentStart, segmentStop, segmentStartElevation, segmentStopElevation)
-		VALUES(POINT(:segmentStartX, :segmentStartY), POINT(:segmentStopX, :segmentStopY), :segmentStartElevation, :segmentStopElevation)";
+		VALUES (POINT(:segmentStartX, :segmentStartY), POINT(:segmentStopX, :segmentStopY), :segmentStartElevation, :segmentStopElevation)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
@@ -242,8 +243,7 @@ class Segment implements JsonSerializable {
 		}
 
 		//create query table
-		$query = "UPDATE segment SET segmentStart = (POINT(:segmentStartX, :segmentStartY), segmentStop = POINT(:segmentStopX, :segmentStopY),
-segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentStopElevation";
+		$query = "UPDATE segment SET segmentStart = POINT(:segmentStartX, :segmentStartY), segmentStop = POINT(:segmentStopX, :segmentStopY), segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentStopElevation";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
@@ -327,7 +327,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = :segmentStart";
 		$statement = $pdo->prepare($query);
 
-		binds segmentStart to placeholder
+//		binds segmentStart to placeholder
 		$segmentStart = "segmentStart";
 		$parameters = array("segmentStart" => $segmentStart);
 		$statement->execute($parameters);
@@ -337,7 +337,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				 new Segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
+				 new Segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
 				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
 				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
 				$segmentStartGenericObject = json_decode($segmentStartJSON);
@@ -345,7 +345,6 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 				$segmentStart = new Point($segmentStartGenericObject->coordinates[0], $segmentStartGenericObject->coordinates[1]);
 				$segmentStop = new Point($segmentStopGenericObject->coordinates[0], $segmentStopGenericObject->coordinates[1]);
 				$segment = new Segment($row["segmentId"], $segmentStart, $segmentStop, $row["segmentStartElevation"], $row["segmentStopElevation"]);
-
 				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
@@ -392,8 +391,14 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segment = new Segment($row ["segmentId"], $segmentStart, $segmentStop, $row["segmentStartElevation"], $row["segmentStopElevation"]);
+//				new Segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
+				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
+				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
+				$segmentStartGenericObject = json_decode($segmentStartJSON);
+				$segmentStopGenericObject = json_decode($segmentStopJSON);
+				$segmentStart = new Point($segmentStartGenericObject->coordinates[0], $segmentStartGenericObject->coordinates[1]);
+				$segmentStop = new Point($segmentStopGenericObject->coordinates[0], $segmentStopGenericObject->coordinates[1]);
+				$segment = new Segment($row["segmentId"], $segmentStart, $segmentStop, $row["segmentStartElevation"], $row["segmentStopElevation"]);
 				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
@@ -426,7 +431,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		}
 
 		//create query template
-		$query = "SELECT segmentId, segmentStop, segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStartElevation = :segmentStartElevation ";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStart) AS segmentStart, ST_AsWKT(segmentStop) AS segmentStop, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStartElevation = :segmentStartElevation";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStartElevation to placeholder
@@ -438,8 +443,14 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+				//new Segment ($row["segmentId"], $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
+				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
+				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
+				$segmentStartGenericObject = json_decode($segmentStartJSON);
+				$segmentStopGenericObject = json_decode($segmentStopJSON);
+				$segmentStart = new Point($segmentStartGenericObject->coordinates[0], $segmentStartGenericObject->coordinates[1]);
+				$segmentStop = new Point($segmentStopGenericObject->coordinates[0], $segmentStopGenericObject->coordinates[1]);
+				$segment = new Segment($row["segmentId"], $segmentStart, $segmentStop, $row["segmentStartElevation"], $row["segmentStopElevation"]);
 				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
@@ -473,7 +484,7 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 			throw (new Exception($exception->getMessage(), 0, $exception));
 		}
 		//create query template
-		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation, FROM segment WHERE segmentStopElevation LIKE :segmentStopElevation";
+		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStopElevation = :segmentStopElevation";
 		$statement = $pdo->prepare($query);
 
 		//binds segmentStopElevation to placeholder
@@ -485,8 +496,14 @@ segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentS
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				// new segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation)
-				$segment = new Segment($row ["segmentId"], $row["segmentStart"], $row["segmentStop"], $row["segmentStartElevation"], $row["segmentStopElevation"]);
+//				new Segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
+				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
+				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
+				$segmentStartGenericObject = json_decode($segmentStartJSON);
+				$segmentStopGenericObject = json_decode($segmentStopJSON);
+				$segmentStart = new Point($segmentStartGenericObject->coordinates[0], $segmentStartGenericObject->coordinates[1]);
+				$segmentStop = new Point($segmentStopGenericObject->coordinates[0], $segmentStopGenericObject->coordinates[1]);
+				$segment = new Segment($row["segmentId"], $segmentStart, $segmentStop, $row["segmentStartElevation"], $row["segmentStopElevation"]);
 				$segments[$segments->key()] = $segment;
 				$segments->next();
 			} catch(Exception $e) {
