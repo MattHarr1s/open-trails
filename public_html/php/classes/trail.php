@@ -505,7 +505,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid) VALUES (:trailId, :userId, :bro
 	public function delete(PDO &$pdo) {
 		//make sure this trail already exists
 		if($this->getTrailId() === null) {
-			throw(new PDOException("Unable to delete a restaurant that does not exist"));
+			throw(new PDOException("Unable to delete a trail that does not exist"));
 		}
 
 		//create query template
