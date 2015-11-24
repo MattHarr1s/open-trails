@@ -48,7 +48,7 @@ class SegmentTest extends TrailQuailTest{
 		 *
 		 * @var int $segmentStartElevation2
 		 **/
-	protected $VALID_SEGMENTSTARTELEVATION2 = 5285;
+	protected $VALID_SEGMENTSTARTELEVATION2 = 5785;
 
 	/**
 	 * valid elevation at segment end point
