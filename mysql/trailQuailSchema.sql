@@ -47,7 +47,7 @@ CREATE TABLE trail (
 	trailTerrain VARCHAR (128) NULL,
 	trailTraffic VARCHAR (48) NOT NULL,
 	trailUse VARCHAR (64) NULL,
-	trailUuid VARCHAR (36) UNIQUE NULL,
+	trailUuid CHAR (22) UNIQUE NULL,
 	INDEX (submitTrailId),
 	INDEX (userId),
 	FOREIGN KEY (submitTrailId) REFERENCES trail (trailId),
@@ -91,4 +91,3 @@ CREATE TABLE trailRelationship (
 	FOREIGN KEY (trailId) REFERENCES trail (trailId),
 	FOREIGN KEY (segmentId) REFERENCES segment (segmentId)
 );
-

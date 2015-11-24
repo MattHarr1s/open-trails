@@ -15,37 +15,40 @@ require_once(dirname(__DIR__). "/php/classes/autoload.php");
  * @authur george Kephart <gkephart@cnm.eduu>
  */
 class CommentTest extends TrailQuailTest {
+
 	/**
 	 *valid browser to use
 	 * @var string $VALID_BROWSER
-	 */
-	protected $VALID_BROWSER = "chrome 46.0.2490.";
-	/**
-	 *valid browser to use
+	 * @var string $VALID_BROWSER1
 	 * @var string $VALID_BROWSER2
 	 */
-	protected $VALID_BROWSER2="firefox 41.0.2";
+	protected $VALID_BROWSER = "chrome 46.0.2490.";
+	protected $VALID_BROWSER1="firefox 41.0.2";
+	protected $VALID_BROWSER2="IE 7 shit ";
+
 
 	/**
-	 * valid create date to use
+	 * valid create dates to use for unit testing
 	 * @var DATETIME $VALID_CREATEDATE
+	 * @var DATETIME $VALID_CREATEDATE1
+	 * @var DATETIME $VALID_CREATEDATE2
 	 */
 	protected $VALID_CREATEDATE = "2015-12-19 12:15:18";
-	/**
-	 * valid create date to use
-	 * @var DATETIME $VALID_CREATEDATE1
-	 */
 	protected $VALID_CREATEDATE1 = "2015-12-19 12:16:20";
+	protected $VALID_CREATEDATE2 = "2015-12-19 11:16:20";
+
+
 	/**
-	 * valid Ip Address to use
+	 * valid Ip Address to use for unit testing
 	 * @var string $VALID_IPADDRESS
+	 * @var string $VALID_IPADDRESS1
+	 * @var string $VALID_IPADDRESS2
+	 *
 	 */
 	protected $VALID_IPADDRESS = "2600::dead:beef:cafe";
-	/**
-	 * valid Ip Address to use
-	 * @var string $VALID_IPADDRESS1
-	 */
 	protected $VALID_IPADDRESS1= "2400::dead:beef:cafe";
+	protected $VALID_IPADDRESS2 = "2700::dead:beef:cafe";
+
 	/**
 	 * valid comment photo path
 	 * @var string $VALID_COMMENTPHOTO
@@ -123,13 +126,13 @@ class CommentTest extends TrailQuailTest {
 		$this->hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->salt, 262144, 128);
 
 		//create a new user to use for testing
-		$this->user = new User(null, $this->VALID_BROWSER ,$this->VALID_CREATEDATE, "192.168.1.4,", "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
+		$this->user = new User(null, $this->VALID_BROWSER ,$this->VALID_CREATEDATE1, $this->VALID_IPADDRESS2, "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
 		$this->user->insert($this->getPDO());
 
 
 
 		// create a trail to own test
-		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE, "192.168.1.4", null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail ", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking",null);
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE2, $this->VALID_IPADDRESS2, null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail ", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking","fpfyRTmt6XeE9ehEKZ5LwF");
 		$this->trail->insert($this->getPDO());
 	}
 	/**

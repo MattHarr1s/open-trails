@@ -214,7 +214,7 @@ class Segment implements JsonSerializable {
 	 * @param PDO $pdo pointer to PDO connection.
 	 * @throws PDOException when mySQL related errors occur
 	 */
-	public function delete(PDO &$pdo) {
+	public function delete(PDO $pdo) {
 		//make sure this segment already exists
 		if($this->segmentId === null) {
 			throw(new PDOException("unable to delete a segment that does not exist"));
