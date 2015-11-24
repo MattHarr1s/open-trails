@@ -243,7 +243,7 @@ class Segment implements JsonSerializable {
 		}
 
 		//create query table
-		$query = "UPDATE segment SET segmentStart = POINT(:segmentStartX, :segmentStartY), segmentStop = POINT(:segmentStopX, :segmentStopY), segmentStartElevation = :segmentStartElevation, SegmentStopElevation = :segmentStopElevation";
+		$query = "UPDATE segment SET segmentStart = POINT(:segmentStartX, :segmentStartY), segmentStop = POINT(:segmentStopX, :segmentStopY), segmentStartElevation = :segmentStartElevation, segmentStopElevation = :segmentStopElevation";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the placeholders in the template
@@ -313,15 +313,6 @@ class Segment implements JsonSerializable {
 	 * @throws Exception for other exception
 	 */
 	public static function getSegmentByStart(PDO &$pdo, $segmentStart) {
-//		sanitize the float before searching
-//		try {
-//			$segmentStart = $segmentStart; //
-//		} catch (InvalidArgumentException $invalidArgument) {
-//			throw(new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-//		} catch (RangeException $range) {
-//			throw (new RangeException($range->getMessage(), 0, $range ));
-//		} catch  (Exception $exception) {
-//			throw (new Exception($exception->getMessage(), 0 ,$exception));
 
 //		create query template
 		$query = "SELECT segmentId, ST_AsWKT(segmentStop) AS segmentStop, ST_AsWKT(segmentStart) AS segmentStart, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStart = :segmentStart";
@@ -337,7 +328,6 @@ class Segment implements JsonSerializable {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				 new Segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
 				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
 				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
 				$segmentStartGenericObject = json_decode($segmentStartJSON);
@@ -367,16 +357,7 @@ class Segment implements JsonSerializable {
 	 * @throws Exception for other exception
 	 */
 	public static function getSegmentByStop(PDO &$pdo, $segmentStop) {
-		//sanitize the float before searching
-//		try {
-//			$segmentStop =  $segmentStop;
-//		} catch (InvalidArgumentException $invalidArgument) {
-//			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-//		} catch (RangeException $range){
-//			throw (new RangeException ($range->getMessage(), 0, $range));
-//		} catch (Exception $exception) {
-//			throw (new Exception($exception->getMessage(),0,$exception));
-//		}
+
 		//create query template
 		$query = "SELECT segmentId, ST_AsWKT(segmentStart) AS segmentStart, ST_AsWKT(segmentStop) AS segmentStop, segmentStartElevation, segmentStopElevation FROM segment WHERE segmentStop = :segmentStop";
 		$statement = $pdo->prepare($query);
@@ -391,7 +372,6 @@ class Segment implements JsonSerializable {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-//				new Segment ($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
 				$segmentStartJSON = Gisconverter::wktToGeojson($row["segmentStart"]);
 				$segmentStopJSON = Gisconverter::wktToGeojson($row["segmentStop"]);
 				$segmentStartGenericObject = json_decode($segmentStartJSON);
