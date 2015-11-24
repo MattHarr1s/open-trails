@@ -578,12 +578,9 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailId = :trai
 			$trail = null;
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
-
 			if($row !== false) {
 				//new trail ($trailId, $userId, $submitTrailId, $browser, $createDate, $ipAddress, $trailAccessibility, $trailAmenities, $trailCondition,$trailDescription, $trailDifficulty, $trailDistance, $trailSubmissionType,$trailTerrain, $trailName, $trailTraffic, $trailUse, $trailUuId)
-				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"],
-						$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"],
-						$row["trailUse"], $row["trailUuid"]);
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAccessibility"], $row["trailAmenities"], $row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmission"], $row["trailTerrain"], $row["trailTraffic"], $row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 				}
