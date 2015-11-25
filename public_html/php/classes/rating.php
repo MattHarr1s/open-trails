@@ -158,11 +158,11 @@ class Rating {
 	 */
 	public function insert(PDO $pdo){
 		// check to see that the trailId and userId are not null
-		if($this->trailId !== null) {
-			throw(new PDOException("not a new rating; trail id has been used"));
+		if($this->trailId === null) {
+			throw(new PDOException("failed insertion; invalid trail id used"));
 		}
-		if($this->userId !== null) {
-			throw(new PDOException("not a new rating; user id has been used"));
+		if($this->userId === null) {
+			throw(new PDOException("ailed insertion; invalid user id used"));
 		}
 
 		//create query template
@@ -191,11 +191,11 @@ class Rating {
 		}
 
 		// create query template
-		$query = "DELETE FROM rating  WHERE trailId = :tralId and  userId = :userId";
+		$query = "DELETE FROM rating  WHERE trailId = :trailId and  userId = :userId";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder in the template
-		$parameters = ["trailId"=>$this->trailId, "userId"=>$this->userId ];
+		$parameters = ["trailId"=>$this->trailId, "userId"=>$this->userId,];
 		$statement->execute($parameters);
 	}
 
@@ -289,8 +289,8 @@ class Rating {
 		$statement->execute($parameters);
 
 		// build an array of trail ratings
-		$rating = new SPLFixedArray($statement->rowcount());
-		$statement->getFetchMode(PDO::FETCH_ASSOC);
+		$ratings = new SPLFixedArray($statement->rowcount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$rating = new Rating($row["trailId"], $row["userId"], $row["ratingValue"]);

@@ -19,23 +19,23 @@ class RatingTest extends TrailQuailTest {
 	 * valid rating value
 	 * @var int $VALID_RATINGVALUE
 	 */
-	protected $VALID_RATINGVALUE = "5";
+	protected $VALID_RATINGVALUE = 5;
 
 	/**
 	 * valid second rating value
 	 * @var int $VALID_RATINGVALUE1
 	 */
-	protected $VALID_RATINGVALUE1 = "4";
+	protected $VALID_RATINGVALUE1 = 4;
 
 	/**
 	* invalid rating values
-	 * @var int $INVALID_RATINGVALUE
+	 * @var int $INVALID_RATINGVALUE1
 	*/
 	protected $INVALID_RATINGVALUE1 = "A";
 
 	/**
 	 * invalid second rating value
-	 * @var int $INVALID_RATINGVALUE
+	 * @var int $INVALID_RATINGVALUE2
 	 */
 	protected $INVALID_RATINGVALUE2 = 8;
 
@@ -121,7 +121,7 @@ class RatingTest extends TrailQuailTest {
 		$this->hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->salt, 262144, 128);
 
 		//create a new user to use for testing
-		$this->user = new User(null, $this->VALID_BROWSER,$this->VALID_CREATEDATE, $this->VALID_IPADDRESS, "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
+		$this->user = new User(null, $this->VALID_BROWSER,$this->VALID_CREATEDATE, $this->VALID_IPADDRESS, "S", "bootboo@trex.com", $this->hash, "george kephart", $this->salt);
 		$this->user->insert($this->getPDO());
 
 		// create a trail to own test
@@ -166,18 +166,21 @@ class RatingTest extends TrailQuailTest {
 		// grab the data from mysql and enforce the fields meet expectation;
 		$pdoRating = Rating::getRatingByTrailIdAndUserId($this->getPDO(), $this->trail->getTrailId(), $this->user->getUserId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("rating"));
-		$this->assertSame($pdoRating->getRatingVale(), $this->VALID_RATINGVALUE1);
-
+		$this->assertSame($pdoRating->getTrailId(), $rating->getTrailId());
+		$this->assertSame($pdoRating->getUserId(), $rating->getUserId());
+		$this->assertSame($pdoRating->getRatingValue(), $this->VALID_RATINGVALUE1);
 	}
+
 	/**
 	 * test updating a rating that doesn't exist
 	 *
-	 * @expectedException PDOException
+	 * @expectedException InvalidArgumentException
 	 */
 	public function testUpdateInvalidRating() {
 		// create a rating then try and insert it for the fail.
-		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE);
-		$rating->insert($this->getPDO());
+		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->INVALID_RATINGVALUE1);
+		$rating->update($this->getPDO());
+
 	}
 	/**
 	 * test creating a rating then deleting it
@@ -201,16 +204,6 @@ class RatingTest extends TrailQuailTest {
 	}
 
 	/**
-	 * test deleting a rating that does not exist
-	 *
-	 * @expectedException pdoException
-	 */
-	public function testDeleteInvalidRating() {
-		// create a Rating and try to delete it without actually inserting it
-		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE);
-		$rating->delete($this->getPDO());
-	}
-	/**
 	 * test inserting a Rating and grabbing it from my sql
 	 */
 
@@ -225,16 +218,17 @@ class RatingTest extends TrailQuailTest {
 		//grab the data from mySQL and enforce the fields match expectations
 		$pdoRating = Rating::getRatingByTrailIdAndUserId($this->getPDO(),$this->trail->getTrailId(), $this->user->getUserId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("rating"));
-		$this->assertSame($pdoRating->getAtHandle(), $this->VALID_RATINGVALUE);
+		$this->assertSame($pdoRating->getRatingValue(), $this->VALID_RATINGVALUE);
 	}
 	/**
 	 * test grabbing a rating that does not exist
 	 */
 	public function testGetInvalidRatingByIds() {
 		//grab a rating value that exceeds the maximum allowable id's
-		$rating = Rating::getRatingByTrailIdAndUserId($this->getPDO(), TrailQuailTest::INVALID_KEY);
+		$rating = Rating::getRatingByTrailIdAndUserId($this->getPDO(), TrailQuailTest::INVALID_KEY,TrailQuailTest::INVALID_KEY);
 		$this->assertNull($rating);
 	}
+
 	/**
 	 * test inserting a Rating and grabbing it from my sql
 	 */
@@ -243,19 +237,23 @@ class RatingTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("rating");
 
 		// create a new rating and insert it into my sql
-		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALIDRATINGVALUE);
+		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE);
 		$rating->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match expectations
-		$pdoRating = Rating::getTrailRatingByTrailId($this->getPDO(), $this->trail->getTrailId());
-		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("rating"));
-		$this->assertSame($pdoRating->getRating(), $this->VALID_RATINGVALUE);
+		$pdoRatings = Rating::getRatingValueByTrailId($this->getPDO(), $this->trail->getTrailId());
+		foreach ($pdoRatings as $pdoRating) {
+			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("rating"));
+			$this->assertSame($pdoRating->getRatingValue(), $this->VALID_RATINGVALUE);
+		}
 	}
 
 	/**
-	 * test grabbing a rating by rating value
+	 * test grabbing a rating by trail Id
+	 *
+	 * @expectedException PDOException
 	 */
-	public function testGetInvalidRatingByTrail(){
+	public function testGetInvalidRatingByTrailId(){
 		$rating = Rating::getRatingValueByTrailId($this->getPDO(), "@doesnotexist");
 		$this->assertNull($rating);
 	}
