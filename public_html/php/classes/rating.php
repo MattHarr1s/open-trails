@@ -123,31 +123,33 @@ class Rating {
 	public function getRatingValue() {
 		return $this->ratingValue;
 	}
-		/**
-		 * mutator method for rating value
-		 *
-		 * @param int $newRatingValue - new value of the user rating
-		 * @throws InvalidArgumentException if $newRatingValue is not an integer or positive
-		 * @throws RangeException if $newRating value is not positive
-		 */
-		public function setRatingValue ($newRatingValue){
-			// verify the rating value is an integer
-			$newRatingValue = filter_var($newRatingValue, FILTER_VALIDATE_INT);
-			if ($newRatingValue === false) {
-				throw(new InvalidArgumentException("rating value is not a valid integer"));
+
+	/**
+	 * mutator method for rating value
+	 *
+	 * @param int $newRatingValue - new value of the user rating
+	 * @throws InvalidArgumentException if $newRatingValue is not an integer or positive
+	 * @throws RangeException if $newRating value is not positive
+	 */
+	public function setRatingValue ($newRatingValue){
+		// verify the rating value is an integer
+		$newRatingValue = filter_var($newRatingValue, FILTER_VALIDATE_INT);
+		if ($newRatingValue === false) {
+			throw(new InvalidArgumentException("rating value is not a valid integer"));
 			}
 
-			// verify the rating value value is positive and less than 6
-			if($newRatingValue <=0){
-				throw(new RangeException("rating value is not positive"));
-			}
-			elseif($newRatingValue > 5) {
-				throw(new RangeException("rating value is too large"));
-			}
-
-			// convert and store the rating value
-			$this->ratingValue = intval($newRatingValue);
+		// verify the rating value value is positive and less than 6
+		if($newRatingValue <=0){
+			throw(new RangeException("rating value is not positive"));
 		}
+		elseif($newRatingValue > 5) {
+			throw(new RangeException("rating value is too large"));
+		}
+
+		// convert and store the rating value
+		$this->ratingValue = intval($newRatingValue);
+	}
+
 	/**
 	 * inserts this rating into mySQL
 	 *
@@ -164,7 +166,7 @@ class Rating {
 		}
 
 		//create query template
-		$query = "INSERT INTO trailRating(trailId, userId, ratingValue) VALUES(:trailId, :userId, :ratingValue) ";
+		$query = "INSERT INTO rating(trailId, userId, ratingValue) VALUES(:trailId, :userId, :ratingValue) ";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder
@@ -219,6 +221,7 @@ class Rating {
 		$parameters = ["trailId"=>$this->trailId, "userId"=>$this->userId, "ratingValue"=>$this->ratingValue];
 		$statement->execute($parameters);
 	}
+
 	/**
 	 * gets rating from rating value
 	 *
@@ -329,7 +332,7 @@ class Rating {
 		}
 
 		//create query template
-		$query = "SELECT trailId, userId, ratingValue FROM Rating WHERE trailId = :trailId AND userId = :userId";
+		$query = "SELECT trailId, userId, ratingValue FROM rating WHERE trailId = :trailId AND userId = :userId";
 		$statement = $pdo->prepare($query);
 
 		//bind the trailId and UserId to the placeholder in the template
@@ -360,7 +363,7 @@ class Rating {
 	 */
 	public static  function getAllRatings(PDO $pdo) {
 		//create query template
-		$query = "select trailId, userId, trailRating FROM rating";
+		$query = "select trailId, userId, rating FROM rating";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 

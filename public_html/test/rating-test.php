@@ -121,13 +121,13 @@ class RatingTest extends TrailQuailTest {
 		$this->hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->salt, 262144, 128);
 
 		//create a new user to use for testing
-		$user = new User(null, $this->VALID_BROWSER ,$this->VALID_CREATEDATE, $this->VALID_IPADDRESS, "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
-		$user->insert($this->getPDO());
+		$this->user = new User(null, $this->VALID_BROWSER,$this->VALID_CREATEDATE, $this->VALID_IPADDRESS, "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
+		$this->user->insert($this->getPDO());
 
 		// create a trail to own test
 		// Trail(trailId, userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailConditions,
-		$trail = new Trail(null, $this->$user[userId]->getUserId(), "Safari", $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail ", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking","fpfyRTmt6XeE9ehEKZ5LwF");
-		$trail->insert($this->getPDO());
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking","fpfyRTmt6XeE9ehEKZ5LwF");
+		$this->trail->insert($this->getPDO());
 	}
 
 /**
@@ -147,25 +147,25 @@ class RatingTest extends TrailQuailTest {
 
 
 	/**
-	 *test inserting rating  editing it, then updating it
+	 *test inserting rating,  editing it, then updating it
 	 *
 	 *grabs the data from mySQL via getRatingByTrailId
 	 */
-	public function testUpdateValidRatingByTrailId() {
+	public function testUpdateValidRatingByIds() {
 		//count the numbers of rows and save it
 		$numRows = $this->getConnection()->getRowCount("rating");
 
 		//create a new rating and inserting it into mysql
 		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE);
-		$rating->update($this->getPDO());
+		$rating->insert($this->getPDO());
 
 		//edit the rating and and update it into
 		$rating->setRatingValue($this->VALID_RATINGVALUE1);
 		$rating->update($this->getPDO());
 
 		// grab the data from mysql and enforce the fields meet expectation;
-		$pdoRating = Rating::getRatingByTrailIdAndUserId($this->getPDO(), $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE1);
-		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		$pdoRating = Rating::getRatingByTrailIdAndUserId($this->getPDO(), $this->trail->getTrailId(), $this->user->getUserId());
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$this->assertSame($pdoRating->getRatingVale(), $this->VALID_RATINGVALUE1);
 
 	}
@@ -183,14 +183,14 @@ class RatingTest extends TrailQuailTest {
 	 * test creating a rating then deleting it
 	 */
 	public function testDeleteValidRating() {
-		$numRows = $this->getConnection()->getRowCount("profile");
+		$numRows = $this->getConnection()->getRowCount("rating");
 
 		// create a new rating and insert it into mySQL
-		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_IPADDRESS);
+		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE);
 		$rating->insert($this->getPDO());
 
 		// delete the user from mysql
-		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$rating->delete($this->getPDO());
 
 		// grab the data from mysql and enforce the fields meet expectation;
@@ -207,7 +207,7 @@ class RatingTest extends TrailQuailTest {
 	 */
 	public function testDeleteInvalidRating() {
 		// create a Rating and try to delete it without actually inserting it
-		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALIDRATINGVALUE);
+		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE);
 		$rating->delete($this->getPDO());
 	}
 	/**
@@ -216,10 +216,10 @@ class RatingTest extends TrailQuailTest {
 
 	public function testGetValidRatingByIds(){
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("profile");
+		$numRows = $this->getConnection()->getRowCount("rating");
 
 		// create a new rating and insert it into my sql
-		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALIDRATINGVALUE);
+		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE);
 		$rating->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match expectations
@@ -240,7 +240,7 @@ class RatingTest extends TrailQuailTest {
 	 */
 	public function testGetValidRatingByTrail() {
 		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("profile");
+		$numRows = $this->getConnection()->getRowCount("rating");
 
 		// create a new rating and insert it into my sql
 		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALIDRATINGVALUE);
