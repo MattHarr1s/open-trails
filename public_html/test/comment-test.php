@@ -162,7 +162,7 @@ class CommentTest extends TrailQuailTest {
 	 */
 	public function testInsertInvalidComment() {
 		// create a comment with a non null commentId for the fail!!
-		$comment = new Comment(TrailQuailTest::INVALID_KEY, $this-> VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
+		$comment = new Comment(TrailQuailTest::INVALID_KEY, $this->trail->getTrailId(), $this->user->getUserId(), $this-> VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
 		$comment->insert($this->getPDO());
 	}
 	/**
