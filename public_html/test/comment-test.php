@@ -63,12 +63,12 @@ class CommentTest extends TrailQuailTest {
 	 * valid comment photo type
 	 * @var string $VALID_COMMENTPHOTOTYPE
 	 */
-	protected $VALID_COMMENTPHOTOTYPE ="jpeg";
+	protected $VALID_COMMENTPHOTOTYPE ="image/jpeg";
 	/**
 	 * valid comment photo type
 	 * @var string $VALID_COMMENTPHOTOTYPE1
 	 */
-	protected $VALID_COMMENTPHOTOTYPE1 ="png";
+	protected $VALID_COMMENTPHOTOTYPE1 ="image/png";
 	/**
 	 * valid comment text
 	 * @var string $VALID_COMMENTTEXT
@@ -89,6 +89,7 @@ class CommentTest extends TrailQuailTest {
 	protected $segment = null;
 
 
+
 	/**
 	 * valid segment start and stop
 	 * @var point $segmentStart
@@ -104,13 +105,15 @@ class CommentTest extends TrailQuailTest {
 	protected $salt = null;
 
 
+
 	/**
 	 * create various functions to run unit test
 	 */
-	public final function setUp() {
+	public function setUp() {
 		parent::setUp();
 		// necessary DateTime format to run the test
 		$this->VALID_CREATEDATE = DateTime::createFromFormat("Y-m-d H:i:s", $this->VALID_CREATEDATE);
+
 		//create points needed for segment
 		$segmentStart = new Point(35.554, 44.546);
 		$segmentStop = new Point(35.554, 48.445);
@@ -162,7 +165,7 @@ class CommentTest extends TrailQuailTest {
 	 */
 	public function testInsertInvalidComment() {
 		// create a comment with a non null commentId for the fail!!
-		$comment = new Comment(TrailQuailTest::INVALID_KEY, $this->trail->getTrailId(), $this->user->getUserId(), $this-> VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
+		$comment = new Comment(TrailQuailTest::INVALID_KEY,$this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
 		$comment->insert($this->getPDO());
 	}
 	/**
@@ -177,7 +180,7 @@ class CommentTest extends TrailQuailTest {
 		$comment->insert($this->getPDO());
 
 		//edit the profile and update it in mySQL
-		$comment->setComment($this->VALID_COMMENTTEXT1);
+		$comment->setCommentText($this->VALID_COMMENTTEXT1);
 		$comment->update($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match expectations
@@ -198,7 +201,7 @@ class CommentTest extends TrailQuailTest {
 	public function testUpdateInvalidComment() {
 		// create a Comment and try to update without actually inserting it
 		$comment= new Comment(null, $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
-		$comment->insert($this->getPDO());
+		$comment->update($this->getPDO());
 	}
 
 	/**
@@ -222,7 +225,7 @@ class CommentTest extends TrailQuailTest {
 		$this->assertSame($numRows, $this->getConnection()->getRowCount("comment"));
 	}
 	/**
-	 * test deleting a profile that doesn't exist
+	 * test deleting a comment that doesn't exist
 	 *
 	 * @expectedException InvalidArgumentException
 	 */

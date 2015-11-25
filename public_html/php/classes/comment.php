@@ -235,7 +235,7 @@ class Comment {
 	public function setCommentPhotoType($newCommentPhotoType) {
 		//verify the photo file type is supported
 		$goodFileType = ["image/png", "image/jpeg"];
-		if(in_array($goodFileType, $newCommentPhotoType) === false) {
+		if(in_array($newCommentPhotoType ,$goodFileType) === false) {
 			throw (new InvalidArgumentException("comment photo file type not supported"));
 		}
 		// store the comment photo type
@@ -373,7 +373,7 @@ class Comment {
 
 		//bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
-		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, ["ipAddress" => $this->ipAddress], "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this->commentText];
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this->commentText];
 		$statement->execute($parameters);
 
 		// update the null tweetId with what mySqL juat gave us
@@ -437,7 +437,7 @@ class Comment {
 			throw(new PDOException("comment text is invalid"));
 		}
 		//create query template
-		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText FROM comment WHERE tweetContent LIKE :tweetContent";
+		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText FROM comment WHERE commentText LIKE :commentText";
 		$statement = $pdo->prepare($query);
 
 		// bind the tweet content to the place holder in the template
@@ -451,7 +451,7 @@ class Comment {
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$comment = new Comment($row["commentId"], $row["trailId"],$row["userId"], $row["browserType"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"] );
-				$comments [$comments->key()] = $comment;
+				$comments[$comments->key()] = $comment;
 				$comments->next();
 			} catch(Exception $exception) {
 				// if the couldn't be converted rethrow it
@@ -462,7 +462,7 @@ class Comment {
 	}
 
 	/**
-	 * gets the comment by comment text
+	 * gets the comment by comment Id
 	 *
 	 * @param PDO $pdo connection object
 	 * @param int $commentId comment id to search for

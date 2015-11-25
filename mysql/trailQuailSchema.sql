@@ -11,7 +11,7 @@ CREATE TABLE segment(
 	segmentStart POINT NOT NULL,
 	segmentStop POINT NOT NULL,
 	segmentStartElevation MEDIUMINT  NOT NULL,
-	SegmentStopElevation MEDIUMINT NOT NULL,
+	segmentStopElevation MEDIUMINT NOT NULL,
 	PRIMARY KEY (segmentId)
 );
 
