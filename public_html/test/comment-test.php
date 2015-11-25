@@ -194,7 +194,7 @@ class CommentTest extends TrailQuailTest {
 	/**
 	 *test updating a Comment that doesn't exist
 	 *
-	 * @expectedException PDOException
+	 * @expectedException InvalidArgumentException
 	 */
 	public function testUpdateInvalidComment() {
 		// create a Comment and try to update without actually inserting it
@@ -225,7 +225,7 @@ class CommentTest extends TrailQuailTest {
 	/**
 	 * test deleting a profile that doesn't exist
 	 *
-	 * @expectedException PDOException
+	 * @expectedException InvalidArgumentException
 	 */
 	public function testDeleteInvalidComment (){
 		// create a comment and than try deleting it without submitting it to mySQL
