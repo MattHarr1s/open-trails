@@ -15,7 +15,7 @@ class Comment {
 	use AntiAbuse;
 	/**
 	 *id for this comment; this is a primary key
-	 * @var int $tweetId
+	 * @var int $commentId
 	 */
 	private $commentId;
 	/**
