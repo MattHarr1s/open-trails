@@ -1,97 +1,111 @@
 <?php
 // grab the project test parameters
 require_once("trail-quail.php");
+require_once(dirname(__DIR__) . "/php/classes/autoload.php");
 
 //class being tested
-require_once(dirname(__DIR__). "/php/classes/trail-rating.php");
+//require_once(dirname(__DIR__). "/php/classes/rating.php");
 
 /**
  * Full PHPUnit test for the trail rating class
  *
  * This is a complete PHPUnit test of the trail rating class.
  * *All* mySQL/PDo enabled methods are tested for both valid and invalid inputs
+ * @author George Kephart <gkephart@gmail.com>
+ * with help from Jeff saul <scaleup13@gmail.com>
  */
 class RatingTest extends TrailQuailTest {
 	/**
 	 * valid rating value
 	 * @var int $VALID_RATINGVALUE
-	 *
 	 */
 	protected $VALID_RATINGVALUE = "5";
+
 	/**
 	 * valid second rating value
 	 * @var int $VALID_RATINGVALUE1
-	 *
 	 */
-	protected $VALID_RATINGVALUE1= "4";
+	protected $VALID_RATINGVALUE1 = "4";
 
 	/**
-	 * invalid rating value
-	 * @var int $INVALID_RATINGVALUE= "1500000"
-	 *
+	* invalid rating values
+	 * @var int $INVALID_RATINGVALUE
 	*/
+	protected $INVALID_RATINGVALUE1 = "A";
 
 	/**
-	 *valid browser to use
-	 * @var string $VALID_BROWSER
-	 * @var string $VALID_BROWSER1
-	 * @var string $VALID_BROWSER2
+	 * invalid second rating value
+	 * @var int $INVALID_RATINGVALUE
 	 */
-	protected $VALID_BROWSER = "chrome 46.0.2490.";
-	protected $VALID_BROWSER1="firefox 41.0.2";
-	protected $VALID_BROWSER2="IE 7 shit ";
+	protected $INVALID_RATINGVALUE2 = 8;
 
+	/**
+	 * valid browser expressions to use
+	 * @var string $VALID_BROWSER
+	 */
+	protected $VALID_BROWSER ="chrome 46.0.2490.";
 
 	/**
 	 * valid create dates to use for unit testing
 	 * @var DATETIME $VALID_CREATEDATE
-	 * @var DATETIME $VALID_CREATEDATE1
-	 * @var DATETIME $VALID_CREATEDATE2
 	 */
 	protected $VALID_CREATEDATE = "2015-12-19 12:15:18";
-	protected $VALID_CREATEDATE1 = "2015-12-19 12:16:20";
-	protected $VALID_CREATEDATE2 = "2015-12-19 11:16:20";
-
 
 	/**
 	 * valid Ip Address to use for unit testing
 	 * @var string $VALID_IPADDRESS
-	 * @var string $VALID_IPADDRESS1
-	 * @var string $VALID_IPADDRESS2
-	 *
 	 */
 	protected $VALID_IPADDRESS = "2600::dead:beef:cafe";
-	protected $VALID_IPADDRESS1= "2400::dead:beef:cafe";
-	protected $VALID_IPADDRESS2 = "2700::dead:beef:cafe";
 
 	/**
+	 * valid trail to use
 	 * @var Trail $trail
-	 * @var User $user
-	 * @var segment $segment
 	 */
 	protected $trail = null;
+
+	/**
+	 * valid user to use
+	 * @var User $user
+	 */
 	protected $user = null;
+
+	/**
+	 * valid segment to use
+	 * @var Segment $segment
+	 */
 	protected $segment = null;
 
-
 	/**
-	 * valid segment start and stop
-	 * @var point $segmentStart
+	 * valid segment start
+	 * @var SegmentStart $segmentStart
 	 */
 	protected $segmentStop = null;
-	protected $segmentStart = null;
+
 	/**
-	 *valid user salt and hash to create a user to own the test
-	 * @var string user $hash
-	 * @var string user $salt
+	 * valid segment stop
+	 * @var SegmentStop $segmentStop
+	 */
+	protected $segmentStart = null;
+
+	/**
+	 *valid user hash
+	 * @var string $hash
 	 */
 	protected $hash = null;
+
+	/**
+	 *valid user salt
+	 * @var string $salt
+	 */
 	protected $salt = null;
 
-	public final function setUp() {
+	/**
+	 * This setUp function changes the date string to a DateTime object, creates a segment, creates test values for user salt and hash, and then creates user and trail entries to use for testing
+	 */
+	public function setUp() {
 		parent::setUp();
 		// necessary DateTime format to run the test
-		$this->VALID_CREATEDATE= DateTime::createFromFormat("2015-12-19 12:30:45", $this->VALID_CREATEDATE);
+		$this->VALID_CREATEDATE = DateTime::createFromFormat("Y-m-d H:i:s", $this->VALID_CREATEDATE);
 
 		//create points needed for segment
 		$segmentStart = new Point(35.554, 44.546);
@@ -107,22 +121,31 @@ class RatingTest extends TrailQuailTest {
 		$this->hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->salt, 262144, 128);
 
 		//create a new user to use for testing
-		$this->user = new User(null, $this->VALID_BROWSER ,$this->VALID_CREATEDATE1, $this->VALID_IPADDRESS2, "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
-		$this->user->insert($this->getPDO());
+		$user = new User(null, $this->VALID_BROWSER ,$this->VALID_CREATEDATE, $this->VALID_IPADDRESS, "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
+		$user->insert($this->getPDO());
 
 		// create a trail to own test
-		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE2, $this->VALID_IPADDRESS2, null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail ", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking","fpfyRTmt6XeE9ehEKZ5LwF");
-		$this->trail->insert($this->getPDO());
+		// Trail(trailId, userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailConditions,
+		$trail = new Trail(null, $this->$user[userId]->getUserId(), "Safari", $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail ", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking","fpfyRTmt6XeE9ehEKZ5LwF");
+		$trail->insert($this->getPDO());
 	}
 
-
-
-
-	public function testInsertInvalidRating() {
+/**
+ * test for creating a trail rating with an invalid user name
+ *
+ * @expectedException PDOException
+ */
+	public function testInsertInvalidUserId() {
 		//create a rating with a non null ratingId for the fail!!
-		$rating= new Rating($this->VALID_TRAILID, TrailQuailTest::INVALID_KEY, $this->VALID_RATINGVALUE);
-		$rating->nsert($this->getPDO());
+		$rating = new Rating($this->trail->getTrailId(), TrailQuailTest::INVALID_KEY, $this->VALID_RATINGVALUE);
+		$rating->insert($this->getPDO());
 	}
+
+	/**
+	 *
+	 */
+
+
 	/**
 	 *test inserting rating  editing it, then updating it
 	 *
@@ -133,7 +156,7 @@ class RatingTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("rating");
 
 		//create a new rating and inserting it into mysql
-		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALIDRATINGVALUE);
+		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE);
 		$rating->update($this->getPDO());
 
 		//edit the rating and and update it into
@@ -141,7 +164,7 @@ class RatingTest extends TrailQuailTest {
 		$rating->update($this->getPDO());
 
 		// grab the data from mysql and enforce the fields meet expectation;
-		$pdoRating = Rating::getRatingValueByTrailIdAndUserId($this->getPDO(), $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE1);
+		$pdoRating = Rating::getRatingByTrailIdAndUserId($this->getPDO(), $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE1);
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
 		$this->assertSame($pdoRating->getRatingVale(), $this->VALID_RATINGVALUE1);
 
@@ -153,8 +176,8 @@ class RatingTest extends TrailQuailTest {
 	 */
 	public function testUpdateInvalidRating() {
 		// create a rating then try and insert it for the fail.
-		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALIDRATINGVALUE);
-		$rating->nsert($this->getPDO());
+		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_RATINGVALUE);
+		$rating->insert($this->getPDO());
 	}
 	/**
 	 * test creating a rating then deleting it
@@ -163,7 +186,7 @@ class RatingTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("profile");
 
 		// create a new rating and insert it into mySQL
-		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALIDRATINGVALUE);
+		$rating = new Rating($this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_IPADDRESS);
 		$rating->insert($this->getPDO());
 
 		// delete the user from mysql
