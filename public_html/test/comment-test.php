@@ -110,8 +110,7 @@ class CommentTest extends TrailQuailTest {
 	public final function setUp() {
 		parent::setUp();
 		// necessary DateTime format to run the test
-		$this->VALID_CREATEDATE= DateTime::createFromFormat("2015-12-19 12:30:45", $this->VALID_CREATEDATE);
-
+		$this->VALID_CREATEDATE = DateTime::createFromFormat("Y-m-d H:i:s", $this->VALID_CREATEDATE);
 		//create points needed for segment
 		$segmentStart = new Point(35.554, 44.546);
 		$segmentStop = new Point(35.554, 48.445);
