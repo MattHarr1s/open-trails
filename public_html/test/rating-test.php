@@ -28,9 +28,9 @@ class RatingTest extends TrailQuailTest {
 	protected $VALID_RATINGVALUE1 = 4;
 
 	/**
-	* invalid rating values
+	 * invalid rating values
 	 * @var int $INVALID_RATINGVALUE1
-	*/
+	 */
 	protected $INVALID_RATINGVALUE1 = "A";
 
 	/**
@@ -43,7 +43,7 @@ class RatingTest extends TrailQuailTest {
 	 * valid browser expressions to use
 	 * @var string $VALID_BROWSER
 	 */
-	protected $VALID_BROWSER ="chrome 46.0.2490.";
+	protected $VALID_BROWSER = "chrome 46.0.2490.";
 
 	/**
 	 * valid create dates to use for unit testing
@@ -121,20 +121,20 @@ class RatingTest extends TrailQuailTest {
 		$this->hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->salt, 262144, 128);
 
 		//create a new user to use for testing
-		$this->user = new User(null, $this->VALID_BROWSER,$this->VALID_CREATEDATE, $this->VALID_IPADDRESS, "S", "bootboo@trex.com", $this->hash, "george kephart", $this->salt);
+		$this->user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, "S", "bootboo@trex.com", $this->hash, "george kephart", $this->salt);
 		$this->user->insert($this->getPDO());
 
 		// create a trail to own test
 		// Trail(trailId, userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailConditions,
-		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking","fpfyRTmt6XeE9ehEKZ5LwF");
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking", "fpfyRTmt6XeE9ehEKZ5LwF");
 		$this->trail->insert($this->getPDO());
 	}
 
-/**
- * test for creating a trail rating with an invalid user name
- *
- * @expectedException PDOException
- */
+	/**
+	 * test for creating a trail rating with an invalid user name
+	 *
+	 * @expectedException PDOException
+	 */
 	public function testInsertInvalidUserId() {
 		//create a rating with a non null ratingId for the fail!!
 		$rating = new Rating($this->trail->getTrailId(), TrailQuailTest::INVALID_KEY, $this->VALID_RATINGVALUE);
@@ -182,6 +182,7 @@ class RatingTest extends TrailQuailTest {
 		$rating->update($this->getPDO());
 
 	}
+
 	/**
 	 * test creating a rating then deleting it
 	 */
@@ -207,7 +208,7 @@ class RatingTest extends TrailQuailTest {
 	 * test inserting a Rating and grabbing it from my sql
 	 */
 
-	public function testGetValidRatingByIds(){
+	public function testGetValidRatingByIds() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("rating");
 
@@ -216,16 +217,17 @@ class RatingTest extends TrailQuailTest {
 		$rating->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match expectations
-		$pdoRating = Rating::getRatingByTrailIdAndUserId($this->getPDO(),$this->trail->getTrailId(), $this->user->getUserId());
+		$pdoRating = Rating::getRatingByTrailIdAndUserId($this->getPDO(), $this->trail->getTrailId(), $this->user->getUserId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("rating"));
 		$this->assertSame($pdoRating->getRatingValue(), $this->VALID_RATINGVALUE);
 	}
+
 	/**
 	 * test grabbing a rating that does not exist
 	 */
 	public function testGetInvalidRatingByIds() {
 		//grab a rating value that exceeds the maximum allowable id's
-		$rating = Rating::getRatingByTrailIdAndUserId($this->getPDO(), TrailQuailTest::INVALID_KEY,TrailQuailTest::INVALID_KEY);
+		$rating = Rating::getRatingByTrailIdAndUserId($this->getPDO(), TrailQuailTest::INVALID_KEY, TrailQuailTest::INVALID_KEY);
 		$this->assertNull($rating);
 	}
 
@@ -242,7 +244,7 @@ class RatingTest extends TrailQuailTest {
 
 		//grab the data from mySQL and enforce the fields match expectations
 		$pdoRatings = Rating::getRatingValueByTrailId($this->getPDO(), $this->trail->getTrailId());
-		foreach ($pdoRatings as $pdoRating) {
+		foreach($pdoRatings as $pdoRating) {
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("rating"));
 			$this->assertSame($pdoRating->getRatingValue(), $this->VALID_RATINGVALUE);
 		}
@@ -253,7 +255,7 @@ class RatingTest extends TrailQuailTest {
 	 *
 	 * @expectedException PDOException
 	 */
-	public function testGetInvalidRatingByTrailId(){
+	public function testGetInvalidRatingByTrailId() {
 		$rating = Rating::getRatingValueByTrailId($this->getPDO(), "@doesnotexist");
 		$this->assertNull($rating);
 	}

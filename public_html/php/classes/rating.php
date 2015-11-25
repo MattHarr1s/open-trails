@@ -1,4 +1,5 @@
 <?php
+
 /**
  * trail quail rating system
  *
@@ -7,7 +8,6 @@
  * @authur George Kephart <gkephart@gmail.com>
  * some modification by Jeff Saul <scaleup13@gmail.com>
  */
-
 class Rating {
 	/**
 	 * id for the indivdual trail the rating is based on.
@@ -38,7 +38,7 @@ class Rating {
 	 * @throws Exception if some other exception is thrown
 	 */
 	public function __construct($newTrailId, $newUserId, $newRatingValue = null) {
-		try{
+		try {
 			$this->setTrailId($newTrailId);
 			$this->setUserId($newUserId);
 			$this->setRatingValue($newRatingValue);
@@ -53,6 +53,7 @@ class Rating {
 			throw(new Exception($exception->getMessage(), 0, $exception));
 		}
 	}
+
 	/**
 	 * accessor method for trailId
 	 *
@@ -61,6 +62,7 @@ class Rating {
 	public function getTrailId() {
 		return $this->trailId;
 	}
+
 	/**
 	 * mutator method for trail id
 	 *
@@ -115,6 +117,7 @@ class Rating {
 		//convert and store the user id
 		$this->userId = intval($newUserId);
 	}
+
 	/**
 	 * accessor method for rating
 	 *
@@ -131,18 +134,17 @@ class Rating {
 	 * @throws InvalidArgumentException if $newRatingValue is not an integer or positive
 	 * @throws RangeException if $newRating value is not positive
 	 */
-	public function setRatingValue ($newRatingValue){
+	public function setRatingValue($newRatingValue) {
 		// verify the rating value is an integer
 		$newRatingValue = filter_var($newRatingValue, FILTER_VALIDATE_INT);
-		if ($newRatingValue === false) {
+		if($newRatingValue === false) {
 			throw(new InvalidArgumentException("rating value is not a valid integer"));
-			}
+		}
 
 		// verify the rating value value is positive and less than 6
-		if($newRatingValue <=0){
+		if($newRatingValue <= 0) {
 			throw(new RangeException("rating value is not positive"));
-		}
-		elseif($newRatingValue > 5) {
+		} elseif($newRatingValue > 5) {
 			throw(new RangeException("rating value is too large"));
 		}
 
@@ -156,7 +158,7 @@ class Rating {
 	 * @param PDO $pdo PDO connection object
 	 * @throws PDOException when mysql errors occur
 	 */
-	public function insert(PDO $pdo){
+	public function insert(PDO $pdo) {
 		// check to see that the trailId and userId are not null
 		if($this->trailId === null) {
 			throw(new PDOException("failed insertion; invalid trail id used"));
@@ -170,11 +172,12 @@ class Rating {
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder
-		$parameters = ["trailId"=>$this->trailId, "userId"=>$this->userId, "ratingValue"=>$this->ratingValue];
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "ratingValue" => $this->ratingValue];
 		$statement->execute($parameters);
 
 
 	}
+
 	/**
 	 * deletes a user generated  trail rating from  mySQl
 	 *
@@ -183,10 +186,10 @@ class Rating {
 	 */
 	public function delete(PDO $pdo) {
 		// enforce that both trailId and userId are not null
-		if ($this->trailId === null) {
+		if($this->trailId === null) {
 			throw(new PDOException("unable to delete a rating about trail that doesn't exist"));
 		}
-		if ($this->userId === null) {
+		if($this->userId === null) {
 			throw (new PDOException("unable to delete to delete a rating that a user didn't post"));
 		}
 
@@ -195,7 +198,7 @@ class Rating {
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holder in the template
-		$parameters = ["trailId"=>$this->trailId, "userId"=>$this->userId,];
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId,];
 		$statement->execute($parameters);
 	}
 
@@ -218,7 +221,7 @@ class Rating {
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
-		$parameters = ["trailId"=>$this->trailId, "userId"=>$this->userId, "ratingValue"=>$this->ratingValue];
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "ratingValue" => $this->ratingValue];
 		$statement->execute($parameters);
 	}
 
@@ -230,37 +233,37 @@ class Rating {
 	 * @returns SplFixedArray all ratings for the trail
 	 * @throws PDOException when mySQL error occurs
 	 */
-/*	public static function geRatingByRatingValue(PDO $pdo, $ratingValue) {
-		$ratingValue = trim($ratingValue);
-		$ratingValue = filter_var($ratingValue, FILTER_VALIDATE_INT);
-		if(empty($ratingValue) === true) {
-			throw(new PDOException("rating value is invalid"));
-		}
-
-		// create query template
-		$query = "select trailId, userId, ratingValue FROM rating WHERE ratingValue Like :RatingValue";
-		$statement = $pdo->prepare($query);
-
-		//bind the rating value to the place holder in the template
-		$ratingValue = "%$ratingValue%";
-		$parameters = ["ratingValue" => $ratingValue];
-		$statement->execute($parameters);
-
-		// build an array of rating values
-		$ratings = new SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$rating = new Rating($row["userId"], $row["trailId"], $row["ratingValue"]);
-				$ratings[$ratings->key()] = $rating;
-				$ratings -> next();
-			} catch(Exception $exception) {
-				// if the row couldn't be converted rethrow it
-				throw(new PDOException($exception->getMessage(), 0, $exception));
+	/*	public static function geRatingByRatingValue(PDO $pdo, $ratingValue) {
+			$ratingValue = trim($ratingValue);
+			$ratingValue = filter_var($ratingValue, FILTER_VALIDATE_INT);
+			if(empty($ratingValue) === true) {
+				throw(new PDOException("rating value is invalid"));
 			}
-		}
-		return($ratings);
-	}*/
+
+			// create query template
+			$query = "select trailId, userId, ratingValue FROM rating WHERE ratingValue Like :RatingValue";
+			$statement = $pdo->prepare($query);
+
+			//bind the rating value to the place holder in the template
+			$ratingValue = "%$ratingValue%";
+			$parameters = ["ratingValue" => $ratingValue];
+			$statement->execute($parameters);
+
+			// build an array of rating values
+			$ratings = new SplFixedArray($statement->rowCount());
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			while(($row = $statement->fetch()) !== false) {
+				try {
+					$rating = new Rating($row["userId"], $row["trailId"], $row["ratingValue"]);
+					$ratings[$ratings->key()] = $rating;
+					$ratings -> next();
+				} catch(Exception $exception) {
+					// if the row couldn't be converted rethrow it
+					throw(new PDOException($exception->getMessage(), 0, $exception));
+				}
+			}
+			return($ratings);
+		}*/
 
 	/**
 	 * gets all the trail ratings for a trail by trailId
@@ -270,13 +273,13 @@ class Rating {
 	 * @returns SplFixedArray all ratings for the trail
 	 * @throws PDOException when mySql related error occurs
 	 */
-	public static  function getRatingValueByTrailId(PDO $pdo, $trailId) {
+	public static function getRatingValueByTrailId(PDO $pdo, $trailId) {
 		// sanitize the the trailId before searching
 		$trailId = filter_var($trailId, FILTER_VALIDATE_INT);
 		if($trailId === false) {
 			throw(new PDOException("$trailId is not an integer "));
 		}
-		If($trailId <= 0 ){
+		If($trailId <= 0) {
 			throw(new PDOException("$trailId is not positive"));
 		}
 
@@ -301,7 +304,7 @@ class Rating {
 				throw(new PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($ratings);
+		return ($ratings);
 	}
 
 	/**
@@ -347,11 +350,11 @@ class Rating {
 			if($row !== false) {
 				$rating = new rating($row["trailId"], $row["userId"], $row["ratingValue"]);
 			}
-		} catch (Exception $exception) {
+		} catch(Exception $exception) {
 			// if the row couldn't be converted rethrow it
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
-	return($rating);
+		return ($rating);
 	}
 
 	/**
@@ -359,9 +362,9 @@ class Rating {
 	 *
 	 * @param PDO $pdo PDO connection object
 	 * @return SplFixedArray all ratings found
-	 *	@throws PDOException when mySQL errors occur
+	 * @throws PDOException when mySQL errors occur
 	 */
-	public static  function getAllRatings(PDO $pdo) {
+	public static function getAllRatings(PDO $pdo) {
 		//create query template
 		$query = "select trailId, userId, rating FROM rating";
 		$statement = $pdo->prepare($query);
@@ -380,6 +383,6 @@ class Rating {
 				throw(new PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-		return($ratings);
+		return ($ratings);
 	}
 }
