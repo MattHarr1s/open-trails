@@ -23,30 +23,64 @@ class CommentTest extends TrailQuailTest {
 	 * @var string $VALID_BROWSER2
 	 */
 	protected $VALID_BROWSER = "chrome 46.0.2490.";
+
+	/**
+	 *valid browser to use
+	 *
+	 * @var string $VALID_BROWSER1
+	 *
+	 */
 	protected $VALID_BROWSER1="firefox 41.0.2";
+
+	/**
+	 *valid browser to use
+	 *
+	 * @var string $VALID_BROWSER1
+	 *
+	 */
 	protected $VALID_BROWSER2="IE 7 shit ";
 
 
 	/**
 	 * valid create dates to use for unit testing
 	 * @var DATETIME $VALID_CREATEDATE
-	 * @var DATETIME $VALID_CREATEDATE1
-	 * @var DATETIME $VALID_CREATEDATE2
 	 */
 	protected $VALID_CREATEDATE = "2015-12-19 12:15:18";
+
+
+	/**
+	 * valid create dates to use for unit testing
+	 *@var DATETIME $VALID_CREATEDATE1
+	 */
+
 	protected $VALID_CREATEDATE1 = "2015-12-19 12:16:20";
+
+
+	/**
+	 * valid create dates to use for unit testing
+	 *@var DATETIME $VALID_CREATEDATE2
+	 */
 	protected $VALID_CREATEDATE2 = "2015-12-19 11:16:20";
 
 
 	/**
 	 * valid Ip Address to use for unit testing
 	 * @var string $VALID_IPADDRESS
-	 * @var string $VALID_IPADDRESS1
-	 * @var string $VALID_IPADDRESS2
-	 *
 	 */
 	protected $VALID_IPADDRESS = "2600::dead:beef:cafe";
+
+	/**
+	 * valid Ip Address to use for unit testing
+	 *
+	 * @var string $VALID_IPADDRESS1
+	 */
 	protected $VALID_IPADDRESS1= "2400::dead:beef:cafe";
+
+	/**
+	 * valid Ip Address to use for unit testing
+	 *
+	 * @var string $VALID_IPADDRESS1
+	 */
 	protected $VALID_IPADDRESS2 = "2700::dead:beef:cafe";
 
 	/**
@@ -78,14 +112,22 @@ class CommentTest extends TrailQuailTest {
 	 * valid comment text
 	 * @var string $VALID_COMMENTTEXT1
 	 */
-	protected $VALID_COMMENTTEXT1 = " Books are useless! I only ever read one book, \"To Kill A Mockingbird,\" and it gave me absolutely no insight on how to kill mockingbirds! ";
+	protected $VALID_COMMENTTEXT1 = "Books are useless I only ever read one book To Kill A Mockingbird, and it gave me absolutely no insight on how to kill mockingbirds!";
+
 	/**
 	 * @var Trail $trail
-	 * @var User $user
-	 * @var segment $segment
 	 */
 	protected $trail = null;
+
+	/**
+	 * @var User $user
+	 *
+	 */
 	protected $user = null;
+
+	/**
+	 * @var Segment $segment
+	 */
 	protected $segment = null;
 
 
@@ -128,13 +170,13 @@ class CommentTest extends TrailQuailTest {
 		$this->hash = hash_pbkdf2("sha512", "iLoveIllinois", $this->salt, 262144, 128);
 
 		//create a new user to use for testing
-		$this->user = new User(null, $this->VALID_BROWSER ,$this->VALID_CREATEDATE1, $this->VALID_IPADDRESS2, "S", "bootbob@trex.com", $this->hash, "george kephart", $this->salt);
+		$this->user = new User(null, $this->VALID_BROWSER ,$this->VALID_CREATEDATE, $this->VALID_IPADDRESS, "S", "bootbod@trex.com", $this->hash, "george kephart", $this->salt);
 		$this->user->insert($this->getPDO());
 
 
 
 		// create a trail to own test
-		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE2, $this->VALID_IPADDRESS2, null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail ", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking","fpfyRTmt6XeE9ehEKZ5LwF");
+		$this->trail = new Trail(null, $this->user->getUserId(), "Safari", $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, null, "y", "Picnic area", "Good", "This trail is a beautiful winding trail located in the Sandia Mountains", 3, 1054.53, "la luz trail ", 1, "Mostly switchbacks with a few sections of rock fall", "Heavy", "Hiking","fpfyRTmt6XeE9ehEKZ5LwF");
 		$this->trail->insert($this->getPDO());
 	}
 	/**
@@ -151,8 +193,10 @@ class CommentTest extends TrailQuailTest {
 		//grab the data from mySQL and enforce the fields match expectations.
 		$pdoComment = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		$this->assertSame($pdoComment->getTrailId(), $this->trail->getTrailId());
+		$this->assertSame($pdoComment->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertEquals($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
 		$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
@@ -170,6 +214,8 @@ class CommentTest extends TrailQuailTest {
 	}
 	/**
 	 * test inserting comment,editing it, then updating it
+	 *
+	 *
 	 */
 	public function testUpdateValidComment() {
 		// count the number of rows and save it
@@ -186,8 +232,10 @@ class CommentTest extends TrailQuailTest {
 		// grab the data from mySQL and enforce the fields match expectations
 		$pdoComment = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
 		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("comment"));
+		$this->assertSame($pdoComment->getTrailId(), $this->trail->getTrailId());
+		$this->assertSame($pdoComment->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertEquals($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
 		$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
@@ -196,7 +244,7 @@ class CommentTest extends TrailQuailTest {
 	/**
 	 *test updating a Comment that doesn't exist
 	 *
-	 * @expectedException InvalidArgumentException
+	 * @expectedException PDOException
 	 */
 	public function testUpdateInvalidComment() {
 		// create a Comment and try to update without actually inserting it
@@ -206,6 +254,8 @@ class CommentTest extends TrailQuailTest {
 
 	/**
 	 * test creating a comment then delete it
+	 *
+	 *
 	 */
 	public function testDeleteValidComment() {
 		// count the number of rows and save it for later
@@ -227,7 +277,7 @@ class CommentTest extends TrailQuailTest {
 	/**
 	 * test deleting a comment that doesn't exist
 	 *
-	 * @expectedException InvalidArgumentException
+	 * @expectedException PDOException
 	 */
 	public function testDeleteInvalidComment (){
 		// create a comment and than try deleting it without submitting it to mySQL
@@ -248,24 +298,97 @@ class CommentTest extends TrailQuailTest {
 		// grab the data from MySQL and enforce the fields match our expectation
 		$pdoComment= Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		$this->assertSame($pdoComment->getTrailId(), $this->trail->getTrailId());
+		$this->assertSame($pdoComment->getUserId(), $this->user->getUserId());
 		$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
+		$this->assertEquals($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
 		$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
 		$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
 		$this->assertSame($pdoComment->getCommentText(), $this->VALID_COMMENTTEXT);
 	}
 
+	/**
+	 * test grabbing a comment that doesn't exist
+	 */
+	public function testGetInvalidCommentByCommentId(){
+		// grab a comment id that exceeds the maximum allowable comment id
+		$comment = Comment::getCommentByCommentId($this->getPDO(), TrailQuailTest::INVALID_KEY);
+		$this->assertNull($comment);
 
-		/**
-		 *test grabbing a comment that doesn't exist
-		 */
-		public function testGetInvalidCommentByCommentId(){
-			// grab a comment id that exceeds the maximum allowable comment id
-			$comment = Comment::getCommentByCommentId($this->getPDO(), TrailQuailTest::INVALID_KEY);
-			$this->assertNull($comment);
+	}
 
+
+
+	/**
+	 * test inserting a comment and and grabbing it by trailId
+	 */
+	public function testGetValidCommentByTrailId() {
+		// get the count of rows in the database
+		$numRows = $this->getConnection()->getRowCount("comment");
+
+		// create a new comment and insert to mySQL
+		$comment= new Comment(null, $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
+		$comment->insert($this->getPDO());
+
+		//grab the data from mySQL and make sure it matches expectations
+		$pdoComments = Comment::getCommentByTrailId($this->getPDO(), $comment->getTrailId());
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		foreach($pdoComments as $pdoComment) {
+			$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
+			$this->assertEquals($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
+			$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
+			$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
+			$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
+			$this->assertSame($pdoComment->getCommentText(), $this->VALID_COMMENTTEXT);
 		}
+	}
+
+	/**
+	 * test for grabbing a Comment by a trailId that does not exist
+	 */
+	public function testGetInvalidCommentByTrailId() {
+		$comment = Comment::getCommentByTrailId ($this->getPDO(), TrailQuailTest::INVALID_KEY);
+		$this->assertEmpty($comment);
+	}
+
+
+
+	/**
+	 * test inserting a comment and and grabbing it by user Id
+	 */
+	public function testGetValidCommentByUserId() {
+		// get the count of rows in the database
+		$numRows = $this->getConnection()->getRowCount("comment");
+
+		// create a new comment and insert to mySQL
+		$comment= new Comment(null, $this->trail->getTrailId(), $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_COMMENTPHOTO, $this->VALID_COMMENTPHOTOTYPE, $this->VALID_COMMENTTEXT);
+		$comment->insert($this->getPDO());
+
+		//grab the data from mySQL and make sure it matches expectations
+		$pdoComments = Comment::getCommentByUserId($this->getPDO(), $comment->getUserId());
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		foreach($pdoComments as $pdoComment){
+			$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
+			$this->assertEquals($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
+			$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
+			$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
+			$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
+			$this->assertSame($pdoComment->getCommentText(), $this->VALID_COMMENTTEXT);
+		}
+	}
+
+	/**
+	 * test for grabbing a Comment by a UserId that does not exist
+	 */
+	public function testGetInvalidCommentByUserId() {
+		$comment = Comment::getCommentByTrailId ($this->getPDO(), TrailQuailTest::INVALID_KEY);
+		$this->assertEmpty($comment);
+	}
+
+
+
+
 	/**
 	 * test grabbing a comment by its commentText
 	 */
@@ -279,23 +402,24 @@ class CommentTest extends TrailQuailTest {
 		$comment->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce it meets expectations
-		$pdoComment= Comment::getCommentByCommmentText($this->getPDO(), $comment->getCommentId());
+		$pdoComments= Comment::getCommentByCommentText($this->getPDO(), $comment->getCommentText());
 		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
-		$this->assertSame($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
-		$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
-		$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
-		$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
-		$this->assertSame($pdoComment->getCommentText(), $this->VALID_COMMENTTEXT);
+		foreach($pdoComments as $pdoComment) {
+			$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
+			$this->assertEquals($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
+			$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
+			$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
+			$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
+			$this->assertSame($pdoComment->getCommentText(), $this->VALID_COMMENTTEXT);
+		}
 	}
 
 	/**
 	 * test grabbing a  comment by an email that does not exist
-	 *
 	 */
 	public function testGetInvalidCommentByText(){
 		$comment = Comment::getCommentByCommentText($this->getPDO(),"homer@comcast.net");
-		$this->assertNull($comment);
+		$this->assertEmpty($comment);
 	}
 
 

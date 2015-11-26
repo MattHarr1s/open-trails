@@ -235,7 +235,7 @@ class Comment {
 	public function setCommentPhotoType($newCommentPhotoType) {
 		//verify the photo file type is supported
 		$goodFileType = ["image/png", "image/jpeg"];
-		if(in_array($newCommentPhotoType ,$goodFileType) === false) {
+		if(in_array($newCommentPhotoType, $goodFileType) === false) {
 			throw (new InvalidArgumentException("comment photo file type not supported"));
 		}
 		// store the comment photo type
@@ -358,13 +358,13 @@ class Comment {
 	 * @param PDO $pdo PDo connection object
 	 * @throws PDOException when MySQL related errors happen
 	 */
-	public function insert (PDO $pdo) {
+	public function insert(PDO $pdo) {
 		// enforce the commentId is null
 		if($this->commentId !== null) {
 			throw(new PDOException("not a new comment"));
 		}
 		// create query template
-		$query = "INSERT INTO comment(trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText ) VALUES (:trailId, :userId, :browser,:createDate, :ipAddress, :CommentPhoto, :commentPhotoType, :commentText)";
+		$query = "INSERT INTO comment(trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText) VALUES (:trailId, :userId, :browser, :createDate, :ipAddress, :commentPhoto, :commentPhotoType, :commentText)";
 		$statement = $pdo->prepare($query);
 
 
@@ -373,10 +373,11 @@ class Comment {
 
 		//bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
-		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this->commentText];
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress,
+				"commentPhoto" => $this->commentPhoto, "commentPhotoType" => $this->commentPhotoType, "commentText" => $this->commentText];
 		$statement->execute($parameters);
 
-		// update the null tweetId with what mySqL juat gave us
+		// update the null tweetId with what mySqL just gave us
 		$this->commentId = intval($pdo->lastInsertId());
 	}
 
@@ -412,12 +413,14 @@ class Comment {
 		if($this->commentId === null) {
 			throw(new PDOException("unable to update a that does not exist"));
 		}
-		$query = "UPDATE comment SET trailId = :trailId, userid = :userId, browser = :browserId, createDate = :createDate, ipAddress = :ipAddress, commentPhoto = :commentPhoto, commentPhotoType = :commentPhotoType, commentText = :commentText ";
+		$query = "UPDATE comment SET trailId = :trailId, userId = :userId, browser = :browser, createDate = :createDate, ipAddress = :ipAddress,
+				commentPhoto = :commentPhoto, commentPhotoType = :commentPhotoType, commentText = :commentText";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
-		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType " => $this->commentPhotoType, "commentText" => $this->commentText];
+		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate,
+				"ipAddress" => $this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType" => $this->commentPhotoType, "commentText" => $this->commentText];
 		$statement->execute($parameters);
 	}
 
@@ -442,7 +445,7 @@ class Comment {
 
 		// bind the tweet content to the place holder in the template
 		$commentText = "%$commentText%";
-		$parameters = ["commentText"=> $commentText];
+		$parameters = ["commentText" => $commentText];
 		$statement->execute($parameters);
 
 		// build an array of comments
@@ -450,7 +453,7 @@ class Comment {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$comment = new Comment($row["commentId"], $row["trailId"],$row["userId"], $row["browserType"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"] );
+				$comment = new Comment($row["commentId"], $row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"]);
 				$comments[$comments->key()] = $comment;
 				$comments->next();
 			} catch(Exception $exception) {
@@ -493,7 +496,7 @@ class Comment {
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$comment = new Comment ($row["commentId"], $row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["IpAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"]);
+				$comment = new Comment ($row["commentId"], $row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"]);
 			}
 		} catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -501,6 +504,7 @@ class Comment {
 		}
 		return ($comment);
 	}
+
 	/**
 	 * gets the comment by trailId
 	 *
@@ -519,27 +523,31 @@ class Comment {
 			throw(new PDOException("trailId is not positive"));
 		}
 		// create query template
-		$query = "SELECT commentId, userId, browserType, createDate, ipAddress, commentPhoto, commentPhotoType,commentText FROM comment WHERE trailId = :trailId";
+		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType,commentText FROM comment WHERE trailId = :trailId";
 		$statement = $pdo->prepare($query);
 
-		// bind the trailId to the placeholder in the template
-		$parameters =["trailId" => $trailId];
+		// bind the trail id to the place holder in the template
+		$trailId = "%$trailId%";
+		$parameters = ["trailId" => $trailId];
 		$statement->execute($parameters);
 
-		//grab the comment from mySQL
-		try{
-			$comment = null;
-			$statement->setFetchMode(PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if ($row !== false) {
-				$comment = new Comment($row["commentId"], $row["trailId"], $row["userId"], $row["browserType"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"]);
+		// build an array of comments
+		$comments = new SplFixedarray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$comment = new Comment($row["commentId"], $row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"]);
+				$comments[$comments->key()] = $comment;
+				$comments->next();
+			} catch(Exception $exception) {
+				// if the couldn't be converted rethrow it
+				throw(new PDOException($exception->getMessage(), 0, $exception));
 			}
-		} catch(Exception $exception){
-			// if the row couldn't be converted rethrow it
-			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
-	return($comment);
+		return ($comments);
 	}
+
+
 	/**
 	 * gets the comment by userId
 	 *
@@ -557,56 +565,28 @@ class Comment {
 			throw(new PDOException("user id  is not positive"));
 		}
 		// create query template
-		$query = "SELECT commentId, trailId, browserType, createDate, ipAddress, commentPhoto, commentPhotoType,commentText FROM comment WHERE userId = :userId ";
+		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType,commentText FROM comment WHERE userId = :userId ";
 		$statement = $pdo->prepare($query);
 
-		// bind the userId to the placeholder in the template
+		// bind the trail id to the place holder in the template
+		$userId = "%$userId%";
 		$parameters = ["userId" => $userId];
 		$statement->execute($parameters);
 
-		// grab the comment from mySQL
-		try {
-			$comment = null;
-			$statement->setFetchMode(PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
-				$comment = new Comment($row["commentId"], $row["trailId"],$row["userId"], $row["browserType"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"] );
-			}
-		} catch(Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw(new PDOException($exception->getMessage(), 0, $exception));
-		}
-	return($comment);
-	}
-
-
-
-	/** gets all comments
-	 *
-	 * @param PDO $pdo PDO Connection object
-	 * @return SplFixedArray all comments found
-	 *	@throws PDOException when MySQL errors occur
-	 */
-	public static function getAllComments(PDO $pdo){
-		//create query template
-		$query = "SELECT commentId, trailId, UserId, browserType, createDate, ipAddress, commentPhoto, commentPhotoType, commentText ";
-		$statement = $pdo->prepare($query);
-		$statement->execute();
-
-		//build an array of comments
-		$comments = new SPLFixedArray($statement->rowCount());
+		// build an array of comments
+		$comments = new SplFixedarray($statement->rowCount());
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$comment = new Comment($row["commentId"], $row["trailId"],$row["userId"], $row["browserType"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"] );
+				$comment = new Comment($row["commentId"], $row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["commentPhoto"], $row["commentPhotoType"], $row["commentText"]);
 				$comments[$comments->key()] = $comment;
 				$comments->next();
 			} catch(Exception $exception) {
-				// if the row couldn't be converted, rethrow it
+				// if the couldn't be converted rethrow it
 				throw(new PDOException($exception->getMessage(), 0, $exception));
 			}
 		}
-	return($comments);
+		return ($comments);
 	}
 }
 
