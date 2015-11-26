@@ -333,14 +333,16 @@ class CommentTest extends TrailQuailTest {
 
 		//grab the data from mySQL and make sure it matches expectations
 		$pdoComments = Comment::getCommentByTrailId($this->getPDO(), $comment->getTrailId());
-		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
-		foreach($pdoComments as $pdoComment) {
-			$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
-			$this->assertEquals($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
-			$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
-			$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
-			$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
-			$this->assertSame($pdoComment->getCommentText(), $this->VALID_COMMENTTEXT);
+		foreach($pdoComments as $pdoComment){
+			if($pdoComment->getTrailId() === $comment->getTrailId()){
+				$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("comment"));
+				$this->assertSame($pdoComment->getBrowser(), $this->VALID_BROWSER);
+				$this->assertEquals($pdoComment->getCreateDate(), $this->VALID_CREATEDATE);
+				$this->assertSame($pdoComment->getIpAddress(), $this->VALID_IPADDRESS);
+				$this->assertSame($pdoComment->getCommentPhoto(), $this->VALID_COMMENTPHOTO);
+				$this->assertSame($pdoComment->getCommentPhotoType(), $this->VALID_COMMENTPHOTOTYPE);
+				$this->assertSame($pdoComment->getCommentText(), $this->VALID_COMMENTTEXT);
+			}
 		}
 	}
 

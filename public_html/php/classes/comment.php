@@ -525,9 +525,6 @@ class Comment {
 		// create query template
 		$query = "SELECT commentId, trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType,commentText FROM comment WHERE trailId = :trailId";
 		$statement = $pdo->prepare($query);
-
-		// bind the trail id to the place holder in the template
-		$trailId = "%$trailId%";
 		$parameters = ["trailId" => $trailId];
 		$statement->execute($parameters);
 
