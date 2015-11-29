@@ -68,4 +68,29 @@ class DataDownloader{
 		return $streamData;
 	}
 
+	/**
+	 * gets the last modified attribute from a file url
+	 *
+	 * @param string $url url to check
+	 * @return string "Last-Modified" attribute
+	**/
+	public static function getLastModified($url) {
+		// get the stream data
+		$streamData = DataDownloader::getMetaData($url);
+
+		//get the wrapper data that contains the "Last-Modified" attribute
+		$wrapperData = $streamData["wrapper_data"];
+
+		// loop through to find the "Last-Modified" attribute
+		$lastModified = "";
+		foreach($wrapperData as $data) {
+			if(strpos($data, "Last-Modified") !== false) {
+				$lastModified = $data;
+				break;
+			}
+		}
+
+		return $lastModified;
+	}
+
 }
