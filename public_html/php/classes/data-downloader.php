@@ -69,7 +69,7 @@ class DataDownloader{
 	}
 
 	/**
-	 * gets the last modified attribute from a file url
+	 * gets the "Last-Modified" attribute from a file url
 	 *
 	 * @param string $url url to check
 	 * @return string "Last-Modified" attribute
@@ -92,5 +92,46 @@ class DataDownloader{
 
 		return $lastModified;
 	}
+
+	/**
+	 * gets the "Last-Modified" date from a file url
+	 *
+	 * @param string $url url to check
+	 * @return DateTime date last modified
+	 **/
+	public static function getLastModifiedDate ($url) {
+		// get the "Last-Modified" attribute
+		$lastModified = DataDownloader::getLastModified($url);
+		$dateString = null;
+
+		if(strpos($lastModified, "Last-Modified") !== false) {
+			//grab the string after "Last-Modified: "
+			$dateString = substr($lastModified, 15);
+		}
+
+		$date = new DateTime($dateString);
+		$date->setTimezone(new DateTimeZone(date_default_timezone_get()));
+
+		//$formattedDate = $date->format ("Y-m-d H:i:s");
+
+		return $date;
+	}
+
+	/**
+	 * deletes a file or files from a directory
+	 *
+	 * @param string $path path to file
+	 * @param string $name filename
+	 * @param string $extension extension of the file
+	**/
+	public static function deleteFiles($path, $name, $extension) {
+		//Delete file(s)
+		$files = glob("$path$name*$extension");
+		foreach($files as $file){
+			unlink($file);
+		}
+	}
+
+
 
 }
