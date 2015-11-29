@@ -29,9 +29,9 @@ if(function_exists("apache_request_headers") === false) {
 }
 
 /**
- * sets an XSRF cookie, generating one  if necesary
+ * sets an XSRF cookie, generating one  if necessary
  *
- * @param string $cookiePath the cookie is revelvant to, blank by defult
+ * @param string $cookiePath the cookie is relevant to, blank by default
  * @throws RuntimeException if the session is not active
  *
  */
