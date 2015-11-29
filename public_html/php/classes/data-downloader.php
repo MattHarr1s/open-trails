@@ -132,6 +132,33 @@ class DataDownloader{
 		}
 	}
 
+	/**
+	 * gets the date of a stored file
+	 *
+	 * @param string $path path to stored file
+	 * @param string $name name of stored file
+	 * @param string $extension extension of stored file
+	 * @return DateTime date of stored file
+	 * @throws Exception if file does not exist
+	**/
+
+	public static function getDateFromStoredFile($path, $name, $extension) {
+		//get date from stored file
+		$currentDateStr = null;
+		$currentFile = null;
+		$files = glob ("$path$name*$extension");
+		if (count($files) > 0) {
+			$currentFile = $files[0];
+		} else {
+			return DateTime::createFromFormat("U", "0");
+		}
+
+		// get date from filename
+		$matches = array();
+		preg_match()
+
+	}
+
 
 
 }
