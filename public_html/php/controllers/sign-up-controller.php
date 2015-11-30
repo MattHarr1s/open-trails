@@ -3,7 +3,7 @@
  * controller for the signing up of a new user
  *
  * @author Louis Gill <lgill7@cnm.edu>
- * contributor code from https://github.com/sandigec/foodinventory &
+ * contributor code from https://github.com/sandidgec/foodinventory &
  * https://github.com/Skylarity/trufork
  **/
 
@@ -28,6 +28,11 @@ $browser = $_SERVER['HTTP_USER_AGENT'];
 $createDate = 													// ???????????????????
 
 try {
+	// ensures that the fields are filled out
+	if(@isset($_POST["email"]) === false || @isset($_POST["username"]) === false || @isset($_POST["password"]) === false || @isset($_POST["verifyPassword"]) === false) {
+		throw(new InvalidArgumentException("Form not complete. Please verify and try again."));
+	}
+
 	//verify the XSRF challenge
 	if(session_status() !== PHP_SESSION_ACTIVE) {
 		session_start();
