@@ -78,6 +78,54 @@ try {
 		$reply->status = 200;
 		$reply->message = "Logged in as administrator";							// HUH??????????
 	}
+
+	// create Swift message
+	$swiftMessage = Swift_Message::newInstance();
+
+	// attach the sender to the message
+	// this takes the form of an associative array where the Email is the key for the real name
+	$swiftMessage->setFrom(["trailquailabq@gmail.com" => "Trail Quail"]);			// setForm??????????????
+
+	/**
+	 * attach the actual message to the message
+	 * here, we set two versions of the message: the HTML formatted message and a special filter_var()ed
+	 * version of the message that generates a plain text version of the HTML content
+	 * notice one tactic  used is to display the entire $confirmLink to plain text; this lets users
+	 * who aren't viewing HTML content in Emails still access your links
+	 */
+
+	// building the activation link that can travel to another server and still work. This is the link that will be clicked to confirm the account.
+	$lastSlash = strpos($_SERVER["SCRIPT_NAME"], "/");
+	$basePath = substr($_SERVER["SCRIPT_NAME"], 0, $lastSlash + 1);
+	$urlglue = $basePath . "confirmation.php?emailActivation=" . $userEmailActivation;
+
+	$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
+	$message = <<< EOF
+<h1>Thank you for registering for Trail Quail!</h1>
+<p>Visit the following URL to confirm your email and complete the registration process.</p>
+<a href="$confirmLink">$confirmLink</a></p>
+EOF;
+	$swiftMessage->setBody($message, "text/html");
+	$swiftMessage->addPart(html_entity_decode(filter_var($message, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)), "text/plain");
+
+	/**
+	 * send the Email via SMTP; the SMTP server here is configured to relay everything upstream via CNM
+	 * this default may or may not be available on all web hosts; consult their documentation/support for details
+	 * SwiftMailer supports many different transport methods; SMTP was chosen because it's the most compatible and has the best error handling
+	 * @see http://swiftmailer.org/docs/sending.html Sending Messages - Documentation - SwiftMailer
+	 */
+	$smtp = Swift_SmtpTransport::newInstance("localhost", 25);
+	$mailer = Swift_Mailer::newInstance($smtp);
+	$numSent = $mailer->send($swiftMessage, $failedRecipients);
+
+	/**
+	 * the send method returns the number of recipients that accepted the Email
+	 * so, if the number attempted is not the number accepted, thpis is an Exception
+	 */
+	if($numSent !== count($recipients)) {
+		// the $failedRecipients parameter passed in the send() method now contains an array of the Emails that failed
+		throw(new RuntimeException("unable to send email"));
+	}
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
