@@ -172,21 +172,21 @@ class DataDownloader{
 	 * @param string $extension extension to save in
 	**/
 
-	public static function downloadFile ($url, $path, $name, $extension){
+	public static function downloadFile ($url, $path, $name, $extension) {
 		//delete old file(s)
 		DataDownloader::deleteFiles($path, $name, $extension);
 
 		//create new file
-		$newFile= null;
+		$newFile = null;
 		$newFileName = $path . $name . DataDownloader::getLastModifiedDate($url)->getTimestamp() . ".csv";
 
 		$file = fopen($url, "rb");
-		if($file){
-			$newFile = fopen ($newFileName, "wb");
+		if($file) {
+			$newFile = fopen($newFileName, "wb");
 
 			if($newFile)
 				while(!feof($file)) {
-					fwrite($newFile, fread($file, 1024 *8), 1024 *8 );
+					fwrite($newFile, fread($file, 1024 * 8), 1024 * 8);
 				}
 		}
 
@@ -194,6 +194,38 @@ class DataDownloader{
 			fclose($file);
 		} else {
 			fclose($newFile);
+		}
+	}
+
+		/**
+		 *This function grabs the named_trails.csv file and reads it
+		 *
+		 *@param string $urlBegin beginning of url to grab file at
+		 *@param string $urlEnd end of url to grab file at
+		 *@throws PDOException PDO related errors
+		 *@throws Exception catch-all exception
+		**/
+		public static function readNamedTrailsCSV($urlBegin, $urlEnd) {
+			$urls = glob("$urlBegin*$urlEnd");
+			if(count($urls) >0) {
+				$url = $urls[0];
+			}
+
+			$context = stream_context_create(array("http" => array("ignore_errors" => true, "method" =>"GET")));
+
+			try {
+				$pdo = connectToEncryptedMySQL("/ect/apache2/mysql/trailquail.ini");
+
+				if(($fd = @fopen ($url,"rb", false, $context)) !== false) {
+					fgetcsv($fd, 0 , "'");
+					while ((($data = fgetcsv($fd, 0 , "'")) !== false) && feof($fd) === false) {
+						$trailId = null;
+						$userId =
+						$
+
+					}
+				}
+			}
 		}
 	}
 
