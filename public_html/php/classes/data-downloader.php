@@ -155,9 +155,49 @@ class DataDownloader{
 
 		// get date from filename
 		$matches = array();
-		preg_match()
+		preg_match("/\\d+", $currentFile, $matches);
+		$currentDateStr = $matches[0];
 
+		//create date
+		$currentDate = DateTime::createFromFormat("U", $currentDateStr);
+
+		return $currentDate;
 	}
+	/**
+	 * Downloads a file to a path from a url
+	 *
+	 * @param string $url url to grab from
+	 * @param string $path path to save to
+	 * @param string $name filename to save in
+	 * @param string $extension extension to save in
+	**/
+
+	public static function downloadFile ($url, $path, $name, $extension){
+		//delete old file(s)
+		DataDownloader::deleteFiles($path, $name, $extension);
+
+		//create new file
+		$newFile= null;
+		$newFileName = $path . $name . DataDownloader::getLastModifiedDate($url)->getTimestamp() . ".csv";
+
+		$file = fopen($url, "rb");
+		if($file){
+			$newFile = fopen ($newFileName, "wb");
+
+			if($newFile)
+				while(!feof($file)) {
+					fwrite($newFile, fread($file, 1024 *8), 1024 *8 );
+				}
+		}
+
+		if($file) {
+			fclose($file);
+		} else {
+			fclose($newFile);
+		}
+	}
+
+
 
 
 
