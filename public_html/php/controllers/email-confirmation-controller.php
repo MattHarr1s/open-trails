@@ -12,6 +12,8 @@ require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
 require_once(dirname(__DIR__) . "/lib/xsrf.php");
 // a security file that's on the server created by Dylan because it's on the server it's not found	// ???????????
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+// composer for Swiftmailer
+require_once(dirname(dirname(__DIR__))) . "/vendor/autoload.php");
 
 //prepare default error message
 $reply = new stdClass();

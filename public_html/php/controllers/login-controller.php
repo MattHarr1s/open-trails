@@ -1,18 +1,18 @@
 <?php
 
-//auto loads classes
-require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
-//security w/ NG in mind
-require_once(dirname(__DIR__) . "/lib/xsrf.php");
-// a security file that's on the server created by Dylan because it's on the server it's not found	// ???????????
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
-
 /**
  * controller for logging in
  *
  * @author Louis Gill <lgill7@cnm.edu>
  * contributing code from TruFork https://github.com/Skylarity/trufork & foodinventory
  */
+
+//auto loads classes
+require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
+//security w/ NG in mind
+require_once(dirname(__DIR__) . "/lib/xsrf.php");
+// a security file that's on the server created by Dylan because it's on the server it's not found	// ???????????
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 //prepare default error message
 $reply = new stdClass();

@@ -16,7 +16,8 @@ require_once(dirname(dirname(__DIR__)) . "/php/lib/xsrf.php");
 //a security file that's on the server created by Dylan
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");					// ???????????????
 
-//composer??																			//DO WE NEED TO REQUIRE OUR COMPOSER PACKAGE??????
+// composer for Swiftmailer
+require_once(dirname(dirname(__DIR__))) . "/vendor/autoload.php");
 
 // prepare default error message
 $reply = new stdClass();
@@ -50,14 +51,14 @@ try {
 	$email = filter_var($requestObject->email, FILTER_SANITIZE_EMAIL);
 	$user = User::getUserByUserEmail($pdo, $email);
 	if($user !== null) {
-		throw new RuntimeException("This email already has an account", 422);
+		throw (new RuntimeException("This email already has an account", 422));
 	}
 
 	// sanitize the username & search by userName
 	$userName = filter_var($requestObject->userName, FILTER_SANITIZE_STRING);
 	$user = User::getUserByUserName($pdo, $userName);
 	if($user !== null) {
-		throw new RuntimeException("This username already exists", 422);
+		throw (new RuntimeException("This username already exists", 422));
 	}
 
 	// create a new salt and email activation
@@ -82,10 +83,10 @@ try {
 	$reply->message = $exception->getMessage();
 }
 
-/**header("Content-type: application/json");
+header("Content-type: application/json");
 if($reply->data === null) {
 	unset($reply->data);
 }
-echo json_encode($reply); **/								// WHAT IS GOING ON HERE???????????
+echo json_encode($reply);								// WHAT IS GOING ON HERE???????????
 
 ?>
