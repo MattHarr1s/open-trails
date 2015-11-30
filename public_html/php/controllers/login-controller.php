@@ -20,6 +20,11 @@ $reply->status = 200;
 $reply->message = null;
 
 try {
+	// ensures that the fields are filled out
+	if(@isset($_POST["loginEmail"]) === false || @isset($_POST["loginPassword"]) === false) {
+		throw(new InvalidArgumentException("Form not complete. Please verify and try again."));
+	}
+
 	// start the session and create an XSRF token
 	if(session_status() !== PHP_SESSION_ACTIVE) {
 		session_start();
