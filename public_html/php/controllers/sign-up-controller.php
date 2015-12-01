@@ -14,7 +14,7 @@ require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
 require_once(dirname(dirname(__DIR__)) . "/php/lib/xsrf.php");
 
 //a security file that's on the server created by Dylan
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");					// ???????????????
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 // composer for Swiftmailer
 require_once(dirname(dirname(__DIR__))) . "/vendor/autoload.php");
@@ -47,8 +47,8 @@ try {
 	}
 
 	//sanitize the email & search by userEmail
-	$email = filter_var($requestObject->email, FILTER_SANITIZE_EMAIL);
-	$user = User::getUserByUserEmail($pdo, $email);
+	$userEmail = filter_var($requestObject->email, FILTER_SANITIZE_EMAIL);
+	$user = User::getUserByUserEmail($pdo, $userEmail);
 	if($user !== null) {
 		throw (new RuntimeException("This email already has an account", 422));
 	}
@@ -77,7 +77,7 @@ try {
 
 	// attach the sender to the message
 	// this takes the form of an associative array where the Email is the key for the real name
-	$swiftMessage->setFrom(["trailquailabq@gmail.com" => "Trail Quail"]);			// setForm??????????????
+	$swiftMessage->setFrom(["trailquailabq@gmail.com" => "Trail Quail"]);
 
 	/**
 	 * attach the actual message to the message
