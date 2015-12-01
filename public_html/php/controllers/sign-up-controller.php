@@ -42,6 +42,9 @@ try {
 	$requestObject = json_decode($requestContent);
 
 	// verify the passwords match!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	if($_POST["password"] !== $_POST["verifyPassword"]) {
+		throw(new InvalidArgumentException("Please make sure that the passwords match"));
+	}
 
 	//sanitize the email & search by userEmail
 	$email = filter_var($requestObject->email, FILTER_SANITIZE_EMAIL);
