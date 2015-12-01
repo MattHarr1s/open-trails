@@ -501,7 +501,7 @@ class Trail implements JsonSerializable {
 	 * @param PDO $pdo pointer to PDO connection, by reference
 	 * @throws PDOException when mySQL related errors occur
 	 **/
-	public function insert(PDO &$pdo) {
+	public function insert(PDO $pdo) {
 		if($this->trailId !== null) {
 			throw (new PDOException("not a new trail"));
 		}
@@ -726,26 +726,15 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE submitTrailId =
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getTrailByTrailAccessibility(PDO &$pdo, $trailAccessibility) {
+	public static function getAllTrails(PDO &$pdo, $trailAccessibility) {
 		//sanitize the trailAccessibility before searching
-		try {
-			$trailAccessibility = Filter::filterString($trailAccessibility, "trailAccessibility", 256);
-		} catch(InvalidArgumentException $invalidArgument) {
-			throw (new PDOException($invalidArgument->getMessage(), 0, $invalidArgument));
-		} catch(RangeException $range) {
-			throw(new PDOException($range->getMessage(), 0, $range));
-		} catch(Exception $exception) {
-			throw(new PDOException($exception->getMessage(), 0, $exception));
-		}
+
 
 		//create query template
 		$query = "SELECT trailId, userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
 trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailAccessibility = :trailAccessibility";
 		$statement = $pdo->prepare($query);
-
-		//bind trailAccessibility to placeholder
-		$parameters = array("trailAccessibility" => $trailAccessibility);
-		$statement->execute($parameters);
+		$statement->execute();
 
 //build an array of trails
 		$trails = new SplFixedArray($statement->rowCount());

@@ -14,29 +14,22 @@ require_once("etc/apache2/capstone-msql/encrypted-config.php");
  * @author George Kephart <g.e.kephart@gmail.com>
  */
 
-// verify the xsrf challenge
-if(session_status() !== PHP_SESSION_ACTIVE) {
-	session_start();
-}
+
 
 
 //prepare an empty reply
 $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
+
 //set XSRF cookie
+setXsrfCookie("/");
 
 try{
 	//grab the mySQL connection get correct path from dylan
 	$pdo = connectToEncrptedMysql("foo");
 
-	// this is a place holder taken from bread basket and has been molded to mirror your project.
-	// will go over what needs to be changed tp make sure quail trails user experience is correct.
-	// this will be used in post put and delete
-	if(empty($_SESSION["user"]) === true) {
-		setXsrfCookie("/");
-		throw(new RuntimeException("Please log-in or sign up", 401));
-	}
+
 	// determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
@@ -101,6 +94,8 @@ try{
 			$reply->data = Trail::getTrailByTrailUse($pdo, $use);
 		} elseif (empty($uuid) === false) {
 			$reply->data = Trail::getTrailByTrailUuid($pdo, $use);
+		} else {
+
 		}
 
 	}
