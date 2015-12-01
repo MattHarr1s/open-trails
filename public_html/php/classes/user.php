@@ -136,7 +136,7 @@ class User {
 	}
 
 	/**
-	 * accessor method for user account type (regular-R, super user-R, suspended-X)
+	 * accessor method for user account type (regular-R, super user-S, suspended-X)
 	 *
 	 * @return string $newUserAccountType - 1 byte string value of user account type
 	 */
@@ -157,7 +157,7 @@ class User {
 			throw(new InvalidArgumentException("UserAccountType is null"));
 		}
 
-		//verify that the user account type is a recognized account type (regular-r, power user-p, suspended-x)
+		//verify that the user account type is a recognized account type (regular-r, super user-s, suspended-x)
 		if(($newUserAccountType !== "R") && ($newUserAccountType !== "S") && ($newUserAccountType !== "X")) {
 			throw(new InvalidArgumentException("User account type invalid"));
 		}
