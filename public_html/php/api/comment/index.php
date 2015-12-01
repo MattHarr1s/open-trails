@@ -41,7 +41,7 @@ try {
 
 	// sanitize and trim the other fields
 	// trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText			// only fields are commentPhoto, commentPhotoType, & commentText?!?!?!!?!?!?
-	$commentPhoto = filter_input
+	$commentPhoto = filter_input;
 	$commentPhotoType = filter_input;																							// HOW DO YOU FILTER THESE???????????????
 	$commentText = filter_input(INPUT_GET, "commentText", FILTER_SANITIZE_STRING);
 
