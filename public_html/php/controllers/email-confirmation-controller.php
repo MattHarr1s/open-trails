@@ -35,7 +35,7 @@ try {
 			throw(new InvalidArgumentException("Activation code has been activated or does not exist"));
 		} else {
 			$user->setUserEmailActivation(null);
-			$volunteer->update($pdo);
+			$user->update($pdo);
 		}
 
 		$reply->message = "Congratulations, your account has been activated!";

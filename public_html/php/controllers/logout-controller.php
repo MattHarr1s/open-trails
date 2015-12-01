@@ -11,3 +11,8 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 }
 unset($_SESSION["user"]);
 
+$reply = new stdClass();
+$reply->status = 200;
+$reply->message = "You have successfully logged out";
+
+echo json_encode($reply);
