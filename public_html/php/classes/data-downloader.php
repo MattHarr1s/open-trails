@@ -220,17 +220,53 @@ class DataDownloader{
 					fgetcsv($fd, 0 , "'");
 					while ((($data = fgetcsv($fd, 0 , "'")) !== false) && feof($fd) === false) {
 						$trailId = null;
-						$userId =
-						$
+						$userId = "";
+						$browser = "";
+						$createDate = "";
+						$ipAddress ="";
+						$submitTrailId = "";
+						$trailAmenities = "";
+						$trailCondition = "";
+						$trailDescription = $data[3];
+						$trailDifficulty = "" ;
+						$trailDistance = "";
+						$trailName = $data[1];
+						$trailSubmissionType = "";
+						$trailTerrain = "";
+						$trailUse = "";
+						$trailUuid = "";
 
-					}
+						//convert fields to UTF-8
+						$trailDescription = mb_convert_encoding($trailDescription, "UTF-8" );
+						$trailName = mb_convert_encoding($trailName, "UTF-8" );
+
+						try {
+							$trail = new Trail($trailName, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailUse, $trailUuid);
+							$trail = insert($pdo);
+						} catch (PDOException $pdoException) {
+							$sqlStateCode = "23000";
+
+							$errorInfo = $pdoException->errorInf;
+							if($errorInfo [0] === $sqlStateCode ) {
+						} else {
+							throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
+							}
+						} catch (Exception $exception){
+							throw (new Exception ($exception->getMessage(), 0, $exception));
+						}
 				}
+				fclose($fd);
 			}
+		} catch(PDOException $pdoException) {
+			throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
+		} catch (Exception $exception) {
+			throw(new Exception ($exception->getMessage(), 0, $exception));
 		}
 	}
-
-
-
-
-
 }
+
+
+
+
+
+
