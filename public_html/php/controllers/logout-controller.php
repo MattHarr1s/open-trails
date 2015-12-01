@@ -11,5 +11,3 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 }
 unset($_SESSION["user"]);
 
-//TODO set the page that it logs out to
-header("https://bootcamp-coders.cnm.edu");

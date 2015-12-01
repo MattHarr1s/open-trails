@@ -11,7 +11,7 @@
 require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
 //security w/ NG in mind
 require_once(dirname(__DIR__) . "/lib/xsrf.php");
-// a security file that's on the server created by Dylan because it's on the server it's not found	// ???????????
+// a security file that's on the server created by Dylan because it's on the server it's not found
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 //prepare default error message
@@ -20,11 +20,6 @@ $reply->status = 200;
 $reply->message = null;
 
 try {
-	// ensures that the fields are filled out
-	if(@isset($_POST["loginEmail"]) === false || @isset($_POST["loginPassword"]) === false) {
-		throw(new InvalidArgumentException("Form not complete. Please verify and try again."));
-	}
-
 	// start the session and create an XSRF token
 	if(session_status() !== PHP_SESSION_ACTIVE) {
 		session_start();
@@ -37,7 +32,6 @@ try {
 	//convert POSTed JSON to an object
 	$requestContent = file_get_contents("php://input");
 	$requestedObject = json_decode($requestContent);
-	var_dump($requestedObject);
 
 	//sanitize the email & search by userEmail
 	$email = filter_var($requestedObject->email, FILTER_SANITIZE_EMAIL);

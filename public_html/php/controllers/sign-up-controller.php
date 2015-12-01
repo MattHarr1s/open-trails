@@ -26,14 +26,8 @@ $reply->message = null;
 
 $ipAddress = $_SERVER['REMOTE_ADDR'];
 $browser = $_SERVER['HTTP_USER_AGENT'];
-$createDate = 													// ???????????????????
 
 try {
-	// ensures that the fields are filled out
-	if(@isset($_POST["email"]) === false || @isset($_POST["username"]) === false || @isset($_POST["password"]) === false || @isset($_POST["verifyPassword"]) === false) {
-		throw(new InvalidArgumentException("Form not complete. Please verify and try again."));
-	}
-
 	//verify the XSRF challenge
 	if(session_status() !== PHP_SESSION_ACTIVE) {
 		session_start();
@@ -41,11 +35,13 @@ try {
 	verifyXsrf();
 
 	// grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/open-trails.ini");		//CORRECT FILE NAME?????
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/open-trails.ini");
 
 	// convert POSTed JSON to an object
 	$requestContent = file_get_contents("php://input");
-	$requestObject = json_decode($requestContent);											//WHAT???????????
+	$requestObject = json_decode($requestContent);
+
+	// verify the passwords match!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	//sanitize the email & search by userEmail
 	$email = filter_var($requestObject->email, FILTER_SANITIZE_EMAIL);
@@ -62,22 +58,16 @@ try {
 	}
 
 	// create a new salt and email activation
-	$userSalt = bin2hex(openssl_random_pseudo_bytes(32));								//WE DIDN'T DO THIS IS IN THE USER CLASS??????????
-	$userEmailActivation = bin2hex(openssl_random_pseudo_bytes(8));				//WHERE DOES THIS COME INTO PLAY????????
+	$userSalt = bin2hex(openssl_random_pseudo_bytes(32));
+	$userEmailActivation = bin2hex(openssl_random_pseudo_bytes(8));
 
 	// create the hash
-	$userHash = hash_pbkdf2("sha512", $requestObject->password, $userSalt, 262144, 128);			//WHAT DO THESE NUMBERS MEAN????????
+	$userHash = hash_pbkdf2("sha512", $requestObject->password, $userSalt, 262144, 128);
 
 	// create a new User and insert into mySQL
-	$user = new User(null, $this->browser, $this->createDate, $this->ipAddress, accountType?, $requestObject->userEmail, $userHash, $requestObject->$userName, $userSalt);	// HOW DO YOU DO ACCOUNT TYPE????????
+	$user = new User(null, $browser, new DateTime(), $ipAddress, "U", $requestObject->userEmail, $userHash, $requestObject->$userName, $userSalt);
 	$user->insert($pdo);
 	$reply->message = "A new user has been created";
-
-	if($user->getUserIsAdmin() === true) {
-		$_SESSION["user"] = $user;
-		$reply->status = 200;
-		$reply->message = "Logged in as administrator";							// HUH??????????
-	}
 
 	// create Swift message
 	$swiftMessage = Swift_Message::newInstance();
@@ -132,9 +122,4 @@ EOF;
 }
 
 header("Content-type: application/json");
-if($reply->data === null) {
-	unset($reply->data);
-}
-echo json_encode($reply);								// WHAT IS GOING ON HERE???????????
-
-?>
+echo json_encode($reply);
