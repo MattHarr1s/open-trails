@@ -1,3 +1,4 @@
 .Ds_Store
 .idea
 /vendor
+node_modules
