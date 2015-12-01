@@ -107,7 +107,7 @@ try{
 
 	//verify user and verify object is not empty
 
-	// if the session belongs to a user allow post
+	// if the session belongs to an active user allow post
 	if(empty($_SESSION["user"]) === false) {
 		if ($method === "POST") {
 
@@ -162,9 +162,92 @@ try{
 			if (empty($requestObject->trailUuid) === true) {
 				$requestObject = null;
 			}
-			//preform the actual post.
-			if($method === "POST");
+			//preform the actual post/do i need to treat foreign keys in any special manner
+			$trail = new Trail(null,$requestObject->userId, $requestObject->browser,$requestObject->creatDate, $requestObject->ipAddress, $requestObject->submitTrailId,$requestObject->trailAmenities, $requestObject-> traiilCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailD, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubbmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
+			$trail->insert($pdo);
+			//not sure if i need the pusher will comment out this line
+			//$pusher->trigger("trail", new, $trail);
 
+			$reply->message = "trail submitted okay";
+		}
+	} elseif(empty($_SESSION["user"]) === false && $_SESSION["user"]->getTrailByTrailSubmissionType() === 2) {
+
+		if($method === "PUT") {
+			verifyXsrf();
+			$requestContent = file_get_contents("php://input");
+			$requestObject = json_decode($requestContent);
+
+			//make sure all fields are present, in order to prevent database issues
+			if(empty($requestObject->userId) === true) {
+				throw(new InvalidArgumentException("user id cannot be empty"));
+			}
+			if (empty($requestObject->browser) === true) {
+				throw(new InvalidArgumentException("browser cannot be empty"));
+			}
+			if(empty($requestObject->createDate) === true) {
+				throw(new InvalidArgumentException("createDate cannot be empty"));
+			}
+			if(empty($requestObject->ipAddress) === true) {
+				throw(new InvalidArgumentException("ip Address cannot be null"));
+			}
+			if (empty($requestObject->submitTrailId) === true) {
+				$requestObject = null;
+			}
+			if (empty($requestObject->trailAmenities) === true) {
+				$requestObject = null;
+			}
+			if (empty($requestObject->TrailCondition) === true) {
+				$requestObject = null;
+			}
+			if (empty($requestObject->trailDescription) === true) {
+				$requestObject = null;
+			}
+			if (empty($requestObject->traiDifficulty) === true) {
+				$requestObject = null;
+			}
+			if (empty($requestObject->trailDistance) === true) {
+				$requestObject = null;
+			}
+			if (empty($requestObject->trailName) === true) {
+				throw(new InvalidArgumentException("trail name cannot be null"));
+			}
+			// do i need to put a limit on what this number can be?
+			if (empty($requestObject->trailSubmissionType) === true) {
+				throw(new InvalidArgumentException("submission type cannot be null"));
+			}
+			if (empty($requestObject->trailTerrain) === true) {
+				$requestObject = null;
+			}
+			if (empty($requestObject->trailUse) === true) {
+				$requestObject = null;
+			}
+			if (empty($requestObject->trailUuid) === true) {
+				$requestObject = null;
+			}
+			$trail = Trail::getTrailById($pdo, $id);
+			if($trail === null) {
+				throw(new RuntimeException("trail does not exist", 404));
+			}
+			$trail = new Trail(null,$requestObject->userId, $requestObject->browser,$requestObject->creatDate, $requestObject->ipAddress, $requestObject->submitTrailId,$requestObject->trailAmenities, $requestObject-> traiilCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailD, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubbmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
+			$trail->update($pdo);
+
+			//not sure if i need the pusher will comment out this line
+			//$pusher->trigger("trail", new, $trail);
+
+			$reply->message = "Trail updated OK";
+		}
+	} elseif (empty($_SESSION["user"]) === false && $_SESSION["user"]->getTrailByTrailSubmissionType() === 2) {
+		if ($method === "DELETE") {
+			$trail = Trail::getTrailById($pdo, $id);
+			if($trail === null) {
+				throw(new RuntimeException("trail does not exist", 404));
+			}
+
+			$trail->delete($pdo);
+			$deletedObject = new stdClass();
+			$deletedObject->traiId = $id;
+			//$pusher->trigger("misquote", "delete", $deletedObject);
+			$reply->message = "trail deleted OK";
 
 		}
 	}
