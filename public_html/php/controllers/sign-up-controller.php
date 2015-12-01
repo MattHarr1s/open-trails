@@ -47,7 +47,7 @@ try {
 	}
 
 	//sanitize the email & search by userEmail
-	$userEmail = filter_var($requestObject->email, FILTER_SANITIZE_EMAIL);
+	$userEmail = filter_var($requestObject->userEmail, FILTER_SANITIZE_EMAIL);
 	$user = User::getUserByUserEmail($pdo, $userEmail);
 	if($user !== null) {
 		throw (new RuntimeException("This email already has an account", 422));

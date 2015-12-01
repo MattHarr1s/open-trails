@@ -34,8 +34,8 @@ try {
 	$requestedObject = json_decode($requestContent);
 
 	//sanitize the email & search by userEmail
-	$email = filter_var($requestedObject->email, FILTER_SANITIZE_EMAIL);
-	$user = User::getUserByUserEmail($pdo, $email);
+	$userEmail = filter_var($requestedObject->userEmail, FILTER_SANITIZE_EMAIL);
+	$user = User::getUserByUserEmail($pdo, $userEmail);
 
 	if($user !== null) {
 		$userHash = hash_pbkdf2("sha512", $requestedObject->password, $user->getUserSalt(), 262144, 128);
