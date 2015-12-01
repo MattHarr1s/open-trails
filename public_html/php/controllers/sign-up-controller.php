@@ -80,6 +80,17 @@ try {
 	$swiftMessage->setFrom(["trailquailabq@gmail.com" => "Trail Quail"]);
 
 	/**
+	 * attach the recipients to the message
+	 * notice this is an array that can include or omit the recipient's real name
+	 * use the recipient's real name where possible; this reduces the probability of the email being marked as spam
+	 */
+	$recipients = [$requestObject->userEmail];
+	$swiftMessage->setTo($recipients);
+
+	// attach the subject line to the message
+	$swiftMessage->setSubject("Please confirm your Trail Quail account");
+
+	/**
 	 * attach the actual message to the message
 	 * here, we set two versions of the message: the HTML formatted message and a special filter_var()ed
 	 * version of the message that generates a plain text version of the HTML content
