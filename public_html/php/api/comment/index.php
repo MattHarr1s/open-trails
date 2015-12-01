@@ -89,7 +89,12 @@ try {
 			// perform the actual put or post
 			if($method === "PUT") {
 				$comment = Comment::getCommentByCommentId($pdo, $commentId);
-				if($comment)
+				if($comment === null) {
+					throw(new RuntimeException("Comment does not exist", 404));
+				}
+				// trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText
+				$comment = new Comment($commentId, $trailId, $userId, $browser, $createDate, $ipAddress, $requestObject->commentPhoto, $requestObject->commentPhotoType, $requestObject->commentText);			// SHOULD COMMENTID BE NULL? HOW DO YOU GET TRAIL & USER IDs? DO ANTIABUSE CORRECTLY!!!!!!!!!!!!!!!
+				$comment->insert($pdo);
 			}
 		}
 	}
