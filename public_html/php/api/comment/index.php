@@ -20,6 +20,9 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
+$ipAddress = $_SERVER['REMOTE_ADDR'];
+$browser = $_SERVER['HTTP_USER_AGENT'];
+
 try {
 	// grab the mySQL connection
 	$pdo = connectToEncryptedMySql("/etc/apache2/capstone-mysql/open-trails.ini");
@@ -93,7 +96,7 @@ try {
 					throw(new RuntimeException("Comment does not exist", 404));
 				}
 				// trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText
-				$comment = new Comment($commentId, $trailId, $userId, $browser, $createDate, $ipAddress, $requestObject->commentPhoto, $requestObject->commentPhotoType, $requestObject->commentText);			// SHOULD COMMENTID BE NULL? HOW DO YOU GET TRAIL & USER IDs? DO ANTIABUSE CORRECTLY!!!!!!!!!!!!!!!
+				$comment = new Comment($commentId, $trailId, $userId, $browser, new DateTime(), $ipAddress, $requestObject->commentPhoto, $requestObject->commentPhotoType, $requestObject->commentText);			// SHOULD COMMENTID BE NULL? HOW DO YOU GET TRAIL & USER IDs?????????????
 				$comment->insert($pdo);
 			}
 		}
