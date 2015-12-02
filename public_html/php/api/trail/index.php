@@ -4,7 +4,7 @@
 require_once dirname(dirname(__DIR__)) . "/classes/autoload.php";
 require_once dirname(dirname(__DIR__)) . "/lib/xsrf.php";
 // go over with dylan to make sure this is correct
-require_once("etc/apache2/capstone-msql/encrypted-config.php");
+require_once("etc/apache2/capstone-mySQL/encrypted-config.php");
 
 /**
  * controller/api for the trail class
@@ -22,6 +22,8 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
+
+//not sure set xsrf code is correct
 //set XSRF cookie
 setXsrfCookie("/");
 
@@ -60,7 +62,7 @@ try{
 	// handle all restful calls
 	// get some of all trails
 	if ($method === "GET") {
-		//set an XSRF cookie request
+		//not sure if i need this.
 		setXsrfCookie("/");
 		if(empty($id) === false) {
 			$reply->data = Trail::getTrailById($pdo, $id);
