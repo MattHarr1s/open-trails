@@ -17,7 +17,7 @@ require_once dirname(dirname(__DIR__)) . "/php/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 // composer for Swiftmailer
-// require_once(dirname(dirname(__DIR__)) . "/vendor/autoload.php");
+require_once(dirname(dirname(dirname(__DIR__))) . "/vendor/autoload.php");
 
 // prepare default error message
 $reply = new stdClass();
@@ -35,14 +35,14 @@ try {
 	verifyXsrf();
 
 	// grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/open-trails.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 
 	// convert POSTed JSON to an object
 	$requestContent = file_get_contents("php://input");
 	$requestObject = json_decode($requestContent);
 
 	// verify the passwords match!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	if($_POST["password"] !== $_POST["verifyPassword"]) {
+	if($requestObject->password !== $requestObject->verifyPassword) {
 		throw(new InvalidArgumentException("Please make sure that the passwords match"));
 	}
 
@@ -68,7 +68,7 @@ try {
 	$userHash = hash_pbkdf2("sha512", $requestObject->password, $userSalt, 262144, 128);
 
 	// create a new User and insert into mySQL
-	$user = new User(null, $browser, new DateTime(), $ipAddress, "U", $requestObject->userEmail, $userHash, $requestObject->$userName, $userSalt);
+	$user = new User(null, $browser, new DateTime(), $ipAddress, "R", $requestObject->userEmail, $userHash, $requestObject->userName, $userSalt);
 	$user->insert($pdo);
 	$reply->message = "A new user has been created";
 

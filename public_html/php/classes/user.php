@@ -491,24 +491,21 @@ class User {
 		$statement = $pdo->prepare($query);
 
 		// bind userId to placeholder
-		$userName = "%$userName%";
 		$parameters = array("userName" => $userName);
 		$statement->execute($parameters);
 
 		// build a user id information array from mySQL
-		$users = new SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
+		try {
+			$user = null;
+			$row = $statement->fetch();
+			if($row !== false) {
 				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
-				$users[$users->key()] = $user;
-				$users->next();
-			} catch(Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new PDOException($exception->getMessage(), 0, $exception));
 			}
+		} catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($users);
+		return($user);
 	}
 
 	/**
