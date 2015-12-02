@@ -8,10 +8,10 @@
  **/
 
 //auto loads classes
-require_once(dirname(__DIR__) . "/php/classes/autoload.php");
+require_once dirname(dirname(__DIR__)) . "/php/classes/autoload.php";
 
 //security w/ NG in mind
-require_once(dirname(dirname(__DIR__)) . "/php/lib/xsrf.php");
+require_once dirname(dirname(__DIR__)) . "/php/lib/xsrf.php";
 
 //a security file that's on the server created by Dylan
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
