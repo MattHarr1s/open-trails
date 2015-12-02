@@ -92,7 +92,7 @@ try{
 		} elseif (empty($uuid) === false) {
 			$reply->data = Trail::getTrailByTrailUuid($pdo, $uuid);
 		} else{
-			$reply->data = Trail::getAllTrails($pdo);
+			$reply->data = Trail::getAllTrails($pdo)->toArray();
 
 		}
 
