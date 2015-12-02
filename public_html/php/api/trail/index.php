@@ -90,9 +90,9 @@ try{
 		} elseif (empty($use) === false) {
 			$reply->data = Trail::getTrailByTrailUse($pdo, $use);
 		} elseif (empty($uuid) === false) {
-			$reply->data = Trail::getTrailByTrailUuid($pdo, $use);
+			$reply->data = Trail::getTrailByTrailUuid($pdo, $uuid);
 		} else{
-			$reply->data = Trail::getAllTrails($pdo, $use);
+			$reply->data = Trail::getAllTrails($pdo);
 
 		}
 
