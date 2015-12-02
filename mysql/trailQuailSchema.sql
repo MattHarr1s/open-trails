@@ -26,6 +26,7 @@ CREATE TABLE user (
 	userName        VARCHAR(64)                 NOT NULL,
 	userSalt        CHAR(64) NOT NULL,
 	UNIQUE (userEmail),
+	UNIQUE (userName),
 	PRIMARY KEY (userId)
 );
 
