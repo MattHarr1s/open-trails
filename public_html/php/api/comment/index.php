@@ -38,9 +38,9 @@ try {
 
 	// sanitize and trim the other fields
 	// trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText			// only fields are commentPhoto, commentPhotoType, & commentText?!?!?!!?!?!?
-	$commentPhoto = filter_input;
-	$commentPhotoType = filter_input;																							// HOW DO YOU FILTER THESE??????????????? 4 gets!
 	$commentText = filter_input(INPUT_GET, "commentText", FILTER_SANITIZE_STRING);
+	$userId = filter_input(INPUT_GET, "userId", FILTER_VALIDATE_INT);
+	$trailId = filter_input(INPUT_GET, "trailId", FILTER_VALIDATE_INT);
 
 	// handle all RESTful calls to listing
 	//get some or all Comments
