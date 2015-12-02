@@ -3,7 +3,7 @@
 require_once dirname(dirname(__DIR__)) . "/classes/autoload.php";
 require_once dirname(dirname(__DIR__)) . "/lib/xsrf.php";
 // go over with dylan to make sure this is correct
-require_once("etc/apache2/capstone-mySQL/encrypted-config.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 /**
  * API for segment for segment class
  *
@@ -16,7 +16,10 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
-
+// start the session
+if(session_status() !== PHP_SESSION_ACTIVE) {
+	session_start();
+}
 
 try{
 	//grab the mySQL connection get correct path from dylan
