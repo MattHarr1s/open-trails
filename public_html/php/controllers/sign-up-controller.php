@@ -8,7 +8,7 @@
  **/
 
 //auto loads classes
-require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
+require_once(dirname(__DIR__) . "/php/classes/autoload.php");
 
 //security w/ NG in mind
 require_once(dirname(dirname(__DIR__)) . "/php/lib/xsrf.php");
