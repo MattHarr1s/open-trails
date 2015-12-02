@@ -17,7 +17,7 @@ require_once dirname(dirname(__DIR__)) . "/php/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 // composer for Swiftmailer
-require_once(dirname(dirname(__DIR__)) . "/vendor/autoload.php");
+// require_once(dirname(dirname(__DIR__)) . "/vendor/autoload.php");
 
 // prepare default error message
 $reply = new stdClass();
