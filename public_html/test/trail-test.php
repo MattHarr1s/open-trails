@@ -446,7 +446,7 @@ class TrailTest extends TrailQuailTest {
 	/**
 	 * test grabbing a trail by TrailAccessibility
 	 **/
-	public function testGetValidTrailByTrailAccessibility() {
+	public function testGetValidAllTrails() {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("trail");
 
@@ -459,7 +459,7 @@ class TrailTest extends TrailQuailTest {
 		$trail->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoTrails = Trail::getTrailByTrailAccessibility($this->getPDO(), $trail->getTrailAccessibility());
+		$pdoTrails = Trail::getAllTrails($this->getPDO(), $trail->getAllTrails());
 		foreach($pdoTrails as $pdoTrail) {
 			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("trail"));
 			$this->assertLessThan($pdoTrail->getTrailId(),0);
@@ -486,14 +486,14 @@ class TrailTest extends TrailQuailTest {
 
 
 	/**
-	 * test grabbing a Trail by TrailAccessibility that does not exist
+	 * test grabbing all trails that does not exist
 	 *
 	 * @expectedException PDOException
 	 **/
 
-	public function testGetInvalidTrailByTrailAccessibility() {
+	public function testGetInvalidAllTrails() {
 		//grab a TrailAccessibility that does not exist
-		$trail = Trail::getTrailByTrailAccessibility($this->getPDO(), "<script></script>");
+		$trail = Trail::getAllTrails($this->getPDO(), "<script></script>");
 		$this->assertNull($trail);
 	}
 
