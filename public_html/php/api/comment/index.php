@@ -25,16 +25,10 @@ $browser = $_SERVER['HTTP_USER_AGENT'];
 
 try {
 	// grab the mySQL connection
-	$pdo = connectToEncryptedMySql("/etc/apache2/capstone-mysql/open-trails.ini");
-
-	// if the volunteer session is empty, the user is not logged in, throw an exception
-	if(empty($_SESSION["user"]) === true) {
-		setXsrfCookie("/");																						// ????????????????????????????
-		throw(new RuntimeException("Please log-in or sign up", 401));								// THIS GOES ELSEWHERE??????????????????????????
-	}
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/open-trails.ini");
 
 	//determine which HTTP method was used
-	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];			// WHAT IS GOING ON HERE??????????
+	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	// sanitize the commentId
 	$commentId = filter_input(INPUT_GET, "commentId", FILTER_VALIDATE_INT);
@@ -45,7 +39,7 @@ try {
 	// sanitize and trim the other fields
 	// trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText			// only fields are commentPhoto, commentPhotoType, & commentText?!?!?!!?!?!?
 	$commentPhoto = filter_input;
-	$commentPhotoType = filter_input;																							// HOW DO YOU FILTER THESE???????????????
+	$commentPhotoType = filter_input;																							// HOW DO YOU FILTER THESE??????????????? 4 gets!
 	$commentText = filter_input(INPUT_GET, "commentText", FILTER_SANITIZE_STRING);
 
 	// handle all RESTful calls to listing
@@ -56,18 +50,18 @@ try {
 		if(empty($commentId) === false) {
 			$reply->data = Comment::getCommentByCommentId($pdo, $commentId);
 		} elseif(empty($trailId) === false) {
-			$reply->data = Comment::getCommentByUserId($pdo, $userId);
+			$reply->data = Comment::getCommentByUserId($pdo, $userId)->toArray();
 		} elseif(empty($commentText) === false) {
-			$reply->data = Comment::getCommentByCommentText($pdo, $commentText);		// DO I NEED THE OTHER ATTRIBUTES???????????????
+			$reply->data = Comment::getCommentByCommentText($pdo, $commentText)->toArray();
 		} else {
-			$reply->data = Comment::getAllComments($pdo)->toArray();						//toArray??????????????
+			$reply->data = Comment::getCommentByTrailId($pdo, $trailId)->toArray();
 		}
 	}
 
 	// verify admin and verify object not empty
 	// if the session belongs to an admin, allow post, put, and delete methods
 	if(empty($_SESSION["user"]) === false && $_SESSION["user"]->getUserAccountType() !== "X") {
-		if($method === "PUT" || $method === "POST" || $method === "DELETE") {												// DELETE???????????????????
+		if($method === "PUT" || $method === "POST") {
 			verifyXsrf();
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
@@ -76,14 +70,11 @@ try {
 			if(empty($requestObject->trailId) === true) {
 				throw(new InvalidArgumentException("Trail ID cannot be empty", 405));
 			}
-			if(empty($requestObject->userId) === true) {
-				throw(new InvalidArgumentException("User ID cannot be empty", 405));						// DO I NEED TO DO THE ANTI-ABUSE TRAITS??????????????
-			}
 			if(empty($requestObject->commentPhoto) === true) {
 				$requestObject->commentPhoto = null;
 			}
 			if(empty($requestObject->commentPhotoType) === true) {
-				$requestObject->commentPhotoType = null;															// WHY DO YOU EVEN HAVE TO DO THIS??????????????????
+				$requestObject->commentPhotoType = null;
 			}
 			if(empty($requestObject->commentText) === true) {
 				throw(new InvalidArgumentException("Comment Text cannot be empty", 405));
@@ -95,33 +86,31 @@ try {
 				if($comment === null) {
 					throw(new RuntimeException("Comment does not exist", 404));
 				}
+
+				if($_SESSION["user"] !== "S" && $_SESSION["user"]->getUserId() !== $comment->userId()) {
+					throw(new RuntimeException("You may only edit your own comments", 403));
+				}
+
 				// trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText
-				$comment = new Comment($commentId, $trail->getTrailId(), $user->getUserId(), $comment->getBrowser(), $comment->getCreateDate(), $comment->getIpAddress(), $requestObject->commentPhoto, $requestObject->commentPhotoType, $requestObject->commentText);			// SHOULD COMMENTID BE NULL? HOW DO YOU GET TRAIL & USER IDs????????????? OR COMMENT->GETCOMMENTID()???????????
+				$comment = new Comment($commentId, $comment->getTrailId(), $comment->getUserId(), $comment->getBrowser(), $comment->getCreateDate(), $comment->getIpAddress(), $requestObject->commentPhoto, $requestObject->commentPhotoType, $requestObject->commentText);
 				$comment->update($pdo);
 
 				$reply->message = "Comment updated OK";
 
 			} elseif($method === "POST") {
-				$comment = new Comment(null, $trail->getTrailId(), $user->getUserId(), $browser, new DateTime(), $ipAddress, $requestObject->commentPhoto, $requestObject->commentPhotoType, $requestObject->commentText);
+				$comment = new Comment(null, $requestObject->trailId, $_SESSION["user"]->getUserId(), $browser, new DateTime(), $ipAddress, $requestObject->commentPhoto, $requestObject->commentPhotoType, $requestObject->commentText);
 				$comment->insert($pdo);
 
 				$reply->message = "Comment created OK";
 			}
 		} elseif($method === "DELETE") {
+			verifyXsrf();
 			$comment = Comment::getCommentByCommentId($pdo, $commentId);
 			if($comment === null) {
 				throw(new RuntimeException("Comment does not exist", 404));
 			}
 			$comment->delete($pdo);
-			$deletedObject = new stdClass();
-			$deletedObject->commentId = $commentId;												// ?????????????????????
-
 			$reply->message = "Comment deleted OK";
-		}
-	} else {
-		// if a suspended user and attempting a method other than get, throw an exception				??????
-		if((empty($method) === false) && ($method !== "GET")) {
-			throw(new RangeException("Suspended users are not allowed to modify entries", 401));
 		}
 	}
 } catch (Exception $exception) {
