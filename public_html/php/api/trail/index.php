@@ -22,11 +22,6 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
-
-//not sure set xsrf code is correct
-//set XSRF cookie
-setXsrfCookie("/");
-
 try{
 	//grab the mySQL connection get correct path from dylan
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
@@ -62,7 +57,6 @@ try{
 	// handle all restful calls
 	// get some of all trails
 	if ($method === "GET") {
-		//not sure if i need this.
 		setXsrfCookie("/");
 		if(empty($id) === false) {
 			$reply->data = Trail::getTrailById($pdo, $id);
@@ -106,6 +100,7 @@ try{
 		if($method === "PUT" || $method === "POST" || $method = "DELETE") {
 
 			//verify the XSRF cookie is correct
+			verifyXsrf();
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
 
@@ -174,6 +169,7 @@ try{
 				$reply->message = "trail submitted okay";
 			}
 			if($method === "DELETE") {
+				verifyXsrf();
 				$trail = Trail::getTrailById($pdo, $id);
 				if($trail === null) {
 					throw(new RuntimeException("trail does not exist", 404));

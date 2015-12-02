@@ -1,10 +1,3 @@
-//attributes in segment
-// segment Id
-// segmentStart
-// segmentStop
-// segmentStartElevation
-// segmentStopElevation
-
 <?php
 
 require_once dirname(dirname(__DIR__)) . "/classes/autoload.php";
@@ -23,8 +16,7 @@ $reply = new stdClass();
 $reply->status = 200;
 $reply->data = null;
 
-//set XSRF cookie
-setXsrfCookie("/");
+
 
 try{
 	//grab the mySQL connection get correct path from dylan
@@ -41,10 +33,10 @@ try{
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 	//sanitize and trim the rest of the inputs
-	//$SegmentA = filter_
-	//$SegmentW = filter_
-	$ElevationA = filter_input(INPUT_GET, "segmentStartElevation", FILTER_VALIDATE_INT);
-	$ElevationW = filter_input(INPUT_GET, "segmentStopElevation", FILTER_VALIDATE_INT);
+	$SegmentX= "segmentStart";
+	$SegmentY = "segmentStop";
+	$ElevationX = filter_input(INPUT_GET, "segmentStartElevation", FILTER_VALIDATE_INT);
+	$ElevationY = filter_input(INPUT_GET, "segmentStopElevation", FILTER_VALIDATE_INT);
 
 
 	//handle all restful calls
@@ -54,13 +46,80 @@ try{
 		setXsrfCookie("/");
 		if (empty($id) === false) {
 			$reply->data = Segment::getSegmentBySegmentId($pdo, $id);
-		} elseif(empty($segmentA) === false) {
-			$reply->data = Segment::getSegmentBySegmentStart($pdo, $segmentStart );
-		} elseif(empty($segmentB) === false) {
-			$reply->data = Segment::getSegmentBySegmentStart($pdo, $segmentStop);
-		} elseif(empty($segmentStartElevation) === false) {
-			$reply->data = Segment::getSegmentBySegmentStartElevation($pdo, $segme)
+		} elseif(empty($segmentX) === false) {
+			$reply->data = Segment::getSegmentBySegmentStart($pdo, $segmentX)->toArray();
+		} elseif(empty($segmentY) === false) {
+			$reply->data = Segment::getSegmentBySegmentStop($pdo, $segmentY)->toArray();
+		} elseif(empty($elevationX) === false) {
+			$reply->data = Segment::getSegmentBySegmentStartElevation($pdo, $elevationX)->toArray();
+		} elseif(empty($elevationY) === false) {
+			$reply->data = Segment::getSegmentBySegmentStopElevation($pdo, $ElevationY)->toArray();
+		}
+	}
+	//if the section belongs to a new an active user allow post, put and delete m
+	if(empty($_SESSION["user"]) === false && $_SESSION["user"]->getUserAccountType() !== "X"); {
+		if($method === "PUT" || $method === "POST" || $method === "DELETE") {
+
+			verifyXsrf();
+			$requestContent = file_get_contents("php://input");
+			$requestObject = json_decode($requestContent);
+
+			// make sure al fields are present, in order to prevent database issues
+			if(empty($requestObject->segmentStart) === true) {
+				throw(new InvalidArgumentException("segment start cannot be empty"));
+			}
+			if(empty($requestObject->segmentStop) === true) {
+				throw(new InvalidArgumentException("segment stop cannot be empty"));
+			}
+			if(empty($requestObject->segmentStartElevation) === true) {
+				throw(new InvalidArgumentException("elevation start cannot be null"));
+			}
+			if(empty($requestObject->segmentStopElevation) === true) {
+				throw(new InvalidArgumentException("elevation stop cannot be null"));
+			}
+
+			//preform the a put post or delete
+			if($method === "PUT") {
+				//verify the xsrf token
+				$segment = Segment::getSegmentBySegmentId($pdo, $id);
+				// verify the segment in question exists
+				if($segment === null) {
+					throw(new RuntimeException("segment must exist", 404));
+				}
+				$segment = new Segment($id, $requestObject->segmentStart, $requestObject->segmentStop, $requestObject->segmentStartElevation, $requestObject->segmentStopElevation);
+				$segment->update($pdo);
+				$reply->message = "segment update was successful";
+			}
+			if($method === "POST") {
+				$segment = new Segment(null, $requestObject->segmentStart, $requestObject->segmentStop, $requestObject->segmentStartElevation, $requestObject->segmentStopElevation );
+				$segment->insert($pdo);
+				$reply->message = "segment insert was successful";
+			}
+			if($method === "DElETE") {
+				$segment = Segment::getSegmentBySegmentId($pdo, $id);
+				if($segment === null) {
+					throw(new RuntimeException("segment must exist", 404));
+				}
+				$segment->delete($pdo);
+				$deletedObject = new stdClass();
+				$deletedObject->segmentId = $id;
+			}
+		} else {
+			if((empty($method) === false) &&($method !=="GET")) {
+				throw(new RuntimeException("only active users are allowed to modify entries", 401));
 		}
 	}
 
+
+	}
+} catch(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
 }
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+echo json_encode($reply);
+
+
