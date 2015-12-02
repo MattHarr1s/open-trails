@@ -718,7 +718,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE submitTrailId =
 	}
 
 	/**
-	 * gets the trail by trailAccessibility
+	 * gets all trails
 	 *
 	 * @param PDO $pdo pointer to PDO connection, by reference
 	 * @param string $trailAccessibility trailAccessibility to search for
@@ -726,13 +726,13 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE submitTrailId =
 	 * @throws PDOException when mySQL related errors occur
 	 *
 	 **/
-	public static function getAllTrails(PDO &$pdo, $trailAccessibility) {
+	public static function getAllTrails(PDO &$pdo) {
 		//sanitize the trailAccessibility before searching
 
 
 		//create query template
 		$query = "SELECT trailId, userId, browser, createDate, ipAddress, submitTrailId, trailAccessibility, trailAmenities, trailCondition, trailDescription, trailDifficulty, trailDistance, trailName, trailSubmissionType,
-trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailAccessibility = :trailAccessibility";
+trailTerrain, trailTraffic, trailUse, trailUuid FROM trail ";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
