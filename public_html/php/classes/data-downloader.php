@@ -263,6 +263,30 @@ class DataDownloader{
 			throw(new Exception ($exception->getMessage(), 0, $exception));
 		}
 	}
+
+	/**
+	 * Decodes geoJson file, converts to string, sifts through the string and inserts the data into the database
+	 *
+	 *
+	 * @param string $urlBegin beginning of url to grab file at
+	 * @param string $urlEnd end of url to grab file at
+	 * @throws PDOException PDO related errors
+	 * @throws Exception catch-all exception
+	**/
+	public static function readTrailSegmentsGeoJson($urlBegin, $urlEnd){
+		$urls = glob ("$urlBegin*$urlEnd");
+		if(count($urls) >0) {
+			$url = $urls[0];
+		} else {
+			throw(new RuntimeException("No file exists at specified location"));
+		}
+		$context = stream_context_create(array("http" => array("ignore_errors" => true, "method" => "GET")));
+
+		try {
+			$pdo = connectToEncryptedMySQL("/etc/apache2/mysql/trailquail.ini");
+
+		}
+	}
 }
 
 
