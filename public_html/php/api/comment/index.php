@@ -96,9 +96,41 @@ try {
 					throw(new RuntimeException("Comment does not exist", 404));
 				}
 				// trailId, userId, browser, createDate, ipAddress, commentPhoto, commentPhotoType, commentText
-				$comment = new Comment($commentId, $trailId, $userId, $browser, new DateTime(), $ipAddress, $requestObject->commentPhoto, $requestObject->commentPhotoType, $requestObject->commentText);			// SHOULD COMMENTID BE NULL? HOW DO YOU GET TRAIL & USER IDs?????????????
+				$comment = new Comment($commentId, $trail->getTrailId(), $user->getUserId(), $comment->getBrowser(), $comment->getCreateDate(), $comment->getIpAddress(), $requestObject->commentPhoto, $requestObject->commentPhotoType, $requestObject->commentText);			// SHOULD COMMENTID BE NULL? HOW DO YOU GET TRAIL & USER IDs????????????? OR COMMENT->GETCOMMENTID()???????????
+				$comment->update($pdo);
+
+				$reply->message = "Comment updated OK";
+
+			} elseif($method === "POST") {
+				$comment = new Comment(null, $trail->getTrailId(), $user->getUserId(), $browser, new DateTime(), $ipAddress, $requestObject->commentPhoto, $requestObject->commentPhotoType, $requestObject->commentText);
 				$comment->insert($pdo);
+
+				$reply->message = "Comment created OK";
 			}
+		} elseif($method === "DELETE") {
+			$comment = Comment::getCommentByCommentId($pdo, $commentId);
+			if($comment === null) {
+				throw(new RuntimeException("Comment does not exist", 404));
+			}
+			$comment->delete($pdo);
+			$deletedObject = new stdClass();
+			$deletedObject->commentId = $commentId;												// ?????????????????????
+
+			$reply->message = "Comment deleted OK";
+		}
+	} else {
+		// if a suspended user and attempting a method other than get, throw an exception				??????
+		if((empty($method) === false) && ($method !== "GET")) {
+			throw(new RangeException("Suspended users are not allowed to modify entries", 401));
 		}
 	}
+} catch (Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
 }
+
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+echo json_encode($reply);
