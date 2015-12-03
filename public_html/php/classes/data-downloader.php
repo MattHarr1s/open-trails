@@ -273,10 +273,6 @@ class DataDownloader {
 	 * Slurp Slurp
 	 * Decodes geoJson file, converts to string, sifts through the string and inserts the data into the database
 	 *
-	 * based on http://www.bewebdeveloper.com/tutorial-about-how-to-parse-json-file-with-php and the knowledge bequeathed
-	 * by the beloved Scrum Masters.
-	 *
-	 *
 	 * @param string $urlBegin beginning of url to grab file at
 	 * @param string $urlEnd end of url to grab file at
 	 * @throws PDOException PDO related errors
@@ -302,22 +298,18 @@ class DataDownloader {
 
 				//decode the geoJson file
 				$jsonConverted = json_decode($jsonData, true);
+				$jsonFeatures = $jsonConverted->features;
 
-				//copy the values to arrays
-				$jsonSegments = $jsonConverted->features->geometry->coordinates[0];
-				$jsonProperties = $jsonConverted->features->properties;
-				foreach($jsonSegments as $segment) {
-					this->$segment->
-
-				}
-				foreach($jsonProperties as $property){
-					this->$property->
-				}
-
-
-
-
+				$coordinates = $jsonFeatures->geometry->coordinates;
+				for($index = 0; $index < count($coordinates) - 1; $index++) {
+					$segmentStartX = $coordinates[$index][0];
+					$segmentStartY = $coordinates[$index][1];
+					$segmentStartElevation = $coordinates[$index][2];
+					$segmenStopX = $coordinates[$index + 1][0];
+					$segmentStopY = $coordinates[$index +1][1];
+					$segmentStopElevation = $coordinates[$index +1][2];
 			}
+				$properties = $jsonFeatures->properties;
 		}
 	}
 }
