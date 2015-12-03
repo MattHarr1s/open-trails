@@ -1,15 +1,15 @@
 <?php
 
-require_once(dirname(__DIR__)  .  "/traits/anti-abuse.php");
+require_once(dirname(__DIR__) . "/traits/anti-abuse.php");
 require_once "autoload.php";
 
 /**
- cross section of trail quail that is user submitted comments
+ * cross section of trail quail that is user submitted comments
  *
  * this feature will be a comment thread that will allow for users to communicate important information about the trail,
  * to have conversations about hiking, to upload photos, and to get official information from the city about the trail
  *
- *@author George Kephart <gkephart@cnm.edu>
+ * @author George Kephart <gkephart@cnm.edu>
  */
 class Comment {
 	use AntiAbuse;
@@ -200,17 +200,20 @@ class Comment {
 	 * @throws RangeException if comment photo  link is larger than > 256
 	 */
 	public function setCommentPhoto($newCommentPhoto) {
+		if($newCommentPhoto === null) {
+			$this->commentPhoto = null;
+			return;
+		}
 		// verify if comment photo path is secure
 		$newCommentPhoto = trim($newCommentPhoto);
 		$newCommentPhoto = filter_var($newCommentPhoto, FILTER_SANITIZE_STRING);
 		if(empty($newCommentPhoto) === true) {
 			throw(new InvalidArgumentException("comment photo path is empty or insecure"));
-
 		}
 
 		//verify the comment photo path is the correct length to fit into the
 		if(strlen($newCommentPhoto) > 255) {
-			throw (new RangeException("comment photo  file path is to long"));
+			throw (new RangeException("comment photo file path is too long"));
 		}
 
 		// store the file path of the comment photo
@@ -233,6 +236,10 @@ class Comment {
 	 * @throws InvalidArgumentException if $newCommentPhotoType is not supported file type
 	 */
 	public function setCommentPhotoType($newCommentPhotoType) {
+		if($newCommentPhotoType === null) {
+			$this->commentPhotoType = null;
+			return;
+		}
 		//verify the photo file type is supported
 		$goodFileType = ["image/png", "image/jpeg"];
 		if(in_array($newCommentPhotoType, $goodFileType) === false) {
@@ -374,7 +381,7 @@ class Comment {
 		//bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
 		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress,
-				"commentPhoto" => $this->commentPhoto, "commentPhotoType" => $this->commentPhotoType, "commentText" => $this->commentText];
+			"commentPhoto" => $this->commentPhoto, "commentPhotoType" => $this->commentPhotoType, "commentText" => $this->commentText];
 		$statement->execute($parameters);
 
 		// update the null tweetId with what mySqL just gave us
@@ -420,7 +427,7 @@ class Comment {
 		// bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
 		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate,
-				"ipAddress" => $this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType" => $this->commentPhotoType, "commentText" => $this->commentText];
+			"ipAddress" => $this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType" => $this->commentPhotoType, "commentText" => $this->commentText];
 		$statement->execute($parameters);
 	}
 
