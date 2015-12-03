@@ -2,12 +2,13 @@
 
 
 require_once dirname(dirname(__DIR__)) . "/classes/autoload.php";
+
 require_once dirname(dirname(__DIR__)) . "/lib/xsrf.php";
 // go over with dylan to make sure this is correct
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 /**
- * controller/api for the trail class
+ * api for the trail class
  *
  * allows for interaction with the rest of the backend via the restful API class
  *
@@ -45,7 +46,6 @@ try{
 	// sanitize  and trim the rest of the inputs
 	$userId = filter_input(INPUT_GET, "userId", FILTER_VALIDATE_INT);
 	$submitId = filter_input(INPUT_GET, "submitId", FILTER_VALIDATE_INT);
-	$browser = filter_input(INPUT_GET, "browser", FILTER_SANITIZE_STRING);
 	$amenities = filter_input(INPUT_GET, "amenities", FILTER_SANITIZE_STRING);
 	$condition = filter_input(INPUT_GET, "condition", FILTER_SANITIZE_STRING);
 	$description = filter_input(INPUT_GET, "description", FILTER_SANITIZE_STRING);
@@ -56,7 +56,7 @@ try{
 	$terrain = filter_input(INPUT_GET, "terrain", FILTER_SANITIZE_STRING);
 	$traffic = filter_input(INPUT_GET, "traffic", FILTER_SANITIZE_STRING);
 	$use = filter_input(INPUT_GET, "use", FILTER_SANITIZE_STRING);
-	$uuid = filter_input(INPUT_GET, "use", FILTER_SANITIZE_STRING);
+	$uuid = filter_input(INPUT_GET, "uuid", FILTER_SANITIZE_STRING);
 
 
 	// handle all restful calls
@@ -113,32 +113,24 @@ try{
 			if(empty($requestObject->userId) === true) {
 				throw(new InvalidArgumentException("user id cannot be empty"));
 			}
-			if(empty($requestObject->browser) === true) {
-				throw(new InvalidArgumentException("browser cannot be empty"));
-			}
-			if(empty($requestObject->createDate) === true) {
-				throw(new InvalidArgumentException("createDate cannot be empty"));
-			}
-			if(empty($requestObject->ipAddress) === true) {
-				throw(new InvalidArgumentException("ip Address cannot be null"));
-			}
+
 			if(empty($requestObject->submitTrailId) === true) {
-				$requestObject = null;
+				$requestObject->submitTrailId = null;
 			}
 			if(empty($requestObject->trailAmenities) === true) {
-				$requestObject = null;
+				$requestObject->trailAmenities = null;
 			}
 			if(empty($requestObject->TrailCondition) === true) {
-				$requestObject = null;
+				$requestObject->TrailCondition = null;
 			}
 			if(empty($requestObject->trailDescription) === true) {
-				$requestObject = null;
+				$requestObject->trailDescription = null;
 			}
-			if(empty($requestObject->traiDifficulty) === true) {
-				$requestObject = null;
+			if(empty($requestObject->trailDifficulty) === true) {
+				$requestObject->traiDifficulty = null;
 			}
 			if(empty($requestObject->trailDistance) === true) {
-				$requestObject = null;
+				$requestObject->trailDistance = null;
 			}
 			if(empty($requestObject->trailName) === true) {
 				throw(new InvalidArgumentException("trail name cannot be null"));
@@ -148,13 +140,13 @@ try{
 				throw(new InvalidArgumentException("submission type cannot be null"));
 			}
 			if(empty($requestObject->trailTerrain) === true) {
-				$requestObject = null;
+				$requestObject->trailTerrain = null;
 			}
 			if(empty($requestObject->trailUse) === true) {
-				$requestObject = null;
+				$requestObject->trailUse = null;
 			}
 			if(empty($requestObject->trailUuid) === true) {
-				$requestObject = null;
+				$requestObject->trailUuid = null;
 			}
 			if($method === "PUT") {
 				verifyXsrf();
@@ -162,14 +154,14 @@ try{
 				if($trail === null) {
 					throw(new RuntimeException("trail does not exist", 404));
 				}
-				$trail = new Trail(null, $requestObject->userId, $requestObject->browser, $requestObject->creatDate, $requestObject->ipAddress, $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->traiilCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailD, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubbmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
+				$trail = new Trail(null, $this->trail->getuserId(), $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"], $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->traiilCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailD, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubbmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
 				$trail->update($pdo);
 			}
 
 			if($method === "POST") {
 				verifyXsrf();
 				//preform the actual post/do i need to treat foreign keys in any special manner
-				$trail = new Trail(null, $requestObject->userId, $requestObject->browser, $requestObject->creatDate, $requestObject->ipAddress, $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->traiilCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailD, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubbmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
+				$trail = new Trail(null, $requestObject->userId, $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"],  $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->trailCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
 				$trail->insert($pdo);
 				$reply->message = "trail submitted okay";
 			}

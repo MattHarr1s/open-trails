@@ -146,8 +146,7 @@ class Trail implements JsonSerializable {
 	 * @throws RangeException if values are out of bounds
 	 * @throws Exception if some other exception is thrown
 	 **/
-	public function __construct($newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId,
-										 $newTrailAccessibility, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty,
+	public function __construct($newTrailId, $newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newSubmitTrailId, $newTrailAmenities, $newTrailCondition, $newTrailDescription, $newTrailDifficulty,
 										 $newTrailDistance, $newTrailName, $newTrailSubmissionType, $newTrailTerrain, $newTrailTraffic, $newTrailUse, $newTrailUuid) {
 		try {
 			$this->setTrailId($newTrailId);
@@ -156,7 +155,6 @@ class Trail implements JsonSerializable {
 			$this->setCreateDate($newCreateDate);
 			$this->setIpAddress($newIpAddress);
 			$this->setSubmitTrailId($newSubmitTrailId);
-			$this->setTrailAccessibility($newTrailAccessibility);
 			$this->setTrailAmenities($newTrailAmenities);
 			$this->setTrailCondition($newTrailCondition);
 			$this->setTrailDescription($newTrailDescription);
