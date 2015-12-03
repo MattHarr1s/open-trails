@@ -466,6 +466,12 @@ class Trail implements JsonSerializable {
 	public function setTrailUuid($newTrailUuid) {
 		// base case if trail uuid is null, this is a new trail submission
 		if($newTrailUuid === null) {
+			$this->trailUuid = null;
+			return;
+		}
+
+		// base case if a new UUID is requested, make one
+		if($newTrailUuid === "CREATE-NEW-UUID") {
 			$this->trailUuid = ShortUuid::uuid4();
 			return;
 		}
@@ -477,7 +483,6 @@ class Trail implements JsonSerializable {
 			throw (new InvalidArgumentException("uuid is empty of insecure"));
 		}
 
-//		var_dump($newTrailUuid);
 		if(strlen($newTrailUuid) === 36) {
 			// encode trail uuid to short form
 			$uuid = Uuid::fromString($newTrailUuid);
@@ -489,8 +494,6 @@ class Trail implements JsonSerializable {
 			// throw an Range Exception
 			throw(new RangeException("trail uuid is not the correct length for the data base"));
 		}
-
-//		var_dump($this->trailUuid);
 	}
 
 	/**
