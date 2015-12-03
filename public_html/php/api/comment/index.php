@@ -5,7 +5,7 @@ require_once dirname(dirname(__DIR__)) . "/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 /**
- * controller/api for the listing class
+ * controller/api for the
  *
  * @author Louis Gill <lgill7@cnm.edu>
  */
