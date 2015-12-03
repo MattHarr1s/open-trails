@@ -116,8 +116,6 @@ try {
 } catch (Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
-
-	$reply->trace = $exception->getTrace();
 }
 
 header("Content-type: application/json");
