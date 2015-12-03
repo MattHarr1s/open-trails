@@ -29,7 +29,7 @@ try {
 	verifyXsrf();
 
 	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/open-trails.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 
 	//convert POSTed JSON to an object
 	$requestContent = file_get_contents("php://input");
@@ -56,6 +56,8 @@ try {
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
+
+	$reply->trace = $exception->getTrace();
 }
 
 header("Content-type: application/json");
