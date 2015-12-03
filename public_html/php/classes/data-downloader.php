@@ -310,6 +310,10 @@ class DataDownloader {
 					$segmentStopElevation = $coordinates[$index +1][2];
 			}
 				$properties = $jsonFeatures->properties;
+				foreach($properties as $property){
+
+				}
+			}
 		}
 	}
 }
