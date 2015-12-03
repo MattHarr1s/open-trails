@@ -4,6 +4,7 @@ require_once dirname(dirname(__DIR__)) . "/classes/autoload.php";
 require_once dirname(dirname(__DIR__)) . "/lib/xsrf.php";
 // go over with dylan to make sure this is correct
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once(dirname(dirname(dirname(__DIR__))) . "/vendor/autoload.php");
 /**
  * API for segment for segment class
  *
@@ -36,16 +37,17 @@ try{
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 	//sanitize and trim the rest of the inputs
-	$SegmentX= "segmentStart";
-	$SegmentY = "segmentStop";
-	$ElevationX = filter_input(INPUT_GET, "segmentStartElevation", FILTER_VALIDATE_INT);
-	$ElevationY = filter_input(INPUT_GET, "segmentStopElevation", FILTER_VALIDATE_INT);
+	$segmentX = "segmentStart";
+	$segmentY = "segmentStop";
+	$elevationX = filter_input(INPUT_GET, "segmentStartElevation", FILTER_VALIDATE_INT);
+	$elevationY = filter_input(INPUT_GET, "segmentStopElevation", FILTER_VALIDATE_INT);
 
 
 	//handle all restful calls
 	// get some or all segments
 	if ($method === "GET") {
 		// not sure if i need to set XSRF COOKIE
+		// TL; DR: yes
 		setXsrfCookie("/");
 		if (empty($id) === false) {
 			$reply->data = Segment::getSegmentBySegmentId($pdo, $id);
@@ -56,7 +58,7 @@ try{
 		} elseif(empty($elevationX) === false) {
 			$reply->data = Segment::getSegmentBySegmentStartElevation($pdo, $elevationX)->toArray();
 		} elseif(empty($elevationY) === false) {
-			$reply->data = Segment::getSegmentBySegmentStopElevation($pdo, $ElevationY)->toArray();
+			$reply->data = Segment::getSegmentBySegmentStopElevation($pdo, $elevationY)->toArray();
 		}
 	}
 	//if the section belongs to a new an active user allow post, put and delete m
