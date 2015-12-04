@@ -96,6 +96,7 @@ try{
 				$reply->message = "segment update was successful";
 			}
 			if($method === "POST") {
+				// form a mini-constructor to assemble a segmentStart and a segmentStop....?????
 				$segment = new Segment(null, $requestObject->segmentStart, $requestObject->segmentStop, $requestObject->segmentStartElevation, $requestObject->segmentStopElevation );
 				$segment->insert($pdo);
 				$reply->message = "segment insert was successful";
