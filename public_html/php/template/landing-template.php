@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- ----------------------------------------------------- -->
-<!--	This is the landing page for the trail quail website -->
-<!--																		  -->
-<!--  @author saulj@me.com  (December 2015)                -->
-<!-- ----------------------------------------------------- -->
+	<!-- ----------------------------------------------------- -->
+	<!--	This is the landing page for the trail quail website -->
+	<!--																		  -->
+	<!--  @author saulj@me.com  (December 2015)                -->
+	<!-- ----------------------------------------------------- -->
 
 
 	<head>
@@ -15,10 +15,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1"
 
 		<!-- Bootstrap latest compiled and minified CSS		-->
-		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
+				integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+				crossorigin="anonymous">
 
 		<!-- Optional Bootstrap Theme -->
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"
+				integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
 
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="css/style.css" type="text/css"/>
@@ -34,7 +37,9 @@
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
 		<!-- Bootstrap latest compiled and minified Javascript -->
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"  integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
+				  integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
+				  crossorigin="anonymous"></script>
 
 		<title>Quail Trail - Albuquerque: Landing Page</title>
 	</head>
@@ -56,22 +61,27 @@
 				<div class="collapse navbar-collapse" id="main-menu">
 					<u1 class="nav navbar-nav navbar-right"
 					</u1>
-					<li><a href="#">Log in</a></li>
-					<li><a href="#">Create Account</a></li>
-					<li><a href="#">About this site</a></li>
 					<li><a href="#">Find Trails</a></li>
+					<li><a href="#">About this site</a></li>
+					<li><a href="#">Create Account</a></li>
+					<li><a href="#">Log in</a></li>
 				</div>
 			</nav>
 
 			<!-- Main jumbotron to welcome users and for a call to action -->
-			<div class="jumbotron">
-				<div class="container">
+			<div class="jumbotron bg-image">
+				<div class="container text-center">
 					<br>
 					<br>
+
 					<h1>Explore the Outdoors around Albuquerque</h1>
-					<p>hiking, mountain biking, skiing, <br>and horseback riding </p>
+
+					<p>Find hiking, mountain biking, skiing, <br>and horseback riding trails</p>
 					<br>
-					<p><a class="btn brn-primary btn-lg" href="#" role="button">Find a Trail</a></p>
+
+					<p><a class="btn btn-primary btn-lg" href="#" role="button">Find a Trail</a></p>
+
+					<p><a class="btn btn-primary" href="#" role="button">Learn More</a></p>
 				</div>
 			</div>
 
@@ -98,7 +108,9 @@
 
 		<footer class="footer">
 			<div class="container">
-				<p class="text-muted">Copyright Comments</p>
+				<p class="text-muted">Copyright Comments<span class="pull-right"><a class="btn btn-primary" href="#"
+																										  role="button">Contact Us</a></span>
+				</p>
 			</div>
 		</footer>
 

@@ -17,9 +17,8 @@ header {
 footer {
 	background-color: #000000;
 	color: aqua;
-	font-style: italic
-	margin-top: 40px;
-	padding: 60px 0;
+	margin-top: 10px;
+	padding: 10px 0;
 }
 
 /***********************************************
@@ -58,8 +57,15 @@ footer {
 		/*  padding-top: 20px; */
 		padding-right: 20px;
 		padding-bottom: 20px;
-		align-content: center;
  	}
+}
+
+.bg-image {
+	background: url() no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
 /* this rule fixes the icon color in the mobile toggle button */
