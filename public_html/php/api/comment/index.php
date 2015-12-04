@@ -87,7 +87,7 @@ try {
 					throw(new RuntimeException("Comment does not exist", 404));
 				}
 
-				if($_SESSION["user"] !== "S" && $_SESSION["user"]->getUserId() !== $comment->userId()) {
+				if($_SESSION["user"] !== "S" && $_SESSION["user"]->getUserId() !== $comment->getUserId()) {
 					throw(new RuntimeException("You may only edit your own comments", 403));
 				}
 

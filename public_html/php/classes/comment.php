@@ -421,7 +421,7 @@ class Comment {
 			throw(new PDOException("unable to update a that does not exist"));
 		}
 		$query = "UPDATE comment SET trailId = :trailId, userId = :userId, browser = :browser, createDate = :createDate, ipAddress = :ipAddress,
-				commentPhoto = :commentPhoto, commentPhotoType = :commentPhotoType, commentText = :commentText";
+				commentPhoto = :commentPhoto, commentPhotoType = :commentPhotoType, commentText = :commentText WHERE commentId = :commentId";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
