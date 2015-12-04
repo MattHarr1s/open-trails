@@ -36,7 +36,6 @@ CREATE TABLE trail (
 	createDate DATETIME NOT NULL,
 	ipAddress VARBINARY (16) NOT NULL,
 	submitTrailId INT UNSIGNED NULL,
-	trailAccessibility VARCHAR (32) NULL,
 	trailAmenities VARCHAR (256) NULL,
 	trailCondition VARCHAR (256) NULL,
 	trailDescription VARCHAR (512)NULL,

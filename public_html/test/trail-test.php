@@ -50,12 +50,6 @@ class TrailTest extends TrailQuailTest {
 
 
 	/**
-	 * accessibility info for trail
-	 * @var string $VALID_TRAILACCESSIBILITY
-	 **/
-	protected $VALID_TRAILACCESSIBILITY = "y";
-
-	/**
 	 *information on amenities on trail
 	 * @var string $VALID_TrailDescription
 	 */
