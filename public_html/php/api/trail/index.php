@@ -42,6 +42,7 @@ try{
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+
 	}
 	// sanitize  and trim the rest of the inputs
 	$userId = filter_input(INPUT_GET, "userId", FILTER_VALIDATE_INT);
@@ -92,13 +93,14 @@ try{
 		} elseif (empty($uuid) === false) {
 			$reply->data = Trail::getTrailByTrailUuid($pdo, $uuid);
 		} else {
-			$reply->data = Trail::getAllTrails($pdo);
-
+			$reply->data = Trail::getAllTrails($pdo)->toArray();
 		}
 
 	}
 
 	//verify user and verify object is not empty
+
+
 
 	// if the session belongs to an active user allow post
 	if(empty($_SESSION["user"]) === false && $_SESSION["user"]->getUserAccountType() !== "X") {
@@ -113,7 +115,6 @@ try{
 			if(empty($requestObject->userId) === true) {
 				throw(new InvalidArgumentException("user id cannot be empty"));
 			}
-
 			if(empty($requestObject->submitTrailId) === true) {
 				$requestObject->submitTrailId = null;
 			}
@@ -154,14 +155,15 @@ try{
 				if($trail === null) {
 					throw(new RuntimeException("trail does not exist", 404));
 				}
-				$trail = new Trail(null, $this->trail->getuserId(), $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"], $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->traiilCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailD, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubbmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
+				$trail = new Trail($id, $requestObject->userId, $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"], $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->traiilCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailD, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubbmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
 				$trail->update($pdo);
+				$reply->message= "trail updated okay";
 			}
 
 			if($method === "POST") {
 				verifyXsrf();
 				//preform the actual post/do i need to treat foreign keys in any special manner
-				$trail = new Trail($id, $requestObject->userId, $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"],  $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->trailCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
+				$trail = new Trail(null, $requestObject->userId, $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"],  $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->trailCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
 				$trail->insert($pdo);
 				$reply->message = "trail submitted okay";
 			}
@@ -186,6 +188,7 @@ try{
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
+	$reply->trace = $exception->getTrace();
 
 //blob
 }
@@ -194,5 +197,3 @@ if($reply->data === null) {
 	unset($reply->data);
 }
 echo json_encode($reply);
-
-

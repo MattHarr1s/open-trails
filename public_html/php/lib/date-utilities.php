@@ -44,3 +44,5 @@ function validateDate($newCreateDate) {
 	$newCreateDate = DateTime::createFromFormat("Y-m-d H:i:s", $newCreateDate);
 	return ($newCreateDate);
 }
+
+
