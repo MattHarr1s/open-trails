@@ -311,9 +311,11 @@ class DataDownloader {
 					$segmentStartX = $coordinates[$index][0];
 					$segmentStartY = $coordinates[$index][1];
 					$segmentStartElevation = $coordinates[$index][2];
-					$segmenStopX = $coordinates[$index + 1][0];
+					$segmentStopX = $coordinates[$index + 1][0];
 					$segmentStopY = $coordinates[$index +1][1];
 					$segmentStopElevation = $coordinates[$index +1][2];
+					$segmentStart = new Point ($segmentStartX, $segmentStartY);
+					$segmentStop = new Point ($segmentStopX, $segmentStopY);
 			}
 				$properties = $jsonFeatures->properties;
 				foreach($properties as $property){
@@ -340,7 +342,7 @@ class DataDownloader {
 					} else {
 						$trailUse = $trailUse . "bicycle: no, ";
 					}
-					if($property['foot'] === "yes"){
+					if($property['foot'] === "yes") {
 						$trailUse = $trailUse . "foot: yes, ";
 					} else {
 						$trailUse = $trailUse . "foot: no, ";
@@ -353,7 +355,37 @@ class DataDownloader {
 				}
 					//convert the fields to UTF-8
 					$trailUse = mb_convert_encoding($trailUse, "UTF-8");
-			}
+
+					try {
+						$segment = new Segment($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
+						$segment = insert($pdo);
+					} catch(PDOException $pdoException) {
+						$sqlStateCode = "23000";
+
+						$errorInfo = $pdoException->errorInf;
+						if($errorInfo [0] === $sqlStateCode) {
+						} else {
+							throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
+						}
+					} catch(Exception $exception) {
+						throw (new Exception ($exception->getMessage(), 0, $exception));
+					}
+
+					try {
+					$trail = new Trail($trailName, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailUse, $trailUuid);
+					$trail = insert($pdo);
+					} catch(PDOException $pdoException) {
+					$sqlStateCode = "23000";
+
+					$errorInfo = $pdoException->errorInf;
+					if($errorInfo [0] === $sqlStateCode) {
+					} else {
+						throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
+					}
+					} catch(Exception $exception) {
+					throw (new Exception ($exception->getMessage(), 0, $exception));
+				}
+
 		}
 	}
 }
