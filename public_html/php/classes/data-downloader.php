@@ -230,7 +230,7 @@ class DataDownloader {
 					$submitTrailId = "";
 					$trailAmenities = "";
 					$trailCondition = "";
-					$trailDescription = $data[3];
+					$trailDescription = "";
 					$trailDifficulty = "";
 					$trailDistance = "";
 					$trailName = $data[1];
@@ -239,6 +239,12 @@ class DataDownloader {
 					$trailUse = "";
 					$trailUuid = "";
 
+					//sets trail description based on available data.
+					if ($data[3] === null){
+					$trailDescription = "This trail currently has no description. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
+					} else{
+					$trailDescription = $data[3];
+					}
 
 					//convert fields to UTF-8
 					$trailDescription = mb_convert_encoding($trailDescription, "UTF-8");
@@ -311,8 +317,42 @@ class DataDownloader {
 			}
 				$properties = $jsonFeatures->properties;
 				foreach($properties as $property){
+					$trailId = null;
+					$userId = "";
+					$browser = "";
+					$createDate = "";
+					$ipAddress = "";
+					$submitTrailId = "";
+					$trailAmenities = "";
+					$trailCondition = "";
+					$trailDescription = "";
+					$trailDifficulty = "";
+					$trailDistance = "";
+					$trailName = "";
+					$trailSubmissionType = "";
+					$trailTerrain = "";
+					$trailUse = "";
+					$trailUuid = "";
 
+					//Set $trailUse string based on information in geoJson properties field.
+					if($property['bicycle'] === "yes") {
+						$trailUse = $trailUse . "bicycle: yes, ";
+					} else {
+						$trailUse = $trailUse . "bicycle: no, ";
+					}
+					if($property['foot'] === "yes"){
+						$trailUse = $trailUse . "foot: yes, ";
+					} else {
+						$trailUse = $trailUse . "foot: no, ";
+					}
+					if($property['wheelchair'] === "yes"){
+						$trailUse = $trailUse . "wheelchair: yes ";
+					} else {
+						$trailUse = $trailUse . "wheelchair: no ";
+					}
 				}
+					//convert the fields to UTF-8
+					$trailUse = mb_convert_encoding($trailUse, "UTF-8");
 			}
 		}
 	}
