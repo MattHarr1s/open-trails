@@ -66,33 +66,33 @@ try{
 		if(empty($id) === false) {
 			$reply->data = Trail::getTrailById($pdo, $id);
 		} elseif(empty($userId) === false) {
-			$reply->data = Trail::getTrailByUserId($pdo, $userId);
+			$reply->data = Trail::getTrailByUserId($pdo, $userId)->toArray();
 		} elseif(empty($submitId) === false) {
-			$reply->data = Trail::getTrailBySubmitTrailId($pdo, $submitId);
+			$reply->data = Trail::getTrailBySubmitTrailId($pdo, $submitId)->toArray();
 		} elseif (empty($amenities) === false) {
-			$reply->data = Trail::getTrailByTrailAmenities($pdo, $amenities);
+			$reply->data = Trail::getTrailByTrailAmenities($pdo, $amenities)->toArray();
 		} elseif (empty($condition) === false) {
-			$reply->data = Trail::getTrailByTrailCondition($pdo, $condition);
+			$reply->data = Trail::getTrailByTrailCondition($pdo, $condition)->toArray();
 		} elseif (empty($description) === false) {
-			$reply->data = Trail::getTrailByTrailDescription($pdo, $description);
+			$reply->data = Trail::getTrailByTrailDescription($pdo, $description)->toArray();
 		} elseif (empty($difficulty) === false) {
-			$reply->data = Trail::getTrailByTrailDifficulty($pdo, $difficulty);
+			$reply->data = Trail::getTrailByTrailDifficulty($pdo, $difficulty)->toArray();
 		} elseif (empty($distance) === false) {
-			$reply->data = Trail::getTrailByTrailDistance($pdo, $distance);
+			$reply->data = Trail::getTrailByTrailDistance($pdo, $distance)->toArray();
 		} elseif (empty($name) === false) {
-			$reply->data = Trail::getTrailByTrailName($pdo, $name);
+			$reply->data = Trail::getTrailByTrailName($pdo, $name)->toArray();
 		} elseif (empty($submission) === false) {
-			$reply->data = Trail::getTrailByTrailSubmissionType($pdo, $submission);
+			$reply->data = Trail::getTrailByTrailSubmissionType($pdo, $submission)->toArray();
 		} elseif (empty($terrain) === false) {
-			$reply->data = Trail::getTrailByTrailTerrain($pdo, $terrain);
+			$reply->data = Trail::getTrailByTrailTerrain($pdo, $terrain)->toArray();
 		} elseif (empty($traffic) === false) {
-			$reply->data = Trail::getTrailByTrailTraffic($pdo, $traffic);
+			$reply->data = Trail::getTrailByTrailTraffic($pdo, $traffic)->toArray();
 		} elseif (empty($use) === false) {
-			$reply->data = Trail::getTrailByTrailUse($pdo, $use);
+			$reply->data = Trail::getTrailByTrailUse($pdo, $use)->toArray();
 		} elseif (empty($uuid) === false) {
 			$reply->data = Trail::getTrailByTrailUuid($pdo, $uuid);
-		} else{
-			$reply->data = Trail::getAllTrails($pdo)->toArray();
+		} else {
+			$reply->data = Trail::getAllTrails($pdo);
 
 		}
 
@@ -161,7 +161,7 @@ try{
 			if($method === "POST") {
 				verifyXsrf();
 				//preform the actual post/do i need to treat foreign keys in any special manner
-				$trail = new Trail(null, $requestObject->userId, $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"],  $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->trailCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
+				$trail = new Trail($id, $requestObject->userId, $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"],  $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->trailCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
 				$trail->insert($pdo);
 				$reply->message = "trail submitted okay";
 			}
@@ -174,7 +174,6 @@ try{
 				$trail->delete($pdo);
 				$deletedObject = new stdClass();
 				$deletedObject->traiId = $id;
-				//$pusher->trigger("misquote", "delete", $deletedObject);
 				$reply->message = "trail deleted OK";
 			}
 		}
@@ -187,6 +186,7 @@ try{
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
+
 //blob
 }
 header("Content-type: application/json");
