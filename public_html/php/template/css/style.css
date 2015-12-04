@@ -1,6 +1,94 @@
-h4 {
-	margin-top: 25px;
+/**********************************************
+* CSS Styles for Bootcamp Wireframe Exercise
+* http://bootcamp-coders.cnm.edu
+*
+* Ref:  @author rlewis37@cnm.edu
+* Modified by scaleup13@gmail.com
+***********************************************/
+
+/**********************************************
+* Layout styles
+**********************************************/
+
+header {
+	padding-top: 20px;
 }
+
+footer {
+	background-color: #000000;
+	color: aqua;
+	font-style: italic
+	margin-top: 40px;
+	padding: 60px 0;
+}
+
+/***********************************************
+* Utility Styles
+*
+* These are intended to be reused
+*for styling purposes
+***********************************************/
+
+.text-box {
+	border-radius: 6px;
+	padding: 10px 15px 15px;
+	margin-bottom: 20px;
+}
+
+.bg-aqua {
+	background: aqua;
+}
+
+.by-gray {
+	background: #eeeeee;
+}
+
+/***********************************************
+* Bootstrap Overrides
+*
+* These styles override the bootstrap defaults
+***********************************************/
+
+/* This media query targets all screens larger than 768px */
+@media only screen and (max-width: 768px) {
+
+	/*this rule fixes the jumbotron padding on xs screens only */
+	.jumbotron {
+		padding-left: 100px;
+		/*  padding-top: 20px; */
+		padding-right: 20px;
+		padding-bottom: 20px;
+		align-content: center;
+ 	}
+}
+
+/* this rule fixes the icon color in the mobile toggle button */
+.navbar-header button span.glyphicon {
+	color: #ffffff;
+}
+
+/*********************
+* Flexbox Sticky Footer
+* http://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer
+*********************/
+
+/* corrects IE min-height bug */
+html { display: flex;}
+body { width: 100%;}
+
+.sfooter {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.sfooter-content {
+	flex: 1 0 auto;
+}
+
+
+
+
 .row {
 	margin-bottom: 20px;
 }
@@ -15,9 +103,4 @@ h4 {
 	background-color: rgba(86,61,124,.15);
 	border: 1px solid #ddd;
 	border: 1px solid rgba(86,61,124,.2);
-}
-
-hr {
-	margin-top: 40px;
-	margin-bottom: 40px;
 }
