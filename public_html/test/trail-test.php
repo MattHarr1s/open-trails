@@ -177,7 +177,7 @@ class TrailTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trail");
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
@@ -386,6 +386,7 @@ class TrailTest extends TrailQuailTest {
 				$this->VALID_TRAILUSE, null);
 		$trail->insert($this->getPDO());
 		$submitTrail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $trail->getTrailId(),
+				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
 		$submitTrail->insert($this->getPDO());
@@ -597,7 +598,7 @@ class TrailTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("trail");
 
 		//create a new trail and insert it into mySQL
-		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID, $this->VALID_TRAILACCESSIBILITY,
+		$trail = new Trail(null, $this->user->getUserId(), $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_SUBMITTRAILID,
 				$this->VALID_TRAILAMENITIES, $this->VALID_TRAILCONDITIION, $this->VALID_TRAILDESCRIPTION, $this->VALID_TRAILDIFFICULTY,
 				$this->VALID_TRAILDISTANCE, $this->VALID_TRAILNAME, $this->VALID_TRAILSUBMISSIONTYPE, $this->VALID_TRAILTERRAIN, $this->VALID_TRAILTRAFFIC,
 				$this->VALID_TRAILUSE, $this->VALID_TRAILUUID);
