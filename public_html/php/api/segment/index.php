@@ -37,6 +37,13 @@ try{
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 	//sanitize and trim the rest of the inputs
+	/*
+	 * declare that angular is going to send object in point x and point y i need to find a way of bridging the gap between
+	 * php and angular like almost how it is done in the actual point class.
+	 *
+	 */
+
+
 	$segmentX = "segmentStart";
 	$segmentY = "segmentStop";
 	$elevationX = filter_input(INPUT_GET, "segmentStartElevation", FILTER_VALIDATE_INT);
