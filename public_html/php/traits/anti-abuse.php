@@ -113,4 +113,11 @@ trait AntiAbuse {
 		}
 		$this->createDate = $newCreateDate;
 	}
+
+	public function formatJsonFields() {
+		$fields = [];
+		$fields["ipAddress"] = inet_ntop($this->ipAddress);
+		$fields["createDate"] = dateTimeToNg($this->createDate);
+		return($fields);
+	}
 }

@@ -78,7 +78,7 @@ try{
 			$reply->data = Trail::getTrailByTrailDescription($pdo, $description)->toArray();
 		} elseif (empty($difficulty) === false) {
 			$reply->data = Trail::getTrailByTrailDifficulty($pdo, $difficulty)->toArray();
-		} elseif (empty($distance) === false) {
+			//} elseif (empty($distance) === false) {
 			$reply->data = Trail::getTrailByTrailDistance($pdo, $distance)->toArray();
 		} elseif (empty($name) === false) {
 			$reply->data = Trail::getTrailByTrailName($pdo, $name)->toArray();
@@ -90,7 +90,7 @@ try{
 			$reply->data = Trail::getTrailByTrailTraffic($pdo, $traffic)->toArray();
 		} elseif (empty($use) === false) {
 			$reply->data = Trail::getTrailByTrailUse($pdo, $use)->toArray();
-		} elseif (empty($uuid) === false) {
+		//} elseif (empty($uuid) === false) {
 			$reply->data = Trail::getTrailByTrailUuid($pdo, $uuid);
 		} else {
 			$reply->data = Trail::getAllTrails($pdo)->toArray();
@@ -181,7 +181,7 @@ try{
 		}
 	} else {
 	// if not an active user and attempting a method other than get, throw an exception
-		if((empty($method) === false) &&($method !=="GET")) {
+		if((empty($method) === false) && ($method !== "GET")) {
 			throw(new RuntimeException("only active users are allowed to modify entries", 401));
 		}
 	}

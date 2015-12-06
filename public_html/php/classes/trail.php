@@ -713,9 +713,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail ";
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAmenities"],
-					$row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmissionType"], $row["trailTerrain"], $row["trailTraffic"],
-					$row["trailUse"], $row["trailUuid"]);
+				$trail = new Trail ($row["trailId"], $row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["submitTrailId"], $row["trailAmenities"], $row["trailCondition"], $row["trailDescription"], $row["trailDifficulty"], $row["trailDistance"], $row["trailName"], $row ["trailSubmissionType"], $row["trailTerrain"], $row["trailTraffic"], $row["trailUse"], $row["trailUuid"]);
 				$trails[$trails->key()] = $trail;
 				$trails->next();
 			} catch(Exception $e) {
@@ -1192,6 +1190,10 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailUuid = :tr
 	 **/
 
 	public function jsonSerialize() {
-		return (get_object_vars($this));
+		$fields = get_object_vars($this);
+		$traitFields = $this->formatJsonFields();
+		$fields = array_merge($fields, $traitFields);
+		$fields["trailUuid"] = $this->getTrailUuid();
+		return ($fields);
 	}
 }

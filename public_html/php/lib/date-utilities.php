@@ -45,4 +45,16 @@ function validateDate($newCreateDate) {
 	return ($newCreateDate);
 }
 
-
+function ngToDateTime($newDate) {
+	if(is_numeric($newDate) === true) {
+		$secondsSinceTheBeginningTime = intval($newDate) / 1000;
+		$newDate = DateTime::createFromFormat("U", $secondsSinceTheBeginningTime);
+		return $newDate;
+	} else {
+		return null;
+	}
+}
+function dateTimeToNg(DateTime $newDate) {
+	$newDate = $newDate->format('U') * 1000;
+	return $newDate;
+}
