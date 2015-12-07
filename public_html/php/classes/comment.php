@@ -11,7 +11,7 @@ require_once "autoload.php";
  *
  * @author George Kephart <gkephart@cnm.edu>
  */
-class Comment {
+class Comment implements JsonSerializable {
 	use AntiAbuse;
 	/**
 	 *id for this comment; this is a primary key
@@ -589,11 +589,16 @@ class Comment {
 		}
 		return ($comments);
 	}
+	/**
+	 * specifies which fields to include in a JSON serialization
+	 *
+	 * @return array array containing all fields in the Segment
+	 **/
+
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$traitFields = $this->formatJsonFields();
+		$fields = array_merge($fields, $traitFields);
+		return ($fields);
+	}
 }
-
-
-
-
-
-
-

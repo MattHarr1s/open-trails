@@ -49,7 +49,7 @@ try {
 		setXsrfCookie("/");
 		if(empty($commentId) === false) {
 			$reply->data = Comment::getCommentByCommentId($pdo, $commentId);
-		} elseif(empty($trailId) === false) {
+		} elseif(empty($userId) === false) {
 			$reply->data = Comment::getCommentByUserId($pdo, $userId)->toArray();
 		} elseif(empty($commentText) === false) {
 			$reply->data = Comment::getCommentByCommentText($pdo, $commentText)->toArray();
@@ -116,6 +116,7 @@ try {
 } catch (Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
+	$reply->message = $exception->getTrace();
 }
 
 header("Content-type: application/json");
@@ -123,3 +124,4 @@ if($reply->data === null) {
 	unset($reply->data);
 }
 echo json_encode($reply);
+
