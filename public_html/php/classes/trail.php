@@ -361,8 +361,8 @@ class Trail implements JsonSerializable {
 			throw(new RangeException("Trail Submission Type not positive"));
 		}
 
-		// Make sure the int is not greater than 6
-		if($newTrailSubmissionType > 6) {
+		// Make sure the int is not greater than 2
+		if($newTrailSubmissionType > 2) {
 			throw(new InvalidArgumentException("Trail Submission Type cannot be greater than 2"));
 		}
 

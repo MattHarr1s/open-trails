@@ -334,18 +334,15 @@ class DataDownloader {
 					} else {
 						$trailUse = $trailUse . "foot: no, ";
 					}
-					if($property['wheelchair'] === "yes"){
+					if($property['wheelchair'] === "yes") {
 						$trailUse = $trailUse . "wheelchair: yes ";
 					} else {
 						$trailUse = $trailUse . "wheelchair: no ";
 					}
 				}
-				//convert the fields to UTF-8
-				$trailUse = mb_convert_encoding($trailUse, "UTF-8");
-
 
 				try {
-					$trail = new Trail($trailName, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailUse, $trailUuid);
+					$trail = new Trail(null, 1, "Mozilla/1.0 (CPM; 8 bit)", new DateTime(), "::1", null, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, 0, "unknown", "unknown", $trailUse, null);
 					$trail->insert($pdo);
 				} catch(PDOException $pdoException) {
 					$sqlStateCode = "23000";
@@ -378,22 +375,39 @@ class DataDownloader {
 						$relationship->insert($pdo);
 
 					} catch(PDOException $pdoException) {
-							$sqlStateCode = "23000";
+						$sqlStateCode = "23000";
 
-							$errorInfo = $pdoException->errorInf;
-							if($errorInfo [0] === $sqlStateCode) {
-							} else {
-								throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
-							}
-						} catch(Exception $exception) {
-							throw (new Exception ($exception->getMessage(), 0, $exception));
+						$errorInfo = $pdoException->errorInf;
+						if($errorInfo [0] === $sqlStateCode) {
+						} else {
+							throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
 						}
+					} catch(Exception $exception) {
+							throw (new Exception ($exception->getMessage(), 0, $exception));
 					}
-}
-
-
+				}
+				fclose($jsonFd);
+				}
+		} catch (PDOException $pdoException) {
+			throw (new PDOException($pdoException ->getMessage(), 0, $pdoException));
+		} catch (Exception $exception) {
+			throw (new Exception ($exception->getMessage(), 0 , $exception));
 		}
 	}
+	/**
+	 * Fills the database with trails and segments
+	 *
+	 * @param string $namedTrailsUrlBegin named_trails.csv url beginning
+	 * @param string $namedTrailsUrlEnd named_trails.csv url end
+	 * @param string $geoJsonUrlBegin trailSegments.geojson url beginning
+	 * @param string $geoJsonUrlEnd trailSegments.geojson url end
+	**/
+	public static function fillDatabase($namedTrailsUrlBegin, $namedTrailsUrlEnd, $geoJsonUrlBegin, $geoJsonUrlEnd) {
+		$pdo = connectToEncryptedMySQL("/etc/apache2/mysql/trailquail.ini");
+
+		//array to store trail
+	}
+
 }
 
 
