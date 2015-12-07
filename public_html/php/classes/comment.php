@@ -171,12 +171,12 @@ class Comment {
 		// verify the user id is valid
 		$newUserId = filter_var($newUserId, FILTER_VALIDATE_INT);
 		if($newUserId === false) {
-			throw(new InvalidArgumentException("profile id is not a valid integer"));
+			throw(new InvalidArgumentException("user id is not a valid integer"));
 		}
 
 		// verify the user id is positive
 		if($newUserId <= 0) {
-			throw(new RangeException('trail id is not positive'));
+			throw(new RangeException('user id is not positive'));
 		}
 
 		//convert and store the user id
