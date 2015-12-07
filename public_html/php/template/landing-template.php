@@ -41,6 +41,26 @@
 				  integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
 				  crossorigin="anonymous"></script>
 
+
+		<!-- load the googlemaps api -->
+		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152""></script>
+
+		<!-- Initialize the Google Map -->
+		<script>
+		function initialize() {
+			var mapCanvas = document.getElementById('map');
+			var mapOptions = {
+				center: new google.maps.LatLng(35.1318, -106.5925),
+				zoom: 8,
+				mapTypeId: google.maps.MapTypeId.TERRAIN
+			}
+			var map = new google.maps.Map(mapCanvas, mapOptions)
+		}
+		google.maps.event.addDomListener(window, 'load', initialize);
+		</script>
+
+
+
 		<title>Quail Trail - Albuquerque: Landing Page</title>
 	</head>
 
@@ -87,29 +107,18 @@
 
 			<div class="container">
 				<div class="row">
-					<div class="col-md-12">Column One: 12/12 columns, 100% of container width</div>
-				</div>
+					<div class="col-md-12" embed-responsive embed-responsive-4by3>
+						<div id="map"></div>
+					</div>
 
-				<div class="row">
-					<div class="col-md-3"> Column Two: 3/12 columns, 25% of container width.</div>
-					<div class="col-md-3"> Column Three: 3/12 columns, 25% of container width.</div>
-					<div class="col-md-3"> Column Four: 3/12 columns, 25% of container width.</div>
-					<div class="col-md-3"> Column Five: 3/12 columns, 25% of container width.</div>
 				</div>
-				<p></p>
-
-				<div class="row">
-					<div class="col-md-6"> Column Six: 6/12 columns, 50% of container width.</div>
-					<div class="col-md-6"> Column Seven: 6/12 columns, 50% of container width.</div>
-				</div>
-
 			</div>
+
 		</div>
 
 		<footer class="footer">
 			<div class="container">
-				<p class="text-muted">Copyright Comments<span class="pull-right"><a class="btn btn-primary" href="#"
-																										  role="button">Contact Us</a></span>
+				<p class="text-muted">Copyright Comments<span class="pull-right"><a class="btn btn-primary" href="#" role="button">Contact Us</a></span>
 				</p>
 			</div>
 		</footer>
