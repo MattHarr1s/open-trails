@@ -16,7 +16,6 @@ class DataDownloader {
 
 	/**
 	 * named trails:http://data.cabq.gov/community/opentrails/named_trails.csv
-	 * stewards: http://data.cabq.gov/community/opentrails/stewards.csv
 	 * trail segments: http://data.cabq.gov/community/opentrails/trail_segments.geojson
 	 *
 	 **/
@@ -242,7 +241,7 @@ class DataDownloader {
 					//sets trail description based on available data.
 					if ($data[3] === null){
 					$trailDescription = "This trail currently has no description. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
-					} else{
+					} else {
 					$trailDescription = $data[3];
 					}
 
@@ -276,7 +275,6 @@ class DataDownloader {
 
 	/**
 	 *
-	 * Slurp Slurp
 	 * Decodes geoJson file, converts to string, sifts through the string and inserts the data into the database
 	 *
 	 * @param string $urlBegin beginning of url to grab file at
@@ -306,17 +304,6 @@ class DataDownloader {
 				$jsonConverted = json_decode($jsonData, true);
 				$jsonFeatures = $jsonConverted->features;
 
-				$coordinates = $jsonFeatures->geometry->coordinates;
-				for($index = 0; $index < count($coordinates) - 1; $index++) {
-					$segmentStartX = $coordinates[$index][0];
-					$segmentStartY = $coordinates[$index][1];
-					$segmentStartElevation = $coordinates[$index][2];
-					$segmentStopX = $coordinates[$index + 1][0];
-					$segmentStopY = $coordinates[$index +1][1];
-					$segmentStopElevation = $coordinates[$index +1][2];
-					$segmentStart = new Point ($segmentStartX, $segmentStartY);
-					$segmentStop = new Point ($segmentStopX, $segmentStopY);
-			}
 				$properties = $jsonFeatures->properties;
 				foreach($properties as $property){
 					$trailId = null;
@@ -353,28 +340,14 @@ class DataDownloader {
 						$trailUse = $trailUse . "wheelchair: no ";
 					}
 				}
-					//convert the fields to UTF-8
-					$trailUse = mb_convert_encoding($trailUse, "UTF-8");
+				//convert the fields to UTF-8
+				$trailUse = mb_convert_encoding($trailUse, "UTF-8");
 
-					try {
-						$segment = new Segment($segmentId, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
-						$segment = insert($pdo);
-					} catch(PDOException $pdoException) {
-						$sqlStateCode = "23000";
 
-						$errorInfo = $pdoException->errorInf;
-						if($errorInfo [0] === $sqlStateCode) {
-						} else {
-							throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
-						}
-					} catch(Exception $exception) {
-						throw (new Exception ($exception->getMessage(), 0, $exception));
-					}
-
-					try {
+				try {
 					$trail = new Trail($trailName, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailUse, $trailUuid);
-					$trail = insert($pdo);
-					} catch(PDOException $pdoException) {
+					$trail->insert($pdo);
+				} catch(PDOException $pdoException) {
 					$sqlStateCode = "23000";
 
 					$errorInfo = $pdoException->errorInf;
@@ -382,9 +355,42 @@ class DataDownloader {
 					} else {
 						throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
 					}
-					} catch(Exception $exception) {
+				} catch(Exception $exception) {
 					throw (new Exception ($exception->getMessage(), 0, $exception));
 				}
+
+				$coordinates = $jsonFeatures->geometry->coordinates;
+				for($index = 0; $index < count($coordinates) - 1; $index++) {
+					$segmentStartX = $coordinates[$index][0];
+					$segmentStartY = $coordinates[$index][1];
+					$segmentStartElevation = $coordinates[$index][2];
+					$segmentStopX = $coordinates[$index + 1][0];
+					$segmentStopY = $coordinates[$index +1][1];
+					$segmentStopElevation = $coordinates[$index +1][2];
+					$segmentStart = new Point ($segmentStartX, $segmentStartY);
+					$segmentStop = new Point ($segmentStopX, $segmentStopY);
+
+					try {
+						$segment = new Segment(null, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
+						$segment->insert($pdo);
+
+						$relationship = new TrailRelationship(null, $trail->getTrailId(), $segment->getSegmentId());
+						$relationship->insert($pdo);
+
+					} catch(PDOException $pdoException) {
+							$sqlStateCode = "23000";
+
+							$errorInfo = $pdoException->errorInf;
+							if($errorInfo [0] === $sqlStateCode) {
+							} else {
+								throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
+							}
+						} catch(Exception $exception) {
+							throw (new Exception ($exception->getMessage(), 0, $exception));
+						}
+					}
+}
+
 
 		}
 	}
