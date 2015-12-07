@@ -59,8 +59,6 @@
 		google.maps.event.addDomListener(window, 'load', initialize);
 		</script>
 
-
-
 		<title>Quail Trail - Albuquerque: Landing Page</title>
 	</head>
 
