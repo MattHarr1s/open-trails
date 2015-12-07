@@ -1,35 +1,12 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<style>
-			#map {
-				width: 500px;
-				height: 400px;
-			}
-		</style>
-		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>
-		<script>
-			function initialize() {
-		var mapCanvas = document.getElementById('map');
-		var mapOptions = {
-		center: new google.maps.LatLng(35.1318,-106.6200),
-		zoom: 8,
-		mapTypeId: google.maps.MapTypeId.TERRAIN
-		}
-		var map = new google.maps.Map(mapCanvas, mapOptions)
-		}
-		google.maps.event.addDomListener(window, 'load', initialize);
-		</script>
-	</head>
-	<body>
-		<div id="map"></div>
-	</body>
-</html>
+<!-------------------------------------------------------->
+<!-- This is the login form for the Trail Quail website -->
+<!-- 																	  -->
+<!-- @author saulj@me.com  (December 2015)  				  -->
+<!-------------------------------------------------------->
 
-<!--  https://www.google.com/maps/@35.1318005,-106.5924864,9.92z-->
-
-!-- The div class="form-wrap" is the black box containing the form. It's set to a column width of 12 for small screens, and a column width of 6 for medium screens on up -->
+<!-- The div class="form-wrap" is the black box containing the form. It's set to a column width of 12 for small screens, and a column width of 6 for medium screens on up -->
 <div class="col-xs-12 col-md-7 form-wrap">
+
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
 	<form method="get" action="#" id="sample-form" class="form-horizontal col-xs-10 col-xs-offset-1">
 
@@ -139,6 +116,3 @@
 		</div>
 	</form>
 </div> <!-- CLOSE FORM WRAP -->
-
-
-
