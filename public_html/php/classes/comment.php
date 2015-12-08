@@ -427,7 +427,7 @@ class Comment implements JsonSerializable {
 		// bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
 		$parameters = ["trailId" => $this->trailId, "userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate,
-			"ipAddress" => $this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType" => $this->commentPhotoType, "commentText" => $this->commentText];
+			"ipAddress" => $this->ipAddress, "commentPhoto" => $this->commentPhoto, "commentPhotoType" => $this->commentPhotoType, "commentText" => $this->commentText, "commentId" => $this->commentId];
 		$statement->execute($parameters);
 	}
 

@@ -68,7 +68,7 @@ try {
 
 			//make sure all the fields are present, in order to prevent database issues
 			if(empty($requestObject->trailId) === true) {
-				throw(new InvalidArgumentException("Trail ID cannot be empty", 405));
+				throw(new InvalidArgumentException("Trail ID cannot be empty", 407));
 			}
 			if(empty($requestObject->commentPhoto) === true) {
 				$requestObject->commentPhoto = null;
@@ -77,7 +77,7 @@ try {
 				$requestObject->commentPhotoType = null;
 			}
 			if(empty($requestObject->commentText) === true) {
-				throw(new InvalidArgumentException("Comment Text cannot be empty", 405));
+				throw(new InvalidArgumentException("Comment Text cannot be empty", 408));
 			}
 
 			// perform the actual put or post
