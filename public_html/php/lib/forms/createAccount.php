@@ -31,11 +31,20 @@
 					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 				</div>
 				<input type="password" id="password1" class="form-control" maxlength="150"
-						 placeholder="your password"/>
+						 placeholder="Your password here"/>
 			</div>
 		</div>
 
-		<div></div>
+		<div class="form-group">
+			<label for="inputPassword2" class="control-label">Verify Password</label>
+			<div class="input-group">
+				<div class="input-group-addon">
+					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+				</div>
+				<input type="password" id="password2" class="form-control" maxlength="150"
+						 placeholder="Verify your password here"/>
+			</div>
+		</div>
 
 		<div class="form-group">
 			<label for="inputEmail1" class="control-label">Email</label>
