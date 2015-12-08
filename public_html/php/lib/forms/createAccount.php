@@ -12,7 +12,7 @@
 
 		<div class="form-group">
 			<!-- Labels for each field are places within a <label> tag. Use the "for" attribute. the class="control-label" is for styling. -->
-			<label for="inputUserName1" class="control-label">Username</label>
+			<label for="userName" class="control-label">Username</label>
 			<!-- the div class="input-group" contains both the text field and the icon to the left -->
 			<div class="input-group">
 				<!-- this div and span contains the glyphicon to the left. aria-hidden is so that screen readers don't read this element -->
@@ -20,39 +20,39 @@
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 				</div>
 				<!-- text field input. pay attention to the id, placeholder text, type, and placeholder attributes -->
-				<input type="text" class="form-control" id="UserName1" placeholder="Your username here." maxlength="150"/>
+				<input type="text" class="form-control" id="userName" placeholder="Your username here." maxlength="150"/>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="inputPassword1" class="control-label">Password</label>
+			<label for="password" class="control-label">Password</label>
 			<div class="input-group">
 				<div class="input-group-addon">
 					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 				</div>
-				<input type="password" id="password1" class="form-control" maxlength="150"
+				<input type="password" id="password" class="form-control" maxlength="150"
 						 placeholder="Your password here"/>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="inputPassword2" class="control-label">Verify Password</label>
+			<label for="verifyPassword" class="control-label">Verify Password</label>
 			<div class="input-group">
 				<div class="input-group-addon">
 					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 				</div>
-				<input type="password" id="password2" class="form-control" maxlength="150"
+				<input type="password" id="verifyPassword" class="form-control" maxlength="150"
 						 placeholder="Verify your password here"/>
 			</div>
 		</div>
 
 		<div class="form-group">
-			<label for="inputEmail1" class="control-label">Email</label>
+			<label for="userEmail1" class="control-label">Email</label>
 			<div class="input-group">
 				<div class="input-group-addon">
 					<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 				</div>
-				<input type="Email" id="email1" class="form-control" maxlength="150"
+				<input type="Email" id="userEmail" class="form-control" maxlength="150"
 						 placeholder="your-email@something.com"/>
 			</div>
 		</div>
