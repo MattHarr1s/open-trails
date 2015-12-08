@@ -104,7 +104,7 @@ try{
 
 	// if the session belongs to an active user allow post
 	if(empty($_SESSION["user"]) === false && $_SESSION["user"]->getUserAccountType() !== "X") {
-		if($method === "PUT" || $method === "POST" || $method = "DELETE") {
+		if($method === "PUT" || $method === "POST") {
 
 			//verify the XSRF cookie is correct
 			verifyXsrf();
@@ -155,7 +155,7 @@ try{
 				if($trail === null) {
 					throw(new RuntimeException("trail does not exist", 404));
 				}
-				$trail = new Trail($id, $requestObject->userId, $trail->getBrowser(), $trail->getCreateDate(), $trail->getIpAddress(), $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->traiilCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailD, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubbmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
+				$trail = new Trail($id, $requestObject->userId, $trail->getBrowser(), $trail->getCreateDate(), $trail->getIpAddress(), $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->trailCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
 				$trail->update($pdo);
 				$reply->message= "trail updated okay";
 			}
@@ -166,17 +166,6 @@ try{
 				$trail = new Trail(null, $requestObject->userId, $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"],  $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->trailCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
 				$trail->insert($pdo);
 				$reply->message = "trail submitted okay";
-			}
-			if($method === "DELETE") {
-				verifyXsrf();
-				$trail = Trail::getTrailById($pdo, $id);
-				if($trail === null) {
-					throw(new RuntimeException("trail does not exist", 404));
-				}
-				$trail->delete($pdo);
-				$deletedObject = new stdClass();
-				$deletedObject->traiId = $id;
-				$reply->message = "trail deleted OK";
 			}
 		}
 	} else {

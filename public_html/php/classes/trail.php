@@ -537,7 +537,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid) VALUES (:trailId, :userId, :bro
 
 		//create a query template
 		$query = "UPDATE trail SET userId =:userId, browser =:browser, createDate =:createDate, ipAddress =:ipAddress, submitTrailId =:submitTrailId, trailAmenities =:trailAmenities, trailCondition =:trailCondition, trailDescription =:trailDescription, trailDifficulty =:trailDifficulty,
-trailDistance =:trailDistance, trailName =:trailName, trailSubmissionType =:trailSubmissionType, trailTerrain =:trailTerrain, trailTraffic =:trailTraffic, trailUse =:trailUse, trailUuid =:trailUuid";
+trailDistance =:trailDistance, trailName =:trailName, trailSubmissionType =:trailSubmissionType, trailTerrain =:trailTerrain, trailTraffic =:trailTraffic, trailUse =:trailUse, trailUuid =:trailUuid WHERE trailId =:trailId";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the placeholders in the template
@@ -545,7 +545,7 @@ trailDistance =:trailDistance, trailName =:trailName, trailSubmissionType =:trai
 			"createDate" => $this->getCreateDate()->format("Y-m-d H:i:s"), "ipAddress" => $this->ipAddress, "submitTrailId" => $this->getSubmitTrailId(), "trailAmenities" => $this->getTrailAmenities(),
 			"trailCondition" => $this->getTrailCondition(), "trailDescription" => $this->getTrailDescription(), "trailDifficulty" => $this->getTrailDifficulty(), "trailDistance" => $this->getTrailDistance(),
 			"trailSubmissionType" => $this->getTrailSubmissionType(), "trailTerrain" => $this->getTrailTerrain(), "trailTraffic" => $this->getTrailTraffic(),
-			"trailName" => $this->getTrailName(), "trailUse" => $this->getTrailUse(), "trailUuid" => $this->trailUuid);
+			"trailName" => $this->getTrailName(), "trailUse" => $this->getTrailUse(), "trailUuid" => $this->trailUuid, "trailId" =>$this->trailId);
 		$statement->execute($parameters);
 	}
 
