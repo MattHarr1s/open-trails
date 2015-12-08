@@ -52,7 +52,7 @@ try {
 		throw(new InvalidArgumentException("email or password is invalid", 401));
 	}
 
-	//create an exception to pass back to the RESTfull caller
+	//create an exception to pass back to the RESTful caller
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();

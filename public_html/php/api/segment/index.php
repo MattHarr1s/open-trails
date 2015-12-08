@@ -22,7 +22,7 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
-try{
+try {
 	//grab the mySQL connection get correct path from dylan
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 
@@ -44,24 +44,23 @@ try{
 	 */
 
 
-	$segmentX =
-	$segmentStop =
+
 	$elevationX = filter_input(INPUT_GET, "segmentStartElevation", FILTER_VALIDATE_INT);
 	$elevationY = filter_input(INPUT_GET, "segmentStopElevation", FILTER_VALIDATE_INT);
 
 
 	//handle all restful calls
 	// get some or all segments
-	if ($method === "GET") {
+	if($method === "GET") {
 		// not sure if i need to set XSRF COOKIE
 		// TL; DR: yes
 		setXsrfCookie("/");
-		if (empty($id) === false) {
+		if(empty($id) === false) {
 			$reply->data = Segment::getSegmentBySegmentId($pdo, $id);
 		} elseif(empty($segmentX) === false) {
-			$reply->data = Segment::getSegmentBySegmentStart($pdo, $segmentX)->toArray();
+			$reply->data = Segment::getSegmentBySegmentStart($pdo, $segmentStart)->toArray();
 		} elseif(empty($segmentY) === false) {
-			$reply->data = Segment::getSegmentBySegmentStop($pdo, $segmentY)->toArray();
+			$reply->data = Segment::getSegmentBySegmentStop($pdo, $segmentStop)->toArray();
 		} elseif(empty($elevationX) === false) {
 			$reply->data = Segment::getSegmentBySegmentStartElevation($pdo, $elevationX)->toArray();
 		} elseif(empty($elevationY) === false) {
@@ -69,7 +68,8 @@ try{
 		}
 	}
 	//if the section belongs to a new an active user allow post, put and delete m
-	if(empty($_SESSION["user"]) === false && $_SESSION["user"]->getUserAccountType() !== "X"); {
+	if(empty($_SESSION["user"]) === false && $_SESSION["user"]->getUserAccountType() !== "X") ;
+	{
 		if($method === "PUT" || $method === "POST" || $method === "DELETE") {
 
 			verifyXsrf();
@@ -104,7 +104,9 @@ try{
 			}
 			if($method === "POST") {
 				// form a mini-constructor to assemble a segmentStart and a segmentStop....?????
-				$segment = new Segment(null, $requestObject->segmentStart, $requestObject->segmentStop, $requestObject->segmentStartElevation, $requestObject->segmentStopElevation );
+				$segmentStart = new Point($requestObject->segmentStart[0], $requestObject->segmentStart[1]);
+				$segmentStop = new Point($requestObject->segmentStop[0], $requestObject->segmentStop[1]);
+				$segment = new Segment(null, $segmentStart, $segmentStop, $requestObject->segmentStartElevation, $requestObject->segmentStopElevation);
 				$segment->insert($pdo);
 				$reply->message = "segment insert was successful";
 			}
@@ -118,21 +120,21 @@ try{
 				$deletedObject->segmentId = $id;
 			}
 		} else {
-			if((empty($method) === false) &&($method !=="GET")) {
+			if((empty($method) === false) && ($method !== "GET")) {
 				throw(new RuntimeException("only active users are allowed to modify entries", 401));
+			}
 		}
-	}
 
 
 	}
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
+	$reply->messgae = $exception->getTrace();
 }
 header("Content-type: application/json");
 if($reply->data === null) {
 	unset($reply->data);
 }
+
 echo json_encode($reply);
-
-
