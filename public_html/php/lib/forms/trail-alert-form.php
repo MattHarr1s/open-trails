@@ -10,18 +10,17 @@
 				<form id="alert" name="alert" class="form" action="<?php echo $PREFIX?>php/controllers/sign-up-controller.php" method="post">												// ????????????????
 					<div class="form-group">
 						<label for="commentText">alert text</label>
-						<input type="text" class="form-control" id="commentText" name="commentText" placeholder="Is there something wrong with the trail? Tell us here."
+						<input type="textbox" class="form-control" id="commentText" name="commentText" placeholder="Is there something wrong with the trail? Tell us here."/>				// textarea (restaurant comment form)
 					</div>
 					<div class="form-group">
 						<label for="commentPhoto">upload photo</label>
-						<input type="commentPhoto" class="form-control" id="commentPhoto" name="commentPhoto" placeholder="upload photo">														// HOW TO DO PHOTO???????????
+						<input type="file" accept="image/*" class="form-control" id="commentPhoto" name="commentPhoto" placeholder="upload photo">
 					</div>
-					<div class="form-group">																																												// FORM GROUP?????????????????
+					<div class="form-group">
 							<button type="submit" class="btn modal-button" id="submitButton" name="submitButton">Submit Alert</button>
-																																																										// TRUFORK????????????????????
 					</div>
 				</form>
-				<div id="outputArea"></div>																																													// ?????????????????????????
+				<div id="outputArea"></div>																																													// for errors!
 			</div>
 		</div>
 	</div>
