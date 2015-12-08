@@ -79,7 +79,7 @@
 				<div class="collapse navbar-collapse" id="main-menu">
 					<u1 class="nav navbar-nav navbar-right"
 					</u1>
-					<li><a href="trailSearch-template">Find Trails</a></li>
+					<li><a href="trailSearch-template.php">Find Trails</a></li>
 					<li><a href="#">About this site</a></li>
 
 					<!-- Drop down form for create acount -->
@@ -120,7 +120,7 @@
 					<p>Find hiking, mountain biking, skiing, <br>and horseback riding trails</p>
 					<br>
 
-					<p><a class="btn btn-primary btn-lg" role="button" href="trailSearch-template.php">Find a Trail</a></p>
+					<p><a class="btn btn-primary btn-lg" href="#" role="button">Find a Trail</a></p>
 
 					<p><a class="btn btn-primary" href="#" role="button">Learn More</a></p>
 				</div>
