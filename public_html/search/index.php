@@ -4,30 +4,23 @@ $CURRENT_DIR = __DIR__;
 /*set page title here*/
 $PAGE_TITLE = "MY PAGE TITLE";
 /*load head-utils.php*/
-require_once("php/template/head-utils.php");
+require_once("../php/template/head-utils.php");
 ?>
 
+<!--	load header content from header.php	-->
 <div class="sfooter-content">
 	<header>
-		<?php require_once("php/template/header.php"); ?>
+		<?php require_once("../php/template/header.php"); ?>
 	</header>
 
-	<!-- Main jumbotron to welcome users and for a call to action -->
-	<div class="jumbotron bg-image">
-		<div class="container text-center">
-			<br>
-			<br>
-
-			<h1>Explore the Outdoors around Albuquerque</h1>
-
-			<p>Find hiking, mountain biking, skiing, <br>and horseback riding trails</p>
-			<br>
-
-			<p><a class="btn btn-primary btn-lg" role="button" href="trailSearch-template.php">Find a Trail</a></p>
-
-			<p><a class="btn btn-primary" href="#" role="button">Learn More</a></p>
-		</div>
+	<!--	Load Trail Search Form here	-->
+	<div class="col-xs-12 col-md-8">
+		<h1 class="page-title">Search for Local Trails</h1>
+		<?php require_once("../php/lib/forms/searchTrails-form.php"); ?>
 	</div>
+	<br>
+	<hr>
+
 
 	<div class="container">
 		<div class="row">
@@ -41,7 +34,7 @@ require_once("php/template/head-utils.php");
 </div>
 
 <footer class="footer">
-	<?php require_once("php/template/footer.php"); ?>
+	<?php require_once("../php/template/footer.php"); ?>
 </footer>
 
 </body>
