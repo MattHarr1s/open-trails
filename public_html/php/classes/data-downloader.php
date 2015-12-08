@@ -277,6 +277,12 @@ class DataDownloader {
 		}
 	}
 
+	/**
+	 *gets all segments for a trail and calculates distance of the trail then inserts calculated trailDistance into trail
+	 *
+	 *
+	 */
+
 
 }
 DataDownloader::readTrailSegmentsGeoJson("http://data.cabq.gov/community/opentrails/trail_segments.geojson");

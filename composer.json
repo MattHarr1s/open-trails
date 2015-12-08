@@ -1,6 +1,7 @@
 {
     "require": {
         "guzzlehttp/guzzle": "@stable",
+        "mjaschen/phpgeo": "@stable",
         "pascaldevink/shortuuid": "^1.0",
         "swiftmailer/swiftmailer": "@stable",
         "symm/gisconverter": "@stable"

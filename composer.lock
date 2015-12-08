@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1a1ac18625e546a83cab107efdacfd9b",
-    "content-hash": "b6954aed2f8dab0e5a8997444f5dd33d",
+    "hash": "f7749767710c9dc358c0371e3574de72",
+    "content-hash": "cf35500ca93b417eea29c384a58b46d0",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -177,6 +177,56 @@
                 "uri"
             ],
             "time": "2015-11-03 01:34:55"
+        },
+        {
+            "name": "mjaschen/phpgeo",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mjaschen/phpgeo.git",
+                "reference": "1b852007a12cf8a83ac921e35c93ceb72ffbd895"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mjaschen/phpgeo/zipball/1b852007a12cf8a83ac921e35c93ceb72ffbd895",
+                "reference": "1b852007a12cf8a83ac921e35c93ceb72ffbd895",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Location": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcus T. Jaschen",
+                    "email": "mjaschen@gmail.com",
+                    "homepage": "https://mj.gs/"
+                }
+            ],
+            "description": "Simple Geo Library",
+            "homepage": "https://github.com/mjaschen/phpgeo",
+            "keywords": [
+                "bounds",
+                "calculation",
+                "coordinate",
+                "distance",
+                "ellipsoid",
+                "geo",
+                "gis"
+            ],
+            "time": "2015-10-29 08:18:33"
         },
         {
             "name": "moontoast/math",
@@ -476,6 +526,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "guzzlehttp/guzzle": 0,
+        "mjaschen/phpgeo": 0,
         "swiftmailer/swiftmailer": 0,
         "symm/gisconverter": 0
     },
