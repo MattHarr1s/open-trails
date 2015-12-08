@@ -28,6 +28,15 @@ footer {
 *for styling purposes
 ***********************************************/
 
+.dropdown-menu {
+	width: 300px;
+}
+
+.form-horizontal .form-group {
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
 .text-box {
 	border-radius: 6px;
 	padding: 10px 15px 15px;

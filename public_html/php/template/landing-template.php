@@ -43,7 +43,7 @@
 
 
 		<!-- load the googlemaps api -->
-		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152""></script>
+		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>
 
 		<!-- Initialize the Google Map -->
 		<script>
@@ -82,12 +82,15 @@
 					<li><a href="#">Find Trails</a></li>
 					<li><a href="#">About this site</a></li>
 					<li><a href="#">Create Account</a></li>
-					<li><div class="dropdown">
-							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Log in
+					<li>
+						<div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+									  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Log in
 								<span class="caret"></span>
 							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							<?php require_once(dirname(__DIR__) . "/lib/forms/login.php"); ?>
+							<div class="dropdown-menu"
+								  aria-labelledby="dropdownMenu1">
+								<?php require_once(dirname(__DIR__) . "/lib/forms/login.php"); ?>
 							</div>
 
 						</div>
@@ -125,7 +128,8 @@
 
 		<footer class="footer">
 			<div class="container">
-				<p class="text-muted">Copyright Comments<span class="pull-right"><a class="btn btn-primary" href="#" role="button">Contact Us</a></span>
+				<p class="text-muted">Copyright Comments<span class="pull-right"><a class="btn btn-primary" href="#"
+																										  role="button">Contact Us</a></span>
 				</p>
 			</div>
 		</footer>

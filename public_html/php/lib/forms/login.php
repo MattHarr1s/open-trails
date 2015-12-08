@@ -20,19 +20,26 @@
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 				</div>
 				<!-- text field input. pay attention to the id, placeholder text, type, and placeholder attributes -->
-				<input type="text" class="form-control" id="UserName1" placeholder="Your username here." maxlength="150" />
+				<input type="text" class="form-control" id="UserName1" placeholder="Your username here." maxlength="150"/>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="inputPassword1" class="control-label">Password</label>
+
 			<div class="input-group">
 				<div class="input-group-addon">
 					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 				</div>
-				<input type="password" id="password1" class="form-control" maxlength="150" placeholder="your.email@something.com"/>
+				<input type="password" id="password1" class="form-control" maxlength="150"
+						 placeholder="your.email@something.com"/>
 			</div>
 		</div>
+
+		<!-- buttons for submit and reset -->
+		<hr>
+		<button class="btn btn-md btn-info" type="submit">Log in</button>
+		<button class="btn btn-md btn-warning" type="reset">Reset</button>
 
 	</form>
 </div> <!-- CLOSE FORM WRAP -->
