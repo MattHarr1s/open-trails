@@ -82,7 +82,16 @@
 					<li><a href="#">Find Trails</a></li>
 					<li><a href="#">About this site</a></li>
 					<li><a href="#">Create Account</a></li>
-					<li><a href="#">Log in</a></li>
+					<li><div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Log in
+								<span class="caret"></span>
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							<?php require_once(dirname(__DIR__) . "/lib/forms/login.php"); ?>
+							</div>
+
+						</div>
+					</li>
 				</div>
 			</nav>
 
