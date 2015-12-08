@@ -45,7 +45,7 @@ try{
 
 
 	$segmentX =
-	$segmentY = "segmentStop";
+	$segmentStop =
 	$elevationX = filter_input(INPUT_GET, "segmentStartElevation", FILTER_VALIDATE_INT);
 	$elevationY = filter_input(INPUT_GET, "segmentStopElevation", FILTER_VALIDATE_INT);
 
