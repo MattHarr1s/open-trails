@@ -82,7 +82,7 @@
 					<li><a href="trailSearch-template.php">Find Trails</a></li>
 					<li><a href="#">About this site</a></li>
 
-					<!-- Drop down form for create acount -->
+					<!-- Drop down form for create account -->
 					<li>
 						<div class="dropdown">
 							<button class="btn btn-default dropdown-toggle" type=":button" id="dropdownMenu0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Create Account<span class="caret"></span>
@@ -109,31 +109,28 @@
 				</div>
 			</nav>
 
-			<!-- Main jumbotron to welcome users and for a call to action -->
-			<div class="jumbotron bg-image">
-				<div class="container text-center">
-					<br>
-					<br>
-
-					<h1>Explore the Outdoors around Albuquerque</h1>
-
-					<p>Find hiking, mountain biking, skiing, <br>and horseback riding trails</p>
-					<br>
-
-					<p><a class="btn btn-primary btn-lg" href="#" role="button">Find a Trail</a></p>
-
-					<p><a class="btn btn-primary" href="#" role="button">Learn More</a></p>
-				</div>
+			<!--	Load Trail Search Form here	-->
+			<div class="col-xs-12 col-md-8">
+				<h1 class="page-title">Search for Local Trails</h1>
+				<?php require_once(dirname(__DIR__) . "/lib/forms/searchTrails-form.php"); ?>
 			</div>
+			<br>
+			<hr>
 
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12" embed-responsive embed-responsive-4by3>
-						<div id="map"></div>
+
+			<!--	Map showing trail heads of trails meeting search criteria -->
+			<br>
+			<h2>Trails Found Meeting Search Criteria</h2>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12" embed-responsive embed-responsive-4by3>
+							<div id="map"></div>
+						</div>
+
 					</div>
-
 				</div>
-			</div>
+
+			<!-- Data base records for trails meeting search criteria will go here -->
 
 		</div>
 

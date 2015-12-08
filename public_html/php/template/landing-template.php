@@ -82,7 +82,7 @@
 					<li><a href="trailSearch-template">Find Trails</a></li>
 					<li><a href="#">About this site</a></li>
 
-					<!-- Drop down form for create acount -->
+					<!-- Drop down form for create account -->
 					<li>
 						<div class="dropdown">
 							<button class="btn btn-default dropdown-toggle" type=":button" id="dropdownMenu0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Create Account<span class="caret"></span>
