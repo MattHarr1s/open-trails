@@ -11,7 +11,7 @@ use Symm\Gisconverter\Gisconverter;
  *
  * @author Matt Harris mattharr505@gmail.com
  *
-**/
+ **/
 class DataDownloader {
 
 	/**
@@ -70,70 +70,6 @@ class DataDownloader {
 	}
 
 	/**
-	 * gets the "Last-Modified" attribute from a file url
-	 *
-	 * @param string $url url to check
-	 * @return string "Last-Modified" attribute
-	 **/
-	public static function getLastModified($url) {
-		// get the stream data
-		$streamData = DataDownloader::getMetaData($url);
-
-		//get the wrapper data that contains the "Last-Modified" attribute
-		$wrapperData = $streamData["wrapper_data"];
-
-		// loop through to find the "Last-Modified" attribute
-		$lastModified = "";
-		foreach($wrapperData as $data) {
-			if(strpos($data, "Last-Modified") !== false) {
-				$lastModified = $data;
-				break;
-			}
-		}
-
-		return $lastModified;
-	}
-
-	/**
-	 * gets the "Last-Modified" date from a file url
-	 *
-	 * @param string $url url to check
-	 * @return DateTime date last modified
-	 **/
-	public static function getLastModifiedDate($url) {
-		// get the "Last-Modified" attribute
-		$lastModified = DataDownloader::getLastModified($url);
-		$dateString = null;
-
-		if(strpos($lastModified, "Last-Modified") !== false) {
-			//grab the string after "Last-Modified: "
-			$dateString = substr($lastModified, 15);
-		}
-
-		$date = new DateTime($dateString);
-		$date->setTimezone(new DateTimeZone(date_default_timezone_get()));
-
-		//$formattedDate = $date->format ("Y-m-d H:i:s");
-
-		return $date;
-	}
-
-	/**
-	 * deletes a file or files from a directory
-	 *
-	 * @param string $path path to file
-	 * @param string $name filename
-	 * @param string $extension extension of the file
-	 **/
-	public static function deleteFiles($path, $name, $extension) {
-		//Delete file(s)
-		$files = glob("$path$name*$extension");
-		foreach($files as $file) {
-			unlink($file);
-		}
-	}
-
-	/**
 	 * gets the date of a stored file
 	 *
 	 * @param string $path path to stored file
@@ -165,53 +101,16 @@ class DataDownloader {
 		return $currentDate;
 	}
 
-	/**
-	 * Downloads a file to a path from a url
-	 *
-	 * @param string $url url to grab from
-	 * @param string $path path to save to
-	 * @param string $name filename to save in
-	 * @param string $extension extension to save in
-	 **/
-
-	public static function downloadFile($url, $path, $name, $extension) {
-		//delete old file(s)
-		DataDownloader::deleteFiles($path, $name, $extension);
-
-		//create new file
-		$newFile = null;
-		$newFileName = $path . $name . DataDownloader::getLastModifiedDate($url)->getTimestamp() . ".csv";
-
-		$file = fopen($url, "rb");
-		if($file) {
-			$newFile = fopen($newFileName, "wb");
-
-			if($newFile)
-				while(!feof($file)) {
-					fwrite($newFile, fread($file, 1024 * 8), 1024 * 8);
-				}
-		}
-
-		if($file) {
-			fclose($file);
-		} else {
-			fclose($newFile);
-		}
-	}
 
 	/**
 	 *This function grabs the named_trails.csv file and reads it
 	 *
-	 * @param string $urlBegin beginning of url to grab file at
-	 * @param string $urlEnd end of url to grab file at
+	 * @param string $url url to grab file at
 	 * @throws PDOException PDO related errors
 	 * @throws Exception catch-all exception
 	 **/
-	public static function readNamedTrailsCSV($urlBegin, $urlEnd) {
-		$urls = glob("$urlBegin*$urlEnd");
-		if(count($urls) > 0) {
-			$url = $urls[0];
-		}
+	public static function readNamedTrailsCSV($url) {
+
 
 		$context = stream_context_create(array("http" => array("ignore_errors" => true, "method" => "GET")));
 
@@ -239,23 +138,19 @@ class DataDownloader {
 					$trailUuid = "";
 
 					//sets trail description based on available data.
-					if ($data[3] === null){
-					$trailDescription = "This trail currently has no description. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
+					if(strlen($data[3]) <= 0) {
+						$trailDescription = "This trail currently has no description information. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
 					} else {
-					$trailDescription = $data[3];
+						$trailDescription = $data[3];
 					}
-
-					//convert fields to UTF-8
-					$trailDescription = mb_convert_encoding($trailDescription, "UTF-8");
-					$trailName = mb_convert_encoding($trailName, "UTF-8");
 
 					try {
 						$trail = new Trail($trailName, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailUse, $trailUuid);
-						$trail = insert($pdo);
+						$trail->insert($pdo);
 					} catch(PDOException $pdoException) {
 						$sqlStateCode = "23000";
 
-						$errorInfo = $pdoException->errorInf;
+						$errorInfo = $pdoException->errorInfo;
 						if($errorInfo [0] === $sqlStateCode) {
 						} else {
 							throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
@@ -277,18 +172,12 @@ class DataDownloader {
 	 *
 	 * Decodes geoJson file, converts to string, sifts through the string and inserts the data into the database
 	 *
-	 * @param string $urlBegin beginning of url to grab file at
-	 * @param string $urlEnd end of url to grab file at
+	 * @param string $url
 	 * @throws PDOException PDO related errors
 	 * @throws Exception catch-all exception
 	 **/
-	public static function readTrailSegmentsGeoJson($urlBegin, $urlEnd) {
-		$urls = glob("$urlBegin*$urlEnd");
-		if(count($urls) > 0) {
-			$url = $urls[0];
-		} else {
-			throw(new RuntimeException("No file exists at specified location"));
-		}
+	public static function readTrailSegmentsGeoJson($url) {
+
 		$context = stream_context_create(array("http" => array("ignore_errors" => true, "method" => "GET")));
 
 		try {
@@ -305,23 +194,9 @@ class DataDownloader {
 				$jsonFeatures = $jsonConverted->features;
 
 				$properties = $jsonFeatures->properties;
-				foreach($properties as $property){
-					$trailId = null;
-					$userId = "";
-					$browser = "";
-					$createDate = "";
-					$ipAddress = "";
-					$submitTrailId = "";
-					$trailAmenities = "";
-					$trailCondition = "";
-					$trailDescription = "";
-					$trailDifficulty = "";
-					$trailDistance = "";
+				foreach($properties as $property) {
 					$trailName = "";
-					$trailSubmissionType = "";
-					$trailTerrain = "";
 					$trailUse = "";
-					$trailUuid = "";
 
 					//Set $trailUse string based on information in geoJson properties field.
 					if($property['bicycle'] === "yes") {
@@ -339,79 +214,69 @@ class DataDownloader {
 					} else {
 						$trailUse = $trailUse . "wheelchair: no ";
 					}
-				}
-
-				try {
-					$trail = new Trail(null, 1, "Mozilla/1.0 (CPM; 8 bit)", new DateTime(), "::1", null, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, 0, "unknown", "unknown", $trailUse, null);
-					$trail->insert($pdo);
-				} catch(PDOException $pdoException) {
-					$sqlStateCode = "23000";
-
-					$errorInfo = $pdoException->errorInf;
-					if($errorInfo [0] === $sqlStateCode) {
-					} else {
-						throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
-					}
-				} catch(Exception $exception) {
-					throw (new Exception ($exception->getMessage(), 0, $exception));
-				}
-
-				$coordinates = $jsonFeatures->geometry->coordinates;
-				for($index = 0; $index < count($coordinates) - 1; $index++) {
-					$segmentStartX = $coordinates[$index][0];
-					$segmentStartY = $coordinates[$index][1];
-					$segmentStartElevation = $coordinates[$index][2];
-					$segmentStopX = $coordinates[$index + 1][0];
-					$segmentStopY = $coordinates[$index +1][1];
-					$segmentStopElevation = $coordinates[$index +1][2];
-					$segmentStart = new Point ($segmentStartX, $segmentStartY);
-					$segmentStop = new Point ($segmentStopX, $segmentStopY);
 
 					try {
-						$segment = new Segment(null, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
-						$segment->insert($pdo);
+						$trails = Trail::getTrailByTrailName($pdo, $trailName);
+						$trail = null;
+						foreach($trails as $trailToSet) {
+							$trail = $trailToSet;
+						}
+						// TODO: Set trail use
+						$trail = $trail->setTrailUse($trailUse);
+						$trail->update($pdo);
 
-						$relationship = new TrailRelationship(null, $trail->getTrailId(), $segment->getSegmentId());
-						$relationship->insert($pdo);
+						$coordinates = $jsonFeatures->geometry->coordinates;
+						for($index = 0; $index < count($coordinates) - 1; $index++) {
+							$segmentStartX = $coordinates[$index][0];
+							$segmentStartY = $coordinates[$index][1];
+							$segmentStartElevation = $coordinates[$index][2];
+							$segmentStopX = $coordinates[$index + 1][0];
+							$segmentStopY = $coordinates[$index + 1][1];
+							$segmentStopElevation = $coordinates[$index + 1][2];
+							$segmentStart = new Point ($segmentStartX, $segmentStartY);
+							$segmentStop = new Point ($segmentStopX, $segmentStopY);
 
+							try {
+								$segment = new Segment(null, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
+								$segment->insert($pdo);
+
+								$relationship = new TrailRelationship(null, $trail->getTrailId(), $segment->getSegmentId());
+								$relationship->insert($pdo);
+
+							} catch(PDOException $pdoException) {
+								$sqlStateCode = "23000";
+
+								$errorInfo = $pdoException->errorInfo;
+								if($errorInfo [0] === $sqlStateCode) {
+								} else {
+									throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
+								}
+							} catch(Exception $exception) {
+								throw (new Exception ($exception->getMessage(), 0, $exception));
+							}
+						}
 					} catch(PDOException $pdoException) {
 						$sqlStateCode = "23000";
 
-						$errorInfo = $pdoException->errorInf;
+						$errorInfo = $pdoException->errorInfo;
 						if($errorInfo [0] === $sqlStateCode) {
 						} else {
 							throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
 						}
 					} catch(Exception $exception) {
-							throw (new Exception ($exception->getMessage(), 0, $exception));
+						throw (new Exception ($exception->getMessage(), 0, $exception));
 					}
 				}
+
 				fclose($jsonFd);
-				}
-		} catch (PDOException $pdoException) {
-			throw (new PDOException($pdoException ->getMessage(), 0, $pdoException));
-		} catch (Exception $exception) {
-			throw (new Exception ($exception->getMessage(), 0 , $exception));
+			}
+		} catch(PDOException $pdoException) {
+			throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
+		} catch(Exception $exception) {
+			throw (new Exception ($exception->getMessage(), 0, $exception));
 		}
 	}
-	/**
-	 * Fills the database with trails and segments
-	 *
-	 * @param string $namedTrailsUrlBegin named_trails.csv url beginning
-	 * @param string $namedTrailsUrlEnd named_trails.csv url end
-	 * @param string $geoJsonUrlBegin trailSegments.geojson url beginning
-	 * @param string $geoJsonUrlEnd trailSegments.geojson url end
-	**/
-	public static function fillDatabase($namedTrailsUrlBegin, $namedTrailsUrlEnd, $geoJsonUrlBegin, $geoJsonUrlEnd) {
-		$pdo = connectToEncryptedMySQL("/etc/apache2/mysql/trailquail.ini");
 
-		//array to store trail
-	}
 
 }
-
-
-
-
-
-
+DataDownloader::readTrailSegmentsGeoJson("http://data.cabq.gov/community/opentrails/trail_segments.geojson");
