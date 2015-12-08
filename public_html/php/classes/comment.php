@@ -410,7 +410,7 @@ class Comment implements JsonSerializable {
 	}
 
 	/**
-	 * updates this comment in mySQL
+	 * updates this comment in MySQL
 	 *
 	 * @param PDO $pdo PDO connection object
 	 * @throws PDOException when mySQL related errors occur
