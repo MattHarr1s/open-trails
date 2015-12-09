@@ -1,19 +1,19 @@
-app.controller("SigninController", ["$scope", "$uibModal", "$window", "AlertService", "SigninService", function($scope, $uibModal, $window, AlertService, SigninService) {
-	$scope.signinData = {};
+app.controller("LoginController", ["$scope", "$uibModal", "$window", "AlertService", "LoginService", function($scope, $uibModal, $window, AlertService, LoginService) {
+	$scope.loginData = {};
 
-	$scope.openSigninModal = function () {
+	$scope.openLoginModal = function () {
 		var signupModalInstance = $uibModal.open({
-			templateUrl: "../../js/views/signin-modal.php",
-			controller: "SigninModal",
+			templateUrl: "../../js/views/login-modal.php",
+			controller: "LoginModal",
 			resolve: {
 				signinData: function () {
 					return($scope.signinData);
 				}
 			}
 		});
-		signupModalInstance.result.then(function (signinData) {
-			$scope.signinData = signinData;
-			SigninService.signin(signinData)
+		signupModalInstance.result.then(function (loginData) {
+			$scope.loginData = loginData;
+			LoginService.login(loginData)
 				.then(function(reply) {
 					if(reply.status === 200) {
 						AlertService.addAlert({type: "success", msg: reply.message});
@@ -23,7 +23,7 @@ app.controller("SigninController", ["$scope", "$uibModal", "$window", "AlertServ
 					}
 				});
 		}, function() {
-			$scope.signinData = {};
+			$scope.loginData = {};
 		});
 	};
 }]);
