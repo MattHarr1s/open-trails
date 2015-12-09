@@ -106,17 +106,18 @@ class DataDownloader {
 					$trailTerrain = "";
 					$trailUse = "";
 					$trailUuid = "";
-
+					var_dump($trailName);
 					//sets trail description based on available data.
 					if(strlen($data[3]) <= 0) {
 						$trailDescription = "This trail currently has no description information. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
 					} else {
 						$trailDescription = $data[3];
 					}
-
+					var_dump($trailDescription);
 					try {
 						$trail = new Trail($trailName, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailUse, $trailUuid);
 						$trail->insert($pdo);
+						var_dump($trail);
 					} catch(PDOException $pdoException) {
 						$sqlStateCode = "23000";
 
@@ -188,6 +189,7 @@ class DataDownloader {
 					try {
 						$trails = Trail::getTrailByTrailName($pdo, $trailName);
 						$trail = null;
+						var_dump($trails);
 						foreach($trails as $trailToSet) {
 							$trail = $trailToSet;
 						}
@@ -258,20 +260,26 @@ class DataDownloader {
 			$trailRelationships = TrailRelationship::getTrailRelationshipByTrailId($pdo, $trail->getTrailId());
 			$track = new Polyline();
 			foreach($trailRelationships as $trailRelationship) {
-
 				$segment = Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId());
-
 				$track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
-				$track->addPoint(new Coordinate($segment->getSegmentStop()->getX(), $segment->getSegmentStop()->getY));
-			}
-			//need to repeat and skip every other segment.
-			$trailDistanceM = $track->getLength(new Vincenty());
-			$trailDistanceKM = $trailDistanceM / 1000;
-			$trailDistanceMi = $trailDistanceM / 1609.344;
+				$track->addPoint(new Coordinate($segment->getSegmentStop()->getX(), $segment->getSegmentStop()->getY()));
 
-			// TODO: Set the trail distance
+			}
+
+			//calculate trail distance and convert to miles
+			$trailDistanceM = $track->getLength(new Vincenty());
+			$trailDistanceMi = $trailDistanceM / 1609.344;
+			var_dump($trailDistanceM);
+			echo ($trailDistanceMi);
+
+			//set trail distance
+			$trailDistance = $trailDistanceMi;
+			$trail = $trail->setTrailDistance($trailDistance);
+			$trail->update($pdo);
+			var_dump($trailDistance);
 		}
 	}
 }
 
 DataDownloader::readTrailSegmentsGeoJson("http://data.cabq.gov/community/opentrails/trail_segments.geojson");
+DataDownloader::readNamedTrailsCSV("http://data.cabq.gov/community/opentrails/named_trails.csv");
