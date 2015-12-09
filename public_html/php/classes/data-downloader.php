@@ -251,40 +251,27 @@ class DataDownloader {
 	 * using
 	 *
 	 *
-	**/
-	public static function calculateTrailDistance(){
-		$trails = Trail::getAllTrails($pdo );
-		foreach($trails as $trailToGet){
-			$trailToGet = $trail->getTrailId($trailId);
-		}
-		$trailRelationship = TrailRelationship::getTrailRelationshipByTrailId($pdo, $trailId);
-		foreach ($trailRelationship as $trailRelationshipToGet) {
-			$trailRelationshipToGet = $trailRelationship->getSegmentId($segmentId);
-		}
-		$trailSegments = Segment :: getSegmentBySegmentId($pdo, $segmentId);
-		foreach($trailSegments as $segmentForCalculation){
-			$segmentStartX = $segment->$segmentStart->getX();
-			$segmentStartY = $segment->$segmentStart->getY();
-			$segmentStopX = $segment->$segmentStop->getX();
-			$segmentStopY = $segment->$segmentStop->getY();
+	 **/
+	public static function calculateTrailDistance() {
+		$trails = Trail::getAllTrails($pdo);
+		foreach($trails as $trail) {
+			$trailRelationships = TrailRelationship::getTrailRelationshipByTrailId($pdo, $trail->getTrailId());
+			$track = new Polyline();
+			foreach($trailRelationships as $trailRelationship) {
 
+				$segment = Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId());
 
-		// calculate distance of trail using the phpgeo composer package.
-		$track = new Polyline();
-		$track->addPoint(new Coordinate($segmentStartX, $segmentStartY));
-		$track->addPoint(new Coordinate($segmentStopX, $segmentStopY));
-		//need to repeat and skip every other segment.
-		$trailDistanceM = $track->getLength(new Vincenty());
-		$trailDistanceKM = $trailDistanceM / 1000;
-		$trailDistanceMi = $trailDistanceM /1609.344;
+				$track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
+				$track->addPoint(new Coordinate($segment->getSegmentStop()->getX(), $segment->getSegmentStop()->getY));
+			}
+			//need to repeat and skip every other segment.
+			$trailDistanceM = $track->getLength(new Vincenty());
+			$trailDistanceKM = $trailDistanceM / 1000;
+			$trailDistanceMi = $trailDistanceM / 1609.344;
 
-
-
-
-
+			// TODO: Set the trail distance
 		}
 	}
-
-
 }
+
 DataDownloader::readTrailSegmentsGeoJson("http://data.cabq.gov/community/opentrails/trail_segments.geojson");
