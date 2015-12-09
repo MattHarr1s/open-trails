@@ -8,7 +8,7 @@
 <div class="form-wrap">
 
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
-	<form method="get" action="#" id="login-form" class="form-horizontal">
+	<form method="get" action="#" id="login-form" class="form-horizontal" ng-submit="addUser(user);">
 
 		<div class="form-group">
 			<!-- Labels for each field are places within a <label> tag. Use the "for" attribute. the class="control-label" is for styling. -->
@@ -20,7 +20,7 @@
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 				</div>
 				<!-- text field input. pay attention to the id, placeholder text, type, and placeholder attributes -->
-				<input type="text" class="form-control" id="userName" placeholder="Your username here." maxlength="150"/>
+				<input type="text" class="form-control" id="userName" placeholder="Your username here." maxlength="150" ng-model="user.userName"/>
 			</div>
 		</div>
 
@@ -31,7 +31,7 @@
 					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 				</div>
 				<input type="password" id="password" class="form-control" maxlength="150"
-						 placeholder="Your password here"/>
+						 placeholder="Your password here" ng-model="user.password"/>
 			</div>
 		</div>
 
@@ -42,7 +42,7 @@
 					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 				</div>
 				<input type="password" id="verifyPassword" class="form-control" maxlength="150"
-						 placeholder="Verify your password here"/>
+						 placeholder="Verify your password here" ng-model="user.verifyPassword"/>
 			</div>
 		</div>
 
@@ -53,7 +53,7 @@
 					<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
 				</div>
 				<input type="Email" id="userEmail" class="form-control" maxlength="150"
-						 placeholder="your-email@something.com"/>
+						 placeholder="your-email@something.com" ng-model="user.userEmail"/>
 			</div>
 		</div>
 
