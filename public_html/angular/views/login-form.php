@@ -5,7 +5,7 @@
 <!-------------------------------------------------------->
 
 <!-- The div class="form-wrap" is the black box containing the form. It's set to a column width of 12 for small screens, and a column width of 6 for medium screens on up -->
-<div class="form-wrap">
+<div class="form-wrap" ng-controller="LoginController">
 
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
 	<form method="get" action="#" id="login-form" class="form-horizontal">
