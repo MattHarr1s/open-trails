@@ -230,7 +230,7 @@ class Rating {
 	 * gets all the trail ratings for a trail by trailId
 	 *
 	 * @param PDO $pdo PDO Connection object
-	 * @param int $trailId trail id to search for
+	 * @param int $trailId trail id to trail-search for
 	 * @returns SplFixedArray all ratings for the trail
 	 * @throws PDOException when mySql related error occurs
 	 */
@@ -271,8 +271,8 @@ class Rating {
 	/**
 	 * gets a trail Rating by trail Id and user Id
 	 * @param PDO $pdo PDO connection object
-	 * @param int $trailId trail id to search for
-	 * @param int $userId user id to search for
+	 * @param int $trailId trail id to trail-search for
+	 * @param int $userId user id to trail-search for
 	 * @return mixed Trail rating found or null if not found
 	 * @throws PDOException
 	 */

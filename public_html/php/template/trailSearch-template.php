@@ -112,7 +112,7 @@
 			<!--	Load Trail Search Form here	-->
 			<div class="col-xs-12 col-md-8">
 				<h1 class="page-title">Search for Local Trails</h1>
-				<?php require_once(dirname(__DIR__) . "/lib/forms/search-trails-form.php"); ?>
+				<?php require_once(dirname(__DIR__) . "/lib/forms/trail-search-trails-form.php"); ?>
 			</div>
 			<br>
 			<hr>

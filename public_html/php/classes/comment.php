@@ -435,8 +435,8 @@ class Comment implements JsonSerializable {
 	 * gets the comment by content
 	 *
 	 * @param PDO $pdo PDO connection object
-	 * @param string $commentText tweet content to search for
-	 * @return SplFixedArray all tweets found for this search
+	 * @param string $commentText tweet content to trail-search for
+	 * @return SplFixedArray all tweets found for this trail-search
 	 * @throws PDOException when mySql related errors occur
 	 */
 	public static function getCommentByCommentText(PDO $pdo, $commentText) {
@@ -475,7 +475,7 @@ class Comment implements JsonSerializable {
 	 * gets the comment by comment Id
 	 *
 	 * @param PDO $pdo connection object
-	 * @param int $commentId comment id to search for
+	 * @param int $commentId comment id to trail-search for
 	 * @return mixed comment found or null if not found
 	 * @throws PDOException when mySql related errors occur
 	 */
@@ -516,12 +516,12 @@ class Comment implements JsonSerializable {
 	 * gets the comment by trailId
 	 *
 	 * @param PDO $pdo PDO Connection object
-	 * @param int $trailId trail id to search for
+	 * @param int $trailId trail id to trail-search for
 	 * @return mixed trail relationship found or not null if not found
 	 * @throws PDOException when an mySQL related error occurs
 	 */
 	public static function getCommentByTrailId(PDO $pdo, $trailId) {
-		// sanitize the trailId before search
+		// sanitize the trailId before trail-search
 		$trailId = filter_var($trailId, FILTER_VALIDATE_INT);
 		if($trailId === false) {
 			throw(new PDOException("trailId is not an integer"));
@@ -556,7 +556,7 @@ class Comment implements JsonSerializable {
 	 * gets the comment by userId
 	 *
 	 * @param PDO $pdo PDO Connection object
-	 * @param int $userId user id to search for
+	 * @param int $userId user id to trail-search for
 	 * @return mixed trail relationship found or not null if not found
 	 * @throws PDOException when an mySQL related error occurs
 	 */

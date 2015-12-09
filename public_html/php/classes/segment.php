@@ -256,7 +256,7 @@ class Segment implements JsonSerializable {
 	 * gets segment by segmentId
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param int $segmentId segmentId to search for
+	 * @param int $segmentId segmentId to trail-search for
 	 * @return mixed Segment found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 */
@@ -305,7 +305,7 @@ class Segment implements JsonSerializable {
 	 * gets segment by segmentStart
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param Point $segmentStart start point to search for
+	 * @param Point $segmentStart start point to trail-search for
 	 * @return mixed Segment found or null if not found
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
@@ -347,7 +347,7 @@ class Segment implements JsonSerializable {
 	 * gets segment by segmentStop
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param Point $segmentStop stop point to search for
+	 * @param Point $segmentStop stop point to trail-search for
 	 * @return mixed segment found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 * @throws RangeException when range is invalid
@@ -389,7 +389,7 @@ class Segment implements JsonSerializable {
 	 * gets segment by segmentStartElevation
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param float $segmentStartElevation start point to search for
+	 * @param float $segmentStartElevation start point to trail-search for
 	 * @return mixed Segment found or null if not found
 	 * @throws RangeException when range is invalid
 	 * @throws Exception for other exception
@@ -440,7 +440,7 @@ class Segment implements JsonSerializable {
 	 * gets segment by segmentStopElevation
 	 *
 	 * @param PDO $pdo pointer to PDO connection
-	 * @param int $segmentStopElevation stop elevation to search for
+	 * @param int $segmentStopElevation stop elevation to trail-search for
 	 * @return mixed segment found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 * @throws RangeException when range is invalid

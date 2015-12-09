@@ -380,7 +380,7 @@ class User {
 	 * gets user ID information by userId
 	 *
 	 * @param PDO $pdo -- pointer to PDO connection, by reference
-	 * @param int $userId -- userId to search for
+	 * @param int $userId -- userId to trail-search for
 	 * @return user ID information if found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 *

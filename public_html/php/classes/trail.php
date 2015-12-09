@@ -553,7 +553,7 @@ trailDistance =:trailDistance, trailName =:trailName, trailSubmissionType =:trai
 	 * gets the trail by trailId
 	 *
 	 * @param PDO $pdo pointer to PDO connection, by reference
-	 * @param int $trailId trailID to search for
+	 * @param int $trailId trailID to trail-search for
 	 * @return mixed trail found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 **/
@@ -598,7 +598,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailId = :trai
 	 * gets the trail by userId
 	 *
 	 * @param PDO $pdo pointer to PDO connection, by reference
-	 * @param int $userId userId to search for
+	 * @param int $userId userId to trail-search for
 	 * @return mixed trail found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 *
@@ -647,7 +647,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE userId = :userI
 	 * gets the trail by submitTrailId
 	 *
 	 * @param PDO $pdo pointer to PDO connection, by reference
-	 * @param int $submitTrailId submitTrailId to search for
+	 * @param int $submitTrailId submitTrailId to trail-search for
 	 * @return mixed trail found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 *
@@ -728,7 +728,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail ";
 	 * gets the trail by trailAmenities
 	 *
 	 * @param PDO $pdo pointer to PDO connection, by reference
-	 * @param int $trailAmenities trailAmenities to search for
+	 * @param int $trailAmenities trailAmenities to trail-search for
 	 * @return mixed trail found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 *
@@ -777,7 +777,7 @@ trailTerrain, trailTraffic, trailUse, trailUuid FROM trail WHERE trailAmenities 
 	 * gets the trail by trailCondition
 	 *
 	 * @param PDO $pdo pointer to PDO connection, by reference
-	 * @param string $trailCondition trailCondition to search for
+	 * @param string $trailCondition trailCondition to trail-search for
 	 * @return mixed trail found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 *

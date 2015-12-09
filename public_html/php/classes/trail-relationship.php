@@ -184,7 +184,7 @@ class TrailRelationship {
 	 * gets a Trail Relationship by trailId
 	 *
 	 * @param PDO $pdo PDO connection object
-	 * @param int $trailId trail id to search for
+	 * @param int $trailId trail id to trail-search for
 	 * @return mixed Trail Relationship found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 **/
@@ -225,7 +225,7 @@ class TrailRelationship {
 	 * gets a Trail Relationship by segmentId
 	 *
 	 * @param PDO $pdo PDO connection object
-	 * @param int $segmentId segment id to search for
+	 * @param int $segmentId segment id to trail-search for
 	 * @return mixed Trail Relationship found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 **/
@@ -266,8 +266,8 @@ class TrailRelationship {
 	 * gets a Trail Relationship by trailId AND segmentId
 	 *
 	 * @param PDO $pdo PDO connection object
-	 * @param int $trailId trail id to search for
-	 * @param int $segmentId segment id to search for
+	 * @param int $trailId trail id to trail-search for
+	 * @param int $segmentId segment id to trail-search for
 	 * @return mixed Trail Relationship found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 **/
@@ -317,7 +317,7 @@ class TrailRelationship {
 	 * gets a Trail Relationship by segmentType
 	 *
 	 * @param PDO $pdo PDO connection object
-	 * @param string $segmentType segment type to search for
+	 * @param string $segmentType segment type to trail-search for
 	 * @return mixed Trail Relationship found or null if not found
 	 * @throws PDOException when mySQL related errors occur
 	 **/
