@@ -248,6 +248,7 @@ class DataDownloader {
 
 	/**
 	 *gets all segments for a trail and calculates distance of the trail then inserts calculated trailDistance into trail
+	 * using
 	 *
 	 *
 	**/
@@ -257,7 +258,30 @@ class DataDownloader {
 			$trailToGet = $trail->getTrailId($trailId);
 		}
 		$trailRelationship = TrailRelationship::getTrailRelationshipByTrailId($pdo, $trailId);
+		foreach ($trailRelationship as $trailRelationshipToGet) {
+			$trailRelationshipToGet = $trailRelationship->getSegmentId($segmentId);
+		}
 		$trailSegments = Segment :: getSegmentBySegmentId($pdo, $segmentId);
+		foreach($trailSegments as $segmentsForCalculation){
+			$segmentStartX = $segment->$segmentStart->getX();
+			$segmentStartY = $segment->$segmentStart->getY();
+			$segmentStopX = $segment->$segmentStop->getX();
+			$segmentStopY = $segment->$segmentStop->getY();
+
+
+		// calculate distance of trail using the phpgeo composer package.
+		$track = new Polyline();
+		$track->addPoint(new Coordinate($segmentStartX, $segmentStartY));
+		$track->addPoint(new Coordinate($segmentStopX, $segmentStopY));
+		//need to repeat and skip every other segment.
+		$trailDistanceM = $track->getLength(new Vincenty());
+		$trailDistanceKM = $trailDistanceM / 1000;
+		$trailDistanceMi = $trailDistanceM /1609.344;
+
+
+
+
+		}
 	}
 
 
