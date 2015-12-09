@@ -48,9 +48,9 @@ try {
 		setXsrfCookie("/");
 		if(empty($id) === false) {
 			$reply->data = Segment::getSegmentBySegmentId($pdo, $id);
-		} elseif(empty($segmentX) === false) {
+		} elseif(empty($segmentStart) === false) {
 			$reply->data = Segment::getSegmentBySegmentStart($pdo, $segmentStart)->toArray();
-		} elseif(empty($segmentY) === false) {
+		} elseif(empty($segmentStop) === false) {
 			$reply->data = Segment::getSegmentBySegmentStop($pdo, $segmentStop)->toArray();
 		} elseif(empty($elevationX) === false) {
 			$reply->data = Segment::getSegmentBySegmentStartElevation($pdo, $elevationX)->toArray();
@@ -66,11 +66,15 @@ try {
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
 
+			//formated segments so that the api and class can communicate together
+			$segmentStart = new Point($requestObject->segmentStart[0], $requestObject->segmentStart[1]);
+			$segmentStop = new Point($requestObject->segmentStop[0], $requestObject->segmentStop[1]);
+
 			// make sure al fields are present, in order to prevent database issues
-			if(empty($requestObject->segmentStart) === true) {
+			if(empty($segmentStart) === true) {
 				throw(new InvalidArgumentException("segment start cannot be empty"));
 			}
-			if(empty($requestObject->segmentStop) === true) {
+			if(empty($segmentStop) === true) {
 				throw(new InvalidArgumentException("segment stop cannot be empty"));
 			}
 			if(empty($requestObject->segmentStartElevation) === true) {
@@ -88,14 +92,12 @@ try {
 				if($segment === null) {
 					throw(new RuntimeException("segment must exist", 404));
 				}
-				$segment = new Segment($id, $requestObject->segmentStart, $requestObject->segmentStop, $requestObject->segmentStartElevation, $requestObject->segmentStopElevation);
+				$segment = new Segment($id, $segmentStart, $segmentStop, $requestObject->segmentStartElevation, $requestObject->segmentStopElevation);
 				$segment->update($pdo);
 				$reply->message = "segment update was successful";
 			}
 			if($method === "POST") {
 				// form a mini-constructor to assemble a segmentStart and a segmentStop....?????
-				$segmentStart = new Point($requestObject->segmentStart[0], $requestObject->segmentStart[1]);
-				$segmentStop = new Point($requestObject->segmentStop[0], $requestObject->segmentStop[1]);
 				$segment = new Segment(null, $segmentStart, $segmentStop, $requestObject->segmentStartElevation, $requestObject->segmentStopElevation);
 				$segment->insert($pdo);
 				$reply->message = "segment insert was successful";
