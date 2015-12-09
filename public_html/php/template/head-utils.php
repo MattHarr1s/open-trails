@@ -22,15 +22,17 @@ setXsrfCookie("/");
 <!DOCTYPE html>
 <html lang="en" ng-app="TrailQuail">
 	<head>
-		<meta charset="UTF-8" />
+		<meta charset="UTF-8"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 		<!-- Latest compiled and minified Bootstrap CSS -->
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+				integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
 		<!-- Optional Bootstrap theme -->
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+				integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
 		<!--  -->
 		<!-- ALL OTHER 3RD PARTY CSS FILES GO HERE, FONTAWESOME, GOOGLE FONTS, ETC. -->
@@ -47,8 +49,10 @@ setXsrfCookie("/");
 
 		<!-- Angular.js -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+		<script type="text/javascript"
+				  src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+		<script type="text/javascript"
+				  src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
 
 		<!--  -->
 		<!-- include all your angular files (.js files) down here -->
@@ -67,7 +71,16 @@ setXsrfCookie("/");
 					zoom: 8,
 					mapTypeId: google.maps.MapTypeId.TERRAIN
 				}
-				var map = new google.maps.Map(mapCanvas, mapOptions)
+				var map = new google.maps.Map(mapCanvas, mapOptions);
+
+				// Map 2
+				var mapCanvas2 = document.getElementById('map2');
+				var mapOptions2 = {
+					center: new google.maps.LatLng(35.1318, -106.5925),
+					zoom: 8,
+					mapTypeId: google.maps.MapTypeId.TERRAIN
+				}
+				var map2 = new google.maps.Map(mapCanvas2, mapOptions2);
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);
 		</script>

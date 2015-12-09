@@ -21,32 +21,41 @@ require_once("../php/template/head-utils.php");
 	<div class="container">
 		<div class="row">
 			<!--map container-->
-			<div class="col-md-6>
+			<div class="col-md-6">
 				<h2>Current Trail Entry</h2>
+
 				<div>Trail Name Here</div>
-			 	<div embed-responsive embed-responsive-4by3">
-					<div id="map1"></div>
+				<div class="row">
+					<div class="col-md-8 embed-responsive embed-responsive-4by3">
+						<div id="map"></div>
+					</div>
+					<!-- End of Map row / beginning of trail info -->
 				</div>
-				<br>
 				<div>Trail Search Parameters go here</div>
 				<br>
+
 				<div>Trail Description goes here</div>
 			</div> <!-- End column 1 here -->
 			<!--Correction/New Trail data column-->
-			<div>Trail Name here again</div>
+
 			<div class="col-md-6">
-				<h2>Trai Correction/New Trail Entry</h2>
+				<h2>Trail Correction/New Trail Entry</h2>
+
 				<div>Trail Name Here again</div>
-				<div embed-responsive embed-responsive-4by3">
-				<div id="map1"></div>
-			</div>
-				<br>
+				<div class="row">
+					<div class="col-md-8 embed-responsive embed-responsive-4by3">
+						<div id="map2"></div>
+					</div>
+					<!-- End of Map row / beginning of trail info -->
+				</div>
 				<div>Trail Search Parameters go here</div>
 				<br>
+
 				<div>trail description goes here</div>
-				<button class="btn btn-md btn-info" type="submit">Approve for update database</button>
-				<!--continue to fill in content next to map here-->
-			</div>
+				<br>
+				<div>Do you want to approve the above trail information to go into the database</div>
+				<?php require_once(dirname(__DIR__) . "/angular/views/accept-reject-form.php"); ?>
+			</div>  <!-- End of column 2 -->
 		</div><!--.row-->
 
 
