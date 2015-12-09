@@ -1,5 +1,5 @@
 app.controller("SignupController", function($http, SignupService, $scope, $window) {
-	$scope.user = null;
+	$scope.user = {};
 	$scope.statusClass = "alert-success";
 	$scope.statusMessage = null;
 
@@ -11,7 +11,7 @@ app.controller("SignupController", function($http, SignupService, $scope, $windo
 			SignupService.addUser(user)
 				.then(function(reply) {
 					if(reply.status === 200) {
-						$window.location.href = dirname(dirname(__DIR__)) . "index.php";																				file path?????
+						$window.location.href = "../../index.php";
 					} else {
 						$scope.statusClass = "alert-danger";
 						$scope.statusMessage = reply.message;
