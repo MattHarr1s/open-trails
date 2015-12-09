@@ -53,7 +53,7 @@ require_once("../php/template/head-utils.php");
 
 				<div>trail description goes here</div>
 				<br>
-				<div>Do you want to approve the above trail information to go into the database</div>
+				<div>Do you want to approve the above trail information to go into the database?</div>
 				<?php require_once(dirname(__DIR__) . "/angular/views/accept-reject-form.php"); ?>
 			</div>  <!-- End of column 2 -->
 		</div><!--.row-->
