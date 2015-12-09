@@ -16,7 +16,7 @@ require_once("../php/template/head-utils.php");
 	<!--	Load Trail Search Form here	-->
 	<div class="col-xs-12 col-md-8">
 		<h1 class="page-title">Search for Local Trails</h1>
-		<?php require_once("../php/lib/forms/searchTrails-form.php"); ?>
+		<?php require_once(dirname(__DIR__) . "/angular/views/search-trails-form.php"); ?>
 	</div>
 	<br>
 	<hr>

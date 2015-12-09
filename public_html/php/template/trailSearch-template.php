@@ -88,7 +88,7 @@
 							<button class="btn btn-default dropdown-toggle" type=":button" id="dropdownMenu0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Create Account<span class="caret"></span>
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu0">
-								<?php require_once(dirname(__DIR__) . "/lib/forms/createAccount.php"); ?>
+								<?php require_once(dirname(__DIR__) . "/lib/forms/create-account-form.php"); ?>
 							</div>
 						</div>
 
@@ -101,7 +101,7 @@
 							</button>
 							<div class="dropdown-menu"
 								  aria-labelledby="dropdownMenu1">
-								<?php require_once(dirname(__DIR__) . "/lib/forms/login.php"); ?>
+								<?php require_once(dirname(__DIR__) . "/lib/forms/login-form.php"); ?>
 							</div>
 
 						</div>
@@ -112,7 +112,7 @@
 			<!--	Load Trail Search Form here	-->
 			<div class="col-xs-12 col-md-8">
 				<h1 class="page-title">Search for Local Trails</h1>
-				<?php require_once(dirname(__DIR__) . "/lib/forms/searchTrails-form.php"); ?>
+				<?php require_once(dirname(__DIR__) . "/lib/forms/search-trails-form.php"); ?>
 			</div>
 			<br>
 			<hr>

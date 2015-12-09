@@ -41,7 +41,7 @@ require_once("../php/template/head-utils.php");
 </div>
 
 <footer class="footer">
-	<?php require_once("../php/template/footer.php"); ?>
+	<?php require_once(dirname(__DIR__) . "/php/template/footer.php"); ?>
 </footer>
 
 </body>

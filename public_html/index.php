@@ -2,10 +2,16 @@
 /*grab current directory*/
 $CURRENT_DIR = __DIR__;
 /*set page title here*/
-$PAGE_TITLE = "MY PAGE TITLE";
+$PAGE_TITLE = "Quail Trail Homepage";
 /*load head-utils.php*/
 require_once("php/template/head-utils.php");
 ?>
+
+<!-- ----------------------------------- -->
+<!-- Quail Trail Homepage                -->
+<!--
+<!--
+<!-- ------------------------------------ -->
 
 <div class="sfooter-content">
 	<header>

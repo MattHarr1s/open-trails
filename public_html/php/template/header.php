@@ -23,7 +23,7 @@
 					Create Account
 				</a>
 				<ul class="uib-dropdown-menu" aria-labelledby="create-account-dropdown">
-					<?php require_once(dirname(__DIR__) . "/lib/forms/createAccount.php"); ?>
+					<?php require_once(dirname(__DIR__) . "/lib/forms/create-account-form.php"); ?>
 				</ul>
 			</span>
 		</li>
@@ -37,7 +37,7 @@
 				</button>
 				<div class="dropdown-menu"
 					  aria-labelledby="dropdownMenu1">
-					<?php require_once(dirname(__DIR__) . "/lib/forms/login.php"); ?>
+					<?php require_once(dirname(__DIR__) . "/lib/forms/login-form.php"); ?>
 				</div>
 
 			</div>
