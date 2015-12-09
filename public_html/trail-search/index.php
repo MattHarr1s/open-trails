@@ -14,12 +14,12 @@ require_once("../php/template/head-utils.php");
 	</header>
 
 	<!--	Load Trail Search Form here	-->
-	<div class="col-xs-12 col-md-8">
+	<div class="col-xs-12 col-md-12">
 		<h1 class="page-title">Search for Local Trails</h1>
 		<?php require_once(dirname(__DIR__) . "/angular/views/search-trails-form.php"); ?>
 	</div>
-	<br>
-	<hr>
+	<br/>
+	<hr/>
 
 
 	<div class="container">
