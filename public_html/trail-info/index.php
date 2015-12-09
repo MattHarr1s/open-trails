@@ -25,14 +25,29 @@ require_once("../php/template/head-utils.php");
 			<!--data column-->
 			<div class="col-md-6">
 				<div>Trail name here</div>
+				<br>
 				<div>Trail Search Parameters go here</div>
+				<br>
+				<button class="btn btn-md btn-info" type="submit">Trail Corrections</button>
+				<button class="btn btn-md btn-warning" type="reset">Trail Alert</button>
 				<!--continue to fill in content next to map here-->
 			</div>
 		</div><!--.row-->
 
+		<!-- Trail comment form inserted here -->
 		<div class="row">
 			<div class="col-md-12">
-				full width column here
+		</div>
+			<h1 class="page-title">Enter Your Comment(s) for this Trail</h1>
+			<?php require_once(dirname(__DIR__) . "/angular/views/comment-form.php"); ?>
+		</div>
+		<br>
+		<hr>
+
+		<!-- Trail comments from database will show below here -->
+		<div class="row">
+			<div class="col-md-12">
+				List of trail commments here
 			</div>
 		</div>
 

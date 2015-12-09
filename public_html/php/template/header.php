@@ -18,14 +18,14 @@
 
 		<!-- Drop down form for create account -->
 		<li ng-controller="DropdownCtrl">
-			<span uib-dropdown on-toggle="toggled"(open)>
-				<a href id="create-account-dropdown" uib-dropdown-toggle>
-					Create Account
-				</a>
-				<ul class="uib-dropdown-menu" aria-labelledby="create-account-dropdown">
-					<?php require_once(dirname(dirname(__DIR__)) . "/angular/views/create-account-form.php"); ?>
-				</ul>
-			</span>
+  <span uib-dropdown on-toggle="toggled"(open)>
+    <a href id="create-account-dropdown" uib-dropdown-toggle>
+		 Create Account
+	 </a>
+    <ul class="uib-dropdown-menu" aria-labelledby="create-account-dropdown">
+		 <?php require_once(dirname(dirname(__DIR__)) . "/angular/views/create-account-form.php"); ?>
+	 </ul>
+  </span>
 		</li>
 
 			<!-- Drop down form for logging in -->

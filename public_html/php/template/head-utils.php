@@ -50,12 +50,10 @@ setXsrfCookie("/");
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
 		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
 
-		<!-- local angular java script file -->
-		<script src="<?php echo $PREFIX; ?>js/angularstyle.js"></script>
-
 		<!--  -->
 		<!-- include all your angular files (.js files) down here -->
 		<!--  -->
+		<!-- <script src="<?php echo $PREFIX; ?>js/angular-style.js"></script>  -->
 
 		<!-- load the googlemaps api -->
 		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>
