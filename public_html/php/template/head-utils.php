@@ -57,7 +57,8 @@ setXsrfCookie("/");
 		<!--  -->
 		<!-- include all your angular files (.js files) down here -->
 		<!--  -->
-		<!-- <script src="<?php echo $PREFIX; ?>js/angular-style.js"></script>  -->
+		<script src="<?php echo $PREFIX; ?>angular/trail-quail.js"></script>
+		<script src="<?php echo $PREFIX; ?>js/angular-style.js"></script>
 
 		<!-- load the googlemaps api -->
 		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>

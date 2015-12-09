@@ -18,29 +18,27 @@
 
 		<!-- Drop down form for create account -->
 		<li ng-controller="DropdownCtrl">
-  <span uib-dropdown on-toggle="toggled"(open)>
-    <a href id="create-account-dropdown" uib-dropdown-toggle>
-		 Create Account
-	 </a>
-    <ul class="uib-dropdown-menu" aria-labelledby="create-account-dropdown">
-		 <?php require_once(dirname(dirname(__DIR__)) . "/angular/views/create-account-form.php"); ?>
-	 </ul>
-  </span>
+		  <span dropdown auto-close="outsideClick" on-toggle="toggled(open)">
+			 <a href id="create-account-dropdown" dropdown-toggle>
+				 Create Account
+			 </a>
+			 <ul class="dropdown-menu" aria-labelledby="create-account-dropdown">
+				 <?php require_once(dirname(dirname(__DIR__)) . "/angular/views/create-account-form.php"); ?>
+			 </ul>
+		  </span>
 		</li>
 
-			<!-- Drop down form for logging in -->
-		<li>
-			<div class="dropdown">
-				<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-						  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Log in
-					<span class="caret"></span>
-				</button>
-				<div class="dropdown-menu"
-					  aria-labelledby="dropdownMenu1">
-					<?php require_once(dirname(dirname(__DIR__)) . "/angular/views/login-form.php"); ?>
-				</div>
-
-			</div>
+		<!-- Drop down form for logging in -->
+		<li ng-controller="DropdownCtrl">
+			<span dropdown auto-close="outsideClick" on-toggle="toggled(open)">
+			 <a href id="create-account-dropdown" dropdown-toggle>
+				 Log in
+			 </a>
+			<ul class="dropdown-menu" aria-labelledby="log-in-dropdown">
+				<?php require_once(dirname(dirname(__DIR__)) . "/angular/views/login-form.php"); ?>
+			</ul>
+			</span>
 		</li>
+
 	</div>
 </nav>

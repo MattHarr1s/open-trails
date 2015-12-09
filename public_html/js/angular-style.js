@@ -1,9 +1,8 @@
-
-angular.module('ui.bootstrap.demo').controller('DropdownCtrl', function ($scope, $log) {
+app.controller('DropdownCtrl', function($scope, $log) {
 
 	$scope.status = {
-	isopen: false
-};
+		isopen: false
+	};
 
 	$scope.toggled = function(open) {
 		$log.log('Dropdown is now: ', open);
