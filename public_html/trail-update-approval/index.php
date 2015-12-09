@@ -17,7 +17,7 @@ require_once("../php/template/head-utils.php");
 	<!-- trail database updates webpage - super user access only -->
 	<hr>
 
-	<!-- current database entry on treil -->
+	<!-- current database entry on trail -->
 	<div class="container">
 		<div class="row">
 			<!--map container-->
@@ -26,7 +26,7 @@ require_once("../php/template/head-utils.php");
 
 				<div>Trail Name Here</div>
 				<div class="row">
-					<div class="col-md-8 embed-responsive embed-responsive-4by3">
+					<div class="col-md-10 embed-responsive embed-responsive-4by3">
 						<div id="map"></div>
 					</div>
 					<!-- End of Map row / beginning of trail info -->
@@ -43,7 +43,7 @@ require_once("../php/template/head-utils.php");
 
 				<div>Trail Name Here again</div>
 				<div class="row">
-					<div class="col-md-8 embed-responsive embed-responsive-4by3">
+					<div class="col-md-10 embed-responsive embed-responsive-4by3">
 						<div id="map2"></div>
 					</div>
 					<!-- End of Map row / beginning of trail info -->
