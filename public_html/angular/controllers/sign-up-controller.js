@@ -11,7 +11,7 @@ app.controller("SignupController", function($http, SignupService, $scope, $windo
 			SignupService.addUser(user)
 				.then(function(reply) {
 					if(reply.status === 200) {
-						$window.location.href = "../lib/angular/controllers";																				file path?????
+						$window.location.href = dirname(dirname(__DIR__)) . "index.php";																				file path?????
 					} else {
 						$scope.statusClass = "alert-danger";
 						$scope.statusMessage = reply.message;
