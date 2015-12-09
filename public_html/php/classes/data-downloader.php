@@ -262,7 +262,7 @@ class DataDownloader {
 			$trailRelationshipToGet = $trailRelationship->getSegmentId($segmentId);
 		}
 		$trailSegments = Segment :: getSegmentBySegmentId($pdo, $segmentId);
-		foreach($trailSegments as $segmentsForCalculation){
+		foreach($trailSegments as $segmentForCalculation){
 			$segmentStartX = $segment->$segmentStart->getX();
 			$segmentStartY = $segment->$segmentStart->getY();
 			$segmentStopX = $segment->$segmentStop->getX();
@@ -277,6 +277,7 @@ class DataDownloader {
 		$trailDistanceM = $track->getLength(new Vincenty());
 		$trailDistanceKM = $trailDistanceM / 1000;
 		$trailDistanceMi = $trailDistanceM /1609.344;
+
 
 
 
