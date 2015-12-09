@@ -1,4 +1,6 @@
-<nav class="navbar navbar-inverse">
+<!-- This in mainly for the Navbar in the header -->
+
+<nav class="navbar navbar-default">
 	<!-- logo and mobile toggle button get grouped together for better mobile display -->
 	<div class="navbar-header">
 		<!-- this is the mobile menu button -->
