@@ -2,7 +2,6 @@
 
 require_once dirname(dirname(__DIR__)) . "/classes/autoload.php";
 require_once dirname(dirname(__DIR__)) . "/lib/xsrf.php";
-// go over with dylan to make sure this is correct
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once dirname(dirname(dirname(dirname(__DIR__)))) . "/vendor/autoload.php";
 /**
@@ -37,14 +36,6 @@ try {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 	//sanitize and trim the rest of the inputs
-	/*
-	 * declare that angular is going to send object in point x and point y i need to find a way of bridging the gap between
-	 * php and angular like almost how it is done in the actual point class.
-	 *
-	 */
-
-
-
 	$elevationX = filter_input(INPUT_GET, "segmentStartElevation", FILTER_VALIDATE_INT);
 	$elevationY = filter_input(INPUT_GET, "segmentStopElevation", FILTER_VALIDATE_INT);
 
@@ -68,9 +59,8 @@ try {
 		}
 	}
 	//if the section belongs to a new an active user allow post, put and delete m
-	if(empty($_SESSION["user"]) === false && $_SESSION["user"]->getUserAccountType() !== "X") ;
-	{
-		if($method === "PUT" || $method === "POST" || $method === "DELETE") {
+	if(empty($_SESSION["user"]) === false && $_SESSION["user"]->getUserAccountType() !== "X") {
+		if($method === "PUT" || $method === "POST") {
 
 			verifyXsrf();
 			$requestContent = file_get_contents("php://input");
@@ -110,27 +100,25 @@ try {
 				$segment->insert($pdo);
 				$reply->message = "segment insert was successful";
 			}
-			if($method === "DElETE") {
-				$segment = Segment::getSegmentBySegmentId($pdo, $id);
-				if($segment === null) {
-					throw(new RuntimeException("segment must exist", 404));
-				}
-				$segment->delete($pdo);
-				$deletedObject = new stdClass();
-				$deletedObject->segmentId = $id;
+
+		} elseif($method === "DELETE") {
+			$segment = Segment::getSegmentBySegmentId($pdo, $id);
+			if($segment === null) {
+				throw(new RuntimeException("segment must exist", 404));
 			}
+			$segment->delete($pdo);
+			$deletedObject = new stdClass();
+			$deletedObject->segmentId = $id;
+			$reply->message = "segment was successfully Deleted";
 		} else {
 			if((empty($method) === false) && ($method !== "GET")) {
 				throw(new RuntimeException("only active users are allowed to modify entries", 401));
 			}
 		}
-
-
 	}
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
-	$reply->messgae = $exception->getTrace();
 }
 header("Content-type: application/json");
 if($reply->data === null) {

@@ -4,8 +4,8 @@
 require_once dirname(dirname(__DIR__)) . "/classes/autoload.php";
 require_once dirname(dirname(dirname(dirname(__DIR__)))) . "/vendor/autoload.php";
 require_once dirname(dirname(__DIR__)) . "/lib/xsrf.php";
-// go over with dylan to make sure this is correct
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once dirname(dirname(dirname(dirname(__DIR__)))) . "/vendor/autoload.php";
 
 /**
  * api for the trail class
@@ -78,7 +78,7 @@ try{
 			$reply->data = Trail::getTrailByTrailDescription($pdo, $description)->toArray();
 		} elseif (empty($difficulty) === false) {
 			$reply->data = Trail::getTrailByTrailDifficulty($pdo, $difficulty)->toArray();
-			//} elseif (empty($distance) === false) {
+		} elseif (empty($distance) === false) {
 			$reply->data = Trail::getTrailByTrailDistance($pdo, $distance)->toArray();
 		} elseif (empty($name) === false) {
 			$reply->data = Trail::getTrailByTrailName($pdo, $name)->toArray();
@@ -177,7 +177,7 @@ try{
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
-	$reply->trace = $exception->getTrace();
+
 
 //blob
 }
