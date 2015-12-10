@@ -13,25 +13,24 @@
 
 	<!-- here are your main nav links, grouped for toggling -->
 	<div class="collapse navbar-collapse" id="main-menu">
-		<u1 class="nav navbar-nav navbar-right"
-		</u1>
-		<li><a href="trailSearch-template">Find Trails</a></li>
-		<li><a href="#">About this site</a></li>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="trailSearch-template">Find Trails</a></li>
+			<li><a href="#">About this site</a></li>
 
-		<!-- Drop down form for create account -->
-		<li ng-controller="DropdownCtrl">
-		  <span dropdown auto-close="outsideClick" on-toggle="toggled(open)">
-			 <a href id="create-account-dropdown" dropdown-toggle>
-				 Create Account
-			 </a>
-			 <ul class="dropdown-menu" aria-labelledby="create-account-dropdown">
-				 <?php require_once(dirname(dirname(__DIR__)) . "/angular/views/create-account-form.php"); ?>
-			 </ul>
-		  </span>
-		</li>
+			<!-- Drop down form for create account -->
+			<li ng-controller="DropdownCtrl">
+			  <span dropdown auto-close="outsideClick" on-toggle="toggled(open)">
+				 <a href id="create-account-dropdown" dropdown-toggle>
+					 Create Account
+				 </a>
+				 <ul class="dropdown-menu" aria-labelledby="create-account-dropdown">
+					 <?php require_once(dirname(dirname(__DIR__)) . "/angular/views/create-account-form.php"); ?>
+				 </ul>
+			  </span>
+			</li>
 
-		<!-- Drop down form for logging in -->
-		<li ng-controller="DropdownCtrl">
+			<!-- Drop down form for logging in -->
+			<li ng-controller="DropdownCtrl">
 			<span dropdown auto-close="outsideClick" on-toggle="toggled(open)">
 			 <a href id="create-account-dropdown" dropdown-toggle>
 				 Log in
@@ -40,7 +39,7 @@
 				<?php require_once(dirname(dirname(__DIR__)) . "/angular/views/login-form.php"); ?>
 			</ul>
 			</span>
-		</li>
-
+			</li>
+		</ul>
 	</div>
 </nav>
