@@ -1,13 +1,13 @@
-app.controller("SignupController", ["$scope", "$uibModal", "AlertService", "SignupService", function($scope, $uibModal, AlertService, SignupService) {
+app.controller("SignupController", ["$scope", "$uibModal", "SignupService", function($scope, $uibModal, SignupService) {
 	$scope.signupData = {};
 
-	$scope.openSignupModal = function () {
+	$scope.openSignupModal = function() {
 		var signupModalInstance = $uibModal.open({
-			templateUrl: "/js/templates/signup-modal.php",
+			templateUrl: "angular/views/create-account-form.php",
 			controller: "SignupModal",
 			resolve: {
 				signupData: function() {
-					return($scope.signupData);
+					return ($scope.signupData);
 				}
 			}
 		});
@@ -30,12 +30,6 @@ app.controller("SignupController", ["$scope", "$uibModal", "AlertService", "Sign
 ]);
 
 
-
-
-
-
-
-
 /**app.controller("SignupController", function($http, SignupService, $scope, $window) {
 	$scope.user = {};
 	$scope.statusClass = "alert-success";
@@ -44,7 +38,7 @@ app.controller("SignupController", ["$scope", "$uibModal", "AlertService", "Sign
 	/**
 	 * method that controlls the action table and will fill the table or display errors
 	 */
-	/**$scope.addUser = function(user) {
+/**$scope.addUser = function(user) {
 		if(user.password === user.verifyPassword) {
 			SignupService.addUser(user)
 				.then(function(reply) {
@@ -57,5 +51,6 @@ app.controller("SignupController", ["$scope", "$uibModal", "AlertService", "Sign
 				});
 		}
 	}
-});
+ });
 
+ */

@@ -36,6 +36,7 @@ setXsrfCookie("/");
 
 		<!--  -->
 		<!-- ALL OTHER 3RD PARTY CSS FILES GO HERE, FONTAWESOME, GOOGLE FONTS, ETC. -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<!--  -->
 
 		<!-- CUSTOM CSS GOES HERE -->
@@ -53,12 +54,13 @@ setXsrfCookie("/");
 				  src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
 		<script type="text/javascript"
 				  src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
-		<script type="text/javascript" src="<?php echo $PREFIX; ?>js/controllers/sign-up-controller.js"></script>
 		<!--  -->
 		<!-- include all your angular files (.js files) down here -->
 		<!--  -->
 		<script src="<?php echo $PREFIX; ?>angular/trail-quail.js"></script>
-		<script src="<?php echo $PREFIX; ?>js/angular-style.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/controllers/sign-up-controller.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/controllers/sign-up-modal.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/services/sign-up-service.js"></script>
 
 		<!-- load the googlemaps api -->
 		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>

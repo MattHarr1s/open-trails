@@ -5,7 +5,7 @@
 <!-------------------------------------------------------->
 
 <!-- The div class="form-wrap" is the black box containing the form. It's set to a column width of 12 for small screens, and a column width of 6 for medium screens on up -->
-<div class="form-wrap" ng-controller="SignupController">
+<div class="modal-body">
 
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
 	<form method="post" action="#" id="login-form" class="form-horizontal" ng-submit="addUser(user);">
@@ -20,12 +20,14 @@
 					<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 				</div>
 				<!-- text field input. pay attention to the id, placeholder text, type, and placeholder attributes -->
-				<input type="text" class="form-control" id="userName" placeholder="Your username here." maxlength="150" ng-model="user.userName"/>
+				<input type="text" class="form-control" id="userName" placeholder="Your username here." maxlength="150"
+						 ng-model="user.userName"/>
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="password" class="control-label">Password</label>
+
 			<div class="input-group">
 				<div class="input-group-addon">
 					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
@@ -37,6 +39,7 @@
 
 		<div class="form-group">
 			<label for="verifyPassword" class="control-label">Verify Password</label>
+
 			<div class="input-group">
 				<div class="input-group-addon">
 					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
@@ -48,6 +51,7 @@
 
 		<div class="form-group">
 			<label for="userEmail1" class="control-label">Email</label>
+
 			<div class="input-group">
 				<div class="input-group-addon">
 					<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
@@ -63,4 +67,5 @@
 		<button class="btn btn-md btn-warning" type="reset">Reset</button>
 
 	</form>
-</div> <!-- CLOSE FORM WRAP -->
+</div>
+<!-- CLOSE FORM WRAP -->
