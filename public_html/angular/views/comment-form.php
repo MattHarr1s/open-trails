@@ -24,14 +24,14 @@
 		<br>
 
 		<div class="form-group">
-			<label for="photoFile" class="control-label">Select photo file to upload:</label>
+			<label for="photoFile" class="control-label"><span class="glyphicon glyphicon-camera"
+																				aria-hidden="true"></span>Select photo file to
+				upload (.png or .jpg files only):</label>
 
 			<div class="input-group">
 				<div class="input-group-addon">
-					<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
 				</div>
-				<input type="file" id="photofile1" class="form-control" maxlength="50"
-						 placeholder="photo.jpg or photo.png"/>
+				<input type="file" id="photofile1" class="form-control"/>
 			</div>
 		</div>
 
