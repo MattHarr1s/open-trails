@@ -6,7 +6,7 @@
 
 <!-- The div class="form-wrap" is the black box containing the form. It's set to a column width of 12 for small screens, and a column width of 6 for medium screens on up -->
 <div class="form-wrap">
-	<label class="control-label" for txtareaComments"></label>
+	<label class="control-label" for="txtareaComments"></label>
 
 
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
@@ -28,10 +28,9 @@
 		<br>
 		<button class="btn btn-md btn-info" type="submit">Submit</button>
 <!--		<button class="btn btn-md btn-warning" type="reset">Reset</button>-->
-		<br>
-<!--		<div>Are you sure?</div>-->
-<!--		<button class="btn btn-md btn-info" type="submit">Yes</button>-->
-
+<!--		<br>-->
+		<!--		<div>Are you sure?</div>-->
+		<!--		<button class="btn btn-md btn-info" type="submit">Yes</button>-->
 
 	</form>
 </div> <!-- CLOSE FORM WRAP -->
