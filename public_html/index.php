@@ -37,7 +37,7 @@ require_once("php/template/head-utils.php");
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12 embed-responsive embed-responsive-4by3">
+			<div class	="col-md-12 embed-responsive embed-responsive-4by3">
 				<div id="map"></div>
 			</div>
 
