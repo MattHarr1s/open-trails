@@ -206,19 +206,33 @@ class TrailRelationship {
 		$parameters = array("trailId" => $trailId);
 		$statement->execute($parameters);
 
-		// grab the Trail Relationship from mySQL
-		try {
-			$trailRelationship = null;
-			$statement->setFetchMode(PDO::FETCH_ASSOC);
-			$row = $statement->fetch();
-			if($row !== false) {
+		// build an array of Trail Relationships
+		$trailRelationships = new SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch())!== false){
+			try{
 				$trailRelationship = new TrailRelationship($row["segmentId"], $row["trailId"], $row["segmentType"]);
+				$trailRelationships[$trailRelationships->key()] = $trailRelationship;
+				$trailRelationships->next();
+			} catch(Exception $e) {
+				//if the row couldn't be converted, rethrow it
+				throw(new PDOException($e->getMessage(), 0, $e));
 			}
-		} catch(Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($trailRelationship);
+
+//		// grab the Trail Relationship from mySQL
+//		try {
+//			$trailRelationship = null;
+//			$statement->setFetchMode(PDO::FETCH_ASSOC);
+//			$row = $statement->fetch();
+//			if($row !== false) {
+//				$trailRelationship = new TrailRelationship($row["segmentId"], $row["trailId"], $row["segmentType"]);
+//			}
+//		} catch(Exception $exception) {
+//			// if the row couldn't be converted, rethrow it
+//			throw(new PDOException($exception->getMessage(), 0, $exception));
+//		}
+		return($trailRelationships);
 	}
 
 	/**

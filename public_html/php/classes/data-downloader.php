@@ -1,7 +1,8 @@
 <?php
 
-require_once "autoload.php";
-require_once("/etc/apache2/mysql/encrypted-config.php");
+require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
+require_once(dirname(dirname(dirname(__DIR__))) . "/vendor/autoload.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Symm\Gisconverter\Gisconverter;
 use Location\Coordinate;
@@ -85,27 +86,28 @@ class DataDownloader {
 		$context = stream_context_create(array("http" => array("ignore_errors" => true, "method" => "GET")));
 
 		try {
-			$pdo = connectToEncryptedMySQL("/ect/apache2/mysql/trailquail.ini");
+			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 
 			if(($fd = @fopen($url, "rb", false, $context)) !== false) {
 				fgetcsv($fd, 0, "'");
-				while((($data = fgetcsv($fd, 0, "'")) !== false) && feof($fd) === false) {
+				while((($data = fgetcsv($fd, 0, ",")) !== false) && feof($fd) === false) {
 					$trailId = null;
-					$userId = "";
-					$browser = "";
-					$createDate = "";
-					$ipAddress = "";
-					$submitTrailId = "";
-					$trailAmenities = "";
-					$trailCondition = "";
+					$userId = 1;
+					$browser = "Mozilla";
+					$createDate = new DateTime();
+					$ipAddress = "192.168.1.4";
+					$submitTrailId = null;
+					$trailAmenities = "This trail currently has no amenities information. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
+					$trailCondition = "This trail currently has no condition information. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
 					$trailDescription = "";
-					$trailDifficulty = "";
-					$trailDistance = "";
+					$trailDifficulty = 2;
+					$trailDistance = 0;
 					$trailName = $data[1];
-					$trailSubmissionType = "";
-					$trailTerrain = "";
-					$trailUse = "";
-					$trailUuid = "";
+					$trailSubmissionType = 2;
+					$trailTerrain = "Unknown";
+					$trailTraffic = "Unknown";
+					$trailUse = "Unknown";
+					$trailUuid = null;
 					var_dump($trailName);
 					//sets trail description based on available data.
 					if(strlen($data[3]) <= 0) {
@@ -115,7 +117,7 @@ class DataDownloader {
 					}
 					var_dump($trailDescription);
 					try {
-						$trail = new Trail($trailName, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailUse, $trailUuid);
+						$trail = new Trail(null, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailTraffic, $trailUse, $trailUuid);
 						$trail->insert($pdo);
 						var_dump($trail);
 					} catch(PDOException $pdoException) {
@@ -152,7 +154,7 @@ class DataDownloader {
 		$context = stream_context_create(array("http" => array("ignore_errors" => true, "method" => "GET")));
 
 		try {
-			$pdo = connectToEncryptedMySQL("/etc/apache2/mysql/trailquail.ini");
+			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 
 			if(($jsonData = file_get_contents($url, null, $context)) === false) {
 
@@ -250,36 +252,49 @@ class DataDownloader {
 
 	/**
 	 *gets all segments for a trail and calculates distance of the trail then inserts calculated trailDistance into trail
-	 * using
+	 *
 	 *
 	 *
 	 **/
 	public static function calculateTrailDistance() {
+		$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 		$trails = Trail::getAllTrails($pdo);
+
 		foreach($trails as $trail) {
 			$trailRelationships = TrailRelationship::getTrailRelationshipByTrailId($pdo, $trail->getTrailId());
+
 			$track = new Polyline();
 			foreach($trailRelationships as $trailRelationship) {
-				$segment = Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId());
+				$segment = TrailRelationship::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId());
 				$track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
+				echo "<p style='background-color:red;'>";
+				$test = $track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
+				echo $test;
+				echo "</p>";
 				$track->addPoint(new Coordinate($segment->getSegmentStop()->getX(), $segment->getSegmentStop()->getY()));
-
 			}
 
 			//calculate trail distance and convert to miles
+//			echo "<p style='background-color:red;'>";
+//			$test = $track->getLength(new Vincenty());
+//			echo $test;
+//			echo "</p>";
 			$trailDistanceM = $track->getLength(new Vincenty());
 			$trailDistanceMi = $trailDistanceM / 1609.344;
 			var_dump($trailDistanceM);
-			echo ($trailDistanceMi);
+			echo($trailDistanceMi);
 
 			//set trail distance
 			$trailDistance = $trailDistanceMi;
-			$trail = $trail->setTrailDistance($trailDistance);
+			$trail->setTrailDistance($trailDistance);
 			$trail->update($pdo);
+			echo "<p>Trail distance:</p>";
 			var_dump($trailDistance);
 		}
 	}
 }
 
-DataDownloader::readTrailSegmentsGeoJson("http://data.cabq.gov/community/opentrails/trail_segments.geojson");
+
 DataDownloader::readNamedTrailsCSV("http://data.cabq.gov/community/opentrails/named_trails.csv");
+DataDownloader::readTrailSegmentsGeoJson("http://data.cabq.gov/community/opentrails/trail_segments.geojson");
+DataDownloader::calculateTrailDistance();
