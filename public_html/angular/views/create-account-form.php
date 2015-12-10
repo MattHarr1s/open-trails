@@ -63,7 +63,7 @@
 
 		<!-- buttons for submit and reset -->
 		<hr>
-		<button class="btn btn-md btn-info" type="submit">Submit</button>
+		<button ng-click="ok()" class="btn btn-md btn-info" type="submit">Submit</button>
 
 
 	</form>
