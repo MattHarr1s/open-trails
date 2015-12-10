@@ -138,7 +138,6 @@
 		<!-- buttons for submit and reset -->
 		<div class="form-horizontal">
 			<button class="btn btn-md btn-info" type="submit">Search</button>
-			<button class="btn btn-md btn-warning" type="reset">Reset</button>
 		</div>
 		<hr>
 

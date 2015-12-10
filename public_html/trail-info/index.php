@@ -47,7 +47,7 @@ require_once("../php/template/head-utils.php");
 		<!-- Trail comments from database will show below here -->
 		<div class="row">
 			<div class="col-md-12">
-				List of trail commments here
+<!--				List of trail comments here-->
 			</div>
 		</div>
 

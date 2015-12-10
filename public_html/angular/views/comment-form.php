@@ -10,23 +10,28 @@
 
 
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
-	<form method="post" action="#" id="login-form" class="form-horizontal">
+	<form method="post" action="#" id="comment-form" name="comment-form" class="form-horizontal">
 
 		<!-- Text box for inputting comments below -->
 		<div class="form-group">
 			<!-- Labels for each field are places within the label tag -->
 			<label for="trailComment" class="control-label"></label>
 			<br>
-			<textarea class="form-control" cols="20" rows="5" id="txtareaComments" maxlength="500"
-						 placeholder="Write a comment..."></textarea>
+			<textarea class="form-control" cols="20" rows="5" id="txtareaComments" name="txtareaComments" ng-maxlength="256"
+						 placeholder="Write a comment..." ng-model="comment" required></textarea>
 		</div>
+		<div ng-messages="comment-form.txtareaComments.$error" role="alert">
+			<div ng-message="required">You must enter a comment before you submit.</div>
+			<div ng-message="maxlength">Your comment is too long.  Limit your comment to 256 characters.</div>
+			</div>
 		<br>
 		<br>
 
 		<div class="form-group">
-			<label for="photoFile" class="control-label"><span class="glyphicon glyphicon-camera"
-																				aria-hidden="true"></span>Select photo file to
-				upload (.png or .jpg files only):</label>
+			<label for="photoFile" class="control-label">
+				<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>  Select photo file to
+				upload (.png or .jpg files only)
+			</label>
 
 			<div class="input-group">
 				<div class="input-group-addon">
@@ -34,9 +39,6 @@
 				<input type="file" id="photofile1" class="form-control"/>
 			</div>
 		</div>
-
-
-</div>
 
 <!-- buttons for submit -->
 <br>
