@@ -20,8 +20,7 @@
 			<!-- Drop down form for create account -->
 			<li ng-controller="DropdownCtrl">
 			  <span dropdown auto-close="outsideClick" on-toggle="toggled(open)">
-				 <a href id="create-account-dropdown" dropdown-toggle>
-					 Create Account
+				 <a ng-controller="SignupController"><a class="btn btn-info btn-lg" ng-click="openSignupModal();"><i class="fa fa-check" aria-hidden="true"></i>Create Account</a>
 				 </a>
 				 <ul class="dropdown-menu" aria-labelledby="create-account-dropdown">
 					 <?php require_once(dirname(dirname(__DIR__)) . "/angular/views/create-account-form.php"); ?>
@@ -32,9 +31,7 @@
 			<!-- Drop down form for logging in -->
 			<li ng-controller="DropdownCtrl">
 			<span dropdown auto-close="outsideClick" on-toggle="toggled(open)">
-			 <a href id="create-account-dropdown" dropdown-toggle>
-				 Log in
-			 </a>
+			 <a ng-controller="LoginController"><a class="btn btn-info btn-lg" ng-click="openLoginModal();"><i class="fa fa-check" aria-hidden="true"></i>Log In</a></a>
 			<ul class="dropdown-menu" aria-labelledby="log-in-dropdown">
 				<?php require_once(dirname(dirname(__DIR__)) . "/angular/views/login-form.php"); ?>
 			</ul>
