@@ -61,6 +61,9 @@ setXsrfCookie("/");
 		<script src="<?php echo $PREFIX; ?>angular/controllers/sign-up-controller.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/controllers/sign-up-modal.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/services/sign-up-service.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/controllers/login-controller.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/controllers/login-modal.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/services/login-service.js"></script>
 
 		<!-- load the googlemaps api -->
 		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>
