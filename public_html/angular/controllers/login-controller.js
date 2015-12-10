@@ -1,4 +1,12 @@
-app.controller("LoginController", function($http, LoginService, $window, $scope) {
+
+
+
+
+
+
+
+
+/**app.controller("LoginController", function($http, LoginService, $window, $scope) {
 	$scope.user = null;
 	$scope.statusClass = "alert-success";
 	$scope.statusMessage = null;
@@ -7,7 +15,7 @@ app.controller("LoginController", function($http, LoginService, $window, $scope)
 	 * method that controls the action table and will fill the table or display errors
 	 */
 
-	$scope.login = function(user) {
+	/**$scope.login = function(user) {
 		$http.post("../../php/controllers/login-controller.php", user)
 			.then(function(reply) {
 				if(typeof reply.data === "object") {
@@ -31,3 +39,5 @@ app.controller("LoginController", function($http, LoginService, $window, $scope)
 		});
 	};
 })
+
+**/

@@ -28,7 +28,7 @@
 			<li ng-controller="LoginController">
 			 <a class="btn btn-info btn-lg" ng-click="openLoginModal();">
 				 <i class="fa fa-check" aria-hidden="true"></i>Log In</>
-				</a>										// aria-hidden="true"
+				</a>																															// aria-hidden="true"
 			</li>
 		</ul>
 	</div>
