@@ -10,14 +10,14 @@
 
 
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
-	<form method="get" action="#" id="login-form" class="form-horizontal">
+	<form method="post" action="#" id="login-form" class="form-horizontal">
 
 		<!-- Text box for inputting comments below -->
 		<div class="form-group">
 			<!-- Labels for each field are places within the label tag -->
-			<label for="trailComment" class="control-label">Comment on this Trail below:</label>
+			<label for="trailComment" class="control-label"></label>
 			<br>
-			<textarea class="form-control" rows="5" id="txtareaComments" maxlength="500" placeholder="500 characters max."></textarea>
+			<textarea class="form-control" rows="5" id="txtareaComments" maxlength="500" placeholder="Write a comment..."></textarea>
 		</div>
 
 		<div class="form-group">
@@ -27,10 +27,10 @@
 		<!-- buttons for submit and reset -->
 		<br>
 		<button class="btn btn-md btn-info" type="submit">Submit</button>
-		<button class="btn btn-md btn-warning" type="reset">Reset</button>
+<!--		<button class="btn btn-md btn-warning" type="reset">Reset</button>-->
 		<br>
-		<div>Are you sure?</div>
-		<button class="btn btn-md btn-info" type="submit">Yes</button>
+<!--		<div>Are you sure?</div>-->
+<!--		<button class="btn btn-md btn-info" type="submit">Yes</button>-->
 
 
 	</form>
