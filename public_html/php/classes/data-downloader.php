@@ -156,7 +156,7 @@ class DataDownloader {
 		try {
 			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 
-			if(($jsonData = file_get_contents($url, null, $context)) === false) {
+			if(($jsonData = file_get_contents($url, null, $context)) !== false) {
 
 				if(($jsonFd = @fopen("php://memory", "wb+")) === false) {
 					throw(new RuntimeException("Memory Error: I can't remember"));
