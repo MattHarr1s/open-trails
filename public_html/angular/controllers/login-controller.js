@@ -1,9 +1,9 @@
-app.controller("LoginController", ["$scope", "uibModal", "LoginService", function($scope, $uibModal, LoginService) {
+app.controller("LoginController", ["$scope", "$uibModal", "LoginService", function($scope, $uibModal, LoginService) {
 	$scope.loginData = {};
 
 	$scope.openLoginModal = function () {
 		var loginModalInstance = $uibModal.open({
-			templateUrl: "angular/views/create-account-form.php",
+			templateUrl: "angular/views/login-form.php",
 			controller: "LoginModal",
 			resolve: {
 				loginData: function() {
