@@ -21,7 +21,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="photoFile" class="
+			<label for="photoFile" class="control-label"></label>
 		</div>
 
 		<!-- buttons for submit and reset -->
