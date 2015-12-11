@@ -1,1 +1,2 @@
-var app = angular.module("TrailQuail", ["ngMessages", "ui.bootstrap"]);
+var app = angular.module("TrailQuail", ["ngMessages", "ui.boot" +
+"strap"]);
