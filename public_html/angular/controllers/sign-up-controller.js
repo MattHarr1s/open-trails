@@ -9,7 +9,7 @@ app.controller("SignupController", ["$scope", "$uibModal", "SignupService", func
 
 	$scope.openSignupModal = function() {
 		var signupModalInstance = $uibModal.open({
-			templateUrl: "angular/views/create-account-form.php",
+			templateUrl: "angular/views/create-account-modal.php",
 			controller: "SignupModal",
 			resolve: {
 				signupData: function() {
@@ -19,7 +19,7 @@ app.controller("SignupController", ["$scope", "$uibModal", "SignupService", func
 		});
 		signupModalInstance.result.then(function(signupData) {
 			$scope.signupData = signupData;
-			SignupService.signup(signupData)
+			SignupService.addUser(signupData)
 				.then(function(reply) {
 					if(reply.status === 200) {
 						AlertService.addAlert({type: "success", msg: reply.message});

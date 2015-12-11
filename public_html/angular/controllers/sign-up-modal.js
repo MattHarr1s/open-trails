@@ -4,8 +4,8 @@
  * @author Louis Gill <lgill7@cnm.edu>
  */
 
-app.controller("SignupModal", ["$scope", "$uibModalInstance", function($scope, $uibModalInstance) {
-	$scope.signupData = {};
+app.controller("SignupModal", ["$scope", "$uibModalInstance", "signupData", function($scope, $uibModalInstance, signupData) {
+	$scope.signupData = signupData;
 
 	$scope.ok = function() {
 		$uibModalInstance.close($scope.signupData);
