@@ -1,6 +1,6 @@
-app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", function($scope, SegmentService) {
+app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", function($scope, $uibModal, SegmentService) {
 	//add as needed will come back to add doing of off bradly history on organization
-	$scope.segments = [];
+	$scope.segments = [0.0, 0.0];
 	$scope.alerts = [];
 	$scope.numSegments = 2;
 
@@ -17,10 +17,10 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message}
 					}
-				})
+				});
 		}
 
-	}
+	};
 
 	$scope.getSegmentStart = function(segmentStart, validated) {
 		if (validated === true) {
@@ -35,7 +35,7 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 		}
 	};
 
-	$scope.getSegmentStop = function(segmentStop, validated){
+	$scope.getSegmentStop = function(segmentStop, validated) {
 		if (validated === true) {
 			SegmentService.fetchSegmentStop(segmentStop)
 				.then(function(result){

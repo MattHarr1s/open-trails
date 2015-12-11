@@ -1,4 +1,4 @@
-app.constant("SEGMENT_ENDPOINT", "api/segment/");
+app.constant("SEGMENT_ENDPOINT", "../../php/api/segment/");
 app.service("SegmentService", function($http, SEGMENT_ENDPOINT) {
 	function getUrl() {
 		return(SEGMENT_ENDPOINT);
