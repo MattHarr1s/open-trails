@@ -125,7 +125,7 @@ class DataDownloader {
 						$trail = new Trail(null, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailTraffic, $trailUse, $trailUuid);
 //						var_dump($trail);
 						$trail->insert($pdo);
-						echo $trail->getTrailId() . PHP_EOL;
+//						echo $trail->getTrailId() . PHP_EOL;
 //						var_dump($trail);
 					} catch(PDOException $pdoException) {
 						$sqlStateCode = "23000";
@@ -213,7 +213,7 @@ class DataDownloader {
 							$trail->setTrailUse($trailUse);
 							$trail->update($pdo);
 							$trailIds[] = $trail->getTrailId();
-							echo $trail->getTrailId() . PHP_EOL;
+//							echo $trail->getTrailId() . PHP_EOL;
 						}
 					} catch(PDOException $pdoException) {
 						$sqlStateCode = "23000";
@@ -233,12 +233,25 @@ class DataDownloader {
 					foreach($jsonFeatures as $jsonFeature) {
 						$jsonCoordinates = $jsonFeature->geometry->coordinates;
 						$coordinates = new SplFixedArray(count($jsonCoordinates));
-						foreach($coordinates as $coordinate) {
-							$coordinates[$coordinates->key()] = $coordinate;
-							$coordinates->next();
+						if($jsonFeature->geometry->type === "LineString") {
+							foreach($jsonCoordinates as $coordinate) {
+								$coordinates[$coordinates->key()] = $coordinate;
+								$coordinates->next();
+							}
+							$geometry[$geometry->key()] = $coordinates;
+							$geometry->next();
+						} else if($jsonFeature->geometry->type === "MultiLineString") {
+							foreach($jsonCoordinates as $lineCoordinates) {
+								foreach($lineCoordinates as $coordinate) {
+									// TODO: Clone master trail
+									// TODO: Insert slave trail
+									// TODO: Add slave trail to trail array
+									// TODO: Add coordinates to coordinate array
+								}
+							}
+							$geometry[$geometry->key()] = $coordinates;
+							$geometry->next();
 						}
-						$geometry[$geometry->key()] = $coordinates;
-						$geometry->next();
 					}
 					for($index = 0; $index < count($geometry); $index++) {
 						$geo = $geometry[$index];
@@ -249,14 +262,14 @@ class DataDownloader {
 							$segmentStopX = $geo[$indexTwo + 1][0];
 							$segmentStopY = $geo[$indexTwo + 1][1];
 //							$segmentStopElevation = $geo[$indexTwo + 1][2];
+							var_dump($segmentStartX, $segmentStartY);
 							$segmentStart = new Point ($segmentStartX, $segmentStartY);
 							$segmentStop = new Point ($segmentStopX, $segmentStopY);
-
 							try {
 								$segment = new Segment(null, $segmentStart, $segmentStop, 0, 0);
 								$segment->insert($pdo);
-							echo $segment->getSegmentId();
-								$relationship = new TrailRelationship($segment->getSegmentId(), $trailIds[$index], );
+//								echo $segment->getSegmentId();
+								$relationship = new TrailRelationship($segment->getSegmentId(), $trailIds[$index], "T");
 								$relationship->insert($pdo);
 
 							} catch(PDOException $pdoException) {
@@ -305,17 +318,18 @@ class DataDownloader {
 		$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 		$trails = Trail::getAllTrails($pdo);
 
+		$testNum = 0;
 		foreach($trails as $trail) {
+			//echo "Tracks: " . $testNum . PHP_EOL;
+			$testNum++;
 			$trailRelationships = TrailRelationship::getTrailRelationshipByTrailId($pdo, $trail->getTrailId());
 
 			$track = new Polyline();
 			foreach($trailRelationships as $trailRelationship) {
-				$segment = TrailRelationship::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId());
+				$segment = Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId());
+//				echo "SegId: " . $trailRelationship->getSegmentId() . PHP_EOL;
 				$track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
-//				echo "<p style='background-color:red;'>";
-//				$test = $track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
-//				echo $test;
-//				echo "</p>";
+//				var_dump($segment->getSegmentStart(), $segment->getSegmentStop());
 				$track->addPoint(new Coordinate($segment->getSegmentStop()->getX(), $segment->getSegmentStop()->getY()));
 			}
 
@@ -325,6 +339,7 @@ class DataDownloader {
 //			echo $test;
 //			echo "</p>";
 			$trailDistanceM = $track->getLength(new Vincenty());
+			echo "Meters: " . $trailDistanceM . PHP_EOL;
 			$trailDistanceMi = $trailDistanceM / 1609.344;
 //			var_dump($trailDistanceM);
 //			echo($trailDistanceMi);
