@@ -21,17 +21,41 @@
 			</div>
 
 		<!-- PASSWORD -->
-			<label class="control-label sr-only" for="password">Password</label>
+			<div class="form-group" ng-class="{ 'has-error': signupData.password.$touched && signupData.password.$invalid }">
+				<label class="control-label" for="password">Password</label>
 
-			<div class="input-group">
-				<input type="text" class="form-control" id="password" name="password" placeholder="password" ng-model="signupData.password" ng-required="true"/>
-			</div>
-			<div class="alert alert-danger" role="alert" ng-messages="signupData.password.$error" ng-if="signupData.password.$touched" ng-hide="signupData.password.$valid">
-				<p ng-message="required">Please enter a password</p>
+				<div class="input-group">
+					<div class="input-group-addon">
+						<i class="fa fa-key" aria-hidden="true"></i>
+					</div>
+					<input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="signupData.password" ng-minlength="8" ng-required="true"/>
+				</div>
+				<div class="alert alert-danger" role="alert" ng-messages="signupData.password.$error" ng-if="signupData.password.$touched" ng-hide="signupData.password.$valid">
+					<p ng-message="minlength">Password must be at least 8 characters.</p>
+					<p ng-message="required">Please enter your password.</p>
+				</div>
 			</div>
 
 			<!-- VERIFY PASSWORD -->
+			<div class="form-group" ng-class="{ 'has-error': signupData.verifyPassword.$touched && signupData.verifyPassword.$invalid}">
+				<label class="control-label">Confirm Password</label>
 
+				<div class="input-group">
+					<div class="input-group-addon">
+						<i class="fa fa-key" aria-hidden="true"></i>
+					</div>
+					<input type="password" class="form-control" id="verifyPassword" name="verifyPassword" placeholder="confirm password" match-password="password" ng-model="signupData.verifyPassword" ng-minlength="8" ng-required="true"/>
+				</div>
+				<div class="alert alert-danger" role="alert" ng-messages="signupData.verifyPassword.$error" ng-if="signupData.verifyPassword.$touched" ng-hide="signupData.verifyPassword.$valid">
+					<p ng-message="minlength">Password must be at least 8 characters.</p>
+					<p ng-message="passwordMatch">Passwords do not match.</p>
+					<p ng-message="required">Please enter your password.</p>
+				</div>
+			</div>
 		</div>
+		<hr/>
+		<button type="submit" class="btn btn-lg btn-info" ng-click="ok();" ng-disabled="signupData.$invalid">
+			<i class="fa fa-check" aria-hidden="true"></i>Submit
+		</button>
 	</form>
 </div>
