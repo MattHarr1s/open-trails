@@ -82,20 +82,25 @@ class DataDownloader {
 	 **/
 	public static function readNamedTrailsCSV($url) {
 
-
 		$context = stream_context_create(array("http" => array("ignore_errors" => true, "method" => "GET")));
 
+//		echo "test 0";
 		try {
 			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 
+//			echo "test 1" . PHP_EOL;
+//			$i = 0;
 			if(($fd = @fopen($url, "rb", false, $context)) !== false) {
-				fgetcsv($fd, 0, "'");
-				while((($data = fgetcsv($fd, 0, ",")) !== false) && feof($fd) === false) {
+//				echo "test 2" . PHP_EOL;
+				fgetcsv($fd, 0, ",");
+				while((($data = fgetcsv($fd, 0, ",", "\"")) !== false) && feof($fd) !== true) {
+//					echo $i . PHP_EOL;
+//					$i++;
 					$trailId = null;
 					$userId = 1;
-					$browser = "Mozilla";
+					$browser = "Default";
 					$createDate = new DateTime();
-					$ipAddress = "192.168.1.4";
+					$ipAddress = "::1";
 					$submitTrailId = null;
 					$trailAmenities = "This trail currently has no amenities information. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
 					$trailCondition = "This trail currently has no condition information. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
@@ -108,20 +113,23 @@ class DataDownloader {
 					$trailTraffic = "Unknown";
 					$trailUse = "Unknown";
 					$trailUuid = null;
-					var_dump($trailName);
+//					var_dump($trailName);
 					//sets trail description based on available data.
 					if(strlen($data[3]) <= 0) {
 						$trailDescription = "This trail currently has no description information. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
 					} else {
 						$trailDescription = $data[3];
 					}
-					var_dump($trailDescription);
+//					var_dump($trailDescription);
 					try {
 						$trail = new Trail(null, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailTraffic, $trailUse, $trailUuid);
+//						var_dump($trail);
 						$trail->insert($pdo);
-						var_dump($trail);
+						echo $trail->getTrailId() . PHP_EOL;
+//						var_dump($trail);
 					} catch(PDOException $pdoException) {
 						$sqlStateCode = "23000";
+						echo "I knew there was a catch somewhere :" . $pdoException->getMessage() . PHP_EOL;
 
 						$errorInfo = $pdoException->errorInfo;
 						if($errorInfo [0] === $sqlStateCode) {
@@ -163,26 +171,36 @@ class DataDownloader {
 				}
 
 				//decode the geoJson file
-				$jsonConverted = json_decode($jsonData, true);
+				$jsonConverted = json_decode($jsonData);
 				$jsonFeatures = $jsonConverted->features;
+//				var_dump($jsonFeatures);
 
-				$properties = $jsonFeatures->properties;
+				$properties = new SplFixedArray(count($jsonFeatures));
+				foreach($jsonFeatures as $jsonFeature) {
+					$properties[$properties->key()] = $jsonFeature->properties;
+					$properties->next();
+				}
+//				$properties = $jsonFeatures->properties;
+//				var_dump($properties);
+
+				$trailIds = [];
+
 				foreach($properties as $property) {
-					$trailName = "";
+					$trailName = $property->name;
 					$trailUse = "";
 
 					//Set $trailUse string based on information in geoJson properties field.
-					if($property['bicycle'] === "yes") {
+					if($property->bicycle === "yes") {
 						$trailUse = $trailUse . "bicycle: yes, ";
 					} else {
 						$trailUse = $trailUse . "bicycle: no, ";
 					}
-					if($property['foot'] === "yes") {
+					if($property->foot === "yes") {
 						$trailUse = $trailUse . "foot: yes, ";
 					} else {
 						$trailUse = $trailUse . "foot: no, ";
 					}
-					if($property['wheelchair'] === "yes") {
+					if($property->wheelchair === "yes") {
 						$trailUse = $trailUse . "wheelchair: yes ";
 					} else {
 						$trailUse = $trailUse . "wheelchair: no ";
@@ -190,43 +208,12 @@ class DataDownloader {
 
 					try {
 						$trails = Trail::getTrailByTrailName($pdo, $trailName);
-						$trail = null;
-						var_dump($trails);
-						foreach($trails as $trailToSet) {
-							$trail = $trailToSet;
-						}
-						$trail = $trail->setTrailUse($trailUse);
-						$trail->update($pdo);
-
-						$coordinates = $jsonFeatures->geometry->coordinates;
-						for($index = 0; $index < count($coordinates) - 1; $index++) {
-							$segmentStartX = $coordinates[$index][0];
-							$segmentStartY = $coordinates[$index][1];
-							$segmentStartElevation = $coordinates[$index][2];
-							$segmentStopX = $coordinates[$index + 1][0];
-							$segmentStopY = $coordinates[$index + 1][1];
-							$segmentStopElevation = $coordinates[$index + 1][2];
-							$segmentStart = new Point ($segmentStartX, $segmentStartY);
-							$segmentStop = new Point ($segmentStopX, $segmentStopY);
-
-							try {
-								$segment = new Segment(null, $segmentStart, $segmentStop, $segmentStartElevation, $segmentStopElevation);
-								$segment->insert($pdo);
-
-								$relationship = new TrailRelationship(null, $trail->getTrailId(), $segment->getSegmentId());
-								$relationship->insert($pdo);
-
-							} catch(PDOException $pdoException) {
-								$sqlStateCode = "23000";
-
-								$errorInfo = $pdoException->errorInfo;
-								if($errorInfo [0] === $sqlStateCode) {
-								} else {
-									throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
-								}
-							} catch(Exception $exception) {
-								throw (new Exception ($exception->getMessage(), 0, $exception));
-							}
+//						var_dump($trails);
+						foreach($trails as $trail) {
+							$trail->setTrailUse($trailUse);
+							$trail->update($pdo);
+							$trailIds[] = $trail->getTrailId();
+							echo $trail->getTrailId() . PHP_EOL;
 						}
 					} catch(PDOException $pdoException) {
 						$sqlStateCode = "23000";
@@ -241,11 +228,69 @@ class DataDownloader {
 					}
 				}
 
-				fclose($jsonFd);
+				try {
+					$geometry = new SplFixedArray(count($jsonFeatures));
+					foreach($jsonFeatures as $jsonFeature) {
+						$jsonCoordinates = $jsonFeature->geometry->coordinates;
+						$coordinates = new SplFixedArray(count($jsonCoordinates));
+						foreach($coordinates as $coordinate) {
+							$coordinates[$coordinates->key()] = $coordinate;
+							$coordinates->next();
+						}
+						$geometry[$geometry->key()] = $coordinates;
+						$geometry->next();
+					}
+					for($index = 0; $index < count($geometry); $index++) {
+						$geo = $geometry[$index];
+						for($indexTwo = 0; $indexTwo < count($geo) - 1; $indexTwo++) {
+							$segmentStartX = $geo[$indexTwo][0];
+							$segmentStartY = $geo[$indexTwo][1];
+//							$segmentStartElevation = $geo[$indexTwo][2];
+							$segmentStopX = $geo[$indexTwo + 1][0];
+							$segmentStopY = $geo[$indexTwo + 1][1];
+//							$segmentStopElevation = $geo[$indexTwo + 1][2];
+							$segmentStart = new Point ($segmentStartX, $segmentStartY);
+							$segmentStop = new Point ($segmentStopX, $segmentStopY);
+
+							try {
+								$segment = new Segment(null, $segmentStart, $segmentStop, 0, 0);
+								$segment->insert($pdo);
+
+								$relationship = new TrailRelationship(null, $trailIds[$index], $segment->getSegmentId());
+								$relationship->insert($pdo);
+
+							} catch(PDOException $pdoException) {
+								$sqlStateCode = "23000";
+
+								$errorInfo = $pdoException->errorInfo;
+								if($errorInfo [0] === $sqlStateCode) {
+								} else {
+									throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
+								}
+							} catch(Exception $exception) {
+								throw (new Exception ($exception->getMessage(), 0, $exception));
+							}
+						}
+					}
+				} catch(PDOException $pdoException) {
+					$sqlStateCode = "23000";
+
+					$errorInfo = $pdoException->errorInfo;
+					if($errorInfo [0] === $sqlStateCode) {
+					} else {
+						throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
+					}
+				} catch(Exception $exception) {
+					throw (new Exception ($exception->getMessage(), 0, $exception));
+				}
 			}
-		} catch(PDOException $pdoException) {
+
+			fclose($jsonFd);
+		} catch
+		(PDOException $pdoException) {
 			throw (new PDOException($pdoException->getMessage(), 0, $pdoException));
-		} catch(Exception $exception) {
+		} catch
+		(Exception $exception) {
 			throw (new Exception ($exception->getMessage(), 0, $exception));
 		}
 	}
@@ -266,11 +311,11 @@ class DataDownloader {
 			$track = new Polyline();
 			foreach($trailRelationships as $trailRelationship) {
 				$segment = TrailRelationship::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId());
-				$track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
-				echo "<p style='background-color:red;'>";
-				$test = $track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
-				echo $test;
-				echo "</p>";
+//				$track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
+//				echo "<p style='background-color:red;'>";
+//				$test = $track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
+//				echo $test;
+//				echo "</p>";
 				$track->addPoint(new Coordinate($segment->getSegmentStop()->getX(), $segment->getSegmentStop()->getY()));
 			}
 
@@ -281,15 +326,15 @@ class DataDownloader {
 //			echo "</p>";
 			$trailDistanceM = $track->getLength(new Vincenty());
 			$trailDistanceMi = $trailDistanceM / 1609.344;
-			var_dump($trailDistanceM);
-			echo($trailDistanceMi);
+//			var_dump($trailDistanceM);
+//			echo($trailDistanceMi);
 
 			//set trail distance
 			$trailDistance = $trailDistanceMi;
 			$trail->setTrailDistance($trailDistance);
 			$trail->update($pdo);
-			echo "<p>Trail distance:</p>";
-			var_dump($trailDistance);
+//			echo "<p>Trail distance:</p>";
+//			var_dump($trailDistance);
 		}
 	}
 }
