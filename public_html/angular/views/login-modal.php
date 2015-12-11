@@ -1,3 +1,7 @@
+<!--modal for login
+<--
+<-- @author Louis Gill <lgill7@cnm.edu>
+-->
 <div class="modal-body">
 	<form id="loginForm" name="loginForm">
 		<h2>Welcome Back!</h2>
