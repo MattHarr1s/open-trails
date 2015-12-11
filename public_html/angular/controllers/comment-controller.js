@@ -53,4 +53,34 @@ app.controller("CommentController", ["$scope", "$uibModal", "SegmentService", fu
 				});
 		}
 	};
+
+	$scope.createComment = function(comment, validated) {
+		if(validated === true) {
+			CommentService.create(comment)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
+		}
+	};
+
+	$scope.updateComment = function(comment, validated) {
+		if(validated === true && $scope.isEditing === true) {
+			CommentService.update(comment.commentId, comment)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+						//cancel the editing mode
+						$scope.isEditing = false;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
+		}
+	};
+
+	// delete the comment
 ])
