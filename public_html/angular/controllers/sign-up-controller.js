@@ -1,3 +1,9 @@
+/**
+ * controller for sign-up form
+ *
+ * @author Louis Gill <lgill7@cnm.edu>
+ */
+
 app.controller("SignupController", ["$scope", "$uibModal", "SignupService", function($scope, $uibModal, SignupService) {
 	$scope.signupData = {};
 
