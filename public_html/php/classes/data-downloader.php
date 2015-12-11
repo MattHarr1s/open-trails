@@ -255,8 +255,8 @@ class DataDownloader {
 							try {
 								$segment = new Segment(null, $segmentStart, $segmentStop, 0, 0);
 								$segment->insert($pdo);
-
-								$relationship = new TrailRelationship(null, $trailIds[$index], $segment->getSegmentId());
+							echo $segment->getSegmentId();
+								$relationship = new TrailRelationship($segment->getSegmentId(), $trailIds[$index], );
 								$relationship->insert($pdo);
 
 							} catch(PDOException $pdoException) {
@@ -311,7 +311,7 @@ class DataDownloader {
 			$track = new Polyline();
 			foreach($trailRelationships as $trailRelationship) {
 				$segment = TrailRelationship::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId());
-//				$track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
+				$track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
 //				echo "<p style='background-color:red;'>";
 //				$test = $track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
 //				echo $test;
