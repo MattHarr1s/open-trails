@@ -19,9 +19,9 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 					}
 				});
 		}
-
 	};
 
+	//comment here
 	$scope.getSegmentStart = function(segmentStart, validated) {
 		if (validated === true) {
 			SegmentService.fetchSegmentStart(segmentStart)
