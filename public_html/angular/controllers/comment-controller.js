@@ -83,4 +83,25 @@ app.controller("CommentController", ["$scope", "$uibModal", "SegmentService", fu
 	};
 
 	// delete the comment
-])
+	$scope.deleteComment = function(commentId) {
+		// create a modal to ask for confirmation
+		var message = "Do you really want to delete this comment?";
+		var modalHtml = '<div class="modal-body">' + message + '</div><div class="modal-footer"><button class="btn btn-primary" ng-click="yes()">Yes</button><button class="btn btn-warning" ng-click="no()">No</button></div>';
+		var modalInstance = $uibModal.open({
+			template: modalHtml,
+			controller: ModalInstanceCtrl
+		});
+
+		// if yes is selected, delete the organization
+		modalInstance.result.then(function() {
+			CommentService.destroy(commentId)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				})
+		});
+	};
+]);
