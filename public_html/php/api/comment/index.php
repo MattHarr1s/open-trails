@@ -68,7 +68,7 @@ try {
 
 			//make sure all the fields are present, in order to prevent database issues
 			if(empty($requestObject->trailId) === true) {
-				throw(new InvalidArgumentException("Trail ID cannot be empty", 407));
+				throw(new InvalidArgumentException("Trail ID cannot be empty", 405));
 			}
 			if(empty($requestObject->commentPhoto) === true) {
 				$requestObject->commentPhoto = null;
@@ -116,7 +116,6 @@ try {
 } catch (Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
-	$reply->message = $exception->getTrace();
 }
 
 header("Content-type: application/json");

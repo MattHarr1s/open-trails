@@ -66,7 +66,7 @@ try {
 			$requestContent = file_get_contents("php://input");
 			$requestObject = json_decode($requestContent);
 
-			//formated segments so that the api and class can communicate together
+			//formatted segments so that the api and class can communicate together
 			$segmentStart = new Point($requestObject->segmentStart[0], $requestObject->segmentStart[1]);
 			$segmentStop = new Point($requestObject->segmentStop[0], $requestObject->segmentStop[1]);
 

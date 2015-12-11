@@ -16,8 +16,8 @@ app.service("SegmentService", function($http, SEGMENT_ENDPOINT) {
 		return($http.get(getUrlForId(segmentId)));
 	};
 
-	this.fetchSegmentX = function(segmentStart) {
-		return($http.getUrl() + '?segmentX=' + segmentStart);
+	this.fetchSegmentStart = function(segmentStart) {
+		return($http.getUrl() + '?SegmentX=' + segmentStart);
 	};
 
 	this.fetchSegmentY = function(segmentStop) {
