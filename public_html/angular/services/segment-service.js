@@ -20,15 +20,15 @@ app.service("SegmentService", function($http, SEGMENT_ENDPOINT) {
 		return($http.getUrl() + '?SegmentX=' + segmentStart);
 	};
 
-	this.fetchSegmentY = function(segmentStop) {
+	this.fetchSegmentStop = function(segmentStop) {
 		return($http.getUrl() + '?segmentY=' + segmentStop);
 	};
 
-	this.elevationX = function(segmentStartElevation) {
+	this.fetchElevationX = function(segmentStartElevation) {
 		return($http.getUrl() + '?elevationX=' + segmentStartElevation);
 	};
 
-	this.elevationY = function(segmentStopElevation) {
+	this.fetchElevationY = function(segmentStopElevation) {
 		return($http.getUrl() + '?elevationY=' + segmentStopElevation);
 	};
 
