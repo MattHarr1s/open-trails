@@ -1,27 +1,51 @@
-app.controller("CommentController", ["$scope", "$uibModal", "SegmentService", function($scope, $uibModal, SegmentService) {
-	$scope.segments = [];
+app.controller("CommentController", ["$scope", "$uibModal", "CommentService", function($scope, $uibModal, CommentService) {
+	$scope.comments = [];
 	$scope.alerts = [];
-	$scope.numSegments = 2;
+	$scope.isEditing = false;
+	$scope.editedComment = [];
+	$scope.newComment = {commentId: null,}
 
-	$scope.getCommentId = function(commentId, validated) {
-		if (validated === true) {
+	$scope.setEditedComment = function() {
+		$scope.isEditing = true;
+	};
+
+	/**
+	 *cancels editing and clears out the comment being edited
+	 */
+	$scope.cancelEditing = function() {
+		$scope.isEditing = false;
+	};
+
+	$scope.getCommentId = function(commentId, validated) {																	// IS THIS A THING?????????????????????????????????
+		if(validated === true) {
 			CommentService.fetchId(commentId)
 				.then(function(result) {
 					if(result.data.status === 200) {
-						$scope.comments = result.data.data
+						$scope.comment = result.data.data
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message}
 					}
 				});
 		}
-	}
-};
+	};
+
 
 	$scope.getComments = function() {
 		CommentService.all()
 			.then(function(result) {
 				if(result.data.status === 200) {
-					$scope.organizations = result.data.data;
+					$scope.comments = result.data.data;
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
+				}
+			});
+	};
+
+	$scope.getCurrentComment = function() {
+		CommentService.fetchCurrent()
+			.then(function(result) {
+				if(result.data.status === 200) {
+					$scope.comment = result.data.data;
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 				}
@@ -92,7 +116,7 @@ app.controller("CommentController", ["$scope", "$uibModal", "SegmentService", fu
 			controller: ModalInstanceCtrl
 		});
 
-		// if yes is selected, delete the organization
+		// if yes is selected, delete the comment
 		modalInstance.result.then(function() {
 			CommentService.destroy(commentId)
 				.then(function(result) {
@@ -104,4 +128,14 @@ app.controller("CommentController", ["$scope", "$uibModal", "SegmentService", fu
 				})
 		});
 	};
-]);
+}]);
+
+	// modal instance controller for deletion prompt
+	var ModalInstanceCtrl = function($scope, $uibModalInstance) {
+		$scope.yes = function() {
+			$uibModalInstance.close();
+		};
+		$scope.no = function() {
+			$uibModalInstance.dismiss('cancel');
+		};
+	};
