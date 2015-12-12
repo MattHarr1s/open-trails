@@ -13,7 +13,8 @@ require_once("../php/template/head-utils.php");
 		<?php require_once(dirname(__DIR__) . "/php/template/header.php"); ?>
 	</header>
 
-	<h1>Trail Database Updates</h1>
+	<h1>Make Trail Corrections</h1>
+	<div>Help us fix our trail information</div>
 	<!-- trail database updates webpage - super user access only -->
 	<hr>
 
@@ -26,7 +27,7 @@ require_once("../php/template/head-utils.php");
 
 			<!--	Will need to define variables for currentTrailId, antiabuse trait, currentTrailName, currentTrailDistance, currentTrailDifficulty, currentTrailUse, and currentTrailDescription	-->
 
-				<-- Dummy data for now -->
+				<!-- Dummy data for now -->
 <!--					$trailName = "Corrales Bosque Trail";-->
 <!--					$trailDistance = 13.0;-->
 <!--					$trailDifficulty = 1;-->
@@ -34,13 +35,14 @@ require_once("../php/template/head-utils.php");
 <!--					$trailDescription = "Located in the northern Albuquerque, the Corrales Boseque Trail offers hikes and mountain bikers a quick escape nearby.  The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing.  The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande.  Bathrooms are available at the Alameda open space on the other side of the river (cross the pedestrian bridge and then go under Alameda to get to the open space parking lot from the trail head.";-->
 <!--					-->
 
-				<div>Corrales Bosque Trail</div>
+				<h3>Corrales Bosque Trail</h3>
 				<div class="row">
 					<div class="col-md-10 embed-responsive embed-responsive-4by3">
 						<div id="map"></div>
 					</div>
 					<!-- End of Map row / beginning of trail info -->
 				</div>
+				<div>The information below is what is currently in the database:</div>
 				<!-- trail difficulty goes here as a row -->
 				<div class="row"></div>
 				<div>Trail Difficulty goes here</div>
@@ -59,7 +61,7 @@ require_once("../php/template/head-utils.php");
 			<div class="col-md-6">
 				<h2>Trail Correction(s)</h2>
 
-				<div>Trail Name Here again</div>
+				<h3>Corrales Bosque Trail</h3>
 				<!--	Note that all current trail information will be copied into update fields	-->
 				<div class="row">
 					<div class="col-md-10 embed-responsive embed-responsive-4by3">
@@ -67,6 +69,7 @@ require_once("../php/template/head-utils.php");
 					</div>
 					<!-- End of Map row / beginning of trail info -->
 				</div>
+				<?php require_once(dirname(__DIR__) . "/angular/views/trail-correction-form.php"); ?>
 				<div>Trail Search Parameters go here</div>
 				<br>
 
