@@ -15,12 +15,12 @@
 					<div class="input-group-addon">
 						<i class="fa fa-envelope" aria-hidden="true"></i>
 					</div>
-					<input type="userEmail" class="form-control" id="userEmail" name="userEmail"
+					<input type="email" class="form-control" id="userEmail" name="userEmail"
 							 placeholder="What's your email?" ng-model="loginData.userEmail" ng-required="true"/>
 				</div>
 				<div class="alert alert-danger" role="alert" ng-messages="loginForm.userEmail.$error"
 					  ng-if="loginForm.userEmail.$touched" ng-hide="loginForm.userEmail.$valid">
-					<p ng-message="userEmail">Email is invalid.</p>
+					<p ng-message="email">Email is invalid.</p>
 
 					<p ng-message="required">Please enter your email.</p>
 				</div>
