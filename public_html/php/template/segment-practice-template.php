@@ -42,8 +42,10 @@
 						<input type="number" ng-model="segment[1]" />
 					</div>
 				</div>
+
 			</form>
 			<p class="well">{{ segments | json }}</p>
+			<input type="submit" ng-click="update(segments)" value="Save" />
 		</main>
 	</body>
 
