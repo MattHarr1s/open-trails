@@ -2,7 +2,7 @@
 /*grab current directory*/
 $CURRENT_DIR = __DIR__;
 /*set page title here*/
-$PAGE_TITLE = "MY PAGE TITLE";
+$PAGE_TITLE = "Trail Update Check";
 /*load head-utils.php*/
 require_once("../php/template/head-utils.php");
 ?>
@@ -22,26 +22,45 @@ require_once("../php/template/head-utils.php");
 		<div class="row">
 			<!--map container-->
 			<div class="col-md-6">
-				<h2>Current Trail Entry</h2>
+				<h2>Current Trail DB Entry</h2>
 
-				<div>Trail Name Here</div>
+			<!--	Will need to define variables for currentTrailId, antiabuse trait, currentTrailName, currentTrailDistance, currentTrailDifficulty, currentTrailUse, and currentTrailDescription	-->
+
+				<-- Dummy data for now -->
+<!--					$trailName = "Corrales Bosque Trail";-->
+<!--					$trailDistance = 13.0;-->
+<!--					$trailDifficulty = 1;-->
+<!--					$trailUse[] = [1, 1, 0, 0, 1];-->
+<!--					$trailDescription = "Located in the northern Albuquerque, the Corrales Boseque Trail offers hikes and mountain bikers a quick escape nearby.  The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing.  The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande.  Bathrooms are available at the Alameda open space on the other side of the river (cross the pedestrian bridge and then go under Alameda to get to the open space parking lot from the trail head.";-->
+<!--					-->
+
+				<div>Corrales Bosque Trail</div>
 				<div class="row">
 					<div class="col-md-10 embed-responsive embed-responsive-4by3">
 						<div id="map"></div>
 					</div>
 					<!-- End of Map row / beginning of trail info -->
 				</div>
-				<div>Trail Search Parameters go here</div>
+				<!-- trail difficulty goes here as a row -->
+				<div class="row"></div>
+				<div>Trail Difficulty goes here</div>
+				<div class="row"></div>
+				<div>Minimum Trail Distance goes here</div>
+				<div class="row"></div>
+				<div>Trail Use goes here</div>
 				<br>
 
-				<div>Trail Description goes here</div>
+				<div class="row"></div>
+				<h3>Trail Description:</h3>
+				<div>Located in the northern Albuquerque, the Corrales Boseque Trail offers hikes and mountain bikers a quick escape nearby.  The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing.  The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande.  Bathrooms are available at the Alameda open space on the other side of the river (cross the pedestrian bridge and then go under Alameda to get to the open space parking lot from the trail head.</div>
 			</div> <!-- End column 1 here -->
 			<!--Correction/New Trail data column-->
 
 			<div class="col-md-6">
-				<h2>Trail Correction/New Trail Entry</h2>
+				<h2>Trail Correction(s)</h2>
 
 				<div>Trail Name Here again</div>
+				<!--	Note that all current trail information will be copied into update fields	-->
 				<div class="row">
 					<div class="col-md-10 embed-responsive embed-responsive-4by3">
 						<div id="map2"></div>
