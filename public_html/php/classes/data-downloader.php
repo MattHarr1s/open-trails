@@ -113,20 +113,15 @@ class DataDownloader {
 					$trailTraffic = "Unknown";
 					$trailUse = "Unknown";
 					$trailUuid = null;
-//					var_dump($trailName);
 					//sets trail description based on available data.
 					if(strlen($data[3]) <= 0) {
 						$trailDescription = "This trail currently has no description information. If you are familiar with this trail, please use the submission form to help us out! Thank you.";
 					} else {
 						$trailDescription = $data[3];
 					}
-//					var_dump($trailDescription);
 					try {
 						$trail = new Trail(null, $userId, $browser, $createDate, $ipAddress, $submitTrailId, $trailAmenities, $trailCondition, $trailDescription, $trailDifficulty, $trailDistance, $trailName, $trailSubmissionType, $trailTerrain, $trailTraffic, $trailUse, $trailUuid);
-//						var_dump($trail);
 						$trail->insert($pdo);
-//						echo $trail->getTrailId() . PHP_EOL;
-//						var_dump($trail);
 					} catch(PDOException $pdoException) {
 						$sqlStateCode = "23000";
 						echo "I knew there was a catch somewhere :" . $pdoException->getMessage() . PHP_EOL;
@@ -173,17 +168,15 @@ class DataDownloader {
 				//decode the geoJson file
 				$jsonConverted = json_decode($jsonData);
 				$jsonFeatures = $jsonConverted->features;
-//				var_dump($jsonFeatures);
 
 				$properties = new SplFixedArray(count($jsonFeatures));
 				foreach($jsonFeatures as $jsonFeature) {
 					$properties[$properties->key()] = $jsonFeature->properties;
 					$properties->next();
 				}
-//				$properties = $jsonFeatures->properties;
-//				var_dump($properties);
 
-				$trailIds = [];
+				$trails = [];
+				$trailGuide = new SplObjectStorage();
 
 				foreach($properties as $property) {
 					$trailName = $property->name;
@@ -207,13 +200,11 @@ class DataDownloader {
 					}
 
 					try {
-						$trails = Trail::getTrailByTrailName($pdo, $trailName);
-//						var_dump($trails);
-						foreach($trails as $trail) {
+						$candidateTrails = Trail::getTrailByTrailName($pdo, $trailName);
+						foreach($candidateTrails as $trail) {
 							$trail->setTrailUse($trailUse);
 							$trail->update($pdo);
-							$trailIds[] = $trail->getTrailId();
-//							echo $trail->getTrailId() . PHP_EOL;
+							$trails[] = $trail;
 						}
 					} catch(PDOException $pdoException) {
 						$sqlStateCode = "23000";
@@ -229,32 +220,43 @@ class DataDownloader {
 				}
 
 				try {
-					$geometry = new SplFixedArray(count($jsonFeatures));
+					$trailIndex = 0;
 					foreach($jsonFeatures as $jsonFeature) {
 						$jsonCoordinates = $jsonFeature->geometry->coordinates;
-						$coordinates = new SplFixedArray(count($jsonCoordinates));
 						if($jsonFeature->geometry->type === "LineString") {
+							$coordinates = new SplFixedArray(count($jsonCoordinates));
 							foreach($jsonCoordinates as $coordinate) {
 								$coordinates[$coordinates->key()] = $coordinate;
 								$coordinates->next();
 							}
-							$geometry[$geometry->key()] = $coordinates;
-							$geometry->next();
+							$trailGuide[$trails[$trailIndex]] = $coordinates;
+							$trailIndex++;
+
+
 						} else if($jsonFeature->geometry->type === "MultiLineString") {
-							foreach($jsonCoordinates as $lineCoordinates) {
-								foreach($lineCoordinates as $coordinate) {
-									// TODO: Clone master trail
-									// TODO: Insert slave trail
-									// TODO: Add slave trail to trail array
-									// TODO: Add coordinates to coordinate array
-								}
+							$trailClones = [];
+							$trails[$trailIndex]->delete($pdo);
+							for($i = 1; $i <= count($jsonCoordinates); $i++) {
+								$trail = clone $trails[$trailIndex];
+								$trail->setTrailId(null);
+								$trail->setTrailName($trail->getTrailName() . " $i");
+								$trail->insert($pdo);
+								$trailClones[] = $trail;
 							}
-							$geometry[$geometry->key()] = $coordinates;
-							$geometry->next();
+							array_splice($trails, $trailIndex, 1, $trailClones);
+
+
+							foreach($jsonCoordinates as $lineCoordinates) {
+								$trailGuide[$trails[$trailIndex]] = $lineCoordinates;
+								$trailIndex++;
+							}
 						}
 					}
-					for($index = 0; $index < count($geometry); $index++) {
-						$geo = $geometry[$index];
+
+					$trailGuide->rewind();
+					foreach($trailGuide as $map) {
+						$trail = $trailGuide->current();
+						$geo = $trailGuide->getInfo();
 						for($indexTwo = 0; $indexTwo < count($geo) - 1; $indexTwo++) {
 							$segmentStartX = $geo[$indexTwo][0];
 							$segmentStartY = $geo[$indexTwo][1];
@@ -262,14 +264,12 @@ class DataDownloader {
 							$segmentStopX = $geo[$indexTwo + 1][0];
 							$segmentStopY = $geo[$indexTwo + 1][1];
 //							$segmentStopElevation = $geo[$indexTwo + 1][2];
-							var_dump($segmentStartX, $segmentStartY);
 							$segmentStart = new Point ($segmentStartX, $segmentStartY);
 							$segmentStop = new Point ($segmentStopX, $segmentStopY);
 							try {
 								$segment = new Segment(null, $segmentStart, $segmentStop, 0, 0);
 								$segment->insert($pdo);
-//								echo $segment->getSegmentId();
-								$relationship = new TrailRelationship($segment->getSegmentId(), $trailIds[$index], "T");
+								$relationship = new TrailRelationship($segment->getSegmentId(), $trail->getTrailId(), "T");
 								$relationship->insert($pdo);
 
 							} catch(PDOException $pdoException) {
@@ -328,9 +328,9 @@ class DataDownloader {
 			foreach($trailRelationships as $trailRelationship) {
 				$segment = Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId());
 //				echo "SegId: " . $trailRelationship->getSegmentId() . PHP_EOL;
-				$track->addPoint(new Coordinate($segment->getSegmentStart()->getX(), $segment->getSegmentStart()->getY()));
+				$track->addPoint(new Coordinate($segment->getSegmentStart()->getY(), $segment->getSegmentStart()->getX()));
 //				var_dump($segment->getSegmentStart(), $segment->getSegmentStop());
-				$track->addPoint(new Coordinate($segment->getSegmentStop()->getX(), $segment->getSegmentStop()->getY()));
+				$track->addPoint(new Coordinate($segment->getSegmentStop()->getY(), $segment->getSegmentStop()->getX()));
 			}
 
 			//calculate trail distance and convert to miles
