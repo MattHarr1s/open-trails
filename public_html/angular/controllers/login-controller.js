@@ -1,13 +1,14 @@
 app.controller("LoginController", ["$scope", "$uibModal", "LoginService", function($scope, $uibModal, LoginService) {
 	$scope.loginData = {};
 
-	$scope.openLoginModal = function () {
+	$scope.openLoginModal = function() {
 		var loginModalInstance = $uibModal.open({
-			templateUrl: "angular/views/login-form.php",
+			templateUrl: "angular/views/login-modal.php",
 			controller: "LoginModal",
 			resolve: {
 				loginData: function() {
-					return($scope.loginData);
+					console.log($scope.loginData);
+					return ($scope.loginData);
 				}
 			}
 		});
@@ -29,11 +30,6 @@ app.controller("LoginController", ["$scope", "$uibModal", "LoginService", functi
 }]);
 
 
-
-
-
-
-
 /**app.controller("LoginController", function($http, LoginService, $window, $scope) {
 	$scope.user = null;
 	$scope.statusClass = "alert-success";
@@ -43,7 +39,7 @@ app.controller("LoginController", ["$scope", "$uibModal", "LoginService", functi
 	 * method that controls the action table and will fill the table or display errors
 	 */
 
-	/**$scope.login = function(user) {
+/**$scope.login = function(user) {
 		$http.post("../../php/controllers/login-controller.php", user)
 			.then(function(reply) {
 				if(typeof reply.data === "object") {
@@ -56,7 +52,7 @@ app.controller("LoginController", ["$scope", "$uibModal", "LoginService", functi
 			});
 	};
 
-	$scope.logout = function() {
+ $scope.logout = function() {
 		$http.get("../../php/controllers/logout-controller.php")
 			.then(function(reply) {
 				if(typeof reply.data === "object") {
@@ -66,6 +62,6 @@ app.controller("LoginController", ["$scope", "$uibModal", "LoginService", functi
 				}
 		});
 	};
-})
+ })
 
-**/
+ **/
