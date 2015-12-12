@@ -19,6 +19,7 @@ app.controller("SignupController", ["$scope", "$uibModal", "SignupService", func
 		});
 		signupModalInstance.result.then(function(signupData) {
 			$scope.signupData = signupData;
+			console.log($scope.signupData);
 			SignupService.addUser(signupData)
 				.then(function(reply) {
 					if(reply.status === 200) {

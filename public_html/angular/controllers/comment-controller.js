@@ -3,7 +3,7 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 	$scope.alerts = [];
 	$scope.isEditing = false;
 	$scope.editedComment = [];
-	$scope.newComment = {commentId: null,}
+	$scope.newComment = {commentId: null, trailId};																								// WHA????????????????????????????????????????
 
 	$scope.setEditedComment = function() {
 		$scope.isEditing = true;
