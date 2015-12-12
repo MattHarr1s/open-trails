@@ -16,15 +16,15 @@ app.service("CommentService", function($http, COMMENT_ENDPOINT) {
 		return($http.get(getUrlForId(commentId)));
 	};
 
-	this.userId = function(userId) {
+	this.fetchUserId = function(userId) {
 		return($http.getUrl() + '?userId=' + userId);
 	};
 
-	this.commentText = function(commentText) {
+	this.fetchCommentText = function(commentText) {
 		return($http.getUrl() + '?commentText=' + commentText); 
 	};
 
-	this.trailId = function(trailId) { 
+	this.fetchTrailId = function(trailId) { 
 		return($http.getUrl() + '?trailId=' + trailId);
 	 };
 

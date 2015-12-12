@@ -18,6 +18,7 @@
 				  src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
 
 		<script type="text/javascript" src="../../angular/trail-quail.js"></script>
+		<script type="text/javascript" src="../../angular/services/segment-service.js"></script>
 		<script type="text/javascript" src="../../angular/controllers/segment-controller.js"></script>
 		<link rel="stylesheet" href="../../css/style.css" />
 	</head>
@@ -25,7 +26,7 @@
 	<body>
 		<main class="container" ng-controller="SegmentController">
 			<h1>Adios Plunker!</h1>
-			<form class="form-horizontal well" ng-submit="loadArray();">
+			<form class="form-horizontal well">
 				<div class="form-group">
 					<label>Number of Segments:</label>
 					<div class="input-group">
@@ -45,7 +46,7 @@
 
 			</form>
 			<p class="well">{{ segments | json }}</p>
-			<input type="submit" ng-click="update(segments)" value="Save" />
+			<button type="submit" class="btn btn-info" ng-click="loadArray();">Save</button>
 		</main>
 	</body>
 

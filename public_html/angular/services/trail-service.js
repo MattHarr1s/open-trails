@@ -16,50 +16,50 @@ app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 		return($http.get(getUrlForId(trailId)));
 	};
 
-	this.userId = function(userId) { 
+	this.fetchUserId = function(userId) { 
 		return($http.getUrl() + '?userId=' + userId); 
 	};
 
-	this.submitId = function(trailSubmitId) { 
+	this.fetchSubmitId = function(trailSubmitId) { 
 		return($http.getUrl() + '?submitId=' + trailSubmitId);
 	 };
 
-	this.amenities = function(trailAmenities) { 
+	this.fetchAmenities = function(trailAmenities) { 
 		return($http.getUrl() + '?amenities=' + trailAmenities);
 	 };
 
-	this.condition= function(trailCondition) { 
+	this.fetchCondition= function(trailCondition) { 
 		return($http.getUrl() + '?condition=' + trailCondition);
 	 };
-	this.description = function(trailDescription) { 
+	this.fetchDescription = function(trailDescription) { 
 		return($http.getUrl() + '?description=' + trailDescription); 
 	};
 
-	this.difficulty = function(traildifficulty) { 
-		return($http.getUrl() + '?difficulty=' + traildifficulty); 
+	this.fetchDifficulty = function(trailDifficulty) { 
+		return($http.getUrl() + '?difficulty=' + trailDifficulty); 
 	};
 
-	this.distance = function(trailDistance) { 
+	this.fetchDistance = function(trailDistance) { 
 		return($http.getUrl() + '?distance=' + trailDistance);
 	 };
 
-	this.name = function(trailName) { 
+	this.fetchName = function(trailName) { 
 		return($http.getUrl() + '?name=' + trailName); 
 	};
 
-	this.submission = function(trailSubmissionType) {
+	this.fetchSubmission = function(trailSubmissionType) {
 		return($http.getUrl() + '?submission=' + trailSubmissionType); 
 	};
 
-	this.terrain = function(trailTerrain)
+	this.fetchTerrain = function(trailTerrain)
 	{ 	return($http.getUrl() + '?terrain=' + trailTerrain);
 		 };
 
-	this.traffic = function(trailTraffic) {
+	this.fetchTraffic = function(trailTraffic) {
 		return($http.getUrl() + '?traffic=' + trailTraffic);
 		 };
 
-	this.use = function(trailuse) {
+	this.fetchUse = function(trailuse) {
 		return($http.getUrl() + '?use=' + trailuse)
 	};
 
@@ -75,9 +75,6 @@ app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 		return($http.put(getUrlForId(trailId), trail));
 	};
 
-	this.destroy = function(trailId) {
-		return($http.delete(getUrlForId(trailId)));
-	};
 });
 
 

@@ -1,6 +1,6 @@
 app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", function($scope, $uibModal, SegmentService) {
 	//add as needed will come back to add doing of off bradly history on organization
-	$scope.segments = [0.0, 0.0];
+	$scope.segments = [];
 	$scope.alerts = [];
 	$scope.numSegments = 2;
 
@@ -48,7 +48,7 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 		}
 	};
 
-	$scope.getElevationX = function(elevationX, validated) {
+	$scope.getElevationX = function(segment, validated) {
 		if (validated === true) {
 			SegmentService.fetchElevationX(elevationX)
 				.then(function(result) {
@@ -61,9 +61,9 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 		}
 
 	};
-	$scope.getElevationY = function(elevationY, validated) {
+	$scope.getElevationY = function(segmentStopElevation, validated) {
 		if (validated === true) {
-			SegmentService.fetchElevationY(elevationY)
+			SegmentService.fetchElevationY(segmentStopElevation)
 				.then(function(result) {
 					if(result.data.status === 200){
 						$scope.segments = result.data.data
@@ -74,12 +74,14 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 		}
 	};
 
+	console.log("testing whyyyyyyy");
 	//create new segment
-	$scope.createSegment = function(segment, validated) {
+	$scope.createSegment = function(segments, validated) {
+		console.log("Invalid");
 		if(validated === true) {
-
-			SegmentService.create(segment)
-				.then(function(result) {
+			console.log("Validated");
+			SegmentService.create(segments)
+				.then(function(result) {console.log(result);}, function(result) {
 					if(result.data.status === 200) {
 						$scope.alerts[0] = {type: "success", msg: result.data.message};
 					} else {
@@ -111,8 +113,8 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 		for(var i = 0; i < $scope.numSegments; i++) {
 			$scope.segments.push([0.0, 0.0]);
 		}
+		$scope.createSegment($scope.segments, true);
 	};
-
 	if($scope.segments.length === 0) {
 		$scope.loadArray();
 	}

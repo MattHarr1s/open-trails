@@ -17,11 +17,11 @@ app.service("SegmentService", function($http, SEGMENT_ENDPOINT) {
 	};
 
 	this.fetchSegmentStart = function(segmentStart) {
-		return($http.getUrl() + '?SegmentX=' + segmentStart);
+		return($http.getUrl() + '?SegmentStart=' + segmentStart);
 	};
 
 	this.fetchSegmentStop = function(segmentStop) {
-		return($http.getUrl() + '?segmentY=' + segmentStop);
+		return($http.getUrl() + '?segmentStop=' + segmentStop);
 	};
 
 	this.fetchElevationX = function(segmentStartElevation) {
@@ -32,8 +32,14 @@ app.service("SegmentService", function($http, SEGMENT_ENDPOINT) {
 		return($http.getUrl() + '?elevationY=' + segmentStopElevation);
 	};
 
-	this.create = function(segment) {
-		return($http.post(getUrl(), segment));
+	this.create = function(segments) {
+		console.log("create()");
+		for(var i = 0; i < segments.length; i++) {
+			var segment = segments[i];
+			segment.elevationStart = 0;
+			segment.elevationStop = 0;
+			return ($http.post(getUrl(), segment));
+		}
 	};
 
 	this.update = function(segmentId, segment) {
