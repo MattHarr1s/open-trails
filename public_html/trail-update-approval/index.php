@@ -69,7 +69,7 @@ require_once("../php/template/head-utils.php");
 					</div>
 					<!-- End of Map row / beginning of trail info -->
 				</div>
-				<?php require_once(dirname(__DIR__) . "/angular/views/trail-correction-form.php"); ?>
+				<?php require_once(dirname(__DIR__) . "/angular/views/trail-update-form.php"); ?>
 				<div>Trail Search Parameters go here</div>
 				<br>
 
