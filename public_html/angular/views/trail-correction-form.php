@@ -11,13 +11,15 @@
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
 	<form method="post" action="#" id="searchTrails-form" class="form-horizontal">
 
-		<!-- Enter Trail Difficulty -->
-		<br>
 
+		<br>
+		<!--	Setting up container, row, and column for this form -->
 		<div class="container">
 			<div class="row">
-				<div class="col-md-10">
+				<div class="col-md-8">
 					<div>Please edit the below information as needed.</div>
+
+					<!-- Edit Trail Difficulty -->
 					<div class="form-group">
 						<div class="row">
 							<label class="control-label">Trail Difficulty</label>
@@ -25,29 +27,29 @@
 						<!--	use div class=“help-block” to explain the form content	-->
 						<div class="row">
 							<div class="help-block">(1 => Easy 5=> Very Difficulty)</div>
-							<div class="row">
-								<div class="checkbox">
-
-									<label class="checkbox col-md-1">
-										<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->
-										<input id="chkTrailDifficulty1" name="chkTrailDifficulty[]" type="checkbox" value="1"/>1
-									</label>
-									<label class="checkbox col-md-1">
-										<input id="chkTrailDifficulty2" name="chkTrailDifficulty[]" type="checkbox" value="2"/>2
-									</label>
-									<label class="checkbox col-md-1">
-										<input id="chkTrailDifficulty3" name="chkTrailDifficulty[]" type="checkbox" value="3"/>3
-									</label>
-									<label class="checkbox col-md-1">
-										<input id="chkTrailDifficulty4" name="chkTrailDifficulty[]" type="checkbox" value="4"/>4
-									</label>
-									<label class="checkbox col-md-1">
-										<input id="chkTrailDifficulty5" name="chkTrailDifficulty[]" type="checkbox" value="5"/>5
-									</label>
-								</div>
+						</div>
+						<div class="row">
+							<div class="checkbox">
+								<label class="checkbox col-md-1">
+									<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->
+									<input id="chkTrailDifficulty1" name="chkTrailDifficulty[]" type="checkbox" value="1"/>1
+								</label>
+								<label class="checkbox col-md-1">
+									<input id="chkTrailDifficulty2" name="chkTrailDifficulty[]" type="checkbox" value="2"/>2
+								</label>
+								<label class="checkbox col-md-1">
+									<input id="chkTrailDifficulty3" name="chkTrailDifficulty[]" type="checkbox" value="3"/>3
+								</label>
+								<label class="checkbox col-md-1">
+									<input id="chkTrailDifficulty4" name="chkTrailDifficulty[]" type="checkbox" value="4"/>4
+								</label>
+								<label class="checkbox col-md-1">
+									<input id="chkTrailDifficulty5" name="chkTrailDifficulty[]" type="checkbox" value="5"/>5
+								</label>
 							</div>
 						</div>
 					</div>
+
 
 					<!-- Data correction for trail distance -->
 					<div class="form-group">
@@ -102,37 +104,52 @@
 
 
 					<!-- Editing trail uses -->
-
-					<div class="col-md-4">
 						<div class="form-group">
-							<label class="control-label">Select Trail use</label>
+							<div class="row">
+								<label class="control-label">Edit Trail use</label>
+							</div>
 							<!--	use div class=“help-block” to explain the form content	-->
-							<div class="help-block">Please check all that apply</div>
-							<div class="checkbox">
-								<label class="checkbox">
-									<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->
-									<Input id="chkTrailUseHike" name="chkTrailUse[]" type="checkbox" value="Hike"/>Hike
-								</label>
-								<label class="checkbox">
-									<Input id="chkTrailUseBike" name="chkTrailUse[]" type="checkbox" value="Bike"/>Bike
-								</label>
-								<label class="checkbox">
-									<Input id="chkTrailUseWheelChair" name="chkTrailUse[]" type="checkbox"
+							<div class="row">
+								<div class="help-block">Please check all that apply</div>
+							</div>
+							<div class="row">
+								<div class="checkbox">
+									<label class="checkbox col-md-1">
+										<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->
+										<Input id="chkTrailUseHike" name="chkTrailUse[]" type="checkbox" value="Hike"/>Hike
+									</label>
+									<label class="checkbox col-md-1">
+										<Input id="chkTrailUseBike" name="chkTrailUse[]" type="checkbox" value="Bike"/>Bike
+									</label>
+									<label class="checkbox col-md-2">
+										<Input id="chkTrailUseWheelChair" name="chkTrailUse[]" type="checkbox"
 											 value="Wheelchair"/>Wheelchair
-								</label>
-								<label class="checkbox">
-									<Input id="chkTrailUseSki" name="chkTrailUse[]" type="checkbox" value="Ski"/>Ski
-								</label>
-								<label class="checkbox">
-									<Input id="chkTrailUseHorse" name="chkTrailUse[]" type="checkbox" value="Horse"/>Horse
-								</label>
+									</label>
+									<label class="checkbox col-md-1">
+										<Input id="chkTrailUseSki" name="chkTrailUse[]" type="checkbox" value="Ski"/>Ski
+									</label>
+									<label class="checkbox col-md-1">
+										<Input id="chkTrailUseHorse" name="chkTrailUse[]" type="checkbox" value="Horse"/>Horse
+									</label>
+								</div>
 							</div>
 						</div>
+
+					<!-- Trail Description -->
+					<div class="form-group">
+						<div class="row">
+							<label class="control-label" for="txtareaTrailDescription">Trail Description (512 character limit)</label>
+						</div>
+						<div class="row">
+							<div class="col-md-8">
+								<textarea class="form-control" rows="8" id="txtareaTrailDescription" maxlength="512" placeholder="Located in northern Albuquerque, the Corrales Bosque Trail offers a quick escape nearby. The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing. The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande. Restrooms available at the Alameda Open Space parking lot (cross the pedestrian bridge over the river & then go under Alameda to get to the parking lot from the trailhead.)"></textarea>
+							</div>
+						</div>
+					</div>
 
 					</div>
 				</div>
 			</div>
-		</div>
 		<br>
 
 		<hr>

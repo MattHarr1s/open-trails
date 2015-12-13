@@ -17,14 +17,14 @@
 			<li><a href="trailSearch-template">Find Trails</a></li>
 			<li><a href="#">About this site</a></li>
 
-			<!-- Drop down form for create account -->
+			<!-- Model+Controller for logging in by L Gill -->
 			<li ng-controller="SignupController">
 				<a class="btn btn-info btn-lg" ng-click="openSignupModal();">
 					<i class="fa fa-check" aria-hidden="true"></i>Create Account
 				</a>
 			</li>
 
-			<!-- Drop down form for logging in -->
+			<!-- Model+Controller for logging in by L Gill  -->
 			<li ng-controller="LoginController">
 				<a class="btn btn-info btn-lg" ng-click="openLoginModal();">
 					<i class="fa fa-check" aria-hidden="true"></i>Log In
