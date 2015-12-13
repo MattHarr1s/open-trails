@@ -16,7 +16,7 @@
 
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<div>Please edit the below information as needed.</div>
 					<div class="form-group">
 						<div class="row">
@@ -24,8 +24,7 @@
 						</div>
 						<!--	use div class=“help-block” to explain the form content	-->
 						<div class="row">
-							<div class="help-block">Please Edit as needed</div>
-							<div>(1 => Easy 5=> Very Difficulty)</div>
+							<div class="help-block">(1 => Easy 5=> Very Difficulty)</div>
 							<div class="row">
 								<div class="checkbox">
 
@@ -50,50 +49,59 @@
 						</div>
 					</div>
 
-					<!-- Data entry for minimum trail distance -->
-					<div class="col-md-4">
-
-						<div class="form-group">
-							<label for="distanceRadio" class="control-label">Select Minimum Trail Distance</label>
-							<!--	use div class=“help-block” to explain the form content	-->
-							<div class="help-block">Please check one box. All trails with that distance or greater will be
-								listed.
+					<!-- Data correction for trail distance -->
+					<div class="form-group">
+						<div class="row">
+							<label for="distanceRadio" class="control-label">
+								Edit Minimum Trail Distance
+							</label>
+						</div>
+						<!--	use div class=“help-block” to explain the form content	-->
+						<div class="row">
+							<div class="help-block">
+								Please correct the trail distance as needed.
 							</div>
-							<!-- Radio buttons here -->
-							<div class="radio">
-								<label>
-									<input type="radio" name="rdoDistance" id="radioDistance1" value="1"/> 0 - 2 miles
-								</label>
-							</div>
+							<div class="row">
+								<div>Note: distance is in miles.</div>
+								<div class="row">
+									<div class="radio col-md-1">
+										<!-- Row of radio buttons here -->
+										<label>
+											<input type="radio" name="rdoDistance" id="radioDistance1" value="1"/> 0-2
+										</label>
+									</div>
 
-							<div class="radio">
-								<label>
-									<input type="radio" name="rdoDistance" id="radioDistance2" value="2"/> 2 - 5 miles
-								</label>
-							</div>
+									<div class="radio col-md-1">
+										<label>
+											<input type="radio" name="rdoDistance" id="radioDistance2" value="2"/> 2-5
+										</label>
+									</div>
 
-							<div class="radio">
-								<label>
-									<input type="radio" name="rdoDistance" id="radioDistance3" value="3"/> 5 - 10 miles
-								</label>
-							</div>
+									<div class="radio col-md-1">
+										<label>
+											<input type="radio" name="rdoDistance" id="radioDistance3" value="3"/> 5-10
+										</label>
+									</div>
 
-							<div class="radio">
-								<label>
-									<input type="radio" name="rdoDistance" id="radioDistance4" value="4"/> 10 - 20 miles
-								</label>
-							</div>
+									<div class="radio col-md-1">
+										<label>
+											<input type="radio" name="rdoDistance" id="radioDistance4" value="4"/> 10-20
+										</label>
+									</div>
 
-							<div class="radio">
-								<label>
-									<input type="radio" name="rdoDistance" id="radioDistance5" value="5"/> > 20 miles
-								</label>
+									<div class="radio col-md-1">
+										<label>
+											<input type="radio" name="rdoDistance" id="radioDistance5" value="5"/> >20
+										</label>
+									</div>
+
+								</div>
 							</div>
 						</div>
 					</div>
-					<!-- End of column 2: entering desired minimum distance-->
 
-					<!-- Column 3: entering trail uses -->
+
+					<!-- Editing trail uses -->
 
 					<div class="col-md-4">
 						<div class="form-group">
@@ -109,7 +117,8 @@
 									<Input id="chkTrailUseBike" name="chkTrailUse[]" type="checkbox" value="Bike"/>Bike
 								</label>
 								<label class="checkbox">
-									<Input id="chkTrailUseWheelChair" name="chkTrailUse[]" type="checkbox" value="Wheelchair"/>Wheelchair
+									<Input id="chkTrailUseWheelChair" name="chkTrailUse[]" type="checkbox"
+											 value="Wheelchair"/>Wheelchair
 								</label>
 								<label class="checkbox">
 									<Input id="chkTrailUseSki" name="chkTrailUse[]" type="checkbox" value="Ski"/>Ski
