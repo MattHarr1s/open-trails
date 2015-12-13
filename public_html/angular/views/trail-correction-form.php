@@ -104,52 +104,54 @@
 
 
 					<!-- Editing trail uses -->
-						<div class="form-group">
-							<div class="row">
-								<label class="control-label">Edit Trail use</label>
-							</div>
-							<!--	use div class=“help-block” to explain the form content	-->
-							<div class="row">
-								<div class="help-block">Please check all that apply</div>
-							</div>
-							<div class="row">
-								<div class="checkbox">
-									<label class="checkbox col-md-1">
-										<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->
-										<Input id="chkTrailUseHike" name="chkTrailUse[]" type="checkbox" value="Hike"/>Hike
-									</label>
-									<label class="checkbox col-md-1">
-										<Input id="chkTrailUseBike" name="chkTrailUse[]" type="checkbox" value="Bike"/>Bike
-									</label>
-									<label class="checkbox col-md-2">
-										<Input id="chkTrailUseWheelChair" name="chkTrailUse[]" type="checkbox"
+					<div class="form-group">
+						<div class="row">
+							<label class="control-label">Edit Trail use</label>
+						</div>
+						<!--	use div class=“help-block” to explain the form content	-->
+						<div class="row">
+							<div class="help-block">Please check all that apply</div>
+						</div>
+						<div class="row">
+							<div class="checkbox">
+								<label class="checkbox col-md-1">
+									<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->
+									<Input id="chkTrailUseHike" name="chkTrailUse[]" type="checkbox" value="Hike"/>Hike
+								</label>
+								<label class="checkbox col-md-1">
+									<Input id="chkTrailUseBike" name="chkTrailUse[]" type="checkbox" value="Bike"/>Bike
+								</label>
+								<label class="checkbox col-md-2">
+									<Input id="chkTrailUseWheelChair" name="chkTrailUse[]" type="checkbox"
 											 value="Wheelchair"/>Wheelchair
-									</label>
-									<label class="checkbox col-md-1">
-										<Input id="chkTrailUseSki" name="chkTrailUse[]" type="checkbox" value="Ski"/>Ski
-									</label>
-									<label class="checkbox col-md-1">
-										<Input id="chkTrailUseHorse" name="chkTrailUse[]" type="checkbox" value="Horse"/>Horse
-									</label>
-								</div>
+								</label>
+								<label class="checkbox col-md-1">
+									<Input id="chkTrailUseSki" name="chkTrailUse[]" type="checkbox" value="Ski"/>Ski
+								</label>
+								<label class="checkbox col-md-1">
+									<Input id="chkTrailUseHorse" name="chkTrailUse[]" type="checkbox" value="Horse"/>Horse
+								</label>
 							</div>
 						</div>
+					</div>
 
 					<!-- Trail Description -->
 					<div class="form-group">
 						<div class="row">
-							<label class="control-label" for="txtareaTrailDescription">Trail Description (512 character limit)</label>
+							<label class="control-label" for="txtareaTrailDescription">Trail Description (512 character
+								limit)</label>
 						</div>
 						<div class="row">
 							<div class="col-md-8">
-								<textarea class="form-control" rows="8" id="txtareaTrailDescription" maxlength="512" placeholder="Located in northern Albuquerque, the Corrales Bosque Trail offers a quick escape nearby. The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing. The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande. Restrooms available at the Alameda Open Space parking lot (cross the pedestrian bridge over the river & then go under Alameda to get to the parking lot from the trailhead.)"></textarea>
+								<textarea class="form-control" rows="8" id="txtareaTrailDescription" maxlength="512"
+											 placeholder="Located in northern Albuquerque, the Corrales Bosque Trail offers a quick escape nearby. The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing. The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande. Restrooms available at the Alameda Open Space parking lot (cross the pedestrian bridge over the river & then go under Alameda to get to the parking lot from the trailhead.)"></textarea>
 							</div>
 						</div>
 					</div>
 
-					</div>
 				</div>
 			</div>
+		</div>
 		<br>
 
 		<hr>
