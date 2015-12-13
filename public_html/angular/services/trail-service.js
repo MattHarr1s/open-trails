@@ -51,14 +51,6 @@ app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 		return($http.getUrl() + '?submission=' + trailSubmissionType); 
 	};
 
-	this.fetchTerrain = function(trailTerrain)
-	{ 	return($http.getUrl() + '?terrain=' + trailTerrain);
-		 };
-
-	this.fetchTraffic = function(trailTraffic) {
-		return($http.getUrl() + '?traffic=' + trailTraffic);
-		 };
-
 	this.fetchUse = function(trailuse) {
 		return($http.getUrl() + '?use=' + trailuse)
 	};

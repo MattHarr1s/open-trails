@@ -2,7 +2,8 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 	//add as needed will come back to add doing of off bradly history on organization
 	$scope.segments = [];
 	$scope.alerts = [];
-	$scope.numSegments = 2;
+	$scope.numSegments = 1;
+
 
 	//get segments from api
 	//come back for other gets
@@ -74,7 +75,7 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 		}
 	};
 
-	console.log("testing whyyyyyyy");
+	console.log("result");
 	//create new segment
 	$scope.createSegment = function(segments, validated) {
 		console.log("Invalid");

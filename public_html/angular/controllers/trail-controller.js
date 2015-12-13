@@ -28,9 +28,9 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 				});
 		}
 	};
-	$scope.getSubmitId = function(submitId, validated) {
+	$scope.getSubmitId = function(TrailSubmitId, validated) {
 		if (validated === true) {
-			TrailService.fetchSubmitId(submitId)
+			TrailService.fetchSubmitId(TrailSubmitId)
 				.then(function(result){
 					if(result.data.status === 200) {
 						$scope.trails = result.data.data
@@ -41,23 +41,59 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 		}
 	};
 
-	$scope.getSubmission = function(submission, validated) {
+	$scope.getTrailDifficulty = function(trailDifficulty, validated) {
 		if (validated === true) {
-			TrailService.fetchSubmission(submission)
+			TrailService.fetchDifficulty(trailDifficulty)
 				.then(function(result) {
-					if(result.data.status === 200){
+					if(result.data.status === 200) {
 						$scope.trails = result.data.data
 					} else {
-						$scope.alrts[0] = {type: "danger", msg: result.data.message}
+						$scope.alerts[0] = {type: "danger", msg: result.data.message}
 					}
 				});
 		}
 	};
-	$scope.getName = function(name, validated) {
+	$scope.getTrailDistance = function(trailDistance, validated) {
 		if (validated === true) {
-			TrailService.fetchName(name)
+			TrailService.fetchDistance(trailDistance)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.trails = result.data.data
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message}
+					}
+				});
 		}
-	}
+	};
+
+	$scope.getTrailName = function(TrailName, validated) {
+		if (validated === true) {
+			TrailService.fetchName(TrailName)
+				.then(function(result){
+					if(result.data.status === 200) {
+						$scope.trails = result.data.data
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message}
+					}
+				});
+		}
+	};
+
+	$scope.getTrailSubmission = function(trailSubmissionType, validated) {
+		if (validated === true) {
+			TrailService.fetchSubmission(trailSubmissionType)
+				.then(function(result) {
+					if(result.data.status === 200){
+						$scope.trails = result.data.data
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message}
+					}
+				});
+		}
+	};
+
+	$scope
+
 
 
 
