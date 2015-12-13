@@ -3,6 +3,9 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 	// get the trail from the api
 	// come back to add other
 	// make doc blocks way better
+	$scope.trails = [];
+
+
 
 	$scope.getTrailId = function(trailId, validated) {
 		if(validated === true) {
@@ -92,7 +95,30 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 		}
 	};
 
-	$scope
+	$scope.createTrail = function(trail, validated) {
+		if(validated === true) {
+			// do i need to add the date
+			TrailService.createTrail(trail)
+				.then(function(result) {
+					$scope.displayStatus(result.data);
+				});
+		}
+	};
+
+	$scope.updateTrail = function(trail, validated) {
+		if(validated === true) {
+			// do i need to add date.
+			TrailService.update(trail.trailId, trail)
+				.then(function(result){
+					$scope.displayStatus(result.data);
+					$scope.cancelEditing();
+					$scope.getTrails();
+				});
+		}
+	};
+
+
+
 
 
 
