@@ -3,7 +3,7 @@
 <-- @author Louis Gill <lgill7@cnm.edu>
 -->
 <div class="modal-body">
-	<form id="loginForm" name="loginForm">
+	<form id="loginForm" name="loginForm" novalidate>
 		<h2>Welcome Back!</h2>
 		<hr/>
 		<div class="form-group form-group-lg"
@@ -11,19 +11,17 @@
 			<label class="control-label" for="userEmail">Email</label>
 
 			<div class="input-group">
-				<div class="input-group">
-					<div class="input-group-addon">
-						<i class="fa fa-envelope" aria-hidden="true"></i>
-					</div>
-					<input type="email" class="form-control" id="userEmail" name="userEmail"
-							 placeholder="What's your email?" ng-model="loginData.userEmail" ng-required="true"/>
+				<div class="input-group-addon">
+					<i class="fa fa-envelope" aria-hidden="true"></i>
 				</div>
-				<div class="alert alert-danger" role="alert" ng-messages="loginForm.userEmail.$error"
-					  ng-if="loginForm.userEmail.$touched" ng-hide="loginForm.userEmail.$valid">
-					<p ng-message="email">Email is invalid.</p>
+				<input type="email" class="form-control" id="userEmail" name="userEmail"
+						 placeholder="What's your email?" ng-model="loginData.userEmail" ng-required="true"/>
+			</div>
+			<div class="alert alert-danger" role="alert" ng-messages="loginForm.userEmail.$error"
+				  ng-if="loginForm.userEmail.$touched" ng-hide="loginForm.userEmail.$valid">
+				<p ng-message="email">Email is invalid.</p>
 
-					<p ng-message="required">Please enter your email.</p>
-				</div>
+				<p ng-message="required">Please enter your email.</p>
 			</div>
 		</div>
 		<div class="form-group form-group-lg"
@@ -38,10 +36,11 @@
 						 ng-model="loginData.password" ng-minlength="8" ng-required="true"/>
 			</div>
 			<div class="alert alert-danger" role="alert" ng-messages="loginForm.password.$error"
-				  ng-if="loginForm.password.$touched" ng-hide="loginForm.password.$valid"></div>
-			<p ng-message="minlength">Password must be at least 8 characters.</p>
+				  ng-if="loginForm.password.$touched" ng-hide="loginForm.password.$valid">
+				<p ng-message="minlength">Password must be at least 8 characters.</p>
 
-			<p ng-message="required">Please enter your password.</p>
+				<p ng-message="required">Please enter your password.</p>
+			</div>
 		</div>
 		<hr/>
 		<button type="submit" class="btn btn-lg btn-info" ng-click="ok();" ng-disabled="loginForm.$invalid"><i
