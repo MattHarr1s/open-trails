@@ -15,19 +15,21 @@
 	<div class="collapse navbar-collapse" id="main-menu">
 		<ul class="nav navbar-nav navbar-right">
 			<li>
-				<a class="btn btn-info btn-lg" href="<?php echo $PREFIX;?>trail-search">Find Trails</a></li>
-			<li><a href="#">About this site</a></li>
+				<a class="btn btn-info btn-md" href="<?php echo $PREFIX;?>trail-search">Find Trails</a>
+			</li>
+			<li>
+				<a class="btn btn-info btn-md" href="<?php echo $PREFIX;?>trail-site-info">About this site</a></li>
 
 			<!-- Model+Controller for logging in by L Gill -->
 			<li ng-controller="SignupController">
-				<a class="btn btn-info btn-lg" ng-click="openSignupModal();">
+				<a class="btn btn-info btn-md" ng-click="openSignupModal();">
 					<i class="fa fa-check" aria-hidden="true"></i>Create Account
 				</a>
 			</li>
 
 			<!-- Model+Controller for logging in by L Gill  -->
 			<li ng-controller="LoginController">
-				<a class="btn btn-info btn-lg" ng-click="openLoginModal();">
+				<a class="btn btn-info btn-md" ng-click="openLoginModal();">
 					<i class="fa fa-check" aria-hidden="true"></i>Log In
 				</a> <!--aria-hidden="true" -->
 			</li>

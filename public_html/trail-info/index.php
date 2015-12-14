@@ -2,7 +2,7 @@
 /*grab current directory*/
 $CURRENT_DIR = __DIR__;
 /*set page title here*/
-$PAGE_TITLE = "MY PAGE TITLE";
+$PAGE_TITLE = "Trail Info";
 /*load head-utils.php*/
 require_once(dirname(__DIR__) . "/php/template/head-utils.php");
 ?>

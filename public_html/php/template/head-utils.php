@@ -16,9 +16,8 @@ require_once(dirname(__DIR__) . "/lib/xsrf.php");
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
-setXsrfCookie("/");
+setXsrfCookie("/"); ?>
 
-?>
 <!DOCTYPE html>
 <html lang="en" ng-app="TrailQuail">
 	<head>
@@ -47,6 +46,14 @@ setXsrfCookie("/");
 		<script type="text/javascript" src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script type="text/javascript" src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
+
+		<!-- jQuery (required for Bootstrap's JS plugins) -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+		<!-- Bootstrap latest compiled and minified Javascript -->
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
+				  integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
+				  crossorigin="anonymous"></script>
 
 		<!-- Angular.js -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
