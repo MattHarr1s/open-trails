@@ -1,7 +1,9 @@
-app.controller("TrailController", ["$scope", "$uibModal", "TrailService", function($scope, $uibModal, TrailService) {
+app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "TrailService", function($scope, $routeParams, $uibModal, TrailService) {
 	// get the trail from the api
 	// come back to add other
 	// make doc blocks way better
+	$scope.currentTrailId = $routeParams.trailId;
+	$scope.currentTrail = null;
 	$scope.newTrail = {trailId: null, userId: null, browser: null, createDate: null, ipAddress: null, submitTrailId: null, trailAmenities: null, trailCondition: null, trailDescription: null, trailDifficulty: null, trailDistance: null, trailName: null, trailSubmissionType: null, trailTerrain: null, trailTraffic: null, trailUse: null, trailUuid: null};
 	$scope.isEditing = false;
 	$scope.trails = [];
@@ -12,7 +14,8 @@ app.controller("TrailController", ["$scope", "$uibModal", "TrailService", functi
 			TrailService.fetchId(trailId)
 				.then(function(result) {
 					if(result.data.status === 200) {
-						$scope.trails = result.data.data
+						$scope.trails = result.data.data;
+						$scope.currentTrail = result.data.data;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message}
 					}
@@ -124,4 +127,9 @@ app.controller("TrailController", ["$scope", "$uibModal", "TrailService", functi
 				});
 		}
 	};
+
+	console.log($routeParams);
+	if($scope.currentTrail === null && $scope.currentTrailId !== null) {
+		$scope.getTrailId($scope.currentTrailId, true);
+	}
 }]);

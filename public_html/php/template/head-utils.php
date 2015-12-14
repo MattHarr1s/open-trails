@@ -59,14 +59,15 @@ setXsrfCookie("/"); ?>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 		<script type="text/javascript"
 				  src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-route.min.js"></script>
 		<script type="text/javascript"
-				  src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.js"></script>
+		src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
 
 		<!--  -->
 		<!-- include all your angular files (.js files) down here -->
 		<!--  -->
 		<script src="<?php echo $PREFIX; ?>angular/trail-quail.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/route-config.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/services/login-service.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/services/sign-up-service.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/services/trail-service.js"></script>
