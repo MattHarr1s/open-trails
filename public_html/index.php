@@ -10,8 +10,8 @@ require_once("php/template/head-utils.php");
 <!-- ----------------------------------- -->
 <!-- Quail Trail Homepage                -->
 <!--
-<!--
-<!-- ------------------------------------ -->
+<!-- saulj@me.com  December 14, 2015
+<!-- ----------------------------------- -->
 
 <div class="sfooter-content">
 	<header>
