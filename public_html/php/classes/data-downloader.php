@@ -84,18 +84,12 @@ class DataDownloader {
 
 		$context = stream_context_create(array("http" => array("ignore_errors" => true, "method" => "GET")));
 
-//		echo "test 0";
 		try {
 			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 
-//			echo "test 1" . PHP_EOL;
-//			$i = 0;
 			if(($fd = @fopen($url, "rb", false, $context)) !== false) {
-//				echo "test 2" . PHP_EOL;
 				fgetcsv($fd, 0, ",");
 				while((($data = fgetcsv($fd, 0, ",", "\"")) !== false) && feof($fd) !== true) {
-//					echo $i . PHP_EOL;
-//					$i++;
 					$trailId = null;
 					$userId = 1;
 					$browser = "Default";
@@ -168,21 +162,22 @@ class DataDownloader {
 				//decode the geoJson file
 				$jsonConverted = json_decode($jsonData);
 				$jsonFeatures = $jsonConverted->features;
-
+				// create array from converted geoJson file
 				$properties = new SplFixedArray(count($jsonFeatures));
+				//loop through array to get to json properties
 				foreach($jsonFeatures as $jsonFeature) {
 					$properties[$properties->key()] = $jsonFeature->properties;
 					$properties->next();
 				}
-
+				//create an array of trails and a SplObjectStorage for the trail guide
 				$trails = [];
 				$trailGuide = new SplObjectStorage();
-
+				//loop through array to get trail name and trail use
 				foreach($properties as $property) {
 					$trailName = $property->name;
 					$trailUse = "";
 
-					//Set $trailUse string based on information in geoJson properties field.
+					//set $trailUse string based on information in geoJson properties field.
 					if($property->bicycle === "yes") {
 						$trailUse = $trailUse . "bicycle: yes, ";
 					} else {
@@ -198,7 +193,7 @@ class DataDownloader {
 					} else {
 						$trailUse = $trailUse . "wheelchair: no ";
 					}
-
+					//get the trail by name and set the trail use
 					try {
 						$candidateTrails = Trail::getTrailByTrailName($pdo, $trailName);
 						foreach($candidateTrails as $trail) {
@@ -308,48 +303,31 @@ class DataDownloader {
 		}
 	}
 
+
 	/**
-	 *gets all segments for a trail and calculates distance of the trail then inserts calculated trailDistance into trail
-	 *
-	 *
-	 *
-	 **/
+	 * calculates trail distance using phpgeo composer package.
+	**/
 	public static function calculateTrailDistance() {
 		$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 		$trails = Trail::getAllTrails($pdo);
 
 		$testNum = 0;
 		foreach($trails as $trail) {
-			//echo "Tracks: " . $testNum . PHP_EOL;
 			$testNum++;
 			$trailRelationships = TrailRelationship::getTrailRelationshipByTrailId($pdo, $trail->getTrailId());
 
 			$track = new Polyline();
 			foreach($trailRelationships as $trailRelationship) {
 				$segment = Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId());
-//				echo "SegId: " . $trailRelationship->getSegmentId() . PHP_EOL;
 				$track->addPoint(new Coordinate($segment->getSegmentStart()->getY(), $segment->getSegmentStart()->getX()));
-//				var_dump($segment->getSegmentStart(), $segment->getSegmentStop());
 				$track->addPoint(new Coordinate($segment->getSegmentStop()->getY(), $segment->getSegmentStop()->getX()));
 			}
 
-			//calculate trail distance and convert to miles
-//			echo "<p style='background-color:red;'>";
-//			$test = $track->getLength(new Vincenty());
-//			echo $test;
-//			echo "</p>";
 			$trailDistanceM = $track->getLength(new Vincenty());
-			echo "Meters: " . $trailDistanceM . PHP_EOL;
 			$trailDistanceMi = $trailDistanceM / 1609.344;
-//			var_dump($trailDistanceM);
-//			echo($trailDistanceMi);
-
-			//set trail distance
 			$trailDistance = $trailDistanceMi;
 			$trail->setTrailDistance($trailDistance);
 			$trail->update($pdo);
-//			echo "<p>Trail distance:</p>";
-//			var_dump($trailDistance);
 		}
 	}
 }
