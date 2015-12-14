@@ -29,9 +29,9 @@ require_once("php/template/head-utils.php");
 			<p>Find hiking, mountain biking, skiing, <br>and horseback riding trails</p>
 			<br>
 
-			<p><a class="btn btn-primary btn-lg" role="button" href="/trailsearch/index.php">Find a Trail</a></p>
+			<p><a class="btn btn-primary btn-lg" role="button" href="<?php echo $PREFIX;?>trail-search">Find a Trail</a></p>
 
-			<p><a class="btn btn-primary" href="#" role="button">Learn More</a></p>
+			<p><a class="btn btn-primary" role="button" href="<?php echo $PREFIX;?>trail-site-info">Learn More</a></p>
 		</div>
 	</div>
 

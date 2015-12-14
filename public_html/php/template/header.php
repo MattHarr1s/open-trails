@@ -14,7 +14,8 @@
 	<!-- here are your main nav links, grouped for toggling -->
 	<div class="collapse navbar-collapse" id="main-menu">
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="trailSearch-template">Find Trails</a></li>
+			<li>
+				<a class="btn btn-info btn-lg" href="<?php echo $PREFIX;?>trail-search">Find Trails</a></li>
 			<li><a href="#">About this site</a></li>
 
 			<!-- Model+Controller for logging in by L Gill -->
