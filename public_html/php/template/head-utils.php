@@ -102,7 +102,7 @@ setXsrfCookie("/"); ?>
 		<!-- Angular Google Maps-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.2.0/angular-google-maps_dev_mapped.js"></script>
-		<script src =
+		<script src =""></script>
 		<!-- Page Title -->
 		<title><?php echo $PAGE_TITLE; ?></title>
 	</head>
