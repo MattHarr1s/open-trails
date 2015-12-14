@@ -25,7 +25,7 @@ require_once("../php/template/head-utils.php");
 			<!--data column-->
 			<div class="col-md-6">
 				<div ng-controller="TrailController">
-					<trail-view></trail-view><!-- ??????????????????????????? -->
+					<trail-view></trail-view>
 				<h1>Trail Name Here</h1>
 				<br>
 				<div>Trail Search Parameters go here</div>
