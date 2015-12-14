@@ -13,7 +13,7 @@ require_once("../php/template/head-utils.php");
 		<?php require_once(dirname(__DIR__) . "/php/template/header.php"); ?>
 	</header>
 
-	<h1>Trail Description</h1>
+	<h2>Trail Description</h2>
 	<hr>
 
 	<div class="container">
@@ -24,7 +24,9 @@ require_once("../php/template/head-utils.php");
 			</div>
 			<!--data column-->
 			<div class="col-md-6">
-				<div>Trail name here</div>
+				<div ng-controller="TrailController">																				<!-- ??????????????????????????? -->
+				</div>
+				<h1>Trail Name Here</h1>
 				<br>
 				<div>Trail Search Parameters go here</div>
 				<br>
@@ -35,6 +37,7 @@ require_once("../php/template/head-utils.php");
 		</div><!--.row-->
 
 		<!-- Trail comment form inserted here -->
+		<hr/>
 		<div class="row">
 			<div class="col-md-12">
 				<h2 class="page-title">Enter Your Comment(s) for this Trail</h2>
@@ -45,6 +48,11 @@ require_once("../php/template/head-utils.php");
 		<hr>
 
 		<!-- Trail comments from database will show below here -->
+		<div ng-controller="CommentController">
+			<div ng-repeat="comment in comments">
+				<comment-directive></comment-directive>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-12">
 <!--				List of trail comments here-->
