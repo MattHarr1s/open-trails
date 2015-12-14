@@ -26,7 +26,7 @@
 	<body>
 		<main class="container" ng-controller="SegmentController">
 			<h1>Adios Plunker!</h1>
-			<form class="form-horizontal well">
+			<form class="form-horizontal well" ng-submit="loadArray();">
 				<div class="form-group">
 					<label>Number of Segments:</label>
 					<div class="input-group">

@@ -33,13 +33,7 @@ app.service("SegmentService", function($http, SEGMENT_ENDPOINT) {
 	};
 
 	this.create = function(segments) {
-		console.log("create()");
-		for(var i = 0; i < segments.length; i++) {
-			var segment = segments[i];
-			segment.elevationStart = 0;
-			segment.elevationStop = 0;
-			return ($http.post(getUrl(), segment));
-		}
+		return ($http.post(getUrl(), segments));
 	};
 
 	this.update = function(segmentId, segment) {

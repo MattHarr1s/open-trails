@@ -2,7 +2,7 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 	//add as needed will come back to add doing of off bradly history on organization
 	$scope.segments = [];
 	$scope.alerts = [];
-	$scope.numSegments = 1;
+	$scope.numSegments = 2;
 
 
 	//get segments from api
@@ -49,9 +49,9 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 		}
 	};
 
-	$scope.getElevationX = function(segment, validated) {
+	$scope.getElevationX = function(segmentStartElevation, validated) {
 		if (validated === true) {
-			SegmentService.fetchElevationX(elevationX)
+			SegmentService.fetchElevationX(segmentStartElevation)
 				.then(function(result) {
 					if(result.data.status === 200){
 						$scope.segments = result.data.data
@@ -75,21 +75,22 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 		}
 	};
 
-	console.log("result");
 	//create new segment
 	$scope.createSegment = function(segments, validated) {
-		console.log("Invalid");
 		if(validated === true) {
-			console.log("Validated");
-			SegmentService.create(segments)
-				.then(function(result) {console.log(result);}, function(result) {
-					if(result.data.status === 200) {
-						$scope.alerts[0] = {type: "success", msg: result.data.message};
-					} else {
-						$scope.alerts[0] = {type: "danger", msg: result.data.message};
-					}
+			for(var i = 0; i < $scope.segments.length - 1; i++) {
+				var newSegment = {segmentStart: $scope.segments[i], segmentStop: $scope.segments[i + 1]};
+				SegmentService.create(newSegment)
+					.then(function(result) {
+						console.log(result.data);
+						if(result.data.status === 200) {
+							$scope.alerts[0] = {type: "success", msg: result.data.message};
+						} else {
+							$scope.alerts[0] = {type: "danger", msg: result.data.message};
+						}
 
-				});
+					});
+			}
 		}
 	};
 

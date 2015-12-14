@@ -78,10 +78,10 @@ try {
 				throw(new InvalidArgumentException("segment stop cannot be empty"));
 			}
 			if(empty($requestObject->segmentStartElevation) === true) {
-				throw(new InvalidArgumentException("elevation start cannot be null"));
+				$requestObject->segmentStartElevation = 0.0;
 			}
 			if(empty($requestObject->segmentStopElevation) === true) {
-				throw(new InvalidArgumentException("elevation stop cannot be null"));
+				$requestObject->segmentStopElevation = 0.0;
 			}
 
 			//preform the a put post or delete

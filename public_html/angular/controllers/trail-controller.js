@@ -3,7 +3,7 @@ app.controller("Trail-Controller", ["$scope", "$uiModal", "TrailService", functi
 	// come back to add other
 	// make doc blocks way better
 	$scope.trails = [];
-
+	$scope.alerts = [];
 
 	$scope.getTrailId = function(trailId, validated) {
 		if(validated === true) {
