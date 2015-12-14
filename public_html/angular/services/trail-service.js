@@ -1,4 +1,4 @@
-app.constant("TRAIL_ENDPOINT", "api/segment/");
+app.constant("TRAIL_ENDPOINT", "api/trail/");
 app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 	function getUrl() {
 		return(TRAIL_ENDPOINT);

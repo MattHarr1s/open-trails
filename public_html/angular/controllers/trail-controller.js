@@ -1,10 +1,8 @@
-
-app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", function($scope, $uibModal, TrailService) {
+app.controller("Trail-Controller", ["$scope", "$uiModal", "TrailService", function($scope, $uibModal, TrailService) {
 	// get the trail from the api
 	// come back to add other
 	// make doc blocks way better
 	$scope.trails = [];
-
 
 
 	$scope.getTrailId = function(trailId, validated) {
@@ -20,10 +18,10 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 		}
 	};
 	$scope.getTrailUser = function(userId, validated) {
-		if (validated === true) {
+		if(validated === true) {
 			TrailService.fetchUserId(userId)
-				.then(function(result){
-					if(result.data.status === 200){
+				.then(function(result) {
+					if(result.data.status === 200) {
 						$scope.trails = result.data.data
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message}
@@ -32,9 +30,9 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 		}
 	};
 	$scope.getSubmitId = function(TrailSubmitId, validated) {
-		if (validated === true) {
+		if(validated === true) {
 			TrailService.fetchSubmitId(TrailSubmitId)
-				.then(function(result){
+				.then(function(result) {
 					if(result.data.status === 200) {
 						$scope.trails = result.data.data
 					} else {
@@ -45,7 +43,7 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 	};
 
 	$scope.getTrailDifficulty = function(trailDifficulty, validated) {
-		if (validated === true) {
+		if(validated === true) {
 			TrailService.fetchDifficulty(trailDifficulty)
 				.then(function(result) {
 					if(result.data.status === 200) {
@@ -57,7 +55,7 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 		}
 	};
 	$scope.getTrailDistance = function(trailDistance, validated) {
-		if (validated === true) {
+		if(validated === true) {
 			TrailService.fetchDistance(trailDistance)
 				.then(function(result) {
 					if(result.data.status === 200) {
@@ -70,9 +68,9 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 	};
 
 	$scope.getTrailName = function(TrailName, validated) {
-		if (validated === true) {
+		if(validated === true) {
 			TrailService.fetchName(TrailName)
-				.then(function(result){
+				.then(function(result) {
 					if(result.data.status === 200) {
 						$scope.trails = result.data.data
 					} else {
@@ -83,10 +81,10 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 	};
 
 	$scope.getTrailSubmission = function(trailSubmissionType, validated) {
-		if (validated === true) {
+		if(validated === true) {
 			TrailService.fetchSubmission(trailSubmissionType)
 				.then(function(result) {
-					if(result.data.status === 200){
+					if(result.data.status === 200) {
 						$scope.trails = result.data.data
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message}
@@ -109,19 +107,13 @@ app.controller ("Trail-Controller", ["$scope", "$uiModal", "TrailService", funct
 		if(validated === true) {
 			// do i need to add date.
 			TrailService.update(trail.trailId, trail)
-				.then(function(result){
+				.then(function(result) {
 					$scope.displayStatus(result.data);
 					$scope.cancelEditing();
 					$scope.getTrails();
 				});
 		}
 	};
-
-
-
-
-
-
 
 
 }]);
