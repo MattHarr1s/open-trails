@@ -54,7 +54,12 @@ require_once("../php/template/head-utils.php");
 
 				<div class="row"></div>
 				<h3>Trail Description:</h3>
-				<div>Located in northern Albuquerque, the Corrales Bosque Trail offers a quick escape nearby. The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing. The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande. Restrooms available at the Alameda Open Space parking lot (cross the pedestrian bridge over the river & then go under Alameda to get to the parking lot from the trailhead.)</div>
+				<div>Located in northern Albuquerque, the Corrales Bosque Trail offers a quick escape nearby. The trail
+					offers scenic views of the Rio Grande. It also offers opportunities for birding and wildlife viewing. The
+					trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the
+					Rio Grande. Restrooms available at the Alameda Open Space parking lot (cross the pedestrian bridge over
+					the river & then go under Alameda to get to the parking lot from the trailhead.)
+				</div>
 			</div> <!-- End column 1 here -->
 			<!--Correction/New Trail data column-->
 
@@ -84,4 +89,4 @@ require_once("../php/template/head-utils.php");
 	</footer>
 
 	</body>
-	</html>
+</html>

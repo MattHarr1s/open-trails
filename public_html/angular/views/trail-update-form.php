@@ -149,6 +149,9 @@
 						</div>
 					</div>
 
+					<!-- submit button to submit trail corrections -->
+					<button class="btn btn-md btn-info" type="submit">Submit Update</button>
+
 				</div>
 			</div>
 		</div>
