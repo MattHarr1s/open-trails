@@ -40,7 +40,7 @@ require_once(dirname(__DIR__) . "/php/template/head-utils.php");
 
 			<!-- Trail comment form inserted here -->
 			<hr/>
-			<div class="row">
+			<div class="row" ng-controller="CommentController">
 				<div class="col-md-12">
 					<h2 class="page-title">Enter Your Comment(s) for this Trail</h2>
 					<?php require_once(dirname(__DIR__) . "/angular/views/comment-form.php"); ?>
@@ -52,7 +52,7 @@ require_once(dirname(__DIR__) . "/php/template/head-utils.php");
 			<!-- Trail comments from database will show below here -->
 			<div ng-controller="CommentController">
 				<div ng-repeat="comment in comments">
-					<comment-directive></comment-directive>
+					<comment-view></comment-view>
 				</div>
 			</div>
 			<div class="row">

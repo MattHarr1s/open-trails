@@ -35,7 +35,7 @@ setXsrfCookie("/"); ?>
 
 		<!--  -->
 		<!-- ALL OTHER 3RD PARTY CSS FILES GO HERE, FONTAWESOME, GOOGLE FONTS, ETC. -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<!--  -->
 
 		<!-- CUSTOM CSS GOES HERE -->
@@ -69,10 +69,14 @@ setXsrfCookie("/"); ?>
 		<script src="<?php echo $PREFIX; ?>angular/trail-quail.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/services/login-service.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/services/sign-up-service.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/services/trail-service.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/services/comment-services.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/controllers/sign-up-modal.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/controllers/sign-up-controller.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/controllers/login-modal.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/controllers/login-controller.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/controllers/trail-controller.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/controllers/comment-controller.js"></script>
 
 		<!-- load the googlemaps api -->
 		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>

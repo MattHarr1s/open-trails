@@ -1,7 +1,9 @@
-app.controller("Trail-Controller", ["$scope", "$uiModal", "TrailService", function($scope, $uibModal, TrailService) {
+app.controller("TrailController", ["$scope", "$uibModal", "TrailService", function($scope, $uibModal, TrailService) {
 	// get the trail from the api
 	// come back to add other
 	// make doc blocks way better
+	$scope.newTrail = {trailId: null, userId: null, browser: null, createDate: null, ipAddress: null, submitTrailId: null, trailAmenities: null, trailCondition: null, trailDescription: null, trailDifficulty: null, trailDistance: null, trailName: null, trailSubmissionType: null, trailTerrain: null, trailTraffic: null, trailUse: null, trailUuid: null};
+	$scope.isEditing = false;
 	$scope.trails = [];
 	$scope.alerts = [];
 
@@ -98,7 +100,11 @@ app.controller("Trail-Controller", ["$scope", "$uiModal", "TrailService", functi
 			// do i need to add the date
 			TrailService.createTrail(trail)
 				.then(function(result) {
-					$scope.displayStatus(result.data);
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
 				});
 		}
 	};
@@ -108,12 +114,14 @@ app.controller("Trail-Controller", ["$scope", "$uiModal", "TrailService", functi
 			// do i need to add date.
 			TrailService.update(trail.trailId, trail)
 				.then(function(result) {
-					$scope.displayStatus(result.data);
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
 					$scope.cancelEditing();
 					$scope.getTrails();
 				});
 		}
 	};
-
-
 }]);
