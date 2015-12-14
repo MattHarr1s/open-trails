@@ -54,6 +54,8 @@ setXsrfCookie("/");
 				  src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
 		<script type="text/javascript"
 				  src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/X,Y,Z/angular-route.js"></script>
+
 		<!--  -->
 		<!-- include all your angular files (.js files) down here -->
 		<!--  -->
