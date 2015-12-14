@@ -143,7 +143,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-8">
-								<textarea class="form-control" rows="8" id="txtareaTrailDescription" maxlength="512"
+								<textarea class="form-control" rows="9" id="txtareaTrailDescription" maxlength="512"
 											 placeholder="Located in northern Albuquerque, the Corrales Bosque Trail offers a quick escape nearby. The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing. The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande. Restrooms available at the Alameda Open Space parking lot (cross the pedestrian bridge over the river & then go under Alameda to get to the parking lot from the trailhead.)"></textarea>
 							</div>
 						</div>
