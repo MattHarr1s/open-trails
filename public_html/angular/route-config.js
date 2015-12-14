@@ -26,3 +26,11 @@ trailQuail.controller('TrailController', function($scope) {
 	// create a message to display in our view
 	$scope.message = 'Blah blah blah';
 });
+
+trailQuail.controller('CommentController', function($scope) {
+	$scope.message = 'something';
+});
+
+trailQuail.controller('SegmentController', function($scope) {
+	$scope.message = 'something else';
+});
