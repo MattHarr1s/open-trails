@@ -1,6 +1,6 @@
 <!-- This in mainly for the Navbar in the header -->
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
 	<!-- logo and mobile toggle button get grouped together for better mobile display -->
 	<div class="navbar-header">
 		<!-- this is the mobile menu button -->
@@ -15,21 +15,21 @@
 	<div class="collapse navbar-collapse" id="main-menu">
 		<ul class="nav navbar-nav navbar-right">
 			<li>
-				<a class="btn btn-info btn-md" href="<?php echo $PREFIX;?>trail-search">Find Trails</a>
+				<a class="btn btn-default btn-md" href="<?php echo $PREFIX;?>trail-search">Find Trails</a>
 			</li>
 			<li>
-				<a class="btn btn-info btn-md" href="<?php echo $PREFIX;?>trail-site-info">About this site</a></li>
+				<a class="btn btn-default btn-md" href="<?php echo $PREFIX;?>trail-site-info">About this site</a></li>
 
 			<!-- Model+Controller for logging in by L Gill -->
 			<li ng-controller="SignupController">
-				<a class="btn btn-info btn-md" ng-click="openSignupModal();">
+				<a class="btn btn-default btn-def" ng-click="openSignupModal();">
 					<i class="fa fa-check" aria-hidden="true"></i>Create Account
 				</a>
 			</li>
 
 			<!-- Model+Controller for logging in by L Gill  -->
 			<li ng-controller="LoginController">
-				<a class="btn btn-info btn-md" ng-click="openLoginModal();">
+				<a class="btn btn-default btn-md" ng-click="openLoginModal();">
 					<i class="fa fa-check" aria-hidden="true"></i>Log In
 				</a> <!--aria-hidden="true" -->
 			</li>
