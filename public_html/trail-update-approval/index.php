@@ -70,17 +70,9 @@ require_once("../php/template/head-utils.php");
 					<!-- End of Map row / beginning of trail info -->
 				</div>
 				<?php require_once(dirname(__DIR__) . "/angular/views/update-approve-form.php"); ?>
-				<div>Trail Search Parameters go here</div>
 				<br>
 
-				<div>trail description goes here</div>
-				<br>
-
-				<div>
-					Do you want to approve the above trail information to go into the database?
-				</div>
-				<?php require_once(dirname(__DIR__) . "/angular/views/accept-dbchange-form.php"); ?>
-			</div>  <!-- End of column 2 -->
+ <!-- End of column 2 -->
 		</div><!--.row-->
 
 

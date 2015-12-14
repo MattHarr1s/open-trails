@@ -152,9 +152,11 @@
 				</div>
 			</div>
 		</div>
-		<br>
+
 
 		<hr>
+		<h4>Do you approve the above trail information to into the database?</h4>
+		<button class="btn btn-md btn-info" type="submit">Approve</button>
 
 	</form>
 </div>
