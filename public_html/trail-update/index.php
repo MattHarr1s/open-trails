@@ -38,7 +38,20 @@ require_once("../php/template/head-utils.php");
 				<h3>Corrales Bosque Trail</h3>
 				<div class="row">
 					<div class="col-md-10 embed-responsive embed-responsive-4by3">
-						<div id="map"></div>
+						<ng-map zoom="3" center="0, -180" map-type-id="TERRAIN">
+								<shape name="polyline"
+										 path="[
+        									[37.772323, -122.214897],
+        									[21.291982, -157.821856],
+        									[-18.142599, 178.431],
+        									[-27.46758, 153.027892]
+      								]"
+										 geodesic="true"
+										 stroke-color="#FF0000"
+										 stroke-opacity="1.0"
+										 stroke-weight="2">
+								</shape>
+							</ng-map>
 					</div>
 					<!-- End of Map row / beginning of trail info -->
 				</div>
@@ -70,7 +83,20 @@ require_once("../php/template/head-utils.php");
 				<!--	Note that all current trail information will be copied into update fields	-->
 				<div class="row">
 					<div class="col-md-10 embed-responsive embed-responsive-4by3">
-						<div id="map2"></div>
+						<ng-map zoom="3" center="0, -180" map-type-id="TERRAIN">
+							<shape name="polyline"
+									 path="[
+        									[37.772323, -122.214897],
+        									[21.291982, -157.821856],
+        									[-18.142599, 178.431],
+        									[-27.46758, 153.027892]
+      								]"
+									 geodesic="true"
+									 stroke-color="#FF0000"
+									 stroke-opacity="1.0"
+									 stroke-weight="2">
+							</shape>
+						</ng-map>
 					</div>
 					<!-- End of Map row / beginning of trail info -->
 				</div>
