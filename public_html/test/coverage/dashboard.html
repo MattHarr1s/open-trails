@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for /home/mharris44/public_html/open-trails/public_html/php</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/nv.d3.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.min.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+ </head>
+ <body>
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="index.html">/home/mharris44/public_html/open-trails/public_html/php</a></li>
+        <li class="active">(Dashboard)</li>
+
+      </ol>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="classes/trail-relationship.php.html#11">TrailRelationship</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#14">Comment</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#10">Rating</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#14">User</a></td><td class="text-right">30%</td></tr>
+       <tr><td><a href="classes/filter.php.html#10">Filter</a></td><td class="text-right">40%</td></tr>
+       <tr><td><a href="traits/anti-abuse.php.html#13">AntiAbuse</a></td><td class="text-right">65%</td></tr>
+       <tr><td><a href="classes/point.php.html#14">Point</a></td><td class="text-right">70%</td></tr>
+       <tr><td><a href="classes/autoload.php.html#11">Autoloader</a></td><td class="text-right">71%</td></tr>
+       <tr><td><a href="classes/trail.php.html#31">Trail</a></td><td class="text-right">77%</td></tr>
+       <tr><td><a href="classes/segment.php.html#21">Segment</a></td><td class="text-right">85%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="classes/comment.php.html#14">Comment</a></td><td class="text-right">4160</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#11">TrailRelationship</a></td><td class="text-right">1892</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#10">Rating</a></td><td class="text-right">1722</td></tr>
+       <tr><td><a href="classes/user.php.html#14">User</a></td><td class="text-right">1126</td></tr>
+       <tr><td><a href="classes/trail.php.html#31">Trail</a></td><td class="text-right">355</td></tr>
+       <tr><td><a href="classes/filter.php.html#10">Filter</a></td><td class="text-right">203</td></tr>
+       <tr><td><a href="classes/segment.php.html#21">Segment</a></td><td class="text-right">51</td></tr>
+       <tr><td><a href="classes/point.php.html#14">Point</a></td><td class="text-right">24</td></tr>
+       <tr><td><a href="traits/anti-abuse.php.html#13">AntiAbuse</a></td><td class="text-right">22</td></tr>
+       <tr><td><a href="classes/autoload.php.html#11">Autoloader</a></td><td class="text-right">4</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="classes/trail-relationship.php.html#35"><abbr title="TrailRelationship::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#360"><abbr title="Rating::getAllRatings">getAllRatings</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#311"><abbr title="Rating::getRatingByTrailIdAndUserId">getRatingByTrailIdAndUserId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#50"><abbr title="TrailRelationship::getTrailId">getTrailId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#77"><abbr title="TrailRelationship::getSegmentId">getSegmentId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#114"><abbr title="TrailRelationship::setSegmentType">setSegmentType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#104"><abbr title="TrailRelationship::getSegmentType">getSegmentType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#88"><abbr title="TrailRelationship::setSegmentId">setSegmentId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#269"><abbr title="Rating::getRatingValueByTrailId">getRatingValueByTrailId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#205"><abbr title="Rating::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#91"><abbr title="Rating::getUserId">getUserId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#70"><abbr title="Rating::setTrailId">setTrailId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#60"><abbr title="Rating::getTrailId">getTrailId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#102"><abbr title="Rating::setUserId">setUserId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#122"><abbr title="Rating::getRatingValue">getRatingValue</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#181"><abbr title="Rating::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#156"><abbr title="Rating::insert">insert</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#132"><abbr title="Rating::setRatingValue">setRatingValue</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#129"><abbr title="TrailRelationship::insert">insert</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#149"><abbr title="TrailRelationship::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#341"><abbr title="User::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#278"><abbr title="User::getUserSalt">getUserSalt</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#245"><abbr title="User::getUserName">getUserName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#363"><abbr title="User::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#388"><abbr title="User::getUserByUserId">getUserByUserId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#522"><abbr title="User::getAllUsers">getAllUsers</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#476"><abbr title="User::getUserByUserName">getUserByUserName</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#431"><abbr title="User::getUserByUserEmail">getUserByUserEmail</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#207"><abbr title="User::getUserHash">getUserHash</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#174"><abbr title="User::getUserEmail">getUserEmail</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#232"><abbr title="TrailRelationship::getTrailRelationshipBySegmentId">getTrailRelationshipBySegmentId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#191"><abbr title="TrailRelationship::getTrailRelationshipByTrailId">getTrailRelationshipByTrailId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#169"><abbr title="TrailRelationship::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#274"><abbr title="TrailRelationship::getTrailRelationshipBySegmentIdAndTrailId">getTrailRelationshipBySegmentIdAndTrailId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#324"><abbr title="TrailRelationship::getTrailRelationshipBySegmentType">getTrailRelationshipBySegmentType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#143"><abbr title="User::getUserAccountType">getUserAccountType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail.php.html#1234"><abbr title="Trail::jsonSerialize">jsonSerialize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#39"><abbr title="Rating::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#61"><abbr title="TrailRelationship::setTrailId">setTrailId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#361"><abbr title="Comment::insert">insert</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#341"><abbr title="Comment::setCommentText">setCommentText</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#330"><abbr title="Comment::getCommentText">getCommentText</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#410"><abbr title="Comment::update">update</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#432"><abbr title="Comment::getCommentByCommentText">getCommentByCommentText</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#512"><abbr title="Comment::getCommentByTrailId">getCommentByTrailId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#472"><abbr title="Comment::getCommentByCommentId">getCommentByCommentId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#138"><abbr title="Comment::setTrailId">setTrailId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#159"><abbr title="Comment::getUserId">getUserId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#225"><abbr title="Comment::getCommentPhotoType">getCommentPhotoType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#235"><abbr title="Comment::setCommentPhotoType">setCommentPhotoType</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#255"><abbr title="Comment::uploadPhoto">uploadPhoto</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#202"><abbr title="Comment::setCommentPhoto">setCommentPhoto</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#191"><abbr title="Comment::getCommentPhoto">getCommentPhoto</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#170"><abbr title="Comment::setUserId">setUserId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/segment.php.html#496"><abbr title="Segment::jsonSerialize">jsonSerialize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#551"><abbr title="Comment::getCommentByUserId">getCommentByUserId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#389"><abbr title="Comment::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/point.php.html#124"><abbr title="Point::jsonSerialize">jsonSerialize</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#63"><abbr title="Comment::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#590"><abbr title="Comment::getAllComments">getAllComments</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/filter.php.html#129"><abbr title="Filter::filterDate">filterDate</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/filter.php.html#102"><abbr title="Filter::filterEmail">filterEmail</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#127"><abbr title="Comment::getTrailId">getTrailId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#102"><abbr title="Comment::setCommentId">setCommentId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/comment.php.html#91"><abbr title="Comment::getCommentId">getCommentId</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="classes/user.php.html#116"><abbr title="User::setUserId">setUserId</abbr></a></td><td class="text-right">30%</td></tr>
+       <tr><td><a href="traits/anti-abuse.php.html#100"><abbr title="AntiAbuse::setCreateDate">setCreateDate</abbr></a></td><td class="text-right">41%</td></tr>
+       <tr><td><a href="classes/trail.php.html#947"><abbr title="Trail::getTrailByTrailDistance">getTrailByTrailDistance</abbr></a></td><td class="text-right">47%</td></tr>
+       <tr><td><a href="classes/trail.php.html#1188"><abbr title="Trail::getTrailByTrailUuid">getTrailByTrailUuid</abbr></a></td><td class="text-right">47%</td></tr>
+       <tr><td><a href="classes/autoload.php.html#20"><abbr title="Autoloader::anonymous function">anonymous function</abbr></a></td><td class="text-right">50%</td></tr>
+       <tr><td><a href="classes/segment.php.html#70"><abbr title="Segment::__construct">__construct</abbr></a></td><td class="text-right">58%</td></tr>
+       <tr><td><a href="classes/point.php.html#32"><abbr title="Point::__construct">__construct</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="classes/user.php.html#154"><abbr title="User::setUserAccountType">setUserAccountType</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="classes/point.php.html#98"><abbr title="Point::setY">setY</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="classes/trail.php.html#468"><abbr title="Trail::setTrailUuid">setTrailUuid</abbr></a></td><td class="text-right">68%</td></tr>
+       <tr><td><a href="classes/user.php.html#72"><abbr title="User::__construct">__construct</abbr></a></td><td class="text-right">68%</td></tr>
+       <tr><td><a href="classes/user.php.html#289"><abbr title="User::setUserSalt">setUserSalt</abbr></a></td><td class="text-right">70%</td></tr>
+       <tr><td><a href="classes/user.php.html#218"><abbr title="User::setUserHash">setUserHash</abbr></a></td><td class="text-right">70%</td></tr>
+       <tr><td><a href="classes/trail.php.html#585"><abbr title="Trail::getTrailById">getTrailById</abbr></a></td><td class="text-right">70%</td></tr>
+       <tr><td><a href="traits/anti-abuse.php.html#72"><abbr title="AntiAbuse::setBrowser">setBrowser</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="classes/user.php.html#256"><abbr title="User::setUserName">setUserName</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="classes/user.php.html#185"><abbr title="User::setUserEmail">setUserEmail</abbr></a></td><td class="text-right">75%</td></tr>
+       <tr><td><a href="classes/segment.php.html#263"><abbr title="Segment::getSegmentBySegmentId">getSegmentBySegmentId</abbr></a></td><td class="text-right">76%</td></tr>
+       <tr><td><a href="classes/point.php.html#64"><abbr title="Point::setX">setX</abbr></a></td><td class="text-right">77%</td></tr>
+       <tr><td><a href="classes/trail.php.html#379"><abbr title="Trail::setTrailSubmissionType">setTrailSubmissionType</abbr></a></td><td class="text-right">77%</td></tr>
+       <tr><td><a href="classes/trail.php.html#729"><abbr title="Trail::getTrailByTrailAccessibility">getTrailByTrailAccessibility</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#827"><abbr title="Trail::getTrailByTrailCondition">getTrailByTrailCondition</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#778"><abbr title="Trail::getTrailByTrailAmenities">getTrailByTrailAmenities</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#680"><abbr title="Trail::getTrailBySubmitTrailId">getTrailBySubmitTrailId</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#1148"><abbr title="Trail::getTrailByTrailUse">getTrailByTrailUse</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#867"><abbr title="Trail::getTrailByTrailDescription">getTrailByTrailDescription</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#631"><abbr title="Trail::getTrailByUserId">getTrailByUserId</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#907"><abbr title="Trail::getTrailByTrailDifficulty">getTrailByTrailDifficulty</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#1027"><abbr title="Trail::getTrailByTrailTerrain">getTrailByTrailTerrain</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#1108"><abbr title="Trail::getTrailByTrailTraffic">getTrailByTrailTraffic</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#987"><abbr title="Trail::getTrailByTrailSubmissionType">getTrailByTrailSubmissionType</abbr></a></td><td class="text-right">78%</td></tr>
+       <tr><td><a href="classes/trail.php.html#1067"><abbr title="Trail::getTrailByTrailName">getTrailByTrailName</abbr></a></td><td class="text-right">79%</td></tr>
+       <tr><td><a href="classes/segment.php.html#397"><abbr title="Segment::getSegmentBySegmentStartElevation">getSegmentBySegmentStartElevation</abbr></a></td><td class="text-right">81%</td></tr>
+       <tr><td><a href="classes/segment.php.html#449"><abbr title="Segment::getSegmentBySegmentStopElevation">getSegmentBySegmentStopElevation</abbr></a></td><td class="text-right">81%</td></tr>
+       <tr><td><a href="classes/filter.php.html#53"><abbr title="Filter::filterDouble">filterDouble</abbr></a></td><td class="text-right">83%</td></tr>
+       <tr><td><a href="traits/anti-abuse.php.html#47"><abbr title="AntiAbuse::setIpAddress">setIpAddress</abbr></a></td><td class="text-right">83%</td></tr>
+       <tr><td><a href="classes/trail.php.html#149"><abbr title="Trail::__construct">__construct</abbr></a></td><td class="text-right">84%</td></tr>
+       <tr><td><a href="classes/trail.php.html#535"><abbr title="Trail::delete">delete</abbr></a></td><td class="text-right">85%</td></tr>
+       <tr><td><a href="classes/segment.php.html#217"><abbr title="Segment::delete">delete</abbr></a></td><td class="text-right">85%</td></tr>
+       <tr><td><a href="classes/filter.php.html#77"><abbr title="Filter::filterString">filterString</abbr></a></td><td class="text-right">85%</td></tr>
+       <tr><td><a href="classes/user.php.html#317"><abbr title="User::insert">insert</abbr></a></td><td class="text-right">87%</td></tr>
+       <tr><td><a href="classes/segment.php.html#238"><abbr title="Segment::update">update</abbr></a></td><td class="text-right">88%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="classes/filter.php.html#129"><abbr title="Filter::filterDate">filterDate</abbr></a></td><td class="text-right">156</td></tr>
+       <tr><td><a href="classes/comment.php.html#255"><abbr title="Comment::uploadPhoto">uploadPhoto</abbr></a></td><td class="text-right">72</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#311"><abbr title="Rating::getRatingByTrailIdAndUserId">getRatingByTrailIdAndUserId</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#274"><abbr title="TrailRelationship::getTrailRelationshipBySegmentIdAndTrailId">getTrailRelationshipBySegmentIdAndTrailId</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="classes/comment.php.html#472"><abbr title="Comment::getCommentByCommentId">getCommentByCommentId</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="classes/comment.php.html#551"><abbr title="Comment::getCommentByUserId">getCommentByUserId</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="classes/user.php.html#388"><abbr title="User::getUserByUserId">getUserByUserId</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="classes/user.php.html#431"><abbr title="User::getUserByUserEmail">getUserByUserEmail</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="classes/comment.php.html#512"><abbr title="Comment::getCommentByTrailId">getCommentByTrailId</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#269"><abbr title="Rating::getRatingValueByTrailId">getRatingValueByTrailId</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#232"><abbr title="TrailRelationship::getTrailRelationshipBySegmentId">getTrailRelationshipBySegmentId</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#191"><abbr title="TrailRelationship::getTrailRelationshipByTrailId">getTrailRelationshipByTrailId</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="classes/user.php.html#476"><abbr title="User::getUserByUserName">getUserByUserName</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#324"><abbr title="TrailRelationship::getTrailRelationshipBySegmentType">getTrailRelationshipBySegmentType</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="classes/comment.php.html#63"><abbr title="Comment::__construct">__construct</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#132"><abbr title="Rating::setRatingValue">setRatingValue</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="classes/filter.php.html#102"><abbr title="Filter::filterEmail">filterEmail</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#39"><abbr title="Rating::__construct">__construct</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="classes/comment.php.html#102"><abbr title="Comment::setCommentId">setCommentId</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="classes/comment.php.html#432"><abbr title="Comment::getCommentByCommentText">getCommentByCommentText</abbr></a></td><td class="text-right">20</td></tr>
+       <tr><td><a href="classes/comment.php.html#341"><abbr title="Comment::setCommentText">setCommentText</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#61"><abbr title="TrailRelationship::setTrailId">setTrailId</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/user.php.html#522"><abbr title="User::getAllUsers">getAllUsers</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#181"><abbr title="Rating::delete">delete</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#88"><abbr title="TrailRelationship::setSegmentId">setSegmentId</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#205"><abbr title="Rating::update">update</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#129"><abbr title="TrailRelationship::insert">insert</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/comment.php.html#170"><abbr title="Comment::setUserId">setUserId</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/comment.php.html#138"><abbr title="Comment::setTrailId">setTrailId</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/comment.php.html#202"><abbr title="Comment::setCommentPhoto">setCommentPhoto</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#169"><abbr title="TrailRelationship::update">update</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#149"><abbr title="TrailRelationship::delete">delete</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#156"><abbr title="Rating::insert">insert</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#360"><abbr title="Rating::getAllRatings">getAllRatings</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/comment.php.html#590"><abbr title="Comment::getAllComments">getAllComments</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#70"><abbr title="Rating::setTrailId">setTrailId</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail-rating.php.html#102"><abbr title="Rating::setUserId">setUserId</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="classes/trail.php.html#947"><abbr title="Trail::getTrailByTrailDistance">getTrailByTrailDistance</abbr></a></td><td class="text-right">11</td></tr>
+       <tr><td><a href="classes/trail.php.html#1188"><abbr title="Trail::getTrailByTrailUuid">getTrailByTrailUuid</abbr></a></td><td class="text-right">11</td></tr>
+       <tr><td><a href="traits/anti-abuse.php.html#100"><abbr title="AntiAbuse::setCreateDate">setCreateDate</abbr></a></td><td class="text-right">9</td></tr>
+       <tr><td><a href="classes/user.php.html#116"><abbr title="User::setUserId">setUserId</abbr></a></td><td class="text-right">9</td></tr>
+       <tr><td><a href="classes/trail.php.html#585"><abbr title="Trail::getTrailById">getTrailById</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/segment.php.html#263"><abbr title="Segment::getSegmentBySegmentId">getSegmentBySegmentId</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#827"><abbr title="Trail::getTrailByTrailCondition">getTrailByTrailCondition</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#907"><abbr title="Trail::getTrailByTrailDifficulty">getTrailByTrailDifficulty</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#867"><abbr title="Trail::getTrailByTrailDescription">getTrailByTrailDescription</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#631"><abbr title="Trail::getTrailByUserId">getTrailByUserId</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#987"><abbr title="Trail::getTrailByTrailSubmissionType">getTrailByTrailSubmissionType</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#680"><abbr title="Trail::getTrailBySubmitTrailId">getTrailBySubmitTrailId</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#1027"><abbr title="Trail::getTrailByTrailTerrain">getTrailByTrailTerrain</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#1108"><abbr title="Trail::getTrailByTrailTraffic">getTrailByTrailTraffic</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#778"><abbr title="Trail::getTrailByTrailAmenities">getTrailByTrailAmenities</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#1148"><abbr title="Trail::getTrailByTrailUse">getTrailByTrailUse</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#729"><abbr title="Trail::getTrailByTrailAccessibility">getTrailByTrailAccessibility</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail.php.html#1067"><abbr title="Trail::getTrailByTrailName">getTrailByTrailName</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/segment.php.html#397"><abbr title="Segment::getSegmentBySegmentStartElevation">getSegmentBySegmentStartElevation</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/segment.php.html#449"><abbr title="Segment::getSegmentBySegmentStopElevation">getSegmentBySegmentStopElevation</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/user.php.html#341"><abbr title="User::delete">delete</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/user.php.html#363"><abbr title="User::update">update</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#114"><abbr title="TrailRelationship::setSegmentType">setSegmentType</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/trail-relationship.php.html#35"><abbr title="TrailRelationship::__construct">__construct</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/comment.php.html#235"><abbr title="Comment::setCommentPhotoType">setCommentPhotoType</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/comment.php.html#361"><abbr title="Comment::insert">insert</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/comment.php.html#389"><abbr title="Comment::delete">delete</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/comment.php.html#410"><abbr title="Comment::update">update</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="classes/user.php.html#154"><abbr title="User::setUserAccountType">setUserAccountType</abbr></a></td><td class="text-right">5</td></tr>
+       <tr><td><a href="classes/point.php.html#98"><abbr title="Point::setY">setY</abbr></a></td><td class="text-right">5</td></tr>
+       <tr><td><a href="classes/trail.php.html#468"><abbr title="Trail::setTrailUuid">setTrailUuid</abbr></a></td><td class="text-right">5</td></tr>
+       <tr><td><a href="classes/point.php.html#64"><abbr title="Point::setX">setX</abbr></a></td><td class="text-right">5</td></tr>
+       <tr><td><a href="classes/segment.php.html#70"><abbr title="Segment::__construct">__construct</abbr></a></td><td class="text-right">5</td></tr>
+       <tr><td><a href="classes/point.php.html#32"><abbr title="Point::__construct">__construct</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="classes/user.php.html#72"><abbr title="User::__construct">__construct</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="classes/user.php.html#218"><abbr title="User::setUserHash">setUserHash</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="classes/user.php.html#289"><abbr title="User::setUserSalt">setUserSalt</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="classes/trail.php.html#379"><abbr title="Trail::setTrailSubmissionType">setTrailSubmissionType</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="classes/trail.php.html#149"><abbr title="Trail::__construct">__construct</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="classes/filter.php.html#77"><abbr title="Filter::filterString">filterString</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="traits/anti-abuse.php.html#72"><abbr title="AntiAbuse::setBrowser">setBrowser</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="classes/user.php.html#185"><abbr title="User::setUserEmail">setUserEmail</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="classes/user.php.html#256"><abbr title="User::setUserName">setUserName</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="traits/anti-abuse.php.html#47"><abbr title="AntiAbuse::setIpAddress">setIpAddress</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="classes/filter.php.html#53"><abbr title="Filter::filterDouble">filterDouble</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="classes/segment.php.html#217"><abbr title="Segment::delete">delete</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="classes/segment.php.html#238"><abbr title="Segment::update">update</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="classes/trail.php.html#535"><abbr title="Trail::delete">delete</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="classes/user.php.html#317"><abbr title="User::insert">insert</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 3.0.1</a> using <a href="http://php.net/" target="_top">PHP 5.6.15-1+deb.sury.org~trusty+1</a> and <a href="https://phpunit.de/">PHPUnit 5.0.9</a> at Thu Nov 26 12:59:35 MST 2015.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="js/jquery.min.js" type="text/javascript"></script>
+  <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="js/holder.min.js" type="text/javascript"></script>
+  <script src="js/d3.min.js" type="text/javascript"></script>
+  <script src="js/nv.d3.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([3,0,0,0,1,1,0,1,3,1,0,0], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([65,0,0,0,1,3,2,5,21,10,5,46], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[71.428571428571,4,"<a href=\"classes\/autoload.php.html#11\">Autoloader<\/a>"],[0,64,"<a href=\"classes\/comment.php.html#14\">Comment<\/a>"],[40.816326530612,29,"<a href=\"classes\/filter.php.html#10\">Filter<\/a>"],[70,17,"<a href=\"classes\/point.php.html#14\">Point<\/a>"],[85.057471264368,45,"<a href=\"classes\/segment.php.html#21\">Segment<\/a>"],[0,41,"<a href=\"classes\/trail-rating.php.html#10\">Rating<\/a>"],[0,43,"<a href=\"classes\/trail-relationship.php.html#11\">TrailRelationship<\/a>"],[77.467811158798,138,"<a href=\"classes\/trail.php.html#31\">Trail<\/a>"],[30.952380952381,57,"<a href=\"classes\/user.php.html#14\">User<\/a>"],[65.51724137931,14,"<a href=\"traits\/anti-abuse.php.html#13\">AntiAbuse<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(key, y, e, graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[100,3,"<a href=\"classes\/autoload.php.html#18\">Autoloader::classLoader<\/a>"],[50,1,"<a href=\"classes\/autoload.php.html#20\">Autoloader::anonymous function<\/a>"],[0,4,"<a href=\"classes\/comment.php.html#63\">Comment::__construct<\/a>"],[0,1,"<a href=\"classes\/comment.php.html#91\">Comment::getCommentId<\/a>"],[0,4,"<a href=\"classes\/comment.php.html#102\">Comment::setCommentId<\/a>"],[0,1,"<a href=\"classes\/comment.php.html#127\">Comment::getTrailId<\/a>"],[0,3,"<a href=\"classes\/comment.php.html#138\">Comment::setTrailId<\/a>"],[0,1,"<a href=\"classes\/comment.php.html#159\">Comment::getUserId<\/a>"],[0,3,"<a href=\"classes\/comment.php.html#170\">Comment::setUserId<\/a>"],[0,1,"<a href=\"classes\/comment.php.html#191\">Comment::getCommentPhoto<\/a>"],[0,3,"<a href=\"classes\/comment.php.html#202\">Comment::setCommentPhoto<\/a>"],[0,1,"<a href=\"classes\/comment.php.html#225\">Comment::getCommentPhotoType<\/a>"],[0,2,"<a href=\"classes\/comment.php.html#235\">Comment::setCommentPhotoType<\/a>"],[0,8,"<a href=\"classes\/comment.php.html#255\">Comment::uploadPhoto<\/a>"],[0,1,"<a href=\"classes\/comment.php.html#330\">Comment::getCommentText<\/a>"],[0,3,"<a href=\"classes\/comment.php.html#341\">Comment::setCommentText<\/a>"],[0,2,"<a href=\"classes\/comment.php.html#361\">Comment::insert<\/a>"],[0,2,"<a href=\"classes\/comment.php.html#389\">Comment::delete<\/a>"],[0,2,"<a href=\"classes\/comment.php.html#410\">Comment::update<\/a>"],[0,4,"<a href=\"classes\/comment.php.html#432\">Comment::getCommentByCommentText<\/a>"],[0,5,"<a href=\"classes\/comment.php.html#472\">Comment::getCommentByCommentId<\/a>"],[0,5,"<a href=\"classes\/comment.php.html#512\">Comment::getCommentByTrailId<\/a>"],[0,5,"<a href=\"classes\/comment.php.html#551\">Comment::getCommentByUserId<\/a>"],[0,3,"<a href=\"classes\/comment.php.html#590\">Comment::getAllComments<\/a>"],[90,6,"<a href=\"classes\/filter.php.html#20\">Filter::filterInt<\/a>"],[83.333333333333,3,"<a href=\"classes\/filter.php.html#53\">Filter::filterDouble<\/a>"],[85.714285714286,4,"<a href=\"classes\/filter.php.html#77\">Filter::filterString<\/a>"],[0,4,"<a href=\"classes\/filter.php.html#102\">Filter::filterEmail<\/a>"],[0,12,"<a href=\"classes\/filter.php.html#129\">Filter::filterDate<\/a>"],[66.666666666667,4,"<a href=\"classes\/point.php.html#32\">Point::__construct<\/a>"],[100,1,"<a href=\"classes\/point.php.html#52\">Point::getX<\/a>"],[77.777777777778,5,"<a href=\"classes\/point.php.html#64\">Point::setX<\/a>"],[100,1,"<a href=\"classes\/point.php.html#87\">Point::getY<\/a>"],[66.666666666667,5,"<a href=\"classes\/point.php.html#98\">Point::setY<\/a>"],[0,1,"<a href=\"classes\/point.php.html#124\">Point::jsonSerialize<\/a>"],[58.333333333333,4,"<a href=\"classes\/segment.php.html#70\">Segment::__construct<\/a>"],[100,1,"<a href=\"classes\/segment.php.html#99\">Segment::getSegmentId<\/a>"],[100,1,"<a href=\"classes\/segment.php.html#109\">Segment::setSegmentId<\/a>"],[100,1,"<a href=\"classes\/segment.php.html#118\">Segment::getSegmentStart<\/a>"],[100,1,"<a href=\"classes\/segment.php.html#127\">Segment::setSegmentStart<\/a>"],[100,1,"<a href=\"classes\/segment.php.html#136\">Segment::getSegmentStop<\/a>"],[100,1,"<a href=\"classes\/segment.php.html#145\">Segment::setSegmentStop<\/a>"],[100,1,"<a href=\"classes\/segment.php.html#154\">Segment::getSegmentStartElevation<\/a>"],[100,1,"<a href=\"classes\/segment.php.html#163\">Segment::setSegmentStartElevation<\/a>"],[100,1,"<a href=\"classes\/segment.php.html#172\">Segment::getSegmentStopElevation<\/a>"],[100,1,"<a href=\"classes\/segment.php.html#181\">Segment::setSegmentStopElevation<\/a>"],[100,2,"<a href=\"classes\/segment.php.html#191\">Segment::insert<\/a>"],[85.714285714286,2,"<a href=\"classes\/segment.php.html#217\">Segment::delete<\/a>"],[88.888888888889,2,"<a href=\"classes\/segment.php.html#238\">Segment::update<\/a>"],[76.923076923077,6,"<a href=\"classes\/segment.php.html#263\">Segment::getSegmentBySegmentId<\/a>"],[95,3,"<a href=\"classes\/segment.php.html#313\">Segment::getSegmentBySegmentStart<\/a>"],[95,3,"<a href=\"classes\/segment.php.html#356\">Segment::getSegmentBySegmentStop<\/a>"],[81.481481481481,6,"<a href=\"classes\/segment.php.html#397\">Segment::getSegmentBySegmentStartElevation<\/a>"],[81.481481481481,6,"<a href=\"classes\/segment.php.html#449\">Segment::getSegmentBySegmentStopElevation<\/a>"],[0,1,"<a href=\"classes\/segment.php.html#496\">Segment::jsonSerialize<\/a>"],[0,4,"<a href=\"classes\/trail-rating.php.html#39\">Rating::__construct<\/a>"],[0,1,"<a href=\"classes\/trail-rating.php.html#60\">Rating::getTrailId<\/a>"],[0,3,"<a href=\"classes\/trail-rating.php.html#70\">Rating::setTrailId<\/a>"],[0,1,"<a href=\"classes\/trail-rating.php.html#91\">Rating::getUserId<\/a>"],[0,3,"<a href=\"classes\/trail-rating.php.html#102\">Rating::setUserId<\/a>"],[0,1,"<a href=\"classes\/trail-rating.php.html#122\">Rating::getRatingValue<\/a>"],[0,4,"<a href=\"classes\/trail-rating.php.html#132\">Rating::setRatingValue<\/a>"],[0,3,"<a href=\"classes\/trail-rating.php.html#156\">Rating::insert<\/a>"],[0,3,"<a href=\"classes\/trail-rating.php.html#181\">Rating::delete<\/a>"],[0,3,"<a href=\"classes\/trail-rating.php.html#205\">Rating::update<\/a>"],[0,5,"<a href=\"classes\/trail-rating.php.html#269\">Rating::getRatingValueByTrailId<\/a>"],[0,7,"<a href=\"classes\/trail-rating.php.html#311\">Rating::getRatingByTrailIdAndUserId<\/a>"],[0,3,"<a href=\"classes\/trail-rating.php.html#360\">Rating::getAllRatings<\/a>"],[0,2,"<a href=\"classes\/trail-relationship.php.html#35\">TrailRelationship::__construct<\/a>"],[0,1,"<a href=\"classes\/trail-relationship.php.html#50\">TrailRelationship::getTrailId<\/a>"],[0,3,"<a href=\"classes\/trail-relationship.php.html#61\">TrailRelationship::setTrailId<\/a>"],[0,1,"<a href=\"classes\/trail-relationship.php.html#77\">TrailRelationship::getSegmentId<\/a>"],[0,3,"<a href=\"classes\/trail-relationship.php.html#88\">TrailRelationship::setSegmentId<\/a>"],[0,1,"<a href=\"classes\/trail-relationship.php.html#104\">TrailRelationship::getSegmentType<\/a>"],[0,2,"<a href=\"classes\/trail-relationship.php.html#114\">TrailRelationship::setSegmentType<\/a>"],[0,3,"<a href=\"classes\/trail-relationship.php.html#129\">TrailRelationship::insert<\/a>"],[0,3,"<a href=\"classes\/trail-relationship.php.html#149\">TrailRelationship::delete<\/a>"],[0,3,"<a href=\"classes\/trail-relationship.php.html#169\">TrailRelationship::update<\/a>"],[0,5,"<a href=\"classes\/trail-relationship.php.html#191\">TrailRelationship::getTrailRelationshipByTrailId<\/a>"],[0,5,"<a href=\"classes\/trail-relationship.php.html#232\">TrailRelationship::getTrailRelationshipBySegmentId<\/a>"],[0,7,"<a href=\"classes\/trail-relationship.php.html#274\">TrailRelationship::getTrailRelationshipBySegmentIdAndTrailId<\/a>"],[0,4,"<a href=\"classes\/trail-relationship.php.html#324\">TrailRelationship::getTrailRelationshipBySegmentType<\/a>"],[84,4,"<a href=\"classes\/trail.php.html#149\">Trail::__construct<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#188\">Trail::getTrailId<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#197\">Trail::setTrailId<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#207\">Trail::getSubmitTrailId<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#216\">Trail::setSubmitTrailId<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#225\">Trail::getUserId<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#234\">Trail::setUserId<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#243\">Trail::getTrailAccessibility<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#252\">Trail::setTrailAccessibility<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#261\">Trail::getTrailAmenities<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#270\">Trail::setTrailAmenities<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#279\">Trail::getTrailCondition<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#288\">Trail::setTrailCondition<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#297\">Trail::getTrailDescription<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#306\">Trail::setTrailDescription<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#315\">Trail::getTrailDifficulty<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#324\">Trail::setTrailDifficulty<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#333\">Trail::getTrailDistance<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#342\">Trail::setTrailDistance<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#351\">Trail::getTrailName<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#361\">Trail::setTrailName<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#370\">Trail::getTrailSubmissionType<\/a>"],[77.777777777778,4,"<a href=\"classes\/trail.php.html#379\">Trail::setTrailSubmissionType<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#404\">Trail::getTrailTerrain<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#413\">Trail::setTrailTerrain<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#422\">Trail::getTrailTraffic<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#431\">Trail::setTrailTraffic<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#440\">Trail::getTrailUse<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#449\">Trail::setTrailUse<\/a>"],[100,1,"<a href=\"classes\/trail.php.html#458\">Trail::getTrailUuid<\/a>"],[68.75,5,"<a href=\"classes\/trail.php.html#468\">Trail::setTrailUuid<\/a>"],[91.666666666667,2,"<a href=\"classes\/trail.php.html#504\">Trail::insert<\/a>"],[85.714285714286,2,"<a href=\"classes\/trail.php.html#535\">Trail::delete<\/a>"],[90.909090909091,2,"<a href=\"classes\/trail.php.html#556\">Trail::update<\/a>"],[70,6,"<a href=\"classes\/trail.php.html#585\">Trail::getTrailById<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#631\">Trail::getTrailByUserId<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#680\">Trail::getTrailBySubmitTrailId<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#729\">Trail::getTrailByTrailAccessibility<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#778\">Trail::getTrailByTrailAmenities<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#827\">Trail::getTrailByTrailCondition<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#867\">Trail::getTrailByTrailDescription<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#907\">Trail::getTrailByTrailDifficulty<\/a>"],[47.826086956522,6,"<a href=\"classes\/trail.php.html#947\">Trail::getTrailByTrailDistance<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#987\">Trail::getTrailByTrailSubmissionType<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#1027\">Trail::getTrailByTrailTerrain<\/a>"],[79.166666666667,6,"<a href=\"classes\/trail.php.html#1067\">Trail::getTrailByTrailName<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#1108\">Trail::getTrailByTrailTraffic<\/a>"],[78.260869565217,6,"<a href=\"classes\/trail.php.html#1148\">Trail::getTrailByTrailUse<\/a>"],[47.826086956522,6,"<a href=\"classes\/trail.php.html#1188\">Trail::getTrailByTrailUuid<\/a>"],[0,1,"<a href=\"classes\/trail.php.html#1234\">Trail::jsonSerialize<\/a>"],[68.75,4,"<a href=\"classes\/user.php.html#72\">User::__construct<\/a>"],[100,1,"<a href=\"classes\/user.php.html#105\">User::getUserId<\/a>"],[30,4,"<a href=\"classes\/user.php.html#116\">User::setUserId<\/a>"],[0,1,"<a href=\"classes\/user.php.html#143\">User::getUserAccountType<\/a>"],[66.666666666667,5,"<a href=\"classes\/user.php.html#154\">User::setUserAccountType<\/a>"],[0,1,"<a href=\"classes\/user.php.html#174\">User::getUserEmail<\/a>"],[75,3,"<a href=\"classes\/user.php.html#185\">User::setUserEmail<\/a>"],[0,1,"<a href=\"classes\/user.php.html#207\">User::getUserHash<\/a>"],[70,4,"<a href=\"classes\/user.php.html#218\">User::setUserHash<\/a>"],[0,1,"<a href=\"classes\/user.php.html#245\">User::getUserName<\/a>"],[75,3,"<a href=\"classes\/user.php.html#256\">User::setUserName<\/a>"],[0,1,"<a href=\"classes\/user.php.html#278\">User::getUserSalt<\/a>"],[70,4,"<a href=\"classes\/user.php.html#289\">User::setUserSalt<\/a>"],[87.5,2,"<a href=\"classes\/user.php.html#317\">User::insert<\/a>"],[0,2,"<a href=\"classes\/user.php.html#341\">User::delete<\/a>"],[0,2,"<a href=\"classes\/user.php.html#363\">User::update<\/a>"],[0,5,"<a href=\"classes\/user.php.html#388\">User::getUserByUserId<\/a>"],[0,5,"<a href=\"classes\/user.php.html#431\">User::getUserByUserEmail<\/a>"],[0,5,"<a href=\"classes\/user.php.html#476\">User::getUserByUserName<\/a>"],[0,3,"<a href=\"classes\/user.php.html#522\">User::getAllUsers<\/a>"],[100,1,"<a href=\"traits\/anti-abuse.php.html#37\">AntiAbuse::getIpAddress<\/a>"],[83.333333333333,3,"<a href=\"traits\/anti-abuse.php.html#47\">AntiAbuse::setIpAddress<\/a>"],[100,1,"<a href=\"traits\/anti-abuse.php.html#61\">AntiAbuse::getBrowser<\/a>"],[75,3,"<a href=\"traits\/anti-abuse.php.html#72\">AntiAbuse::setBrowser<\/a>"],[100,1,"<a href=\"traits\/anti-abuse.php.html#88\">AntiAbuse::getCreateDate<\/a>"],[41.666666666667,5,"<a href=\"traits\/anti-abuse.php.html#100\">AntiAbuse::setCreateDate<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

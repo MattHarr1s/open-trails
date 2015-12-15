@@ -133,4 +133,4 @@ app.controller("Trail-Controller", ["$scope", "$uiModal", "TrailService", "NgMap
 	if($scope.currentTrail === null && $scope.currentTrailId !== null) {
 		$scope.getTrailId($scope.currentTrailId, true);
 	}
-}]);
+}])
