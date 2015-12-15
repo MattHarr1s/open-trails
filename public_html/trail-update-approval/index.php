@@ -38,7 +38,9 @@ require_once("../php/template/head-utils.php");
 				<h3>Corrales Bosque Trail</h3>
 				<div class="row">
 					<div class="col-md-10 embed-responsive embed-responsive-4by3">
-						<div id="map"></div>
+						<map ng-transclude class="google-map" center="map.center" options="map.options" zoom="map.zoom">
+							<polylines coords="polylines.coords" options="polylines.options"></polylines>
+						</map>
 					</div>
 					<!-- End of Map row / beginning of trail info -->
 				</div>
@@ -65,7 +67,9 @@ require_once("../php/template/head-utils.php");
 				<!--	Note that all current trail information will be copied into update fields	-->
 				<div class="row">
 					<div class="col-md-10 embed-responsive embed-responsive-4by3">
-						<div id="map2"></div>
+						<map ng-transclude class="google-map" center="map.center" options="map.options" zoom="map.zoom">
+							<polylines coords="polylines.coords" options="polylines.options"></polylines>
+						</map>
 					</div>
 					<!-- End of Map row / beginning of trail info -->
 				</div>
