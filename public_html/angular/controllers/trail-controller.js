@@ -24,6 +24,7 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 		trailUuid: null
 	};
 	$scope.isEditing = false;
+	$scope.points = {};
 	$scope.trails = {};
 	$scope.alerts = [];
 	$scope.trailToSubmit = {};
@@ -169,6 +170,22 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 					}
 					$scope.cancelEditing();
 					$scope.getTrails();
+				});
+		}
+	};
+
+	$scope.getPoints = function(
+			trailId, validated) {
+		if(validated === true) {
+
+			TrailService.fetchPoints(trailId)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						//console.log(result.data);
+						$scope.points = result.data.points;
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message}
+					}
 				});
 		}
 	};

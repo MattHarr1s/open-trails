@@ -16,8 +16,6 @@ require_once dirname(dirname(dirname(dirname(__DIR__)))) . "/vendor/autoload.php
  */
 
 
-
-
 //prepare an empty reply
 $reply = new stdClass();
 $reply->status = 200;
@@ -28,7 +26,7 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
-try{
+try {
 	//grab the mySQL connection get correct path from dylan
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
 
@@ -53,7 +51,7 @@ try{
 	$difficulty = filter_input(INPUT_GET, "difficulty", FILTER_VALIDATE_INT);
 	$distance = filter_input(INPUT_GET, "distance", FILTER_VALIDATE_INT);
 	$name = filter_input(INPUT_GET, "name", FILTER_SANITIZE_STRING);
-	$submission = filter_input(INPUT_GET,"submission", FILTER_VALIDATE_INT);
+	$submission = filter_input(INPUT_GET, "submission", FILTER_VALIDATE_INT);
 	$terrain = filter_input(INPUT_GET, "terrain", FILTER_SANITIZE_STRING);
 	$traffic = filter_input(INPUT_GET, "traffic", FILTER_SANITIZE_STRING);
 	$use = filter_input(INPUT_GET, "use", FILTER_SANITIZE_STRING);
@@ -62,35 +60,47 @@ try{
 
 	// handle all restful calls
 	// get some of all trails
-	if ($method === "GET") {
+	if($method === "GET") {
 		setXsrfCookie("/");
 		if(empty($id) === false) {
 			$reply->data = Trail::getTrailById($pdo, $id);
+
+			// Grab segments
+			$trailRelationships = TrailRelationship::getTrailRelationshipByTrailId($pdo, $id);
+			$points = [];
+			foreach($trailRelationships as $trailRelationship) {
+				$points[] = [Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStart()->getX(),
+					Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStart()->getY()];
+				$points[] = [Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStop()->getX(),
+					Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStop()->getY()];
+			}
+			// Add segments to reply
+			$reply->points = $points;
 		} elseif(empty($userId) === false) {
 			$reply->data = Trail::getTrailByUserId($pdo, $userId)->toArray();
 		} elseif(empty($submitId) === false) {
 			$reply->data = Trail::getTrailBySubmitTrailId($pdo, $submitId)->toArray();
-		} elseif (empty($amenities) === false) {
+		} elseif(empty($amenities) === false) {
 			$reply->data = Trail::getTrailByTrailAmenities($pdo, $amenities)->toArray();
-		} elseif (empty($condition) === false) {
+		} elseif(empty($condition) === false) {
 			$reply->data = Trail::getTrailByTrailCondition($pdo, $condition)->toArray();
-		} elseif (empty($description) === false) {
+		} elseif(empty($description) === false) {
 			$reply->data = Trail::getTrailByTrailDescription($pdo, $description)->toArray();
-		} elseif (empty($difficulty) === false) {
+		} elseif(empty($difficulty) === false) {
 			$reply->data = Trail::getTrailByTrailDifficulty($pdo, $difficulty)->toArray();
-		} elseif (empty($distance) === false) {
+		} elseif(empty($distance) === false) {
 			$reply->data = Trail::getTrailByTrailDistance($pdo, $distance)->toArray();
-		} elseif (empty($name) === false) {
+		} elseif(empty($name) === false) {
 			$reply->data = Trail::getTrailByTrailName($pdo, $name)->toArray();
-		} elseif (empty($submission) === false) {
+		} elseif(empty($submission) === false) {
 			$reply->data = Trail::getTrailByTrailSubmissionType($pdo, $submission)->toArray();
-		} elseif (empty($terrain) === false) {
+		} elseif(empty($terrain) === false) {
 			$reply->data = Trail::getTrailByTrailTerrain($pdo, $terrain)->toArray();
-		} elseif (empty($traffic) === false) {
+		} elseif(empty($traffic) === false) {
 			$reply->data = Trail::getTrailByTrailTraffic($pdo, $traffic)->toArray();
-		} elseif (empty($use) === false) {
+		} elseif(empty($use) === false) {
 			$reply->data = Trail::getTrailByTrailUse($pdo, $use)->toArray();
-		//} elseif (empty($uuid) === false) {
+			//} elseif (empty($uuid) === false) {
 			$reply->data = Trail::getTrailByTrailUuid($pdo, $uuid);
 		} else {
 			$reply->data = Trail::getAllTrails($pdo)->toArray();
@@ -99,7 +109,6 @@ try{
 	}
 
 	//verify user and verify object is not empty
-
 
 
 	// if the session belongs to an active user allow post
@@ -157,19 +166,19 @@ try{
 				}
 				$trail = new Trail($id, $requestObject->userId, $trail->getBrowser(), $trail->getCreateDate(), $trail->getIpAddress(), $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->trailCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
 				$trail->update($pdo);
-				$reply->message= "trail updated okay";
+				$reply->message = "trail updated okay";
 			}
 
 			if($method === "POST") {
 				verifyXsrf();
 				//preform the actual post/do i need to treat foreign keys in any special manner
-				$trail = new Trail(null, $requestObject->userId, $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"],  $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->trailCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
+				$trail = new Trail(null, $requestObject->userId, $_SERVER["HTTP_USER_AGENT"], new DateTime(), $_SERVER["REMOTE_ADDR"], $requestObject->submitTrailId, $requestObject->trailAmenities, $requestObject->trailCondition, $requestObject->trailDescription, $requestObject->trailDifficulty, $requestObject->trailDistance, $requestObject->trailName, $requestObject->trailSubmissionType, $requestObject->trailTerrain, $requestObject->trailTraffic, $requestObject->trailUse, $requestObject->trailUuid);
 				$trail->insert($pdo);
 				$reply->message = "trail submitted okay";
 			}
 		}
 	} else {
-	// if not an active user and attempting a method other than get, throw an exception
+		// if not an active user and attempting a method other than get, throw an exception
 		if((empty($method) === false) && ($method !== "GET")) {
 			throw(new RuntimeException("only active users are allowed to modify entries", 401));
 		}
