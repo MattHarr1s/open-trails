@@ -82,6 +82,9 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 			console.log("validated");
 			for(var i = 0; i < $scope.segments.length - 1; i++) {
 				var newSegment = {segmentStart: $scope.segments[i], segmentStop: $scope.segments[i + 1]};
+
+
+
 				SegmentService.create(newSegment)
 					.then(function(result) {
 						console.log(result.data);
@@ -121,5 +124,7 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 	if($scope.segments.length === 0) {
 		$scope.loadArray();
 	}
+
+
 
 }]);
