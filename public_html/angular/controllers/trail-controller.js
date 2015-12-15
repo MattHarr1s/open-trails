@@ -1,5 +1,4 @@
 app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "TrailService", function($scope, $routeParams, $uibModal, TrailService) {
-app.controller("Trail-Controller", ["$scope", "$uiModal", "TrailService", "NgMap", function($scope, $uibModal, TrailService, NgMap) {
 	// get the trail from the api
 	// come back to add other
 	// make doc blocks way better
@@ -133,4 +132,4 @@ app.controller("Trail-Controller", ["$scope", "$uiModal", "TrailService", "NgMap
 	if($scope.currentTrail === null && $scope.currentTrailId !== null) {
 		$scope.getTrailId($scope.currentTrailId, true);
 	}
-}])
+}]);

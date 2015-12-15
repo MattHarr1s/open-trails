@@ -4,13 +4,6 @@
  *
  * @author Louis Gill <lgill7@cnm.edu>
  * contributing code from TruFork https://github.com/Skylarity/trufork
-
-
-
-
-
-
-
  */
 
 if(session_status() !== PHP_SESSION_ACTIVE) {
