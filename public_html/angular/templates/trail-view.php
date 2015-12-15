@@ -1,5 +1,6 @@
-<h2>{{trail.trailName}}</h2>
-<p>{{trail.trailDistance}}</p>
-<p>{{trail.trailDifficulty}}</p>
-<p>{{trail.trailUse}}</p>
-<p>{{trail.trailDescription}}</p>
+<!--<h2>{{currentTrail.trailName}}</h2>-->
+<!--<p>{{currentTrail.trailDistance}}</p>-->
+<!--<p>{{currentTrail.trailDifficulty}}</p>-->
+<!--<p>{{currentTrail.trailUse}}</p>-->
+<!--<p>{{currentTrail.trailDescription}}</p>-->
+<p>test</p>
