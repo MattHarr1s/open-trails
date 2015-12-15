@@ -38,7 +38,13 @@
 				<p>Description: {{currentTrail.trailDescription}}</p>
 				<br>
 				<button class="btn btn-md btn-info" type="submit">Trail Corrections</button>
-				<button class="btn btn-md btn-warning" type="reset">Trail Alert</button>
+
+				<li>																					<!-- YEAH? HOW DO I ADD TRAIL ALERT TO TRAIL CONTROLLER? -->
+					<a class="btn btn-default btn-def" ng-click="openTrailAlertModal();">
+						<i class="fa fa-check" aria-hidden="true"></i>Trail Alert
+					</a>
+				</li>
+<!--				<button class="btn btn-md btn-warning" type="reset">Trail Alert</button>-->
 				<!--continue to fill in content next to map here-->
 				<!--				<trail-view></trail-view>-->
 			</div>

@@ -9,6 +9,12 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 	$scope.trails = [];
 	$scope.alerts = [];
 
+	$scope.openTrailAlertModal = function() {
+		var TrailAlertModalInstance = $uibModal.open({
+			templateUrl: ""
+		})
+	}
+
 	$scope.getTrailId = function(trailId, validated) {
 		if(validated === true) {
 			TrailService.fetchId(trailId)
