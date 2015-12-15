@@ -38,7 +38,9 @@ require_once("php/template/head-utils.php");
 	<div class="container">
 		<div class="row">
 			<div class	="col-md-12 embed-responsive embed-responsive-4by3">
-				<div id="map"></div>
+				<ng-map zoom="10" center="35.1318, -106.5925">
+					<bicycling-layer></bicycling-layer>
+				</ng-map>
 			</div>
 
 		</div>

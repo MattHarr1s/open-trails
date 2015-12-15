@@ -4,7 +4,7 @@ $CURRENT_DIR = __DIR__;
 /*set page title here*/
 $PAGE_TITLE = "MY PAGE TITLE";
 /*load head-utils.php*/
-require_once(dirname(__DIR__) . "/php/template/head-utils.php");
+require_once("../php/template/head-utils.php");
 ?>
 
 <!--	load header content from header.php	-->

@@ -1,4 +1,4 @@
-app.constant("TRAIL_ENDPOINT", "/~lgill7/open-trails/public_html/php/api/trail/");
+app.constant("TRAIL_ENDPOINT", "api/trail/");
 app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 	function getUrl() {
 		return(TRAIL_ENDPOINT);

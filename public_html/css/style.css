@@ -100,28 +100,16 @@ body { width: 100%;}
 *  Ref: https://developers.google.com/maps/tutorials/fundamentals/adding-a-google-map
 ***************************/
 
-#map, #map2 {
+.ng-map {
 	width: auto;
 	height: 300px;
 	margin: 0 auto;
 }
 
 @media only screen and (min-width: 768px) {
-	#map, #map2{
+	.ng-map{
 		width: 600px;
 		height: 450px;
 	}
 
-}
-
-/***************************
-*  Fix navbar buttons on hover
-***************************/
-.navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover,
-.nav > li > a:focus, .nav > li > a:hover {
-	background-color: transparent;
-}
-
-.btn-default:focus, .btn-default:hover {
-	background-position: 0px;
 }

@@ -7,7 +7,7 @@ app.controller("LoginController", ["$scope", "$uibModal", "LoginService", functi
 			controller: "LoginModal",
 			resolve: {
 				loginData: function() {
-					//console.log($scope.loginData);
+					console.log($scope.loginData);
 					return ($scope.loginData);
 				}
 			}
@@ -17,10 +17,10 @@ app.controller("LoginController", ["$scope", "$uibModal", "LoginService", functi
 			LoginService.login(loginData)
 				.then(function(reply) {
 					if(reply.status === 200) {
-						//AlertService.addAlert({type: "success", msg: reply.message});
-						location.reload(true);
+						AlertService.addAlert({type: "success", msg: reply.message});
+						$window.location.reload();
 					} else {
-						//AlertService.addAlert({type: "danger", msg: reply.message});
+						AlertService.addAlert({type: "danger", msg: reply.message});
 					}
 				});
 		}, function() {
