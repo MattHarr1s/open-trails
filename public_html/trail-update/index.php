@@ -12,7 +12,7 @@ require_once("../php/template/head-utils.php");
 	<header>
 		<?php require_once(dirname(__DIR__) . "/php/template/header.php"); ?>
 	</header>
-
+</div>
 	<h1>Make Trail Corrections</h1>
 	<div>Help us fix our trail information</div>
 	<!-- trail database updates webpage - super user access only -->
