@@ -10,9 +10,31 @@
 				<trail-view></trail-view>
 				<h1>Trail Name: {{currentTrail.trailName}}</h1>
 				<hr/>
-				<p>Distance (mi): {{currentTrail.trailDistance}}</p>
+
+				<p>
+					<span class="fa-stack fa-lg">
+						<i class="fa fa-male fa-stack-1x"></i>
+						<i class="fa fa-ban fa-stack-2x text-danger"
+							ng-hide="currentTrail.trailUse.indexOf('foot: yes') != -1"></i>
+					</span>
+
+					<span class="fa-stack fa-lg">
+						<i class="fa fa-bicycle fa-stack-1x"></i>
+						<i class="fa fa-ban fa-stack-2x text-danger"
+							ng-hide="currentTrail.trailUse.indexOf('bicycle: yes') != -1"></i>
+					</span>
+
+					<span class="fa-stack fa-lg">
+						<i class="fa fa-wheelchair fa-stack-1x"></i>
+						<i class="fa fa-ban fa-stack-2x text-danger"
+							ng-hide="currentTrail.trailUse.indexOf('wheelchair: yes') != -1"></i>
+					</span>
+				</p>
+
+				<p>Distance (mi): {{currentTrail.trailDistance | number:3}}</p>
+
 				<p>Difficulty: {{currentTrail.trailDifficulty}}</p>
-				<p>Use: {{currentTrail.trailUse}}</p>
+
 				<p>Description: {{currentTrail.trailDescription}}</p>
 				<br>
 				<button class="btn btn-md btn-info" type="submit">Trail Corrections</button>
