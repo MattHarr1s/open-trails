@@ -77,6 +77,7 @@ setXsrfCookie("/"); ?>
 		<script src="<?php echo $PREFIX; ?>angular/controllers/comment-controller.js"></script>
 
 		<!-- load the googlemaps api -->
+		<script src="<?php echo $PREFIX; ?>angular/ng-map.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>
 
 		<!-- Initialize the Google Map -->
