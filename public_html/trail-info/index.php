@@ -14,7 +14,7 @@ require_once(dirname(__DIR__) . "/php/template/head-utils.php");
 	</header>
 
 
-	<h2>Trail Description</h2>
+
 	<hr>
 
 	<div ng-view></div>
