@@ -113,3 +113,15 @@ body { width: 100%;}
 	}
 
 }
+
+/***************************
+*  Fix navbar buttons on hover
+***************************/
+.navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover,
+.nav > li > a:focus, .nav > li > a:hover {
+	background-color: transparent;
+}
+
+.btn-default:focus, .btn-default:hover {
+	background-position: 0px;
+}
