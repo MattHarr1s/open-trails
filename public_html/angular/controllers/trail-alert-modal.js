@@ -1,8 +1,8 @@
 app.controller("TrailAlertModal", ["$scope", "$uibModalInstance", function($scope, $uibModalInstance) {
-	$scope.trail = {};
+	$scope.trailCondition = "";
 
 	$scope.ok = function() {
-		$uibModalInstance.close($scope.trail);
+		$uibModalInstance.close($scope.trailCondition);
 	};
 
 	$scope.cancel = function() {

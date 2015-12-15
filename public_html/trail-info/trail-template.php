@@ -7,7 +7,6 @@
 		<!--data column-->
 		<div class="col-md-6">
 			<div ng-controller="TrailController">
-				<trail-view></trail-view>
 				<h1>Trail Name: {{currentTrail.trailName}}</h1>
 				<hr/>
 
@@ -39,12 +38,12 @@
 				<br>
 				<button class="btn btn-md btn-info" type="submit">Trail Corrections</button>
 
-				<li>																					<!-- YEAH? HOW DO I ADD TRAIL ALERT TO TRAIL CONTROLLER? -->
+				<li>
 					<a class="btn btn-default btn-def" ng-click="openTrailAlertModal();">
 						<i class="fa fa-check" aria-hidden="true"></i>Trail Alert
 					</a>
 				</li>
-<!--				<button class="btn btn-md btn-warning" type="reset">Trail Alert</button>-->
+				<!--				<button class="btn btn-md btn-warning" type="reset">Trail Alert</button>-->
 				<!--continue to fill in content next to map here-->
 				<!--				<trail-view></trail-view>-->
 			</div>

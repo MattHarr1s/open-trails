@@ -4,35 +4,55 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 	// make doc blocks way better
 	$scope.currentTrailId = $routeParams.trailId;
 	$scope.currentTrail = null;
-	$scope.newTrail = {trailId: null, userId: null, browser: null, createDate: null, ipAddress: null, submitTrailId: null, trailAmenities: null, trailCondition: null, trailDescription: null, trailDifficulty: null, trailDistance: null, trailName: null, trailSubmissionType: null, trailTerrain: null, trailTraffic: null, trailUse: null, trailUuid: null};
+	$scope.newTrail = {
+		trailId: null,
+		userId: null,
+		browser: null,
+		createDate: null,
+		ipAddress: null,
+		submitTrailId: null,
+		trailAmenities: null,
+		trailCondition: null,
+		trailDescription: null,
+		trailDifficulty: null,
+		trailDistance: null,
+		trailName: null,
+		trailSubmissionType: null,
+		trailTerrain: null,
+		trailTraffic: null,
+		trailUse: null,
+		trailUuid: null
+	};
 	$scope.isEditing = false;
-	$scope.trails = [];
+	$scope.trails = {};
 	$scope.alerts = [];
+	$scope.trailToSubmit = {};
 
 	$scope.openTrailAlertModal = function() {
 		var TrailAlertModalInstance = $uibModal.open({
-			templateUrl: "../views/trail-alert-modal.php",
+			templateUrl: "../angular/views/trail-alert-modal.php",
 			controller: "TrailAlertModal",
 			resolve: {
-				trail: function() {
-					return ($scope.trails);
+				trails: function() {
+					return ($scope.trailCondition);
 				}
 			}
 		});
-		TrailAlertModalInstance.result.then(function(trail) {
-
-			TrailService.create(trail)
-				.then(function(result) {
-					if(result.data.status === 200) {
-						$scope.alerts[0] = {type: "success", msg: result.data.message};
-					} else {
-						$scope.alerts[0] = {type: "danger", msg: result.data.message};
-					}
-				});
-			// push the new trail into the array to update live
-			$scope.trails.push(trail);
+		TrailAlertModalInstance.result.then(function(trailCondition) {
+			$scope.trailToSubmit = $scope.currentTrail;
+			$scope.trailToSubmit.trailCondition = trailCondition;
+			$scope.trailToSubmit.submitTrailId = $scope.trailToSubmit.trailId;
+			$scope.trailToSubmit.trailId = null;
+			TrailService.create($scope.trailToSubmit).then(function(result) {
+				if(result.data.status === 200) {
+					$scope.alerts[0] = {type: "success", msg: result.data.message};
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
+				}
+			});
 		});
 	};
+
 
 	$scope.getTrailId = function(trailId, validated) {
 		if(validated === true) {
