@@ -4,7 +4,7 @@ app.config(function($routeProvider) {
 
 	// route for the trail page
 		.when('/Trail/:trailId', {
-			templateUrl: 'george.php',
+			templateUrl: '../../trail-info/index.php',
 			controller: 'TrailController'
 		})
 });
