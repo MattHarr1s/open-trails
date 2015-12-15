@@ -11,9 +11,28 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 
 	$scope.openTrailAlertModal = function() {
 		var TrailAlertModalInstance = $uibModal.open({
-			templateUrl: ""
-		})
-	}
+			templateUrl: "../views/trail-alert-modal.php",
+			controller: "TrailAlertModal",
+			resolve: {
+				trail: function() {
+					return ($scope.trails);
+				}
+			}
+		});
+		TrailAlertModalInstance.result.then(function(trail) {
+
+			TrailService.create(trail)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
+			// push the new trail into the array to update live
+			$scope.trails.push(trail);
+		});
+	};
 
 	$scope.getTrailId = function(trailId, validated) {
 		if(validated === true) {
