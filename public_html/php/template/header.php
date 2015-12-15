@@ -9,7 +9,7 @@
 			<span class="sr-only">main menu</span>
 			<span class="glyphicon glyphicon-menu-hamburger"></span>
 		</button>
-		<a class="navbar-brand" href="#">Trail Quail - Albuquerque</a>
+		<a class="navbar-brand" href="<?php $PREFIX;?>">Trail Quail - Albuquerque</a>
 	</div>
 
 	<!-- here are your main nav links, grouped for toggling -->
