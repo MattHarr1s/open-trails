@@ -82,9 +82,6 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 			console.log("validated");
 			for(var i = 0; i < $scope.segments.length - 1; i++) {
 				var newSegment = {segmentStart: $scope.segments[i], segmentStop: $scope.segments[i + 1]};
-
-
-
 				SegmentService.create(newSegment)
 					.then(function(result) {
 						console.log(result.data);
@@ -113,18 +110,34 @@ app.controller("SegmentController", ["$scope", "$uibModal", "SegmentService", fu
 				});
 		}
 	};
+	$scope.geoFindMe = function() {
+		if (!navigator.geolocation) {
+			$scope.alerts[0] = {type: "danger", msg: "Uninstall IE. Good fucking luck!"};
+			return;
+		}
+
+		function success(position) {
+			var latitude  = position.coords.latitude;
+			var longitude = position.coords.longitude;
+
+			$scope.segments.push([longitude, latitude]);
+		}
+
+		function error() {
+			$scope.alerts[0] = {type: "danger", msg: "Can't get location (user probably declined/ignored request)."};
+		}
+
+		navigator.geolocation.getCurrentPosition(success, error);
+	};
 
 	// temporary: load the array with blank values
-	$scope.loadArray = function() {
-		$scope.segments.length = 0;
-		for(var i = 0; i < $scope.numSegments; i++) {
-			$scope.segments.push([0.0, 0.0]);
-		}
-	};
-	if($scope.segments.length === 0) {
-		$scope.loadArray();
-	}
-
-
-
+	 $scope.loadArray = function() {
+	 $scope.segments.length = 0;
+	 for(var i = 0; i < $scope.numSegments; i++) {
+	 $scope.segments.push([0.0, 0.0]);
+	 }
+	 };
+	 if($scope.segments.length === 0) {
+	 $scope.loadArray();
+	 }
 }]);
