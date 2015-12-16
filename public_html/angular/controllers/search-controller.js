@@ -31,22 +31,22 @@ app.controller("TrailSearchController", ["$scope", "$location", "TrailService", 
 					for(var i = 0; i < $scope.trails.length; i++) {
 						if($scope.flags.trailName !== "") {
 							if($scope.trails[i].trailName !== $scope.flags.trailName) {
-								$scope.trails[i].pop(); // Removes trail from array
+								$scope.trails.splice(i, 1); // Removes trail from array
 							}
 						}
 						if(typeof $scope.flags.trailDifficulty !== "undefined") {
 							if($scope.trails[i].trailDifficulty !== $scope.flags.trailDifficulty) {
-								$scope.trails[i].pop(); // Removes trail from array
+								$scope.trails[i].splice(i, 1); // Removes trail from array
 							}
 						}
 						if($scope.flags.trailDistance > 0) {
 							if($scope.trails[i].trailDistance != $scope.flags.trailDistance) {
-								$scope.trails[i].pop(); // Removes trail from array
+								$scope.trails[i].splice(i, 1); // Removes trail from array
 							}
 						}
 						if(typeof $scope.flags.trailUse !== "undefined") {
 							if($scope.trails[i].trailUse !== $scope.flags.trailUse) {
-								$scope.trails[i].pop(); // Removes trail from array
+								$scope.trails[i].splice(i, 1); // Removes trail from array
 							}
 						}
 					}
