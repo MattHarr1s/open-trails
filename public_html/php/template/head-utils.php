@@ -53,7 +53,7 @@ setXsrfCookie("/"); ?>
 
 		<!-- Bootstrap latest compiled and minified Javascript -->
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
-				  integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc=sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
+				  integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc="
 				  crossorigin="anonymous"></script>
 
 		<!-- Angular.js -->
@@ -90,27 +90,27 @@ setXsrfCookie("/"); ?>
 		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>
 
 		<!-- Initialize the Google Map -->
-		<script>
-			function initialize() {
-				var mapCanvas = document.getElementById('map');
-				var mapOptions = {
-					center: new google.maps.LatLng(35.1318, -106.5925),
-					zoom: 8,
-					mapTypeId: google.maps.MapTypeId.TERRAIN
-				}
-				var map = new google.maps.Map(mapCanvas, mapOptions);
-
-				// Map 2
-				var mapCanvas2 = document.getElementById('map2');
-				var mapOptions2 = {
-					center: new google.maps.LatLng(35.1318, -106.5925),
-					zoom: 8,
-					mapTypeId: google.maps.MapTypeId.TERRAIN
-				}
-				var map2 = new google.maps.Map(mapCanvas2, mapOptions2);
-			}
-			google.maps.event.addDomListener(window, 'load', initialize);
-		</script>
+		<!--		<script>-->
+		<!--			function initialize() {-->
+		<!--				var mapCanvas = document.getElementById('map');-->
+		<!--				var mapOptions = {-->
+		<!--					center: new google.maps.LatLng(35.1318, -106.5925),-->
+		<!--					zoom: 8,-->
+		<!--					mapTypeId: google.maps.MapTypeId.TERRAIN-->
+		<!--				}-->
+		<!--				var map = new google.maps.Map(mapCanvas, mapOptions);-->
+		<!---->
+		<!--				// Map 2-->
+		<!--				var mapCanvas2 = document.getElementById('map2');-->
+		<!--				var mapOptions2 = {-->
+		<!--					center: new google.maps.LatLng(35.1318, -106.5925),-->
+		<!--					zoom: 8,-->
+		<!--					mapTypeId: google.maps.MapTypeId.TERRAIN-->
+		<!--				}-->
+		<!--				var map2 = new google.maps.Map(mapCanvas2, mapOptions2);-->
+		<!--			}-->
+		<!--			google.maps.event.addDomListener(window, 'load', initialize);-->
+		<!--		</script>-->
 
 		<!-- Angular Google Maps-->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>

@@ -10,7 +10,7 @@ require_once(dirname(__DIR__) . "/php/template/head-utils.php");
 <!--	load header content from header.php	-->
 <div class="sfooter-content">
 	<header>
-		<?php require_once(dirname(__DIR__) . "/php/template/header.php"); ?>
+		<?php require_once($PREFIX . "/php/template/home.php"); ?>
 	</header>
 
 	<!--	Load Trail Search Form here	-->

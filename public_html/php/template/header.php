@@ -9,17 +9,17 @@
 			<span class="sr-only">main menu</span>
 			<span class="glyphicon glyphicon-menu-hamburger"></span>
 		</button>
-		<a class="navbar-brand" href="<?php $PREFIX;?>">Trail Quail - Albuquerque</a>
+		<a class="navbar-brand" href="<?php echo $PREFIX;?>#/">Trail Quail - Albuquerque</a>
 	</div>
 
 	<!-- here are your main nav links, grouped for toggling -->
 	<div class="collapse navbar-collapse" id="main-menu">
 		<ul class="nav navbar-nav navbar-right">
 			<li>
-				<a class="btn btn-default btn-md" href="<?php echo $PREFIX; ?>trail-search">Find Trails</a>
+				<a class="btn btn-default btn-md" href="<?php echo $PREFIX; ?>#/trail-search">Find Trails</a>
 			</li>
 			<li>
-				<a class="btn btn-default btn-md" href="<?php echo $PREFIX; ?>trail-site-info">About this site</a></li>
+				<a class="btn btn-default btn-md" href="<?php echo $PREFIX; ?>#/trail-site-info">About this site</a></li>
 
 			<!-- if user is not logged in, place buttons for create account -->
 			<!-- and log in on the right side of the nab bar					 -->
