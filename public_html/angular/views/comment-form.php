@@ -35,7 +35,7 @@
 
 		<!--	Input form for 1 photo per comment -- Photo files must be png or jpg	-->
 
-		<div class="form-group">
+		<!--  <div class="form-group">
 			<label for="photoFile" class="control-label">
 				<span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Select photo file to
 				upload (.png or .jpg files only)
@@ -46,7 +46,7 @@
 				</div>
 				<input type="file" id="photofile1" class="form-control"/>
 			</div>
-		</div>
+		</div>  -->
 
 		<!-- buttons for submit -->
 		<br>
