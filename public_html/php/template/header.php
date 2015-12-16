@@ -57,6 +57,10 @@
 					</li>
 
 					<li>
+						<a class="btn btn-link btn-md disabled">Welcome back,&nbsp;<?php echo $userName; ?>!</a>
+					</li>
+
+					<li>
 						<a href="" class="btn btn-default btn-def" ng-controller="LogoutController" ng-click="logOut();">
 							<i class="fa fa-check" aria-hidden="true"></i>Log out
 						</a>

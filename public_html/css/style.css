@@ -11,7 +11,7 @@
 **********************************************/
 
 header {
-	padding-top: 20px;
+	padding-top: 0px;
 }
 
 footer {
@@ -59,6 +59,7 @@ footer {
 
 .jumbotron {
 	color: white;
+	padding: 1px;
 }
 
 .bg-image {
