@@ -28,37 +28,35 @@ app.controller("TrailSearchController", ["$scope", "$location", "TrailService", 
 			.then(function(reply) {
 				if(reply.status === 200) {
 					if(reply.data.submitTrailId == null) {
-						console.log(reply.data);
-						$scope.trails = reply.data; // Adds trail to array
+						$scope.trails = reply.data; // Adds trails to array
+						for(var i = 0; i < $scope.trails.length; i++) {
+							if(isset($scope.flags.trailName)) {
+								if($scope.trails[i].trailName != $scope.flags.trailName) {
+									$scope.trails[i].pop(); // Removes trail from array
+								}
+							}
+							if(isset($scope.flags.trailDifficulty)) {
+								if($scope.trails[i].trailDifficulty != $scope.flags.trailDifficulty) {
+									$scope.trails[i].pop(); // Removes trail from array
+								}
+							}
+							if(isset($scope.flags.trailDistance)) {
+								if($scope.trails[i].trailDistance != $scope.flags.trailDistance) {
+									$scope.trails[i].pop(); // Removes trail from array
+								}
+							}
+							if(isset($scope.flags.trailUse)) {
+								if($scope.trails[i].trailUse != $scope.flags.trailUse) {
+									$scope.trails[i].pop(); // Removes trail from array
+								}
+							}
+						}
+						SearchService.setTrails($scope.trails);
+						$location.path("search-results");
 					}
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: reply.data.message}
 				}
 			});
-
-		for(var i = 0; i < $scope.trails.length; i++) {
-			if(isset($scope.flags.trailName)) {
-				if($scope.trails[i].trailName != $scope.flags.trailName) {
-					$scope.trails[i].pop(); // Removes trail from array
-				}
-			}
-			if(isset($scope.flags.trailDifficulty)) {
-				if($scope.trails[i].trailDifficulty != $scope.flags.trailDifficulty) {
-					$scope.trails[i].pop(); // Removes trail from array
-				}
-			}
-			if(isset($scope.flags.trailDistance)) {
-				if($scope.trails[i].trailDistance != $scope.flags.trailDistance) {
-					$scope.trails[i].pop(); // Removes trail from array
-				}
-			}
-			if(isset($scope.flags.trailUse)) {
-				if($scope.trails[i].trailUse != $scope.flags.trailUse) {
-					$scope.trails[i].pop(); // Removes trail from array
-				}
-			}
-		}
-		SearchService.setTrails($scope.trails);
-		$location.path("search-results");
 	}
 }]);
