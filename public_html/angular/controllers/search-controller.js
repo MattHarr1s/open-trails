@@ -1,4 +1,4 @@
-app.controller("TrailSearchController", ["$scope", "TrailService", function($scope, TrailService) {
+app.controller("TrailSearchController", ["$scope", "$location", "TrailService", "SearchService", function($scope, $location, TrailService, SearchService) {
 	$scope.flags = {trailName: "", selectedDifficulties: [], trailDistance: 0, selectedUses: []};
 	$scope.trails = [];
 	$scope.alerts = [];
@@ -28,7 +28,8 @@ app.controller("TrailSearchController", ["$scope", "TrailService", function($sco
 			.then(function(reply) {
 				if(reply.status === 200) {
 					if(reply.data.submitTrailId == null) {
-						$scope.trails.push(reply.data); // Adds trail to array
+						console.log(reply.data);
+						$scope.trails = reply.data; // Adds trail to array
 					}
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: reply.data.message}
@@ -57,5 +58,7 @@ app.controller("TrailSearchController", ["$scope", "TrailService", function($sco
 				}
 			}
 		}
+		SearchService.setTrails($scope.trails);
+		$location.path("search-results");
 	}
-}])
+}]);

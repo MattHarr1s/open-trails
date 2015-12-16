@@ -75,7 +75,6 @@ app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 	this.update = function(trailId, trail) {
 		return ($http.put(getUrlForId(trailId), trail));
 	};
-
 });
 
 

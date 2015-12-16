@@ -9,7 +9,7 @@
 <div class="form-wrap container">
 
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
-	<form method="post" action="#" id="searchTrails-form" class="form-horizontal">
+	<form method="post" ng-submit="search();" id="searchTrails-form" class="form-horizontal">
 
 		<!-- Enter Trail Name -->
 		<div class="form-group">
