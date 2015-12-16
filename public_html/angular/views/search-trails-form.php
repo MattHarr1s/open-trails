@@ -6,7 +6,7 @@
 
 <!-- The div class="form-wrap" is the black box containing the form. It's set to a column width of 12 for small screens, and a column width of 6 for medium screens on up -->
 
-<div class="form-wrap">
+<div class="form-wrap container">
 
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
 	<form method="post" action="#" id="searchTrails-form" class="form-horizontal">
@@ -40,20 +40,25 @@
 						<div class="checkbox">
 							<label class="checkbox">
 								<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->
-									<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty1" name="chkTrailDifficulty[]" type="checkbox" value="1"/>1 =>
-									Easy
+								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty1" name="chkTrailDifficulty[]"
+										 type="checkbox" value="1"/>1 =>
+								Easy
 							</label>
 							<label class="checkbox">
-								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty2" name="chkTrailDifficulty[]" type="checkbox" value="2"/>2
+								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty2" name="chkTrailDifficulty[]"
+										 type="checkbox" value="2"/>2
 							</label>
 							<label class="checkbox">
-								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty3" name="chkTrailDifficulty[]" type="checkbox" value="3"/>3
+								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty3" name="chkTrailDifficulty[]"
+										 type="checkbox" value="3"/>3
 							</label>
 							<label class="checkbox">
-								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty4" name="chkTrailDifficulty[]" type="checkbox" value="4"/>4
+								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty4" name="chkTrailDifficulty[]"
+										 type="checkbox" value="4"/>4
 							</label>
 							<label class="checkbox">
-								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty5" name="chkTrailDifficulty[]" type="checkbox" value="5"/>5 => Very
+								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty5" name="chkTrailDifficulty[]"
+										 type="checkbox" value="5"/>5 => Very
 								Difficult
 							</label>
 						</div>
@@ -71,31 +76,36 @@
 						<!-- Radio buttons here -->
 						<div class="radio">
 							<label>
-								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance1" value="1"/> 0 - 2 miles
+								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance1"
+										 value="1"/> 0 - 2 miles
 							</label>
 						</div>
 
 						<div class="radio">
 							<label>
-								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance2" value="2"/> 2 - 5 miles
+								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance2"
+										 value="2"/> 2 - 5 miles
 							</label>
 						</div>
 
 						<div class="radio">
 							<label>
-								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance3" value="3"/> 5 - 10 miles
+								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance3"
+										 value="3"/> 5 - 10 miles
 							</label>
 						</div>
 
 						<div class="radio">
 							<label>
-								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance4" value="4"/> 10 - 20 miles
+								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance4"
+										 value="4"/> 10 - 20 miles
 							</label>
 						</div>
 
 						<div class="radio">
 							<label>
-								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance5" value="5"/> > 20 miles
+								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance5"
+										 value="5"/> > 20 miles
 							</label>
 						</div>
 					</div>
@@ -110,22 +120,30 @@
 						<!--	use div class=“help-block” to explain the form content	-->
 						<div class="help-block">Please check all that apply</div>
 						<div class="checkbox">
-							<label class="checkbox">
-								<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->
-								<Input ng-model="flags.trailUse" id="chkTrailUseHike" name="chkTrailUse[]" type="checkbox" value="Hike"/>Hike
+							<label ng-repeat="use in uses">
+								<input type="checkbox" checklist-model="flags.trailUse" checklist-value="use" />{{use}}
 							</label>
-							<label class="checkbox">
-								<Input ng-model="flags.trailUse" id="chkTrailUseBike" name="chkTrailUse[]" type="checkbox" value="Bike"/>Bike
-							</label>
-							<label class="checkbox">
-								<Input ng-model="flags.trailUse" id="chkTrailUseWheelChair" name="chkTrailUse[]" type="checkbox" value="Wheelchair"/>Wheelchair
-							</label>
-							<label class="checkbox">
-								<Input ng-model="flags.trailUse" id="chkTrailUseSki" name="chkTrailUse[]" type="checkbox" value="Ski"/>Ski
-							</label>
-							<label class="checkbox">
-								<Input ng-model="flags.trailUse" id="chkTrailUseHorse" name="chkTrailUse[]" type="checkbox" value="Horse"/>Horse
-							</label>
+<!--							<label class="checkbox">-->
+<!--								<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->-->
+<!--								<Input ng-model="flags.trailUse" id="chkTrailUseHike" name="chkTrailUse[]" type="checkbox"-->
+<!--										 value="Hike"/>Hike-->
+<!--							</label>-->
+<!--							<label class="checkbox">-->
+<!--								<Input ng-model="flags.trailUse" id="chkTrailUseBike" name="chkTrailUse[]" type="checkbox"-->
+<!--										 value="Bike"/>Bike-->
+<!--							</label>-->
+<!--							<label class="checkbox">-->
+<!--								<Input ng-model="flags.trailUse" id="chkTrailUseWheelChair" name="chkTrailUse[]" type="checkbox"-->
+<!--										 value="Wheelchair"/>Wheelchair-->
+<!--							</label>-->
+<!--							<label class="checkbox">-->
+<!--								<Input ng-model="flags.trailUse" id="chkTrailUseSki" name="chkTrailUse[]" type="checkbox"-->
+<!--										 value="Ski"/>Ski-->
+<!--							</label>-->
+<!--							<label class="checkbox">-->
+<!--								<Input ng-model="flags.trailUse" id="chkTrailUseHorse" name="chkTrailUse[]" type="checkbox"-->
+<!--										 value="Horse"/>Horse-->
+<!--							</label>-->
 						</div>
 					</div>
 
@@ -137,7 +155,7 @@
 
 		<!-- buttons for submit and reset -->
 		<div class="form-horizontal">
-			<button class="btn btn-md btn-info" type="submit">Search</button>
+			<button class="btn btn-md btn-info pull-right" type="submit">Search</button>
 		</div>
 		<hr>
 

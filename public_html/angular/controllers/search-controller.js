@@ -2,6 +2,7 @@ app.controller("TrailSearchController", ["$scope", "TrailService", function($sco
 	$scope.flags = {};
 	$scope.trails = [];
 	$scope.alerts = [];
+	$scope.uses = ["Hike", "Bike", ];
 
 	$scope.search = function() {
 		if(isset($scope.flags.trailName)) {
