@@ -1,8 +1,3 @@
-<h1>Make Trail Corrections</h1>
-<div>Help us fix our trail information</div>
-<!-- trail database updates webpage - super user access only -->
-<hr>
-
 <!-- current database entry on trail -->
 <div class="container">
 	<div class="row">
@@ -23,20 +18,7 @@
 			<h3>Corrales Bosque Trail</h3>
 			<div class="row">
 				<div class="col-md-10 embed-responsive embed-responsive-4by3">
-					<ng-map zoom="10" center="35.1318, -106.5925" map-type-id="TERRAIN">
-						<shape name="polyline"
-								 path="[
-        									[37.772323, -122.214897],
-        									[21.291982, -157.821856],
-        									[-18.142599, 178.431],
-        									[-27.46758, 153.027892]
-      								]"
-								 geodesic="true"
-								 stroke-color="#FF0000"
-								 stroke-opacity="1.0"
-								 stroke-weight="2">
-						</shape>
-					</ng-map>
+					<div id="map"></div>
 				</div>
 				<!-- End of Map row / beginning of trail info -->
 			</div>
@@ -52,12 +34,7 @@
 
 			<div class="row"></div>
 			<h3>Trail Description:</h3>
-			<div>Located in northern Albuquerque, the Corrales Bosque Trail offers a quick escape nearby. The trail
-				offers scenic views of the Rio Grande. It also offers opportunities for birding and wildlife viewing. The
-				trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the
-				Rio Grande. Restrooms available at the Alameda Open Space parking lot (cross the pedestrian bridge over
-				the river & then go under Alameda to get to the parking lot from the trailhead.)
-			</div>
+			<div>Located in northern Albuquerque, the Corrales Bosque Trail offers a quick escape nearby. The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing. The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande. Restrooms available at the Alameda Open Space parking lot (cross the pedestrian bridge over the river & then go under Alameda to get to the parking lot from the trailhead.)</div>
 		</div> <!-- End column 1 here -->
 		<!--Correction/New Trail data column-->
 
@@ -68,24 +45,11 @@
 			<!--	Note that all current trail information will be copied into update fields	-->
 			<div class="row">
 				<div class="col-md-10 embed-responsive embed-responsive-4by3">
-					<ng-map zoom="10" center="35.1318, -106.5925" map-type-id="TERRAIN">
-						<shape name="polyline"
-								 path="[
-        									[37.772323, -122.214897],
-        									[21.291982, -157.821856],
-        									[-18.142599, 178.431],
-        									[-27.46758, 153.027892]
-      								]"
-								 geodesic="true"
-								 stroke-color="#FF0000"
-								 stroke-opacity="1.0"
-								 stroke-weight="2">
-						</shape>
-					</ng-map>
+					<div id="map2"></div>
 				</div>
 				<!-- End of Map row / beginning of trail info -->
 			</div>
-			<?php require_once(dirname(__DIR__) . "/angular/views/trail-update-form.php"); ?>
+			<?php require_once(dirname(__DIR__) . "/angular/views/update-approve-form.php"); ?>
 			<br>
 
 			<!-- End of column 2 -->
@@ -93,3 +57,4 @@
 
 
 	</div><!--.container-->
+</div>

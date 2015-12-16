@@ -25,15 +25,15 @@ require_once("../php/template/head-utils.php");
 			<div class="col-md-6">
 				<h2>Current Trail DB Entry</h2>
 
-			<!--	Will need to define variables for currentTrailId, antiabuse trait, currentTrailName, currentTrailDistance, currentTrailDifficulty, currentTrailUse, and currentTrailDescription	-->
+				<!--	Will need to define variables for currentTrailId, antiabuse trait, currentTrailName, currentTrailDistance, currentTrailDifficulty, currentTrailUse, and currentTrailDescription	-->
 
 				<!-- Dummy data for now -->
-<!--					$trailName = "Corrales Bosque Trail";-->
-<!--					$trailDistance = 13.0;-->
-<!--					$trailDifficulty = 1;-->
-<!--					$trailUse[] = [1, 1, 0, 0, 1];-->
-<!--					$trailDescription = "Located in northern Albuquerque, the Corrales Bosque Trail offers a quick escape nearby. The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing. The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande. Restrooms available at the Alameda Open Space parking lot (cross the pedestrian bridge over the river & then go under Alameda to get to the parking lot from the trailhead.";-->
-<!--					-->
+				<!--					$trailName = "Corrales Bosque Trail";-->
+				<!--					$trailDistance = 13.0;-->
+				<!--					$trailDifficulty = 1;-->
+				<!--					$trailUse[] = [1, 1, 0, 0, 1];-->
+				<!--					$trailDescription = "Located in northern Albuquerque, the Corrales Bosque Trail offers a quick escape nearby. The trail offers scenic views of the Rio Grande.  It also offers opportunities for birding and wildlife viewing. The trail is paved at the beginning turning into a dirt and sand singletrack on a flat wooded trail along the Rio Grande. Restrooms available at the Alameda Open Space parking lot (cross the pedestrian bridge over the river & then go under Alameda to get to the parking lot from the trailhead.";-->
+				<!--					-->
 
 				<h3>Corrales Bosque Trail</h3>
 				<div class="row">
@@ -72,12 +72,12 @@ require_once("../php/template/head-utils.php");
 				<?php require_once(dirname(__DIR__) . "/angular/views/update-approve-form.php"); ?>
 				<br>
 
- <!-- End of column 2 -->
-		</div><!--.row-->
+				<!-- End of column 2 -->
+			</div><!--.row-->
 
 
-	</div><!--.container-->
-</div>
+		</div><!--.container-->
+	</div>
 
 <footer class="footer">
 	<?php require_once(dirname(__DIR__) . "/php/template/footer.php"); ?>
