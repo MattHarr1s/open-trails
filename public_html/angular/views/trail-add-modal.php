@@ -6,17 +6,9 @@
 			<h2>Save Your Progress</h2>
 			<button class="btn btn-info" ng-click="ok();">Save Trail</button>
 			<button class="btn btn-danger" ng-click="cancel();">Cancel</button>
-			<div class="col-md-12 embed-responsive embed-responsive-4by3">
-				<ng-map zoom="15" center="{{points[0]}}" map-type-id="SATELLITE">
-					<shape name="polyline"
-							 path="{{points}}"
-							 geodesic="true"
-							 stroke-color="#FF0000"
-							 stroke-opacity="1.0"
-							 stroke-weight="2">
-					</shape>
-				</ng-map>
-			</div>
+			<p>
+				{{points}}
+			</p>
 		</form>
 	</div>
 </div>
