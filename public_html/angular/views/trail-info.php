@@ -2,7 +2,7 @@
 	<div class="row">
 		<!--map container-->
 		<div class="col-md-6 embed-responsive embed-responsive-4by3">
-			<ng-map zoom="13" center="{{points[0]}}" map-type-id="SATELLITE">
+			<ng-map zoom="15" center="{{points[0]}}" map-type-id="SATELLITE">
 				<shape name="polyline"
 						 path="{{points}}"
 						 geodesic="true"
@@ -10,6 +10,7 @@
 						 stroke-opacity="1.0"
 						 stroke-weight="2">
 				</shape>
+			</ng-map>
 		</div>
 		<!--data column-->
 		<div class="col-md-6">
@@ -60,7 +61,7 @@
 			<!-- Trail comment form inserted here -->
 			<hr/>
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-6 embed-responsive embed-responsive-4by3">
 					<h2 class="page-title">Enter Your Comment(s) for this Trail</h2>
 					<?php require_once(dirname(dirname(__DIR__)) . "/angular/views/comment-form.php"); ?>
 				</div>
