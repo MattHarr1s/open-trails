@@ -29,7 +29,17 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 	$scope.alerts = [];
 	$scope.trailToSubmit = {};
 	$scope.comments = CommentService.fetchTrailId($scope.currentTrailId);
-	$scope.newComment = {commentId: null, trailId: null, userId: null, browser: null, createDate: null, ipAddress: null, commentPhoto: null, commentPhotoType: null, commentText: null};
+	$scope.newComment = {
+		commentId: null,
+		trailId: null,
+		userId: null,
+		browser: null,
+		createDate: null,
+		ipAddress: null,
+		commentPhoto: null,
+		commentPhotoType: null,
+		commentText: null
+	};
 
 	$scope.openTrailAlertModal = function() {
 		var TrailAlertModalInstance = $uibModal.open({
@@ -44,6 +54,7 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 		TrailAlertModalInstance.result.then(function(trailCondition) {
 			$scope.trailToSubmit = $scope.currentTrail;
 			$scope.trailToSubmit.trailCondition = trailCondition;
+			$scope.trailToSubmit.trailUuid = null;
 			$scope.trailToSubmit.submitTrailId = $scope.trailToSubmit.trailId;
 			$scope.trailToSubmit.trailId = null;
 			TrailService.create($scope.trailToSubmit).then(function(result) {
