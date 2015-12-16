@@ -1,8 +1,8 @@
 app.controller("BeginTrackModal", ["$scope", "$uibModalInstance", function($scope, $uibModalInstance) {
-	$scope.trailCondition = "";
+	$scope.geoFindMe() = [];
 
 	$scope.ok = function() {
-		$uibModalInstance.close($scope.);
+		$uibModalInstance.close($scope.geoFindMe());
 	};
 
 	$scope.cancel = function() {
