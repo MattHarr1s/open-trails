@@ -1,6 +1,6 @@
 <!--	Load Trail Search Form here	-->
 <div class="col-xs-12 col-md-12">
-	<h1 class="page-title">Search for Local Trails</h1>
+	<h1 class="page-title text-center">Search for Local Trails</h1>
 	<?php require_once("search-trails-form.php"); ?>
 </div>
 <!--<br/>-->

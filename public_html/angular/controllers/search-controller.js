@@ -27,33 +27,31 @@ app.controller("TrailSearchController", ["$scope", "$location", "TrailService", 
 		TrailService.all()
 			.then(function(reply) {
 				if(reply.status === 200) {
-					if(reply.data.submitTrailId == null) {
-						$scope.trails = reply.data; // Adds trails to array
-						for(var i = 0; i < $scope.trails.length; i++) {
-							if(isset($scope.flags.trailName)) {
-								if($scope.trails[i].trailName != $scope.flags.trailName) {
-									$scope.trails[i].pop(); // Removes trail from array
-								}
-							}
-							if(isset($scope.flags.trailDifficulty)) {
-								if($scope.trails[i].trailDifficulty != $scope.flags.trailDifficulty) {
-									$scope.trails[i].pop(); // Removes trail from array
-								}
-							}
-							if(isset($scope.flags.trailDistance)) {
-								if($scope.trails[i].trailDistance != $scope.flags.trailDistance) {
-									$scope.trails[i].pop(); // Removes trail from array
-								}
-							}
-							if(isset($scope.flags.trailUse)) {
-								if($scope.trails[i].trailUse != $scope.flags.trailUse) {
-									$scope.trails[i].pop(); // Removes trail from array
-								}
+					$scope.trails = reply.data.data; // Adds trails to array
+					for(var i = 0; i < $scope.trails.length; i++) {
+						if($scope.flags.trailName !== "") {
+							if($scope.trails[i].trailName !== $scope.flags.trailName) {
+								$scope.trails[i].pop(); // Removes trail from array
 							}
 						}
-						SearchService.setTrails($scope.trails);
-						$location.path("search-results");
+						if(typeof $scope.flags.trailDifficulty !== "undefined") {
+							if($scope.trails[i].trailDifficulty !== $scope.flags.trailDifficulty) {
+								$scope.trails[i].pop(); // Removes trail from array
+							}
+						}
+						if($scope.flags.trailDistance > 0) {
+							if($scope.trails[i].trailDistance != $scope.flags.trailDistance) {
+								$scope.trails[i].pop(); // Removes trail from array
+							}
+						}
+						if(typeof $scope.flags.trailUse !== "undefined") {
+							if($scope.trails[i].trailUse !== $scope.flags.trailUse) {
+								$scope.trails[i].pop(); // Removes trail from array
+							}
+						}
 					}
+					SearchService.setTrails($scope.trails);
+					$location.path("search-results");
 				} else {
 					$scope.alerts[0] = {type: "danger", msg: reply.data.message}
 				}

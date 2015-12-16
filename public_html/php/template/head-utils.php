@@ -91,7 +91,8 @@ setXsrfCookie("/"); ?>
 
 		<!-- load the googlemaps api -->
 		<script src="<?php echo $PREFIX; ?>angular/ng-map.min.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>
+		<!--		<script src="https://maps.googleapis.com/maps/api/js?=trailquail-1152"></script>-->
+		<script async defer src="https://maps.googleapis.com/maps/api/js?trailquail-1152&callback=initMap"></script>
 
 		<!-- Initialize the Google Map -->
 		<!--		<script>-->
