@@ -14,7 +14,7 @@
 		<p><a class="btn btn-primary" role="button" href="#/trail-site-info">Learn More</a></p>
 	</div>
 </div>
- <div class="container by-gray">
+ <div class="container">
 	<div class="row">
 		<div class="col-md-12 embed-responsive embed-responsive-4by3">
 			<div class="container text-center">
