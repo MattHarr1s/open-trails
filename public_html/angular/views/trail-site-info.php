@@ -9,7 +9,7 @@
 		<p>Find hiking, mountain biking, skiing, <br>and horseback riding trails</p>
 		<br>
 
-		<p><a class="btn btn-primary btn-lg" role="button" href="<?php echo $PREFIX;?>trail-search">Find a Trail</a></p>
+		<p><a class="btn btn-primary btn-lg" role="button" href="#/trail-search">Find a Trail</a></p>
 	</div>
 </div>
 
