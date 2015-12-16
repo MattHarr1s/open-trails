@@ -17,15 +17,15 @@ app.service("CommentService", function($http, COMMENT_ENDPOINT) {
 	};
 
 	this.fetchUserId = function(userId) {
-		return ($http.getUrl() + '?userId=' + userId);
+		return ($http.get(getUrl() + '?userId=' + userId));
 	};
 
 	this.fetchCommentText = function(commentText) {
-		return ($http.post(getUrl() + '?commentText=' + commentText));
+		return ($http.get(getUrl() + '?commentText=' + commentText));
 	};
 
 	this.fetchTrailId = function(trailId) {
-		return ($http.post(getUrl() + '?trailId=' + trailId));
+		return ($http.get(getUrl() + '?trailId=' + trailId));
 	};
 
 	this.create = function(comment) {

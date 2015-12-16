@@ -57,25 +57,25 @@
 		</div>
 	</div>   <!-- End of row 1  -->
 
-	<div class="row comment-margin1	">
-		<!-- Trail comment form inserted here -->
-		<div class="col-md-12 embed-responsive embed-responsive-4by3">
-			<h2 class="page-title">Enter Your Comment(s) for this Trail</h2>
-			<?php require_once(dirname(dirname(__DIR__)) . "/angular/views/comment-form.php"); ?>
-		</div>
-	</div>
-	<br>
-	<hr>
-
+	<!--	<div class="row comment-margin1	">-->
+	<!-- Trail comment form inserted here -->
+	<!--		<div class="col-md-12 embed-responsive embed-responsive-4by3">-->
+	<!--			<h2 class="page-title">Enter Your Comment(s) for this Trail</h2>-->
+	<!--			--><?php //require_once(dirname(dirname(__DIR__)) . "/angular/views/comment-form.php"); ?>
+	<!--		</div>-->
+	<!--	</div>-->
+	<!--	<br>-->
+	<!--	<hr>-->
+	<!---->
 	<!-- Trail comments from database will show below here -->
-	<div class="row" ng-repeat="comment in comments">
-		<div class="panel panel-primary">
-			<div class="panel-body">
-				<p>{{comment.commentText}}</p>
-				<small>Posted on: {{comment.createDate | date:"MM/dd/yyyy 'at' h:mma"}}</small>
-			</div>
-		</div>
-	</div>
+	<!--	<div class="row" ng-repeat="comment in comments">-->
+	<!--		<div class="panel panel-primary">-->
+	<!--			<div class="panel-body">-->
+	<!--				<p>{{comment.commentText}}</p>-->
+	<!--				<small>Posted on: {{comment.createDate | date:"MM/dd/yyyy 'at' h:mma"}}</small>-->
+	<!--			</div>-->
+	<!--		</div>-->
+	<!--	</div>-->
 
 
 </div>

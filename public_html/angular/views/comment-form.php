@@ -6,23 +6,22 @@
 
 <!-- The div class="form-wrap" is the black box containing the form. It's set to a column width of 12 for small screens, and a column width of 6 for medium screens on up -->
 <div class="form-wrap">
-	<label class="control-label" for="txtareaComments"></label>
-
-
 	<!-- Form is centered within it's container, and is set to 10 be columns wide RELATIVE TO IT'S CONTAINER, and offset to the right by one column. See classes: col-xs-offset-1 & col-xs-10 -->
-	<form method="post" ng-submit="createComment();" id="comment-form" name="comment-form" class="form-horizontal">
-
+	<form method="post" ng-submit="createComment(newComment, comment-form.$valid);" id="comment-form" name="comment-form"
+			class="form-horizontal" novalidate>
 		<!-- Text box for inputting text comments up to 256 characters below -->
 		<div class="form-group">
 			<!-- Labels for each field are places within the label tag -->
-			<label for="trailComment" class="control-label"></label>
+			<label for="txtareaComments" class="control-label"></label>
 			<br>
 			<textarea class="form-control" cols="20" rows="5" id="txtareaComments" name="txtareaComments"
-						 ng-maxlength="256" placeholder="Write a comment..." ng-model="comment.commentText" required></textarea>
+						 ng-maxlength="256" placeholder="Write a comment..." ng-model="newComment.commentText" required
+						 ng-required="true"></textarea>
 		</div>
 		<!--		<pre>comment-form.txtareaComments.$error =-->
 		<!--			{{ comment-form.txtareaComments.$error | json }}</pre>-->
-		<div ng-messages="comment-form.txtareaComments.$error" role="alert">
+		<div ng-messages="comment-form.txtareaComments.$error" role="alert" ng-if="comment-form.txtareaComments.$touched"
+			  ng-hide="comment-form.txtareaComments.$valid">
 			<div ng-message="required">
 				You must enter a text comment before you submit.
 			</div>
@@ -52,5 +51,8 @@
 		<br>
 		<button class="btn btn-md btn-info pull-right" type="submit">Submit</button>
 
+		<p class="well">{{ newComment | json }}</p>
+		<p class="well">{{ comment-form.$valid }}</p>
+		<p class="well">{{ comment-form.txtareaComments.$valid }}</p>
 	</form>
 </div> <!-- CLOSE FORM WRAP -->

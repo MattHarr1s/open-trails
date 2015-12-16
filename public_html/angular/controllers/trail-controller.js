@@ -29,6 +29,7 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 	$scope.alerts = [];
 	$scope.trailToSubmit = {};
 	$scope.comments = CommentService.fetchTrailId($scope.currentTrailId);
+	$scope.newComment = {commentId: null, trailId: null, userId: null, browser: null, createDate: null, ipAddress: null, commentPhoto: null, commentPhotoType: null, commentText: null};
 
 	$scope.openTrailAlertModal = function() {
 		var TrailAlertModalInstance = $uibModal.open({
@@ -213,16 +214,18 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 		}
 	};
 
-	$scope.createComment = function(comment) {
-		comment.trailId = $scope.currentTrailId;
-		CommentService.create(comment)
-			.then(function(result) {
-				if(result.data.status === 200) {
-					$scope.alerts[0] = {type: "success", msg: result.data.message};
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			});
+	$scope.createComment = function(newComment, validated) {
+		if(validated === true) {
+			newComment.trailId = $scope.currentTrailId;
+			CommentService.create(newComment)
+				.then(function(result) {
+					if(result.data.status === 200) {
+						$scope.alerts[0] = {type: "success", msg: result.data.message};
+					} else {
+						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+					}
+				});
+		}
 	};
 
 	console.log($routeParams);
