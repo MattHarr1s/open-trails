@@ -63,7 +63,7 @@ footer {
 }
 
 .bg-image {
-	background: url("../img/sandiaMtnNM.jpg") no-repeat center center;
+	background: url("../img/sandiaMtnNM.jpg") no-repeat center top;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
