@@ -60,6 +60,7 @@ footer {
 .jumbotron {
 	color: white;
 	padding: 1px;
+	text-shadow: 2px 2px 3px #444;
 }
 
 .bg-image {
