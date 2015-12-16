@@ -14,6 +14,22 @@ app.config(function($routeProvider) {
 
 		.when('/trail-search', {
 			templateUrl: 'angular/views/trail-search.php'
+		})
+
+		.when('/trail-site-info', {
+			templateUrl: 'angular/views/trail-site-info.php'
+		})
+
+		.when('/trail-suspended-user', {
+			templateUrl: 'angular/views/trail-suspended-user.php'
+		})
+
+		.when('/trail-update', {
+			templateUrl: 'angular/views/trail-update.php'
+		})
+
+		.when('/trail-update-approval', {
+			templateUrl: '/angular/views/trail-update-approval.php'
 		});
 
 	// route
