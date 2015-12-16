@@ -8,10 +8,9 @@ app.controller("TrailAddModal", ["$scope", "$uibModalInstance", function($scope,
 		}
 
 		function success(position) {
-			var latitude = position.coords.latitude;
 			var longitude = position.coords.longitude;
-
-			$scope.points.push([longitude, latitude]);
+			var latitude = position.coords.latitude;
+			$scope.points.push([latitude, longitude]);
 		}
 
 		function error() {
