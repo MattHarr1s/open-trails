@@ -14,7 +14,7 @@
 		<p><a class="btn btn-primary" role="button" href="#/trail-site-info">Learn More</a></p>
 	</div>
 </div>
-<div class="container">
+ <div class="container by-gray">
 	<div class="row">
 		<div class="col-md-12 embed-responsive embed-responsive-4by3">
 			<ng-map zoom="8" center="35.1318, -106.5925" map-type-id="TERRAIN"></ng-map>

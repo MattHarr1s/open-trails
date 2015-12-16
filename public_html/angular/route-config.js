@@ -30,7 +30,7 @@ app.config(function($routeProvider) {
 		})
 
 		.when('/trail-update-approval', {
-			templateUrl: '/angular/views/trail-update-approval.php'
+			templateUrl: 'angular/views/trail-update-approval.php'
 		});
 
 	// route

@@ -57,7 +57,9 @@ footer {
 * These styles override the bootstrap defaults
 ***********************************************/
 
-
+.jumbotron {
+	color: white;
+}
 
 .bg-image {
 	background: url("../img/sandiaMtnNM.jpg") no-repeat center center;
