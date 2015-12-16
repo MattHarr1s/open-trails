@@ -82,8 +82,13 @@ footer {
 *********************/
 
 /* corrects IE min-height bug */
-html { display: flex;}
-body { width: 100%;}
+html {
+	display: flex;
+}
+
+body {
+	width: 100%;
+}
 
 .sfooter {
 	display: flex;
@@ -137,4 +142,8 @@ body { width: 100%;}
 
 .map-margin {
 	padding: 10px 10px 20px 10px
+}
+
+.modal-padding {
+	padding: 20px;
 }

@@ -1,11 +1,12 @@
 <div class="model-body">
-	<div class="container">
+	<div>
 		<form id="trackModal" name="trackModel" class="form-inline">
 			<h2> Let Us Track Your Progress</h2>
 			<button class="btn btn-info" ng-click="geoFindMe();">Begin Tracking</button>
 			<h2>Save Your Progress</h2>
 			<button class="btn btn-info" ng-click="ok();">Save Trail</button>
 			<button class="btn btn-danger" ng-click="cancel();">Cancel</button>
+			<div class="col-md-12 embed-responsive embed-responsive-4by3">
 				<ng-map zoom="15" center="{{points[0]}}" map-type-id="SATELLITE">
 					<shape name="polyline"
 							 path="{{points}}"
@@ -15,6 +16,7 @@
 							 stroke-weight="2">
 					</shape>
 				</ng-map>
+			</div>
 		</form>
 	</div>
 </div>

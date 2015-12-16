@@ -16,10 +16,10 @@
 </div>
  <div class="container">
 	<div class="row">
+		<div class="container text-center">
+			<h1>Road Biking Trail Pages: Coming Spring 2016</h1>
+		</div>
 		<div class="col-md-12 embed-responsive embed-responsive-4by3">
-			<div class="container text-center">
-				<h1>Road Biking Trail Pages: Coming Spring 2016</h1>
-			</div>
 			<ng-map zoom="11" center="35.1318, -106.5925" map-type-id="TERRAIN">
 			<bicycling-layer></bicycling-layer>
 			</ng-map>

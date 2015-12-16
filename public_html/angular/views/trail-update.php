@@ -23,14 +23,9 @@
 			<h3>Corrales Bosque Trail</h3>
 			<div class="row">
 				<div class="col-md-10 embed-responsive embed-responsive-4by3">
-					<ng-map zoom="10" center="35.1318, -106.5925" map-type-id="TERRAIN">
+					<ng-map zoom="15" center="{{points[0]}}" map-type-id="SATELLITE">
 						<shape name="polyline"
-								 path="[
-        									[37.772323, -122.214897],
-        									[21.291982, -157.821856],
-        									[-18.142599, 178.431],
-        									[-27.46758, 153.027892]
-      								]"
+								 path="{{points}}"
 								 geodesic="true"
 								 stroke-color="#FF0000"
 								 stroke-opacity="1.0"
@@ -68,14 +63,9 @@
 			<!--	Note that all current trail information will be copied into update fields	-->
 			<div class="row">
 				<div class="col-md-10 embed-responsive embed-responsive-4by3">
-					<ng-map zoom="10" center="35.1318, -106.5925" map-type-id="TERRAIN">
+					<ng-map zoom="15" center="{{points[0]}}" map-type-id="SATELLITE">
 						<shape name="polyline"
-								 path="[
-        									[37.772323, -122.214897],
-        									[21.291982, -157.821856],
-        									[-18.142599, 178.431],
-        									[-27.46758, 153.027892]
-      								]"
+								 path="{{points}}"
 								 geodesic="true"
 								 stroke-color="#FF0000"
 								 stroke-opacity="1.0"
