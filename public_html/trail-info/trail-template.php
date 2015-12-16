@@ -4,7 +4,7 @@
 		<div class="col-md-6 embed-responsive embed-responsive-4by3">
 			<ng-map zoom="13" center="{points[0]}" map-type-id="SATELLITE">
 				<shape name="polyline"
-						 path=""
+						 path="{{get.points[0]}}"
 						 geodesic="true"
 						 stroke-color="#FF0000"
 						 stroke-opacity="1.0"
@@ -12,7 +12,7 @@
 				</shape>
 			</ng-map>
 
-			{{get.points[0]}}
+
 
 		</div>
 		<!--data column-->
