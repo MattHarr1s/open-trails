@@ -6,9 +6,11 @@
 			<h2>Save Your Progress</h2>
 			<button class="btn btn-info" ng-click="ok();">Save Trail</button>
 			<button class="btn btn-danger" ng-click="cancel();">Cancel</button>
+			<p>
+				{{points}}
+			</p>
+
 		</form>
-		<p>
-			{{points}}
-		</p>
+
 	</div>
 </div>
