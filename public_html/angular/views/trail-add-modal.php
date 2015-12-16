@@ -9,8 +9,6 @@
 			<p>
 				{{points}}
 			</p>
-
 		</form>
-
 	</div>
 </div>
