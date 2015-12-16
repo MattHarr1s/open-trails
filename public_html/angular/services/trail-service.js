@@ -39,6 +39,7 @@ app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 	this.fetchCondition = function(trailCondition) {
 		return ($http.getUrl() + '?condition=' + trailCondition);
 	};
+
 	this.fetchDescription = function(trailDescription) {
 		return ($http.getUrl() + '?description=' + trailDescription);
 	};
@@ -61,10 +62,6 @@ app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 
 	this.fetchUse = function(trailuse) {
 		return ($http.getUrl() + '?use=' + trailuse);
-	};
-
-	this.fetchUse = function(trailUse) {
-		return ($http.getUrl() + '?use=' + trailUse)
 	};
 
 	this.uuid = function(trailUuid) {
