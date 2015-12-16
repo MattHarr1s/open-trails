@@ -14,6 +14,7 @@ app.config(function($routeProvider) {
 
 		.when('/trail-search', {
 			templateUrl: 'angular/views/trail-search.php'
+			controller: 'TrailSearchController'
 		})
 
 		.when('/trail-site-info', {
