@@ -1,58 +1,39 @@
 app.controller("TrailSearchController", ["$scope", "TrailService", function($scope, TrailService) {
-	$scope.flags = {};
+	$scope.flags = {trailName: "", selectedDifficulties: [], trailDistance: 0, selectedUses: []};
 	$scope.trails = [];
 	$scope.alerts = [];
-	$scope.uses = ["Hike", "Bike", ];
+	$scope.difficulties = {1: false, 2: false, 3: false, 4: false, 5: false};
+	$scope.uses = {hike: false, bike: false, wheelchair: false};
+
+	$scope.checkDifficulty = function() {
+		$scope.flags.selectedDifficulties = [];
+		for(difficulty in $scope.difficulties) {
+			if($scope.difficulties[difficulty] === true) {
+				$scope.flags.selectedDifficulties.push(difficulty);
+			}
+		}
+	};
+
+	$scope.checkUse = function() {
+		$scope.flags.selectedUses = [];
+		for(use in $scope.uses) {
+			if($scope.uses[use] === true) {
+				$scope.flags.selectedUses.push(use);
+			}
+		}
+	};
 
 	$scope.search = function() {
-		if(isset($scope.flags.trailName)) {
-			TrailService.fetchName($scope.flags.trailName)
-				.then(function(reply) {
-					if(reply.status === 200) {
-						if(reply.data.submitTrailId == null) {
-							$scope.trails.push(reply.data); // Adds trail to array
-						}
-					} else {
-						$scope.alerts[0] = {type: "danger", msg: reply.data.message}
+		TrailService.all()
+			.then(function(reply) {
+				if(reply.status === 200) {
+					if(reply.data.submitTrailId == null) {
+						$scope.trails.push(reply.data); // Adds trail to array
 					}
-				});
-		}
-		if(isset($scope.flags.trailDifficulty)) {
-			TrailService.fetchDifficulty($scope.flags.trailDifficulty)
-				.then(function(reply) {
-					if(reply.status === 200) {
-						if(reply.data.submitTrailId == null) {
-							$scope.trails.push(reply.data); // Adds trail to array
-						}
-					} else {
-						$scope.alerts[0] = {type: "danger", msg: reply.data.message}
-					}
-				});
-		}
-		if(isset($scope.flags.trailDistance)) {
-			TrailService.fetchDistance($scope.flags.trailDistance)
-				.then(function(reply) {
-					if(reply.status === 200) {
-						if(reply.data.submitTrailId == null) {
-							$scope.trails.push(reply.data); // Adds trail to array
-						}
-					} else {
-						$scope.alerts[0] = {type: "danger", msg: reply.data.message}
-					}
-				});
-		}
-		if(isset($scope.flags.trailUse)) {
-			TrailService.fetchUse($scope.flags.trailUse)
-				.then(function(reply) {
-					if(reply.status === 200) {
-						if(reply.data.submitTrailId == null) {
-							$scope.trails.push(reply.data); // Adds trail to array
-						}
-					} else {
-						$scope.alerts[0] = {type: "danger", msg: reply.data.message}
-					}
-				});
-		}
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: reply.data.message}
+				}
+			});
 
 		for(var i = 0; i < $scope.trails.length; i++) {
 			if(isset($scope.flags.trailName)) {

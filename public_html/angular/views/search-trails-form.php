@@ -37,29 +37,11 @@
 						<label class="control-label">Select Trail Difficulty</label>
 						<!--	use div class=“help-block” to explain the form content	-->
 						<div class="help-block">Please check all that apply</div>
-						<div class="checkbox">
-							<label class="checkbox">
-								<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->
-								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty1" name="chkTrailDifficulty[]"
-										 type="checkbox" value="1"/>1 =>
-								Easy
-							</label>
-							<label class="checkbox">
-								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty2" name="chkTrailDifficulty[]"
-										 type="checkbox" value="2"/>2
-							</label>
-							<label class="checkbox">
-								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty3" name="chkTrailDifficulty[]"
-										 type="checkbox" value="3"/>3
-							</label>
-							<label class="checkbox">
-								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty4" name="chkTrailDifficulty[]"
-										 type="checkbox" value="4"/>4
-							</label>
-							<label class="checkbox">
-								<input ng-model="flags.trailDifficulty" id="chkTrailDifficulty5" name="chkTrailDifficulty[]"
-										 type="checkbox" value="5"/>5 => Very
-								Difficult
+						<div class="help-block">(Easy to hard)</div>
+						<div class="checkbox" ng-repeat="(difficulty, enabled) in difficulties">
+							<label for="difficulties" class="checkbox">
+								<input name="difficulties" type="checkbox" ng-change="checkDifficulty();"
+										 ng-model="difficulties[difficulty]"/>{{difficulty}}
 							</label>
 						</div>
 					</div>
@@ -75,37 +57,28 @@
 						</div>
 						<!-- Radio buttons here -->
 						<div class="radio">
-							<label>
-								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance1"
-										 value="1"/> 0 - 2 miles
+							<label for="distance">
+								<input name="distance" ng-model="flags.trailDistance" type="radio" value="2"/> less than 2 mi
 							</label>
 						</div>
-
 						<div class="radio">
-							<label>
-								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance2"
-										 value="2"/> 2 - 5 miles
+							<label for="distance">
+								<input name="distance" ng-model="flags.trailDistance" type="radio" value="5"/> less than 5 mi
 							</label>
 						</div>
-
 						<div class="radio">
-							<label>
-								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance3"
-										 value="3"/> 5 - 10 miles
+							<label for="distance">
+								<input name="distance" ng-model="flags.trailDistance" type="radio" value="10"/> less than 10 mi
 							</label>
 						</div>
-
 						<div class="radio">
-							<label>
-								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance4"
-										 value="4"/> 10 - 20 miles
+							<label for="distance">
+								<input name="distance" ng-model="flags.trailDistance" type="radio" value="20"/> less than 20 mi
 							</label>
 						</div>
-
 						<div class="radio">
-							<label>
-								<input ng-model="flags.trailDistance" type="radio" name="rdoDistance" id="radioDistance5"
-										 value="5"/> > 20 miles
+							<label for="distance">
+								<input name="distance" ng-model="flags.trailDistance" type="radio" value="0"/> no limit
 							</label>
 						</div>
 					</div>
@@ -119,31 +92,10 @@
 						<label class="control-label">Select Trail use</label>
 						<!--	use div class=“help-block” to explain the form content	-->
 						<div class="help-block">Please check all that apply</div>
-						<div class="checkbox">
-							<label ng-repeat="use in uses">
-								<input type="checkbox" checklist-model="flags.trailUse" checklist-value="use" />{{use}}
+						<div class="checkbox" ng-repeat="(use, enabled) in uses">
+							<label for="uses" class="checkbox">
+								<input name="uses" type="checkbox" ng-change="checkUse();" ng-model="uses[use]"/>{{use}}
 							</label>
-<!--							<label class="checkbox">-->
-<!--								<!--	name value contains square brackets which makes it easy to create an array on the back end in php	-->-->
-<!--								<Input ng-model="flags.trailUse" id="chkTrailUseHike" name="chkTrailUse[]" type="checkbox"-->
-<!--										 value="Hike"/>Hike-->
-<!--							</label>-->
-<!--							<label class="checkbox">-->
-<!--								<Input ng-model="flags.trailUse" id="chkTrailUseBike" name="chkTrailUse[]" type="checkbox"-->
-<!--										 value="Bike"/>Bike-->
-<!--							</label>-->
-<!--							<label class="checkbox">-->
-<!--								<Input ng-model="flags.trailUse" id="chkTrailUseWheelChair" name="chkTrailUse[]" type="checkbox"-->
-<!--										 value="Wheelchair"/>Wheelchair-->
-<!--							</label>-->
-<!--							<label class="checkbox">-->
-<!--								<Input ng-model="flags.trailUse" id="chkTrailUseSki" name="chkTrailUse[]" type="checkbox"-->
-<!--										 value="Ski"/>Ski-->
-<!--							</label>-->
-<!--							<label class="checkbox">-->
-<!--								<Input ng-model="flags.trailUse" id="chkTrailUseHorse" name="chkTrailUse[]" type="checkbox"-->
-<!--										 value="Horse"/>Horse-->
-<!--							</label>-->
 						</div>
 					</div>
 
