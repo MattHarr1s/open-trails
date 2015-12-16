@@ -16,7 +16,7 @@ app.controller("TrailAddModal", ["$scope", "$uibModalInstance", function($scope,
 		function error() {
 			$scope.alerts[0] = {type: "danger", msg: "Can't get location (user probably declined/ignored request)."};
 		}
-
+//random
 		navigator.geolocation.getCurrentPosition(success, error);
 	};
 
