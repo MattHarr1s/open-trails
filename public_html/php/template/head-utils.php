@@ -84,6 +84,7 @@ setXsrfCookie("/"); ?>
 		<script src="<?php echo $PREFIX; ?>angular/controllers/comment-controller.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/directives/trail-view.js"></script>
 		<script src="<?php echo $PREFIX; ?>angular/controllers/trail-alert-modal.js"></script>
+		<script src="<?php echo $PREFIX; ?>angular/controllers/trail-add-modal.js"></script>
 
 		<!-- load the googlemaps api -->
 		<script src="<?php echo $PREFIX; ?>angular/ng-map.min.js"></script>

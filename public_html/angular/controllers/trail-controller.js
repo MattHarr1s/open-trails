@@ -31,7 +31,7 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 
 	$scope.openTrailAlertModal = function() {
 		var TrailAlertModalInstance = $uibModal.open({
-			templateUrl: "../angular/views/trail-alert-modal.php",
+			templateUrl: "angular/views/trail-alert-modal.php",
 			controller: "TrailAlertModal",
 			resolve: {
 				trails: function() {
@@ -51,6 +51,28 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 					$scope.alerts[0] = {type: "danger", msg: result.data.message};
 				}
 			});
+		});
+	};
+
+	// Point add modal
+	$scope.openPointAddModal = function() {
+		var TrailAlertModalInstance = $uibModal.open({
+			templateUrl: "angular/views/trail-add-modal.php",
+			controller: "TrailAddModal",
+			resolve: {
+				trails: function() {
+					return ($scope.points);
+				}
+			}
+		});
+		TrailAlertModalInstance.result.then(function(points) {
+			//TrailService.create($scope.trailToSubmit).then(function(result) {
+			//	if(result.data.status === 200) {
+			//		$scope.alerts[0] = {type: "success", msg: result.data.message};
+			//	} else {
+			//		$scope.alerts[0] = {type: "danger", msg: result.data.message};
+			//	}
+			//});
 		});
 	};
 

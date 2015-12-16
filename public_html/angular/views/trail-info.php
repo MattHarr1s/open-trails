@@ -47,17 +47,17 @@
 
 				<p>Description: {{currentTrail.trailDescription}}</p>
 				<br>
-				<button class="btn btn-md btn-info" type="submit">Trail Corrections</button>
+				<a class="btn btn-md btn-info" ng-click="openPointAddModal();">Update Map</a>
 
-				<li>
-					<!-- YEAH? HOW DO I ADD TRAIL ALERT TO TRAIL CONTROLLER? -->
-					<a class="btn btn-default btn-def" ng-click="openTrailAlertModal();">
-						<i class="fa fa-check" aria-hidden="true"></i>Trail Alert
-					</a>
-				</li>
+				<!-- YEAH? HOW DO I ADD TRAIL ALERT TO TRAIL CONTROLLER? -->
+				<a class="btn btn-default btn-def" ng-click="openTrailAlertModal();">
+					<i class="fa fa-check" aria-hidden="true"></i>Trail Alert
+				</a>
 				<!--				<button class="btn btn-md btn-warning" type="reset">Trail Alert</button>-->
 				<!--continue to fill in content next to map here-->
 				<!--				<trail-view></trail-view>-->
+
+				<p>{{points}}</p>
 			</div>
 		</div>
 		<div class="row">
@@ -68,7 +68,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h2 class="page-title">Enter Your Comment(s) for this Trail</h2>
-					<?php require_once(dirname(__DIR__) . "/angular/views/comment-form.php"); ?>
+					<?php require_once(dirname(dirname(__DIR__)) . "/angular/views/comment-form.php"); ?>
 				</div>
 			</div>
 			<br>

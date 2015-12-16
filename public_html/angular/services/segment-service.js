@@ -1,5 +1,7 @@
 app.constant("SEGMENT_ENDPOINT", "../../php/api/segment/");
 app.service("SegmentService", function($http, SEGMENT_ENDPOINT) {
+	this.point = [];
+
 	function getUrl() {
 		return(SEGMENT_ENDPOINT);
 	}
@@ -42,6 +44,14 @@ app.service("SegmentService", function($http, SEGMENT_ENDPOINT) {
 
 	this.destroy = function(segmentId) {
 		return($http.delete(getUrlForId(segmentId)));
+	};
+
+	this.setPoint = function(point) {
+		this.point = point;
+	};
+
+	this.fetchPoint = function() {
+		return(this.point);
 	};
 });
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="TrailQuail">
+<html> <!-- removed "ng-app='TrailQuail'" -->
 
 	<head>
 		<!-- Latest compiled and minified Bootstrap CSS -->
@@ -16,12 +16,13 @@
 				  src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.js"></script>
 		<script type="text/javascript"
 				  src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.min.js"></script>
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.js"></script>
+		<script type="text/javascript"
+				  src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.js"></script>
 
 		<script type="text/javascript" src="../../angular/trail-quail.js"></script>
 		<script type="text/javascript" src="../../angular/services/segment-service.js"></script>
 		<script type="text/javascript" src="../../angular/controllers/segment-controller.js"></script>
-		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../css/style.css"/>
 	</head>
 
 	<body>
@@ -31,17 +32,18 @@
 				<div class="form-group">
 					<label>Number of Segments:</label>
 					<div class="input-group">
-						<input type="number" name="numSegments" class="form-control" ng-model="numSegments" />
+						<input type="number" name="numSegments" class="form-control" ng-model="numSegments"/>
 					</div>
 				</div>
 				<button type="submit" class="btn btn-info">Set Number of Segments</button>
 			</form>
-			<form name="segmentPractice" class="form-horizontal well" ng-submit="createSegment(segments, segmentPractice.$valid);">
+			<form name="segmentPractice" class="form-horizontal well"
+					ng-submit="createSegment(segments, segmentPractice.$valid);">
 				<div class="form-group" ng-repeat="segment in segments" novalidate>
 					<label>Segment {{ $index }}</label>
 					<div class="input-group">
-						<input type="number" min="-180.0" max="180.0" step="any" ng-model="segment[0]" />
-						<input type="number" min="-90.0" max="90.0" step="any" ng-model="segment[1]" />
+						<input type="number" min="-180.0" max="180.0" step="any" ng-model="segment[0]"/>
+						<input type="number" min="-90.0" max="90.0" step="any" ng-model="segment[1]"/>
 					</div>
 				</div>
 				<p class="well">{{ segments | json }}</p>
