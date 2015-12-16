@@ -62,6 +62,7 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 					if(result.data.status === 200) {
 						$scope.trails = result.data.data;
 						$scope.currentTrail = result.data.data;
+						$scope.getPoints(result.data.data.trailId, true); // TODO: Check this
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message}
 					}
@@ -174,8 +175,7 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 		}
 	};
 
-	$scope.getPoints = function(
-			trailId, validated) {
+	$scope.getPoints = function(trailId, validated) {
 		if(validated === true) {
 
 			TrailService.fetchPoints(trailId)
