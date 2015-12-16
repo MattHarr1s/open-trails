@@ -128,3 +128,12 @@ body { width: 100%;}
 .btn-default:focus, .btn-default:hover {
 	background-position: 0px;
 }
+
+/*  format for comment page and form */
+.comment-margin1 {
+	margin: 0px 15px;
+}
+
+.map-margin {
+	padding: 10px 10px 20px 10px
+}

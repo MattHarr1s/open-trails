@@ -50,7 +50,7 @@
 
 		<!-- buttons for submit -->
 		<br>
-		<button class="btn btn-md btn-info" type="submit" value="Submit">Submit</button>
+		<button class="btn btn-md btn-info pull-right" type="submit" value="Submit">Submit</button>
 
 	</form>
 </div> <!-- CLOSE FORM WRAP -->

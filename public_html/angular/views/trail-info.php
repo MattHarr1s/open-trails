@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row">
 		<!--map container-->
-		<div class="col-md-6 embed-responsive embed-responsive-4by3">
+		<div class="col-md-6">
 			<ng-map zoom="15" center="{{points[0]}}" map-type-id="SATELLITE">
 				<shape name="polyline"
 						 path="{{points}}"
@@ -55,32 +55,30 @@
 				<!--				<trail-view></trail-view>-->
 			</div>
 		</div>
-	</div> 	<!-- End of row 1  -->
+	</div>   <!-- End of row 1  -->
 
-	<div class="row">
+	<div class="row comment-margin1	">
 		<!-- Trail comment form inserted here -->
-		<div class="row">
-			<div class="col-md-6 embed-responsive embed-responsive-4by3">
-				<h2 class="page-title">Enter Your Comment(s) for this Trail</h2>
-				<?php require_once(dirname(dirname(__DIR__)) . "/angular/views/comment-form.php"); ?>
-			</div>
+		<div class="col-md-12 embed-responsive embed-responsive-4by3">
+			<h2 class="page-title">Enter Your Comment(s) for this Trail</h2>
+			<?php require_once(dirname(dirname(__DIR__)) . "/angular/views/comment-form.php"); ?>
 		</div>
-		<br>
-		<hr>
-
-		<!-- Trail comments from database will show below here -->
-		<div ng-controller="CommentController">
-			<div ng-repeat="comment in comments">
-				<comment-view></comment-view>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<!--				List of trail comments here-->
-			</div>
-		</div>
-
-
 	</div>
-	<!--.container-->
+	<br>
+	<hr>
+
+	<!-- Trail comments from database will show below here -->
+	<div ng-controller="CommentController">
+		<div ng-repeat="comment in comments">
+			<comment-view></comment-view>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<!--				List of trail comments here-->
+		</div>
+	</div>
+
+
 </div>
+<!--.container-->
