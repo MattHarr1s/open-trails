@@ -15,9 +15,7 @@
 
 <div class="container">
 	<div class="row">
-		<div class	="col-md-12 embed-responsive embed-responsive-4by3">
-			<div>Information on Trail Quail and how to use the site</div>
-		</div>
-
+			<p>Information on Trail Quail and how to use the site</p>
 	</div>
+
 </div>

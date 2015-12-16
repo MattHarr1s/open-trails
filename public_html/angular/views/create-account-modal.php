@@ -1,5 +1,5 @@
 <div class="modal-body">
-	<form id="signupModal" name="signupModal" class="form-inline">
+	<form id="signupModal" name="signupModal">
 		<h2>Join us!</h2>
 		<hr/>
 

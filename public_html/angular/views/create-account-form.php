@@ -25,6 +25,7 @@
 			</div>
 		</div>
 
+
 		<div class="form-group">
 			<label for="password" class="control-label">Password</label>
 
@@ -37,29 +38,33 @@
 			</div>
 		</div>
 
-		<div class="form-group">
-			<label for="verifyPassword" class="control-label">Verify Password</label>
 
-			<div class="input-group">
-				<div class="input-group-addon">
-					<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+
+			<div class="form-group">
+				<label for="verifyPassword" class="control-label">Verify Password</label>
+
+				<div class="input-group">
+					<div class="input-group-addon">
+						<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+					</div>
+					<input type="password" id="verifyPassword" class="form-control" maxlength="150"
+							 placeholder="Verify your password here" ng-model="user.verifyPassword"/>
 				</div>
-				<input type="password" id="verifyPassword" class="form-control" maxlength="150"
-						 placeholder="Verify your password here" ng-model="user.verifyPassword"/>
 			</div>
-		</div>
 
-		<div class="form-group">
-			<label for="userEmail1" class="control-label">Email</label>
 
-			<div class="input-group">
-				<div class="input-group-addon">
-					<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+			<div class="form-group">
+				<label for="userEmail1" class="control-label">Email</label>
+
+				<div class="input-group">
+					<div class="input-group-addon">
+						<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+					</div>
+					<input type="Email" id="userEmail" class="form-control" maxlength="150"
+							 placeholder="your-email@something.com" ng-model="user.userEmail"/>
 				</div>
-				<input type="Email" id="userEmail" class="form-control" maxlength="150"
-						 placeholder="your-email@something.com" ng-model="user.userEmail"/>
 			</div>
-		</div>
+
 
 		<!-- buttons for submit and reset -->
 		<hr>
