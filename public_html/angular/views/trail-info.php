@@ -2,18 +2,14 @@
 	<div class="row">
 		<!--map container-->
 		<div class="col-md-6 embed-responsive embed-responsive-4by3">
-			<ng-map zoom="13" center="{points[0]}" map-type-id="SATELLITE">
+			<ng-map zoom="13" center="{{points[0]}}" map-type-id="SATELLITE">
 				<shape name="polyline"
-						 path=""
+						 path="{{points}}"
 						 geodesic="true"
 						 stroke-color="#FF0000"
 						 stroke-opacity="1.0"
 						 stroke-weight="2">
 				</shape>
-			</ng-map>
-
-			{{get.points[0]}}
-
 		</div>
 		<!--data column-->
 		<div class="col-md-6">
@@ -56,8 +52,6 @@
 				<!--				<button class="btn btn-md btn-warning" type="reset">Trail Alert</button>-->
 				<!--continue to fill in content next to map here-->
 				<!--				<trail-view></trail-view>-->
-
-				<p>{{points}}</p>
 			</div>
 		</div>
 		<div class="row">

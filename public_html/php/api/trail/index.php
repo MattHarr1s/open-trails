@@ -69,10 +69,10 @@ try {
 			$trailRelationships = TrailRelationship::getTrailRelationshipByTrailId($pdo, $id);
 			$points = [];
 			foreach($trailRelationships as $trailRelationship) {
-				$points[] = [Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStart()->getX(),
-					Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStart()->getY()];
-				$points[] = [Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStop()->getX(),
-					Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStop()->getY()];
+				$points[] = [Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStart()->getY(),
+					Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStart()->getX()];
+				$points[] = [Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStop()->getY(),
+					Segment::getSegmentBySegmentId($pdo, $trailRelationship->getSegmentId())->getSegmentStop()->getX()];
 			}
 			// Add segments to reply
 			$reply->points = $points;
