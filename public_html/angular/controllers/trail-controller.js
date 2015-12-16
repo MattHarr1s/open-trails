@@ -1,4 +1,4 @@
-app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "TrailService", function($scope, $routeParams, $uibModal, TrailService) {
+app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "TrailService", "CommentService", function($scope, $routeParams, $uibModal, TrailService, CommentService) {
 	// get the trail from the api
 	// come back to add other
 	// make doc blocks way better
@@ -28,6 +28,7 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 	$scope.trails = [];
 	$scope.alerts = [];
 	$scope.trailToSubmit = {};
+	$scope.comments = CommentService.fetchTrailId($scope.currentTrailId);
 
 	$scope.openTrailAlertModal = function() {
 		var TrailAlertModalInstance = $uibModal.open({
@@ -210,6 +211,18 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 					}
 				});
 		}
+	};
+
+	$scope.createComment = function(comment) {
+		comment.trailId = $scope.currentTrailId;
+		CommentService.create(comment)
+			.then(function(result) {
+				if(result.data.status === 200) {
+					$scope.alerts[0] = {type: "success", msg: result.data.message};
+				} else {
+					$scope.alerts[0] = {type: "danger", msg: result.data.message};
+				}
+			});
 	};
 
 	console.log($routeParams);

@@ -113,7 +113,7 @@ try {
 			$reply->message = "Comment deleted OK";
 		}
 	}
-} catch (Exception $exception) {
+} catch(Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
 }

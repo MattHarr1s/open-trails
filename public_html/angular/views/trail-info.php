@@ -14,7 +14,7 @@
 		</div>
 		<!--data column-->
 		<div class="col-md-6">
-			<div ng-controller="TrailController">
+			<div>
 				<h1>Trail Name: {{currentTrail.trailName}}</h1>
 				<hr/>
 
@@ -68,14 +68,12 @@
 	<hr>
 
 	<!-- Trail comments from database will show below here -->
-	<div ng-controller="CommentController">
-		<div ng-repeat="comment in comments">
-			<comment-view></comment-view>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<!--				List of trail comments here-->
+	<div class="row" ng-repeat="comment in comments">
+		<div class="panel panel-primary">
+			<div class="panel-body">
+				<p>{{comment.commentText}}</p>
+				<small>Posted on: {{comment.createDate | date:"MM/dd/yyyy 'at' h:mma"}}</small>
+			</div>
 		</div>
 	</div>
 
