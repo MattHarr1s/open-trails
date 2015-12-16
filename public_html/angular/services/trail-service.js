@@ -17,11 +17,13 @@ app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 	};
 
 	this.fetchPoints = function(trailId) {
-		return($http.get(getUrlForId(trailId)));
+		return ($http.get(getUrlForId(trailId)));
 	};
 
-	this.fetchUserId = function(userId) { 
-		return($http.getUrl() + '?userId=' + userId); 
+	this.fetchUserId = function(userId) {
+		return ($http.getUrl() + '?userId=' + userId);
+	};
+
 	this.fetchUserId = function(userId) {
 		return ($http.getUrl() + '?userId=' + userId);
 	};
@@ -58,9 +60,11 @@ app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 	};
 
 	this.fetchUse = function(trailuse) {
-		return ($http.getUrl() + '?use=' + trailuse)
+		return ($http.getUrl() + '?use=' + trailuse);
+	};
+
 	this.fetchUse = function(trailUse) {
-		return($http.getUrl() + '?use=' + trailUse)
+		return ($http.getUrl() + '?use=' + trailUse)
 	};
 
 	this.uuid = function(trailUuid) {
