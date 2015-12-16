@@ -53,7 +53,7 @@
 				// info page and give them a log out button
 				if($accountType === "S") { ?>
 					<li>
-						<a class="btn btn-default btn-md" href="<?php echo $PREFIX; ?>trail-update-approval">Approve Updates</a>
+						<a class="btn btn-default btn-md" href="<?php echo $PREFIX; ?>#/trail-update-approval">Approve Updates</a>
 					</li>
 
 					<li>
@@ -74,7 +74,7 @@
 					</li>
 
 				<?php } elseif($accountType === "X") {
-					header("Location:" . $PREFIX . "trail-suspended-account");
+					header("Location:" . $PREFIX . "#/trail-suspended-account");
 				}
 			} ?>
 
