@@ -24,8 +24,8 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 		trailUuid: null
 	};
 	$scope.isEditing = false;
-	$scope.points = {};
-	$scope.trails = {};
+	$scope.points = [];
+	$scope.trails = [];
 	$scope.alerts = [];
 	$scope.trailToSubmit = {};
 
