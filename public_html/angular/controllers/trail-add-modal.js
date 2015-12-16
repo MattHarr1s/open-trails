@@ -6,7 +6,7 @@ app.controller("TrailAddModal", ["$scope", "$uibModalInstance", function($scope,
 			$scope.alerts[0] = {type: "danger", msg: "Uninstall IE. Good fucking luck!"};
 			return;
 		}
-
+//this a useless comment
 		function success(position) {
 			var longitude = position.coords.longitude;
 			var latitude = position.coords.latitude;
