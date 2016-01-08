@@ -11,7 +11,7 @@ require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
 //security w/ NG in mind
 require_once(dirname(__DIR__) . "/lib/xsrf.php");
 // a security file that's on the server created by Dylan because it's on the server it's not found	// ???????????
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/var/www/trailquail/encrypted-mysql/encrypted-config.php");
 // composer for Swiftmailer
 require_once dirname(dirname(dirname(dirname(__DIR__)))) . "/vendor/autoload.php";
 
@@ -22,7 +22,7 @@ $reply->message = null;
 
 try {
 	// grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/open-trails.ini");
+	$pdo = connectToEncryptedMySQL("/var/www/trailquail/encrypted-mysql/open-trails.ini");
 
 	//do I need to pull the JSON data here? If not how do I pull the data?
 

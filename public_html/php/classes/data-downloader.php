@@ -2,7 +2,7 @@
 
 require_once(dirname(dirname(__DIR__)) . "/php/classes/autoload.php");
 require_once(dirname(dirname(dirname(__DIR__))) . "/vendor/autoload.php");
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/var/www/trailquail/encrypted-mysql/encrypted-config.php");
 
 use Symm\Gisconverter\Gisconverter;
 use Location\Coordinate;
@@ -85,7 +85,7 @@ class DataDownloader {
 		$context = stream_context_create(array("http" => array("ignore_errors" => true, "method" => "GET")));
 
 		try {
-			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
+			$pdo = connectToEncryptedMySQL("/var/www/trailquail/encrypted-mysql/trailquail.ini");
 
 			if(($fd = @fopen($url, "rb", false, $context)) !== false) {
 				fgetcsv($fd, 0, ",");
@@ -151,7 +151,7 @@ class DataDownloader {
 		$context = stream_context_create(array("http" => array("ignore_errors" => true, "method" => "GET")));
 
 		try {
-			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
+			$pdo = connectToEncryptedMySQL("/var/www/trailquail/encrypted-mysql/trailquail.ini");
 
 			if(($jsonData = file_get_contents($url, null, $context)) !== false) {
 
@@ -308,7 +308,7 @@ class DataDownloader {
 	 * calculates trail distance using phpgeo composer package.
 	**/
 	public static function calculateTrailDistance() {
-		$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
+		$pdo = connectToEncryptedMySQL("/var/www/trailquail/encrypted-mysql/trailquail.ini");
 		$trails = Trail::getAllTrails($pdo);
 
 		$testNum = 0;

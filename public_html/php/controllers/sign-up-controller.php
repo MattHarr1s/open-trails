@@ -14,7 +14,7 @@ require_once dirname(dirname(__DIR__)) . "/php/classes/autoload.php";
 require_once dirname(dirname(__DIR__)) . "/php/lib/xsrf.php";
 
 //a security file that's on the server created by Dylan
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/var/www/trailquail/encrypted-mysql/encrypted-config.php");
 
 // composer for Swiftmailer
 require_once(dirname(dirname(dirname(__DIR__))) . "/vendor/autoload.php");
@@ -35,7 +35,7 @@ try {
 	verifyXsrf();
 
 	// grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
+	$pdo = connectToEncryptedMySQL("/var/www/trailquail/encrypted-mysql/trailquail.ini");
 
 	// convert POSTed JSON to an object
 	$requestContent = file_get_contents("php://input");

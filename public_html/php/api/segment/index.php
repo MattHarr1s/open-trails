@@ -2,7 +2,7 @@
 
 require_once dirname(dirname(__DIR__)) . "/classes/autoload.php";
 require_once dirname(dirname(__DIR__)) . "/lib/xsrf.php";
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/var/www/trailquail/encrypted-mysql/encrypted-config.php");
 require_once dirname(dirname(dirname(dirname(__DIR__)))) . "/vendor/autoload.php";
 /**
  * API for segment for segment class
@@ -23,7 +23,7 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 
 try {
 	//grab the mySQL connection get correct path from dylan
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
+	$pdo = connectToEncryptedMySQL("/var/www/trailquail/encrypted-mysql/trailquail.ini");
 
 
 	// determine which HTTP method was used

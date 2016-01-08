@@ -2,7 +2,7 @@
 
 require_once dirname(dirname(__DIR__)) . "/classes/autoload.php";
 require_once dirname(dirname(__DIR__)) . "/lib/xsrf.php";
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/var/www/trailquail/encrypted-mysql/encrypted-config.php");
 
 /**
  * controller/api for the
@@ -25,7 +25,7 @@ $browser = $_SERVER['HTTP_USER_AGENT'];
 
 try {
 	// grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/trailquail.ini");
+	$pdo = connectToEncryptedMySQL("/var/www/trailquail/encrypted-mysql/trailquail.ini");
 
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
