@@ -5,8 +5,15 @@
  * @author Louis Gill <lgill7@cnm.edu>
  * contributor code from https://github.com/sandidgec/foodinventory &
  * https://github.com/Skylarity/trufork
- **/
+ *
 
+
+
+
+ */
+/**
+ * Louis Gill
+ */
 //auto loads classes
 require_once dirname(dirname(__DIR__)) . "/php/classes/autoload.php";
 
