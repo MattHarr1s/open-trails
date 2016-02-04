@@ -12,7 +12,203 @@
 		<!-- The 3 meta tags *must* come first in the head; any other head content must come *after* these tags  		-->
 		<meta charset="utf-8"/>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"
+		<meta name="viewport" content="width=device-width, initial-scale=1"<!--modal for login
+<--
+<-- @author Louis Gill <lgill7@cnm.edu>
+-->
+		<div class="modal-body">
+			<form id="loginForm" name="loginForm" novalidate>
+				<h2>Welcome Back!</h2>
+				<hr/>
+				<div class="form-group form-group-lg"
+					  ng-class="{ 'has-error': loginForm.userEmail.$touched && loginForm.userEmail.$invalid }">
+					<label class="control-label" for="userEmail">Email</label>
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</div>
+						<input type="email" class="form-control" id="userEmail" name="userEmail"
+								 placeholder="What's your email?" ng-model="loginData.userEmail" ng-required="true"/>
+					</div>
+					<div class="alert alert-danger" role="alert" ng-messages="loginForm.userEmail.$error"
+						  ng-if="loginForm.userEmail.$touched" ng-hide="loginForm.userEmail.$valid">
+						<p ng-message="email">Email is invalid.</p>
+
+						<p ng-message="required">Please enter your email.</p>
+					</div>
+				</div>
+				<div class="form-group form-group-lg"
+					  ng-class="{ 'has-error': loginForm.password.$touched && loginForm.password.$invalid }">
+					<label class="control-label" for="password">Password</label>
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-key" aria-hidden="true"></i>
+						</div>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Password"
+								 ng-model="loginData.password" ng-minlength="8" ng-required="true"/>
+					</div>
+					<div class="alert alert-danger" role="alert" ng-messages="loginForm.password.$error"
+						  ng-if="loginForm.password.$touched" ng-hide="loginForm.password.$valid">
+						<p ng-message="minlength">Password must be at least 8 characters.</p>
+
+						<p ng-message="required">Please enter your password.</p>
+					</div>
+				</div>
+				<hr/>
+				<button type="submit" class="btn btn-lg btn-info" ng-click="ok();" ng-disabled="loginForm.$invalid"><i
+						class="fa fa-login" aria-hidden="true"></i>Log In
+				</button>
+			</form>
+		</div><!--modal for login
+<--
+<-- @author Louis Gill <lgill7@cnm.edu>
+-->
+		<div class="modal-body">
+			<form id="loginForm" name="loginForm" novalidate>
+				<h2>Welcome Back!</h2>
+				<hr/>
+				<div class="form-group form-group-lg"
+					  ng-class="{ 'has-error': loginForm.userEmail.$touched && loginForm.userEmail.$invalid }">
+					<label class="control-label" for="userEmail">Email</label>
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</div>
+						<input type="email" class="form-control" id="userEmail" name="userEmail"
+								 placeholder="What's your email?" ng-model="loginData.userEmail" ng-required="true"/>
+					</div>
+					<div class="alert alert-danger" role="alert" ng-messages="loginForm.userEmail.$error"
+						  ng-if="loginForm.userEmail.$touched" ng-hide="loginForm.userEmail.$valid">
+						<p ng-message="email">Email is invalid.</p>
+
+						<p ng-message="required">Please enter your email.</p>
+					</div>
+				</div>
+				<div class="form-group form-group-lg"
+					  ng-class="{ 'has-error': loginForm.password.$touched && loginForm.password.$invalid }">
+					<label class="control-label" for="password">Password</label>
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-key" aria-hidden="true"></i>
+						</div>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Password"
+								 ng-model="loginData.password" ng-minlength="8" ng-required="true"/>
+					</div>
+					<div class="alert alert-danger" role="alert" ng-messages="loginForm.password.$error"
+						  ng-if="loginForm.password.$touched" ng-hide="loginForm.password.$valid">
+						<p ng-message="minlength">Password must be at least 8 characters.</p>
+
+						<p ng-message="required">Please enter your password.</p>
+					</div>
+				</div>
+				<hr/>
+				<button type="submit" class="btn btn-lg btn-info" ng-click="ok();" ng-disabled="loginForm.$invalid"><i
+						class="fa fa-login" aria-hidden="true"></i>Log In
+				</button>
+			</form>
+		</div><!--modal for login
+<--
+<-- @author Louis Gill <lgill7@cnm.edu>
+-->
+		<div class="modal-body">
+			<form id="loginForm" name="loginForm" novalidate>
+				<h2>Welcome Back!</h2>
+				<hr/>
+				<div class="form-group form-group-lg"
+					  ng-class="{ 'has-error': loginForm.userEmail.$touched && loginForm.userEmail.$invalid }">
+					<label class="control-label" for="userEmail">Email</label>
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</div>
+						<input type="email" class="form-control" id="userEmail" name="userEmail"
+								 placeholder="What's your email?" ng-model="loginData.userEmail" ng-required="true"/>
+					</div>
+					<div class="alert alert-danger" role="alert" ng-messages="loginForm.userEmail.$error"
+						  ng-if="loginForm.userEmail.$touched" ng-hide="loginForm.userEmail.$valid">
+						<p ng-message="email">Email is invalid.</p>
+
+						<p ng-message="required">Please enter your email.</p>
+					</div>
+				</div>
+				<div class="form-group form-group-lg"
+					  ng-class="{ 'has-error': loginForm.password.$touched && loginForm.password.$invalid }">
+					<label class="control-label" for="password">Password</label>
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-key" aria-hidden="true"></i>
+						</div>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Password"
+								 ng-model="loginData.password" ng-minlength="8" ng-required="true"/>
+					</div>
+					<div class="alert alert-danger" role="alert" ng-messages="loginForm.password.$error"
+						  ng-if="loginForm.password.$touched" ng-hide="loginForm.password.$valid">
+						<p ng-message="minlength">Password must be at least 8 characters.</p>
+
+						<p ng-message="required">Please enter your password.</p>
+					</div>
+				</div>
+				<hr/>
+				<button type="submit" class="btn btn-lg btn-info" ng-click="ok();" ng-disabled="loginForm.$invalid"><i
+						class="fa fa-login" aria-hidden="true"></i>Log In
+				</button>
+			</form>
+		</div><!--modal for login
+<--
+<-- @author Louis Gill <lgill7@cnm.edu>
+-->
+		<div class="modal-body">
+			<form id="loginForm" name="loginForm" novalidate>
+				<h2>Welcome Back!</h2>
+				<hr/>
+				<div class="form-group form-group-lg"
+					  ng-class="{ 'has-error': loginForm.userEmail.$touched && loginForm.userEmail.$invalid }">
+					<label class="control-label" for="userEmail">Email</label>
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</div>
+						<input type="email" class="form-control" id="userEmail" name="userEmail"
+								 placeholder="What's your email?" ng-model="loginData.userEmail" ng-required="true"/>
+					</div>
+					<div class="alert alert-danger" role="alert" ng-messages="loginForm.userEmail.$error"
+						  ng-if="loginForm.userEmail.$touched" ng-hide="loginForm.userEmail.$valid">
+						<p ng-message="email">Email is invalid.</p>
+
+						<p ng-message="required">Please enter your email.</p>
+					</div>
+				</div>
+				<div class="form-group form-group-lg"
+					  ng-class="{ 'has-error': loginForm.password.$touched && loginForm.password.$invalid }">
+					<label class="control-label" for="password">Password</label>
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-key" aria-hidden="true"></i>
+						</div>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Password"
+								 ng-model="loginData.password" ng-minlength="8" ng-required="true"/>
+					</div>
+					<div class="alert alert-danger" role="alert" ng-messages="loginForm.password.$error"
+						  ng-if="loginForm.password.$touched" ng-hide="loginForm.password.$valid">
+						<p ng-message="minlength">Password must be at least 8 characters.</p>
+
+						<p ng-message="required">Please enter your password.</p>
+					</div>
+				</div>
+				<hr/>
+				<button type="submit" class="btn btn-lg btn-info" ng-click="ok();" ng-disabled="loginForm.$invalid"><i
+						class="fa fa-login" aria-hidden="true"></i>Log In
+				</button>
+			</form>
+		</div>
 
 		<!-- Bootstrap latest compiled and minified CSS		-->
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"

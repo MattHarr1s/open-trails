@@ -9,7 +9,7 @@
 						 stroke-color="#FF0000"
 						 stroke-opacity="1.0"
 						 stroke-weight="2">
-				</shape>
+				</shape
 			</ng-map>
 
 

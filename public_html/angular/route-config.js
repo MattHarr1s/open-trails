@@ -37,4 +37,8 @@ app.config(function($routeProvider) {
 		.when('/trail-update-approval', {
 			templateUrl: 'angular/views/trail-update-approval.php'
 		});
+	//Im going to begin messing with ways to fix routing on the site html5 History API
+	//$locationProvider.html5Mode(true);
+
+
 });
