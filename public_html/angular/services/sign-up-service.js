@@ -4,7 +4,7 @@
  * @author Louis Gill <lgill7@cnm.edu>
  */
 app.service("SignupService", function($http, $q) {
-	this.SIGNUP_ENDPOINT = "../../public_html/php/controllers/sign-up-controller.php";
+	this.SIGNUP_ENDPOINT = "/public_html/php/controllers/sign-up-controller.php";
 
 	this.addUser = function(user) {
 		//console.log(user);
