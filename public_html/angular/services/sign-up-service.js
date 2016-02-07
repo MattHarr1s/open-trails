@@ -7,10 +7,10 @@ app.service("SignupService", function($http, $q) {
 	this.SIGNUP_ENDPOINT = "../../public_html/php/controllers/sign-up-controller.php";
 
 	this.addUser = function(user) {
-		console.log(user);
+		//console.log(user);
 		return($http.post(this.SIGNUP_ENDPOINT, user)
 			.then(function(reply) {
-				console.log(reply);
+				//console.log(reply);
 				if(typeof reply.data === "object") {
 					return(reply.data);
 				} else {
