@@ -1,6 +1,5 @@
 .Ds_Store
 .idea
 /vendor
-/public_html/php/api/trail/index.php
 node_modules
 /encrypted-mysql
