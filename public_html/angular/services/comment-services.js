@@ -1,3 +1,11 @@
+/**
+ * this Service is used to make calls to the comment API to get needed data from the server about specific trails
+ * @ param app.constant set end point for the Comment API
+ * @ param app.service is the actual service being created to send calls
+ */
+
+
+
 app.constant("COMMENT_ENDPOINT", "php/api/comment/");
 app.service("CommentService", function($http, COMMENT_ENDPOINT) {
 	function getUrl() {

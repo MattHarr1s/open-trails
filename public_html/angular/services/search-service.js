@@ -1,3 +1,6 @@
+/**
+ * Service used for searching specific trails
+ */
 app.service("SearchService", function() {
 	this.trails = [];
 
