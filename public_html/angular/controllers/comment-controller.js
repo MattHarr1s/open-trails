@@ -1,3 +1,8 @@
+/**
+ * controller created to handle View logic for comments this is a work in progress
+ */
+
+//define the name of the controller
 app.controller("CommentController", ["$scope", "$uibModal", "CommentService", function($scope, $uibModal, CommentService) {
 	$scope.comments = [];
 	$scope.alerts = [];
@@ -16,6 +21,12 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 		$scope.isEditing = false;
 	};
 
+	/**
+	 * grabs the specific comment by its ID and validates it.
+	 * @param commentId
+	 * @param validated either returns 200 for success or nothing if failure/danger
+	 */
+
 	$scope.getCommentId = function(commentId, validated) {																	// IS THIS A THING?????????????????????????????????
 		if(validated === true) {
 			CommentService.fetchId(commentId)
@@ -30,6 +41,9 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 	};
 
 
+	/**
+	 * fulfills the promise from retrieving the comments from the comment API
+	 */
 	$scope.getComments = function() {
 		CommentService.all()
 			.then(function(result) {
@@ -41,6 +55,11 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 			});
 	};
 
+
+	/**
+	 * I have no idea what this line of code does or if it is even needed
+	 */
+
 	$scope.getCurrentComment = function() {
 		CommentService.fetchCurrent()
 			.then(function(result) {
@@ -51,6 +70,12 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 				}
 			});
 	};
+
+	/**
+	 * grabs the comments based on the trail Id most important get param because all comments need to be tied to a trail
+	 * @param trailId
+	 * @param validated
+	 */
 
 	$scope.getCommentByTrailId = function(trailId, validated) {
 		if(validated === true) {
@@ -65,6 +90,12 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 		}
 	};
 
+	/**
+	 * grabs the comment by the userId if no user is signed in the person will not be able to make a comment
+	 * @param userId Primary key for the user, used for validation in API
+	 * @param validated
+	 */
+
 	$scope.getCommentByUserId = function(userId, validated) {
 		if(validated === true) {
 			CommentService.fetchUserId(userId)
@@ -78,6 +109,11 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 		}
 	};
 
+	/**
+	 * Creates a brand new comment and passes it to the API for insertion into the database
+	 * @param comment
+	 * @param validated
+	 */
 	$scope.createComment = function(comment, validated) {
 		if(validated === true) {
 			CommentService.create(comment)
@@ -91,6 +127,11 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 		}
 	};
 
+	/**
+	 * checks to make sure that the comment being edittied exists then passes it the backend for storage
+	 * @param comment
+	 * @param validated must equal 200 for sucess
+	 */
 	$scope.updateComment = function(comment, validated) {
 		if(validated === true && $scope.isEditing === true) {
 			CommentService.update(comment.commentId, comment)
@@ -106,7 +147,10 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 		}
 	};
 
-	// delete the comment
+	/**
+	 * Creates a prompt that will make sure the person wants to delete their comment, if selected yes the comment is then deleted from the backend, with a 200 form the API of course
+	 * @param commentId
+	 */
 	$scope.deleteComment = function(commentId) {
 		// create a modal to ask for confirmation
 		var message = "Do you really want to delete this comment?";
@@ -130,6 +174,12 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 	};
 }]);
 
+/**
+ * this need to be moved to its own file
+ * @param $scope
+ * @param $uibModalInstance
+ * @constructor
+ */
 	// modal instance controller for deletion prompt
 	var ModalInstanceCtrl = function($scope, $uibModalInstance) {
 		$scope.yes = function() {
