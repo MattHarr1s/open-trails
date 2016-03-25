@@ -15,4 +15,17 @@ George Kephart g.e.kephart@gmail.com -->
 			</div>
 		</div>
 	</div>
+
+	<!-- view to actually load the needed comment -->
+	<div class="create-comment">
+		<div class="row">
+			<form name="comment-form" id="comment-form" ng-submit="submit(comment,comment-form.$vaild);" novalidate>
+				<div class="input-group">
+					<input type="text" class="form-control" name="comment" id="comment" cols="30" row="3" ng-minlength="2" ng-maxlength="256" ng-required="true" placeholder="comment" ng-model="commentData.commentText">
+
+					<span class="input-group-btn"><button type="submit" class="btn btn-default"><i class="fa fa-comment"></i>&nbsp;Submit</button></span>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
