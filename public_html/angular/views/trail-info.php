@@ -55,7 +55,11 @@
 				<!--				<trail-view></trail-view>-->
 			</div>
 		</div>
-	</div>   <!-- End of row 1  -->
+	</div>
+	<divcomment-view></div>
+
+
+	<!-- End of row 1  -->
 
 	<!--	<div class="row comment-margin1	">-->
 	<!-- Trail comment form inserted here -->
