@@ -23,7 +23,7 @@
 				</div>
 				<!-- text field input. pay attention to the id, placeholder text, type, and placeholder attributes -->
 				<input ng-model="flags.trailName" type="text" class="form-control" id="searchTrailName"
-						 placeholder="If you know the trail name, enter here Sam." maxlength="150"/>
+						 placeholder="If you know the trail name, please enter it here." maxlength="150"/>
 			</div>
 		</div>
 
