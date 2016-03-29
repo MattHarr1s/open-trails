@@ -10,8 +10,8 @@ app.controller("TrailSearchController", ["$scope", "$location", "TrailService", 
 		for(difficulty in $scope.difficulties) {
 			if($scope.difficulties[difficulty] === true) {
 				$scope.flags.selectedDifficulties.push(difficulty);
-			}
-		}
+			};
+		};
 	};
 
 	$scope.checkUse = function() {
@@ -19,8 +19,8 @@ app.controller("TrailSearchController", ["$scope", "$location", "TrailService", 
 		for(use in $scope.uses) {
 			if($scope.uses[use] === true) {
 				$scope.flags.selectedUses.push(use);
-			}
-		}
+			};
+		};
 	};
 
 	$scope.search = function() {
@@ -32,29 +32,29 @@ app.controller("TrailSearchController", ["$scope", "$location", "TrailService", 
 						if($scope.flags.trailName !== "") {
 							if($scope.trails[i].trailName !== $scope.flags.trailName) {
 								$scope.trails.splice(i, 1); // Removes trail from array
-							}
-						}
+							};
+						};
 						if(typeof $scope.flags.trailDifficulty !== "undefined") {
 							if($scope.trails[i].trailDifficulty !== $scope.flags.trailDifficulty) {
 								$scope.trails[i].splice(i, 1); // Removes trail from array
-							}
-						}
+							};
+						};
 						if($scope.flags.trailDistance > 0) {
 							if($scope.trails[i].trailDistance != $scope.flags.trailDistance) {
 								$scope.trails[i].splice(i, 1); // Removes trail from array
-							}
-						}
+							};
+						};
 						if(typeof $scope.flags.trailUse !== "undefined") {
 							if($scope.trails[i].trailUse !== $scope.flags.trailUse) {
 								$scope.trails[i].splice(i, 1); // Removes trail from array
-							}
-						}
-					}
+							};
+						};
+					};
 					SearchService.setTrails($scope.trails);
 					$location.path("search-results");
 				} else {
-					$scope.alerts[0] = {type: "danger", msg: reply.data.message}
-				}
+					$scope.alerts[0] = {type: "danger", msg: reply.data.message};
+				};
 			});
-	}
+	};
 }]);
