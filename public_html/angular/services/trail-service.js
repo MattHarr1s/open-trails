@@ -3,7 +3,7 @@
 * @ param app.constant set end point for the trail API
 * @ param app.service is the actual service being created to send calls
  */
-app.constant("TRAIL_ENDPOINT", "php/api/trail/");
+app.constant("TRAIL_ENDPOINT", "/../../php/api/trail/");
 app.service("TrailService", function($http, TRAIL_ENDPOINT) {
 	function getUrl() {
 		return (TRAIL_ENDPOINT);

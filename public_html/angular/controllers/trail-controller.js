@@ -225,6 +225,7 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 		}
 	};
 
+	/**
 	$scope.createComment = function(newComment, validated) {
 		if(validated === true) {
 			newComment.trailId = $scope.currentTrailId;
@@ -238,6 +239,7 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 				});
 		}
 	};
+	*/
 
 	console.log($routeParams);
 	if($scope.currentTrail === null && $scope.currentTrailId !== null) {
