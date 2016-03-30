@@ -3,7 +3,7 @@
 <!-- trail database updates webpage - super user access only -->
 <hr>
 
-<!-- current database entry on trail -->
+<!-- current database entry on trail from trail-info view -->
 <div class="container">
 	<div class="row">
 		<!--map container-->
