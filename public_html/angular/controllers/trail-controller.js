@@ -28,7 +28,8 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 	$scope.trails = [];
 	$scope.alerts = [];
 	$scope.trailToSubmit = {};
-	$scope.comments = CommentService.fetchTrailId($scope.currentTrailId);
+	//$scope.comments = CommentService.fetchTrailId($scope.currentTrailId);
+	/**
 	$scope.newComment = {
 		commentId: null,
 		trailId: null,
@@ -40,6 +41,7 @@ app.controller("TrailController", ["$scope", "$routeParams", "$uibModal", "Trail
 		commentPhotoType: null,
 		commentText: null
 	};
+	*/
 
 	$scope.openTrailAlertModal = function() {
 		var TrailAlertModalInstance = $uibModal.open({

@@ -4,11 +4,12 @@
 
 //define the name of the controller
 app.controller("CommentController", ["$scope", "$uibModal", "CommentService", function($scope, $uibModal, CommentService) {
-	$scope.comments = [];
+	$scope.comment
 	$scope.alerts = [];
 	$scope.isEditing = false;
 	$scope.editedComment = [];
 	$scope.newComment = {commentId: null, trailId: null, userId: null, browser: null, createDate: null, ipAddress: null, commentPhoto: null, commentPhotoType: null, commentText: null};
+	
 
 	$scope.setEditedComment = function() {
 		$scope.isEditing = true;
@@ -55,22 +56,6 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 			});
 	};
 
-
-	/**
-	 * I have no idea what this line of code does or if it is even needed
-	 */
-
-	$scope.getCurrentComment = function() {
-		CommentService.fetchCurrent()
-			.then(function(result) {
-				if(result.data.status === 200) {
-					$scope.comment = result.data.data;
-				} else {
-					$scope.alerts[0] = {type: "danger", msg: result.data.message};
-				}
-			});
-	};
-
 	/**
 	 * grabs the comments based on the trail Id most important get param because all comments need to be tied to a trail
 	 * @param trailId
@@ -94,7 +79,7 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 	 * grabs the comment by the userId if no user is signed in the person will not be able to make a comment
 	 * @param userId Primary key for the user, used for validation in API
 	 * @param validated
-	 */
+	 	// as of now not needed
 
 	$scope.getCommentByUserId = function(userId, validated) {
 		if(validated === true) {
@@ -108,6 +93,7 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 				});
 		}
 	};
+	 */
 
 	/**
 	 * Creates a brand new comment and passes it to the API for insertion into the database
@@ -142,6 +128,7 @@ app.controller("CommentController", ["$scope", "$uibModal", "CommentService", fu
 						$scope.isEditing = false;
 					} else {
 						$scope.alerts[0] = {type: "danger", msg: result.data.message};
+
 					}
 				});
 		}

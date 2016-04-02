@@ -38,7 +38,7 @@ try {
 	//sanitize the email & search by userEmail
 	$userEmail = filter_var($requestedObject->userEmail, FILTER_SANITIZE_EMAIL);
 	$user = User::getUserByUserEmail($pdo, $userEmail);
-
+	
 	if($user !== null) {
 		$userHash = hash_pbkdf2("sha512", $requestedObject->password, $user->getUserSalt(), 262144, 128);
 		if($userHash === $user->getUserHash()) {
@@ -46,10 +46,10 @@ try {
 			$reply->status = 200;
 			$reply->message = "Successfully logged in";
 		} else {
-			throw(new InvalidArgumentException("email or password is invalid", 401));
+			throw(new InvalidArgumentException("work god dammit", 401));
 		}
 	} else {
-		throw(new InvalidArgumentException("email or password is invalid", 401));
+		throw(new InvalidArgumentException("password is invalid", 401));
 	}
 
 	//create an exception to pass back to the RESTful caller
