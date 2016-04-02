@@ -51,6 +51,13 @@ class UserTest extends TrailQuailTest {
 	protected $VALID_USEREMAIL = "saul.jeff@gmail.com";
 
 	/**
+	 * valid userEmailActivation
+	 * @var string $VALID_EMAILACTIVATION
+	 */
+
+	protected $VALID_EMAIL_ACTIVATION = "1234567898765432";
+
+	/**
 	 * valid user hash to use
 	 * @var string $VALID_USERHASH
 	 */
@@ -94,7 +101,7 @@ class UserTest extends TrailQuailTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("user");
 		// create a new user information profile and insert it in the database
-		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_EMAIL_ACTIVATION, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and verify the fields match our expectation
@@ -105,6 +112,7 @@ class UserTest extends TrailQuailTest {
 		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
+		$this->assertSame($pdoUser->getUserEmailActivation(), $this->VALID_EMAIL_ACTIVATION);
 		$this->assertSame($pdoUser->getUserHash(), $this->VALID_USERHASH);
 		$this->assertSame($pdoUser->getUserName(), $this->VALID_USERNAME);
 		$this->assertSame($pdoUser->getUserSalt(), $this->VALID_USERSALT);
@@ -117,7 +125,7 @@ class UserTest extends TrailQuailTest {
 	 */
 	public function testInsertInValidUser() {
 		// create a user Id profile with a non null userId adn watch it fail
-		$user = new User(TrailQuailTest::INVALID_KEY, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE,$this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user = new User(TrailQuailTest::INVALID_KEY, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE,$this->VALID_USEREMAIL, $this->VALID_EMAIL_ACTIVATION, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->insert($this->getPDO());
 }
 
@@ -129,7 +137,7 @@ class UserTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new user Id profile and insert it into mySQL
-		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE,$this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE,$this->VALID_USEREMAIL, $this->VALID_EMAIL_ACTIVATION, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->insert($this->getPDO());
 
 		// edit the user Id profile and update it in mySQL
@@ -144,6 +152,7 @@ class UserTest extends TrailQuailTest {
 		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
+		$this->assertSame($pdoUser->getUserEmailActivation(), $this->VALID_EMAIL_ACTIVATION);
 		$this->assertSame($pdoUser->getUserHash(), $this->VALID_USERHASH);
 		$this->assertSame($pdoUser->getUserName(), $this->VALID_USERNAME2);
 		$this->assertSame($pdoUser->getUserSalt(), $this->VALID_USERSALT);
@@ -156,7 +165,7 @@ class UserTest extends TrailQuailTest {
 	 */
 	public function testUpdateInvalidUser() {
 		// create a user Id profile  and try to update it without actually inserting it
-		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_EMAIL_ACTIVATION, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->update($this->getPDO());
 		}
 
@@ -168,7 +177,7 @@ class UserTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new user Id profile and insert it into MySQL
-		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_EMAIL_ACTIVATION, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->insert($this->getPDO());
 
 		// delete this user Id profile from mySQL
@@ -188,7 +197,7 @@ class UserTest extends TrailQuailTest {
 	 */
 	public function testDeleteInvalidUser() {
 		// create a user Id profile adn try to delete it without actually inserting it
-		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_EMAIL_ACTIVATION, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->delete($this->getPDO());
 	}
 
@@ -200,7 +209,7 @@ class UserTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new user Id profile and insert it into mySQL
-		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_EMAIL_ACTIVATION, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and see if the fields match our expected values
@@ -211,6 +220,7 @@ class UserTest extends TrailQuailTest {
 		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
+		$this->assertSame($pdoUser->getUserEmailActivation(), $this->VALID_EMAIL_ACTIVATION);
 		$this->assertSame($pdoUser->getUserHash(), $this->VALID_USERHASH);
 		$this->assertSame($pdoUser->getUserName(), $this->VALID_USERNAME);
 		$this->assertSame($pdoUser->getUserSalt(), $this->VALID_USERSALT);
@@ -233,7 +243,7 @@ class UserTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new user Id profile and insert it into mySQL
-	$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+	$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_EMAIL_ACTIVATION, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and see if the fields match our expected values
@@ -245,6 +255,7 @@ class UserTest extends TrailQuailTest {
 			$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
 			$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 			$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
+			$this->assertSame($pdoUser->getUserEmailActivation(), $this->VALID_EMAIL_ACTIVATION);
 			$this->assertSame($pdoUser->getUserHash(), $this->VALID_USERHASH);
 			$this->assertSame($pdoUser->getUserName(), $this->VALID_USERNAME);
 			$this->assertSame($pdoUser->getUserSalt(), $this->VALID_USERSALT);
@@ -270,7 +281,7 @@ class UserTest extends TrailQuailTest {
 		$numRows = $this->getConnection()->getRowCount("user");
 
 		// create a new user Id profile and insert it into mySQL
-		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
+		$user = new User(null, $this->VALID_BROWSER, $this->VALID_CREATEDATE, $this->VALID_IPADDRESS, $this->VALID_USERACCOUNTTYPE, $this->VALID_USEREMAIL, $this->VALID_EMAIL_ACTIVATION, $this->VALID_USERHASH, $this->VALID_USERNAME, $this->VALID_USERSALT);
 		$user->insert($this->getPDO());
 
 		// grab the data from mySQL and see if the fields match our expected values
@@ -281,6 +292,7 @@ class UserTest extends TrailQuailTest {
 		$this->assertSame($pdoUser->getIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertSame($pdoUser->getUserAccountType(), $this->VALID_USERACCOUNTTYPE);
 		$this->assertSame($pdoUser->getUserEmail(), $this->VALID_USEREMAIL);
+		$this->assertSame($pdoUser->getUserEmailActivation(), $this->VALID_EMAIL_ACTIVATION);
 		$this->assertSame($pdoUser->getUserHash(), $this->VALID_USERHASH);
 		$this->assertSame($pdoUser->getUserName(), $this->VALID_USERNAME);
 		$this->assertSame($pdoUser->getUserSalt(), $this->VALID_USERSALT);
