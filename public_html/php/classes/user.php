@@ -34,6 +34,12 @@ class User {
 	private $userEmail;
 
 	/**
+	 *activation key for volunter email, null if email confirmed
+	 *@var string $userEmailActivation
+	 */
+	private $userEmailActivation;
+
+	/**
 	 * This is the 128 byte hash variable for user authentication
 	 * @var string $userHash
 	 */
@@ -61,6 +67,7 @@ class User {
 	 * @param string $newIpAddress -- the user Ip address when account was set up
 	 * @param string $newUserAccountType -- this denotes the type of user account
 	 * @param string $newUserEmail -- the user email address for this account
+	 * @param string $newUserEmailActivation -- activation key for user email, null if email comfirmed
 	 * @param string $newUserHash -- hash value of user password
 	 * @param string $newUserName -- the user username for this account
 	 * @param string $newUserSalt -- salt value of user password
@@ -69,14 +76,15 @@ class User {
 	 * @throws RangeException if data values are out of bounds (e.g. strings too long or too short)
 	 * @throws Exception if some other exception is thrown
 	 */
-	public function __construct($newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newUserAccountType, $newUserEmail, $newUserHash, $newUserName, $newUserSalt) {
+	public function __construct($newUserId, $newBrowser, $newCreateDate, $newIpAddress, $newUserAccountType, $newUserEmail, $newUserEmailActivation, $newUserHash, $newUserName, $newUserSalt) {
 		try {
-			$this->setUserID($newUserId);
+			$this->setUserId($newUserId);
 			$this->setBrowser($newBrowser);
 			$this->setCreateDate($newCreateDate);
 			$this->setIpAddress($newIpAddress);
 			$this->setUserAccountType($newUserAccountType);
 			$this->setUserEmail($newUserEmail);
+			$this->setUserEmailActivation($newUserEmailActivation);
 			$this->setUserHash($newUserHash);
 			$this->setUserName($newUserName);
 			$this->setUserSalt($newUserSalt);
@@ -142,7 +150,7 @@ class User {
 	 */
 	public function getUserAccountType() {
 		return ($this->userAccountType);
-		}
+	}
 
 	/**
 	 * mutator method for user account type (regular-R, super user-S, suspended-X)
@@ -197,6 +205,42 @@ class User {
 
 		// store the user's email address
 		$this->userEmail = $newUserEmail;
+	}
+
+	/**
+	 * accessor for userEmailActivation
+	 * @return string value for activation code -- activation code
+	 */
+	public function getUserEmailActivation() {
+		return ($this->userEmailActivation);
+	}
+
+	/**
+	 * mutator method for userEmailActivation
+	 * @param string $newUserEmailActivation
+	 * @throws InvalidArgumentException is not a string or insecure
+	 **/
+	public function setUserEmailActivation($newUserEmailActivation) {
+		//basecase: if the activation is null this is an existing volunter
+		if($newUserEmailActivation === null) {
+			$this->userEmailActivation = null;
+			return;
+		}
+
+		//veirfy the activation code is valid
+		$newUserEmailActivation = trim($newUserEmailActivation);
+		$newUserEmailActivation = filter_var($newUserEmailActivation, FILTER_SANITIZE_STRING);
+		if(empty($newUserEmailActivation) === true) {
+			throw(new InvalidArgumentException("activation code is insuffcient length or insecure"));
+		}
+
+		//verify the code will fit in the database
+		if(strlen($newUserEmailActivation) !== 16) {
+			throw(new RangeException("activation code is to large"));
+		}
+
+		//store the activation code
+		$this->userEmailActivation = $newUserEmailActivation;
 	}
 
 	/**
@@ -321,11 +365,11 @@ class User {
 		}
 
 		// create user query template
-		$query = "INSERT INTO user(userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt ) VALUES (:userId, :browser, :createDate, :ipAddress, :userAccountType, :userEmail, :userHash, :userName, :userSalt)";
+		$query = "INSERT INTO user(userId, browser, createDate, ipAddress, userAccountType, userEmail, userEmailActivation, userHash, userName, userSalt ) VALUES (:userId, :browser, :createDate, :ipAddress, :userAccountType, :userEmail,:userEmailActivation, :userHash, :userName, :userSalt)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the placeholders in the template
-		$parameters = array("userId" => $this->userId, "browser" => $this->browser, "createDate" => $this->createDate->format("Y-m-d H:i:s"), "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail,"userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt);
+		$parameters = array("userId" => $this->userId, "browser" => $this->browser, "createDate" => $this->createDate->format("Y-m-d H:i:s"), "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail, "userEmailActivation" => $this->userEmailActivation, "userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt);
 		$statement->execute($parameters);
 
 		// update the null userId with what mySQL just gave us
@@ -367,17 +411,17 @@ class User {
 			throw(new PDOException("unable to update ID information for a user that does not exist"));
 		}
 		// create query template
-		$query = "UPDATE user SET userId = :userId, browser = :browser, createDate = :createDate, ipAddress = :ipAddress, userAccountType = :userAccountType, userEmail = :userEmail, userHash = :userHash, userName = :userName, userSalt = :userSalt";
+		$query = "UPDATE user SET userId = :userId, browser = :browser, createDate = :createDate, ipAddress = :ipAddress, userAccountType = :userAccountType, userEmail = :userEmail, userEmailActivation = :userEmailActivation,  userHash = :userHash, userName = :userName, userSalt = :userSalt";
 		$statement = $pdo->prepare($query);
 
 		//  bind the member variables to the place holders in the template
 		$formattedDate = $this->createDate->format("Y-m-d H:i:s");
-		$parameters = ["userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail, "userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt];
+		$parameters = ["userId" => $this->userId, "browser" => $this->browser, "createDate" => $formattedDate, "ipAddress" => $this->ipAddress, "userAccountType" => $this->userAccountType, "userEmail" => $this->userEmail, "userEmailActivation " => $this->userEmailActivation, "userHash" => $this->userHash, "userName" => $this->userName, "userSalt" => $this->userSalt];
 		$statement->execute($parameters);
 	}
 
 	/**
-	 * gets user ID information by userId
+	 * gets user information by userId
 	 *
 	 * @param PDO $pdo -- pointer to PDO connection, by reference
 	 * @param int $userId -- userId to trail-search for
@@ -396,7 +440,7 @@ class User {
 		}
 
 		// create user query template
-		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user WHERE userId = :userId";
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userEmailActivation, userHash, userName, userSalt FROM user WHERE userId = :userId";
 		$statement = $pdo->prepare($query);
 
 		// bind userId to placeholder
@@ -410,7 +454,7 @@ class User {
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
+				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userEmailActivation"], $row["userHash"], $row["userName"], $row["userSalt"]);
 			}
 		}	catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -419,15 +463,15 @@ class User {
 		return($user);
 	}
 
-/**
-* gets user ID information by user email address
-*
-* @param PDO $pdo -- pointer to PDO connection, by reference
-* @param string $userEmail -- user email address
-* @return mixed user - return user ID information if found or null if not found
-* @throws PDOException when mySQL related errors occur
-*
-**/
+	/**
+	 * gets user ID information by user email address
+	 *
+	 * @param PDO $pdo -- pointer to PDO connection, by reference
+	 * @param string $userEmail -- user email address
+	 * @return mixed user - return user ID information if found or null if not found
+	 * @throws PDOException when mySQL related errors occur
+	 *
+	 **/
 	public static function getUserByUserEmail (PDO $pdo, $userEmail) {
 		// sanitize the userId before searching
 		$userEmail = trim($userEmail);
@@ -442,7 +486,7 @@ class User {
 		}
 
 		// create user query template
-		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user WHERE userEmail = :userEmail";
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userEmailActivation, userHash, userName, userSalt FROM user WHERE userEmail = :userEmail";
 		$statement = $pdo->prepare($query);
 
 		// bind userId to placeholder
@@ -455,9 +499,47 @@ class User {
 			$statement->setFetchMode(PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
+				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userEmailActivation"], $row["userHash"], $row["userName"], $row["userSalt"]);
 			}
 		}	catch(Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($user);
+	}
+
+	/**
+	 * grabs user by email activation
+	 * @param PDO $pdo pdo connection object
+	 * @param string $userEmailActivation activation code to look for
+	 * @return SplFixedArray users -- returns an
+	 * @throws PDOException if mySQL related errors occurs
+	 */
+	public static function getUserByActivation(PDO $pdo, $userEmailActivation) {
+		//santize the input
+		$userEmailActivation = trim($userEmailActivation);
+		$userEmailActivation = filter_var($userEmailActivation);
+		if($userEmailActivation === false) {
+			throw (new PDOException("email activation is insecure or empty"));
+		}
+
+		//create query template
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userEmailActivation,  userHash, userName, userSalt FROM user WHERE userEmailActivation = :userEmailActivation";
+		$statement = $pdo->prepare($query);
+
+		//bind the value to the place holder template
+		$parameters = ["userEmailActivation" => $userEmailActivation];
+		$statement->execute($parameters);
+
+		//grab the volunter form mySQL
+		try{
+			$user = null;
+			$statement->setFetchMode(PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userEmailActivation"], $row["userHash"], $row["userName"], $row["userSalt"]);
+			}
+		} catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
 			throw(new PDOException($exception->getMessage(), 0, $exception));
 		}
@@ -487,7 +569,7 @@ class User {
 		}
 
 		// create user query template
-		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user WHERE userName = :userName";
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userEmailActivation, userHash, userName, userSalt FROM user WHERE userName = :userName";
 		$statement = $pdo->prepare($query);
 
 		// bind userId to placeholder
@@ -499,7 +581,7 @@ class User {
 			$user = null;
 			$row = $statement->fetch();
 			if($row !== false) {
-				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
+				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userEmailActivation"], $row["userHash"], $row["userName"], $row["userSalt"]);
 			}
 		} catch(Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -513,12 +595,12 @@ class User {
 	 *
 	 * @param PDO $pdo -- pointer to PDO connection, by reference
 	 * @return SplFixedArray users -- return array of user ID information if found or null if not found
-	* @throws PDOException when mySQL related errors occur
- 	*
-	**/
+	 * @throws PDOException when mySQL related errors occur
+	 *
+	 **/
 	public static function getAllUsers(PDO $pdo) {
 		// create user query template
-		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userHash, userName, userSalt FROM user";
+		$query = "SELECT userId, browser, createDate, ipAddress, userAccountType, userEmail, userEmailActivation, userHash, userName, userSalt FROM user";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
@@ -527,7 +609,7 @@ class User {
 		$statement->setFetchMode(PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userHash"], $row["userName"], $row["userSalt"]);
+				$user = new User($row["userId"], $row["browser"], $row["createDate"], $row["ipAddress"], $row["userAccountType"], $row["userEmail"], $row["userEmailActivation"], $row["userHash"], $row["userName"], $row["userSalt"]);
 				$users[$users->key()] = $user;
 				$users->next();
 			} catch(Exception $exception) {
